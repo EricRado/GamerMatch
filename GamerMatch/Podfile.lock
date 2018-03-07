@@ -1,5 +1,4 @@
 PODS:
-  - EZYGradientView (1.5.1)
   - Firebase (4.9.0):
     - Firebase/Core (= 4.9.0)
   - Firebase/Auth (4.9.0):
@@ -63,7 +62,6 @@ PODS:
   - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
-  - EZYGradientView
   - Firebase
   - Firebase/Auth
   - Firebase/Database
@@ -75,7 +73,6 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  EZYGradientView: f13e7a9e774b906c66d617fb04a13c8853ba25b4
   Firebase: 632216af3ed7f31e3be34776947fdc7546cfb572
   FirebaseAnalytics: 388b630c15713f5dbf364071f5f3d6077fb52f4e
   FirebaseAuth: aaaf68d5064a6c8fec435758f83a43b8db26ccaa
@@ -93,6 +90,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 870f92af1224ff4a1d920513bba0178a6c70a749
+PODFILE CHECKSUM: 42dee42adbdc1b3f83c6cb79b1df68ab8ef3d540
 
 COCOAPODS: 1.4.0

@@ -7,21 +7,67 @@
 //
 
 import UIKit
+import Firebase
+import SVProgressHUD
 
 class RegistrationViewController: UIViewController {
-
+    
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: UITextField!
+    
+    @IBOutlet weak var signUpButton: UIButton!
+    
+    var formIsValid: Bool = false
+    
+    let dbReference = Database.database().reference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        signUpButton.layer.cornerRadius = 10
+        signUpButton.layer.masksToBounds = true
+        
+        setupTextFields()
     }
     
+    func setupTextFields(){
+        emailTextField.setBottomLine(borderColor: UIColor.black)
+        passwordTextField.setBottomLine(borderColor: UIColor.black)
+        usernameTextField.setBottomLine(borderColor: UIColor.black)
+    }
+    
+    func validateForm() -> Bool{
+        var formIsValid = false
+        if usernameTextField.text != nil {
+            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
+                if error != nil {
+                    print("There was an error: \(error!)")
+                }else {
+                    print("User registered successfully")
+                    print(user?.uid)
+                }
+            })
+            formIsValid = true
+        }
+        print("This is formIsValid value:  \(formIsValid)")
+        return formIsValid
+    }
 
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "dashboardSegue"{
+            if validateForm(){
+                print("Form is valid")
+                return true
+            }else {
+                print("Form is invalid")
+            }
+        }
+        return false
+    }
+    
+    
     /*
     // MARK: - Navigation
 

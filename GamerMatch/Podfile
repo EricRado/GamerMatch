@@ -6,7 +6,6 @@ target 'GamerMatch' do
 
   # Pods for GamerMatch
 
-pod 'EZYGradientView'
 pod 'Firebase'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
