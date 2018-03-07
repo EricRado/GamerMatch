@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import SVProgressHUD
 
 extension UITextField{
     func setBottomLine(borderColor: UIColor) {
@@ -48,7 +50,16 @@ class LoginViewController: UIViewController {
 
     
     @IBAction func signInPressed(_ sender: UIButton) {
-        
+        SVProgressHUD.show()
+        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
+            if error != nil {
+                print("There was an error : \((error?.localizedDescription)!)")
+            }else {
+                print("Login successful")
+                SVProgressHUD.dismiss()
+                self.performSegue(withIdentifier: "signinDashboardSegue", sender: self)
+            }
+        }
     }
     
     

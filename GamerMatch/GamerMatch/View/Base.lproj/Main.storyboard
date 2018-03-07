@@ -91,6 +91,7 @@
                         <outlet property="emailTextField" destination="eBm-MF-ufF" id="PXf-ev-aXY"/>
                         <outlet property="passwordTextField" destination="tfz-3N-ISO" id="wQ9-sM-7YO"/>
                         <outlet property="signInButton" destination="Awd-q5-qyL" id="Nmt-zE-y28"/>
+                        <segue destination="euJ-xH-Wd8" kind="show" identifier="signinDashboardSegue" id="p1K-8C-PN8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -127,9 +128,6 @@
                                 <state key="normal" title="Sign Up">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="euJ-xH-Wd8" kind="show" identifier="dashboardSegue" id="fJj-p6-Bhk"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GKE-Nv-6Va">
                                 <rect key="frame" x="76" y="295" width="230" height="30"/>
@@ -147,11 +145,12 @@
                         <outlet property="passwordTextField" destination="Wyw-Xy-2Zg" id="tSq-vS-H73"/>
                         <outlet property="signUpButton" destination="H6T-5S-iVX" id="ieQ-sj-CmZ"/>
                         <outlet property="usernameTextField" destination="GKE-Nv-6Va" id="R7Y-0o-B3C"/>
+                        <segue destination="euJ-xH-Wd8" kind="show" identifier="dashboardSegue" id="dSy-8B-ZhX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zJc-48-JIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="872.79999999999995" y="35.532233883058474"/>
+            <point key="canvasLocation" x="929" y="35"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="lmF-aY-ziP">
@@ -209,4 +208,7 @@
     <resources>
         <image name="gameController" width="2400" height="2400"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="dSy-8B-ZhX"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -18,8 +18,6 @@ class RegistrationViewController: UIViewController {
     
     @IBOutlet weak var signUpButton: UIButton!
     
-    var formIsValid: Bool = false
-    
     let dbReference = Database.database().reference()
     
     override func viewDidLoad() {
@@ -37,8 +35,8 @@ class RegistrationViewController: UIViewController {
         usernameTextField.setBottomLine(borderColor: UIColor.black)
     }
     
-    func validateForm() -> Bool{
-        var formIsValid = false
+    func validateForm() {
+        SVProgressHUD.show()
         if usernameTextField.text != nil {
             SVProgressHUD.show()
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
@@ -47,30 +45,17 @@ class RegistrationViewController: UIViewController {
                 }else {
                     print("User registered successfully")
                     self.addUserToDatabase(uid: (user?.uid)!, email: self.emailTextField.text!, password: self.passwordTextField.text!, username: self.usernameTextField.text!)
+                    SVProgressHUD.dismiss()
+                    self.performSegue(withIdentifier: "dashboardSegue", sender: self)
                 }
             })
-            formIsValid = true
         }
-        print("This is formIsValid value:  \(formIsValid)")
-        return formIsValid
     }
     
     func addUserToDatabase(uid: String, email: String, password: String, username: String){
         let user = User(uid: uid, email: email, password: password, username: username)
         dbReference.child("Users/\(uid)").setValue(user.toAnyObject())
         SVProgressHUD.dismiss()
-    }
-
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "dashboardSegue"{
-            if validateForm(){
-                print("Form is valid")
-                return true
-            }else {
-                print("Form is invalid")
-            }
-        }
-        return false
     }
     
     
