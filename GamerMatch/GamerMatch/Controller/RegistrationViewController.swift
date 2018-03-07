@@ -40,11 +40,13 @@ class RegistrationViewController: UIViewController {
     func validateForm() -> Bool{
         var formIsValid = false
         if usernameTextField.text != nil {
+            SVProgressHUD.show()
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
                 if error != nil {
                     print("There was an error: \(error!)")
                 }else {
                     print("User registered successfully")
+                    self.addUserToDatabase(uid: (user?.uid)!, email: self.emailTextField.text!, password: self.passwordTextField.text!, username: self.usernameTextField.text!)
                 }
             })
             formIsValid = true
@@ -54,7 +56,9 @@ class RegistrationViewController: UIViewController {
     }
     
     func addUserToDatabase(uid: String, email: String, password: String, username: String){
-        
+        let user = User(uid: uid, email: email, password: password, username: username)
+        dbReference.child("Users/\(uid)").setValue(user.toAnyObject())
+        SVProgressHUD.dismiss()
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
