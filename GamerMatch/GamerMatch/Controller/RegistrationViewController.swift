@@ -28,11 +28,10 @@ class RegistrationViewController: UIViewController {
         // Do any additional setup after loading the view.
         signUpButton.layer.cornerRadius = 10
         signUpButton.layer.masksToBounds = true
-        
-        setupTextFields()
+    
     }
     
-    func setupTextFields(){
+     override func viewDidLayoutSubviews() {
         emailTextField.setBottomLine(borderColor: UIColor.black)
         passwordTextField.setBottomLine(borderColor: UIColor.black)
         usernameTextField.setBottomLine(borderColor: UIColor.black)
@@ -46,13 +45,16 @@ class RegistrationViewController: UIViewController {
                     print("There was an error: \(error!)")
                 }else {
                     print("User registered successfully")
-                    print(user?.uid)
                 }
             })
             formIsValid = true
         }
         print("This is formIsValid value:  \(formIsValid)")
         return formIsValid
+    }
+    
+    func addUserToDatabase(uid: String, email: String, password: String, username: String){
+        
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
