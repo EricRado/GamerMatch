@@ -14,7 +14,7 @@ pod 'Firebase/Storage'
 pod 'SVProgressHUD'
 pod 'GoogleMaps'
 pod 'SwiftyJSON'
-pod 'AlamoFire'
 pod 'MBProgressHUD'
+pod 'FontAwesome.swift'
 
 end
