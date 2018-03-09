@@ -54,8 +54,10 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
             if error != nil {
                 print("There was an error : \((error?.localizedDescription)!)")
+                SVProgressHUD.dismiss()
             }else {
                 print("Login successful")
+                
                 SVProgressHUD.dismiss()
                 self.performSegue(withIdentifier: "signinDashboardSegue", sender: self)
             }

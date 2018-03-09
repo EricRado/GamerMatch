@@ -217,6 +217,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Fdt-Jh-nrU" id="Cc1-GN-Ib1"/>
+                                    <outlet property="delegate" destination="Fdt-Jh-nrU" id="WA7-da-3xU"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -230,6 +234,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="oJq-CL-QAs"/>
                     <connections>
+                        <outlet property="chatTableView" destination="AZN-q9-iPe" id="5tI-YM-BG2"/>
                         <segue destination="fIc-Yj-YGI" kind="show" identifier="chatSegue" id="das-c4-Am8"/>
                     </connections>
                 </viewController>
