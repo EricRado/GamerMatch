@@ -16,6 +16,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     let dbRef = Database.database().reference()
     var chatIds = [String]()
     var participantIds = [[String]]()
+    var chatUsers = [ChatUserDisplay]()
     
     
     override func viewDidLoad() {
@@ -30,8 +31,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getUserChatsId(){
-        let chatsRef = dbRef.child("Users").child((Auth.auth().currentUser?.uid)!).child("chatIds")
-        chatsRef.observe(.value) { (snapshot) in
+        let userChatsRef = dbRef.child("Users").child((Auth.auth().currentUser?.uid)!).child("chatIds")
+        userChatsRef.observe(.value) { (snapshot) in
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 print("Chat id...")
                 print(child.key)
@@ -42,46 +43,43 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getParticipantsId(chatId: String){
-        let participantsRef = dbRef.child("Participants/\(chatId)").child("usersId")
+        print("This is chatId: \(chatId)")
+        let chatRef = dbRef.child("Chats").child(chatId).child("members")
+        /* COUNTTTTT */
         let count = participantIds.count
-        participantsRef.observeSingleEvent(of: .value, with: {(snapshot) in
+        chatRef.observeSingleEvent(of: .value) { (snapshot) in
             print(snapshot)
-            
-            // check if the chat is a group or 1on1 chat
-            let isGroupChat = (snapshot.childrenCount - 1) > 1
-            print("This is childCount: \(snapshot.childrenCount)")
-            print(isGroupChat)
-            self.participantIds.append([])
-            
             for child in snapshot.children.allObjects as! [DataSnapshot] {
-                print("Participant id...")
                 print(child.key)
+                self.participantIds.append([])
                 if child.key != Auth.auth().currentUser?.uid {
                     self.participantIds[count].append(child.key)
-                }
-                if !isGroupChat {
                     self.getUsernameAndPic(id: child.key)
                 }
-               
             }
-            self.chatTableView.reloadData()
-        }) { (error) in
-            print(error.localizedDescription)
+            
         }
     }
     
-    func getUsernameAndPic(id: String) -> String {
+    func getUsernameAndPic(id: String){
         var username: String = ""
-        let usernameRef = dbRef.child("Users/").child(id).child("username")
+        var avatarURL: String = ""
+       
+        let userPicURL = dbRef.child("Users/").child(id)
         
-        
-        // retrieve the username and the user avatar pic with the parameter id
-        usernameRef.observeSingleEvent(of: .value) { (snapshot) in
-            print(snapshot)
-            username = snapshot.value as! String
+        userPicURL.observeSingleEvent(of: .value) { (snapshot) in
+            // get the username and img url from the participant id
+            if let dict = snapshot.value as? [String: Any]{
+                username = (dict["username"] as? String)!
+                if let imgURL = dict["avatarURL"] as? String{
+                    avatarURL = imgURL
+                }
+                self.chatUsers.append(ChatUserDisplay(id: id, username: username, avatarURL: avatarURL))
+                print(self.chatUsers)
+            }
+            self.chatTableView.reloadData()
         }
         
-        return username
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,13 +88,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! chatTableViewCell
-        var username = ""
         
         if participantIds[indexPath.row].count >= 2 {
             print("This is a group chat...")
         }else {
             print("This is a 1on1 chat...")
-            cell.chatUsernameLabel.text = username
+            let user = chatUsers.filter({$0.id == participantIds[indexPath.row][0]})
+            cell.chatUsernameLabel.text = user[0].username 
         }
         
         return cell

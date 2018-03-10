@@ -10,11 +10,13 @@ import Foundation
 import UIKit
 
 struct ChatUserDisplay {
+    var id: String?
     var username: String?
-    var userPic: UIImage?
+    var avatarURL: String?
     
-    init(username: String, userPic: UIImage){
+    init(id: String, username: String, avatarURL: String){
+        self.id = id
         self.username = username
-        self.userPic = userPic
+        self.avatarURL = avatarURL
     }
 }
