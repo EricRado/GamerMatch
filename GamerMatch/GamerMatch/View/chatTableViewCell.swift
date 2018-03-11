@@ -18,6 +18,10 @@ class chatTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        chatUserPic.layer.masksToBounds = false
+        chatUserPic.layer.cornerRadius = chatUserPic.frame.height / 2
+        chatUserPic.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

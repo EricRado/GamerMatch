@@ -31,6 +31,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         getUserChatsId()
         
+        chatTableView.rowHeight = UITableViewAutomaticDimension
+        chatTableView.estimatedRowHeight = 105
+        
     }
     
     func getUserChatsId(){
