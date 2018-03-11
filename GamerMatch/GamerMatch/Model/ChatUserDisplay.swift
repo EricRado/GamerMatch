@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct ChatUserDisplay {
+struct ChatUserDisplay: Hashable {
     var id: String?
     var username: String?
     var avatarURL: String?
@@ -18,5 +18,14 @@ struct ChatUserDisplay {
         self.id = id
         self.username = username
         self.avatarURL = avatarURL
+    }
+    
+    var hashValue: Int {
+        return (id?.hashValue)!
+    }
+    
+    static func == (lhs: ChatUserDisplay, rhs: ChatUserDisplay) -> Bool {
+        return lhs.id == rhs.id && lhs.username == rhs.username
+            && lhs.avatarURL == rhs.avatarURL
     }
 }

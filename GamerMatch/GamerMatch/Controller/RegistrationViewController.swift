@@ -45,7 +45,6 @@ class RegistrationViewController: UIViewController {
                 }else {
                     print("User registered successfully")
                     self.addUserToDatabase(uid: (user?.uid)!, email: self.emailTextField.text!, password: self.passwordTextField.text!, username: self.usernameTextField.text!)
-                    SVProgressHUD.dismiss()
                     self.performSegue(withIdentifier: "dashboardSegue", sender: self)
                 }
             })

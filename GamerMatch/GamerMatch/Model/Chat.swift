@@ -15,9 +15,11 @@ class Chat {
     var title: String?
     var isGroupChat: Bool?
     
-    init(id: String, creatorId: String){
+    init(id: String, creatorId: String, isGroupChat: Bool, title: String){
         self.id = id
         self.creatorId = creatorId
+        self.isGroupChat = isGroupChat
+        self.title = title
     }
     
     init?(snapshot: DataSnapshot){
