@@ -257,7 +257,7 @@
         <!--Chat Selected View Controller-->
         <scene sceneID="oFj-NO-HvL">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="fIc-Yj-YGI" customClass="chatSelectedViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="fIc-Yj-YGI" customClass="ChatSelectedViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="91U-Wd-dPx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

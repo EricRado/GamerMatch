@@ -15,11 +15,19 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     let dbRef = Database.database().reference()
     
+    /* - chats - stores all of the user's chats meta data
+       - chatParticipantDict - stores chat's participants ids, keyed to the chat id
+       - chatUsers - stores all 1on1 chats participant username and avatar picture
+    */
+    
     var chats = [Chat]()
     var chatParticipantDict = [String: [String]]()
-    
-    // SET
     var chatUsers = Set<ChatUserDisplay>()
+    
+    // selected chat information indices
+    var selectedChat: Chat?
+    var selectedParticipantIds = [String]()
+    var selectedChatUser: ChatUserDisplay?
     
     
     override func viewDidLoad() {
@@ -141,7 +149,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedChatId = chats[indexPath.row].id
         
+        selectedChat = chats[indexPath.row]
+        selectedParticipantIds = chatParticipantDict[selectedChatId!]!
+    
+        // this is a 1on1 chat get user's username and avatar pic
+        if selectedParticipantIds.count == 1 {
+            let user = chatUsers.filter({$0.id == selectedParticipantIds[0]})
+            selectedChatUser = user.first
+        }
         
         performSegue(withIdentifier: "chatSegue", sender: self)
         
@@ -149,9 +166,29 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("Table view height...")
-        print(chatTableView.rowHeight)
         return chatTableView.rowHeight
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "chatSegue" {
+            let vc = segue.destination as! ChatSelectedViewController
+            
+            // if the chat is 1on1 set title for message log screen to user's
+            // username else to group chat's title
+            if let user = selectedChatUser {
+                vc.navigationItem.title = user.username
+                vc.selectedChatUser = user
+            }else {
+                vc.navigationItem.title = selectedChat?.title
+            }
+            
+            // send chat meta data and participant ids to message log screen
+            vc.chat = selectedChat
+            vc.participantIds = selectedParticipantIds
+            
+            // reset selectedChatUser
+            selectedChatUser = nil
+        }
     }
 
 
