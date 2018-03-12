@@ -31,9 +31,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         getUserChatsId()
         
-        chatTableView.rowHeight = UITableViewAutomaticDimension
-        chatTableView.estimatedRowHeight = 105
-        
     }
     
     func getUserChatsId(){
@@ -149,6 +146,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         performSegue(withIdentifier: "chatSegue", sender: self)
         
         chatTableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        print("Table view height...")
+        print(chatTableView.rowHeight)
+        return chatTableView.rowHeight
     }
 
 
