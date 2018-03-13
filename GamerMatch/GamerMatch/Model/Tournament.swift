@@ -33,6 +33,8 @@ class Tournament {
     }
     
     init?(snapshot: DataSnapshot){
+        print("RUNNING SNAPSHOT INIT")
+        print(snapshot)
         guard let dict = snapshot.value as? [String: String] else {return nil}
         
         guard let id = dict["id"] else {return nil}

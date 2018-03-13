@@ -71,7 +71,6 @@ class TournamentViewController: UIViewController {
     func getTournaments(){
         let tournamentRef = dbRef.child("Tournaments")
         tournamentRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot)
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 if !child.exists() {
                     print("Child is empty...")
@@ -79,16 +78,28 @@ class TournamentViewController: UIViewController {
                 }
                 print(child)
                 if let tournament = Tournament(snapshot: child) {
-                    print(tournament)
+                    self.tournaments.append(tournament)
+                    self.addTournamentToMap(latitude: tournament.latitude!,
+                        longitude: tournament.longitude!, name: tournament.name!,
+                        id: tournament.id!)
                 }
-                
-                self.tournaments.append(Tournament(snapshot: child)!)
-                print(self.tournaments)
             }
         }) { (error) in
             print(error.localizedDescription)
         }
     }
 
+    func addTournamentToMap(latitude: String, longitude: String, name: String, id: String) {
+        let marker: GMSMarker
+        if let latitude = Double(latitude), let longitude = Double(longitude){
+            marker = GMSMarker(position: CLLocationCoordinate2D(latitude: latitude,
+                            longitude: longitude))
+            marker.title = name
+            marker.snippet = id
+            marker.map = mapView
+        }
+        
+        
+    }
 
 }
