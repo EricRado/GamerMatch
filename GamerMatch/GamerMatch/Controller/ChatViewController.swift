@@ -24,7 +24,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var chatParticipantDict = [String: [String]]()
     var chatUsers = Set<ChatUserDisplay>()
     
-    // selected chat information indices
+    // selected chat information to pass to ChatSelectedViewController
     var selectedChat: Chat?
     var selectedParticipantIds = [String]()
     var selectedChatUser: ChatUserDisplay?
@@ -85,6 +85,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         chatMemberRef.observeSingleEvent(of: .value) { (snapshot) in
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 if child.key != Auth.auth().currentUser?.uid {
+                    
+                    /* modify so it only runs for 1on1 chats */
                     self.getUsernameAndPic(id: child.key, chatId: chatId)
                 }
             }

@@ -21,6 +21,8 @@
 		07E586F52052FDCA00023383 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F42052FDCA00023383 /* Message.swift */; };
 		07E586F720542E2C00023383 /* ChatUserDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F620542E2C00023383 /* ChatUserDisplay.swift */; };
 		07E586FB205604ED00023383 /* ChatSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586FA205604ED00023383 /* ChatSelectedViewController.swift */; };
+		07E586FD2056170600023383 /* TournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586FC2056170600023383 /* TournamentViewController.swift */; };
+		07E586FF20578FA400023383 /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586FE20578FA300023383 /* Tournament.swift */; };
 		7105DC45CB9B5E0CBF066D2E /* Pods_GamerMatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,8 @@
 		07E586F42052FDCA00023383 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		07E586F620542E2C00023383 /* ChatUserDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserDisplay.swift; sourceTree = "<group>"; };
 		07E586FA205604ED00023383 /* ChatSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectedViewController.swift; sourceTree = "<group>"; };
+		07E586FC2056170600023383 /* TournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentViewController.swift; sourceTree = "<group>"; };
+		07E586FE20578FA300023383 /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GamerMatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AF9417A7AC9D821680FE172 /* Pods-GamerMatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamerMatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GamerMatch/Pods-GamerMatch.debug.xcconfig"; sourceTree = "<group>"; };
 		FF24FBA86CEBCD1907B56494 /* Pods-GamerMatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamerMatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-GamerMatch/Pods-GamerMatch.release.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07E586CB2050E14F00023383 /* ChatViewController.swift */,
 				07E586FA205604ED00023383 /* ChatSelectedViewController.swift */,
+				07E586FC2056170600023383 /* TournamentViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -109,6 +114,7 @@
 				07E586F22052FA5700023383 /* Chat.swift */,
 				07E586F42052FDCA00023383 /* Message.swift */,
 				07E586F620542E2C00023383 /* ChatUserDisplay.swift */,
+				07E586FE20578FA300023383 /* Tournament.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -286,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07E586FF20578FA400023383 /* Tournament.swift in Sources */,
 				07E586F720542E2C00023383 /* ChatUserDisplay.swift in Sources */,
 				07E586C8205050A400023383 /* User.swift in Sources */,
 				07E586C3204F911300023383 /* RegistrationViewController.swift in Sources */,
@@ -293,6 +300,7 @@
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
 				07E586F52052FDCA00023383 /* Message.swift in Sources */,
+				07E586FD2056170600023383 /* TournamentViewController.swift in Sources */,
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
 				07E586FB205604ED00023383 /* ChatSelectedViewController.swift in Sources */,
 				07E586CE2050E85300023383 /* chatTableViewCell.swift in Sources */,
