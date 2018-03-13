@@ -42,9 +42,14 @@ class TournamentViewController: UIViewController {
     var currentLocation: CLLocation?
     var mapView: GMSMapView!
     var zoomLevel: Float = 13.0
+    
+    let dbRef = Database.database().reference()
+    var tournaments = [Tournament]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getTournaments()
         
         // setup location manager and its properties
         locationManager.delegate = self
@@ -60,6 +65,29 @@ class TournamentViewController: UIViewController {
         
         view.addSubview(mapView)
         
+        
+    }
+    
+    func getTournaments(){
+        let tournamentRef = dbRef.child("Tournaments")
+        tournamentRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                if !child.exists() {
+                    print("Child is empty...")
+                    return
+                }
+                print(child)
+                if let tournament = Tournament(snapshot: child) {
+                    print(tournament)
+                }
+                
+                self.tournaments.append(Tournament(snapshot: child)!)
+                print(self.tournaments)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
 
 
