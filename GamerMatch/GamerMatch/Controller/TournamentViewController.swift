@@ -31,9 +31,38 @@ extension TournamentViewController: CLLocationManagerDelegate {
         }
     }
     
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.stopUpdatingLocation()
         print("Error : \(error)")
+    }
+}
+
+extension TournamentViewController: GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print("Marker Id ...")
+        print(marker.markerId)
+        createAlert(title: marker.title!, id: marker.markerId)
+        return true
+    }
+    
+}
+
+struct AssociatedKeys {
+    static var toggleState: UInt8 = 0
+}
+
+extension GMSMarker {
+    var markerId: String {
+        get {
+            guard let value = objc_getAssociatedObject(self, &AssociatedKeys.toggleState) as? String else {
+                return ""
+            }
+            return value
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &AssociatedKeys.toggleState, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
     }
 }
 
@@ -44,7 +73,7 @@ class TournamentViewController: UIViewController {
     var zoomLevel: Float = 13.0
     
     let dbRef = Database.database().reference()
-    var tournaments = [Tournament]()
+    var tournamentsDict = [String: Tournament]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +90,7 @@ class TournamentViewController: UIViewController {
         
         // add the GMSMapView to the view controller's view
         mapView = GMSMapView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        mapView.delegate = self
         mapView.isMyLocationEnabled = true
         
         view.addSubview(mapView)
@@ -78,7 +108,7 @@ class TournamentViewController: UIViewController {
                 }
                 print(child)
                 if let tournament = Tournament(snapshot: child) {
-                    self.tournaments.append(tournament)
+                    self.tournamentsDict[tournament.id!] = tournament
                     self.addTournamentToMap(latitude: tournament.latitude!,
                         longitude: tournament.longitude!, name: tournament.name!,
                         id: tournament.id!)
@@ -95,11 +125,20 @@ class TournamentViewController: UIViewController {
             marker = GMSMarker(position: CLLocationCoordinate2D(latitude: latitude,
                             longitude: longitude))
             marker.title = name
-            marker.snippet = id
+            marker.markerId = id
             marker.map = mapView
         }
         
+    }
+    
+    func createAlert(title: String, id: String) {
+        let ac = UIAlertController(title: title, message: "HELLOOOO", preferredStyle: .alert)
         
+        // when more info is pressed leads to another screen, displays all of the tournament info
+        ac.addAction(UIAlertAction(title: "More Info", style: .default, handler: nil))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(ac, animated: true, completion: nil)
     }
 
 }
