@@ -16,17 +16,19 @@ extension UITextField{
         self.borderStyle = UITextBorderStyle.none
         self.backgroundColor = UIColor.clear
         
+        
         let borderLine = UIView()
         let height = 1.0
         borderLine.frame = CGRect(x: 0, y: Double(self.frame.height) - height,
                                   width: Double(self.frame.width),height: height)
-        
+        borderLine.layer.borderWidth = 2
+        borderLine.layer.borderColor = UIColor.white.cgColor
         borderLine.backgroundColor = borderColor
         self.addSubview(borderLine)
     }
 }
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var emailTextField: UITextField!
@@ -39,6 +41,16 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         signInButton.layer.cornerRadius = 10
         signInButton.layer.masksToBounds = true
+        
+        self.view.backgroundColor = UIColor(white: 0, alpha: 0.95)
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
     override func viewDidLayoutSubviews() {

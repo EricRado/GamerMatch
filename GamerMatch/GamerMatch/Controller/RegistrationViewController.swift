@@ -58,6 +58,16 @@ class RegistrationViewController: UIViewController {
     }
     
     
+    @IBAction func returnBtnPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "returnSegue", sender: self)
+    }
+    
+    
+    @IBAction func addPhotoBtnPressed(_ sender: UIButton) {
+        print("Add photo btn pressed...")
+    }
+    
+    
     @IBAction func signUpPressed(_ sender: UIButton) {
         validateForm()
     }
