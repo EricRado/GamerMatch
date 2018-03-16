@@ -10,11 +10,12 @@ import UIKit
 import Firebase
 import SVProgressHUD
 
-class RegistrationViewController: UIViewController {
+class RegistrationViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var reconfirmPasswordTextField: UITextField!
     
     @IBOutlet weak var signUpButton: UIButton!
     
@@ -26,13 +27,24 @@ class RegistrationViewController: UIViewController {
         // Do any additional setup after loading the view.
         signUpButton.layer.cornerRadius = 10
         signUpButton.layer.masksToBounds = true
+        
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.usernameTextField.delegate = self
+        self.reconfirmPasswordTextField.delegate = self
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
     
     }
     
-     override func viewDidLayoutSubviews() {
+    /* override func viewDidLayoutSubviews() {
         emailTextField.setBottomLine(borderColor: UIColor.black)
         passwordTextField.setBottomLine(borderColor: UIColor.black)
         usernameTextField.setBottomLine(borderColor: UIColor.black)
+    }*/
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
     func validateForm() {
