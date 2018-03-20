@@ -401,47 +401,65 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="VEs-Mv-NeU" secondAttribute="height" multiplier="1:1" id="zhe-Yx-Fpq"/>
                                                 </constraints>
-                                                <state key="normal" image="nba2k18Logo"/>
+                                                <state key="normal" image="nba2k18"/>
+                                                <connections>
+                                                    <action selector="gameBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="26A-2r-hQE"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H9a-BR-Dbh" userLabel="Game2Btn">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H9a-BR-Dbh" userLabel="Game2Btn">
                                                 <rect key="frame" x="105" y="0.0" width="70" height="70"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="H9a-BR-Dbh" secondAttribute="height" multiplier="1:1" id="4HJ-Qu-xTk"/>
                                                 </constraints>
-                                                <state key="normal" image="overwatchLogo"/>
+                                                <state key="normal" image="overwatch"/>
+                                                <connections>
+                                                    <action selector="gameBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="c9U-fe-arv"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UD4-Bx-2km" userLabel="Game3Btn">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UD4-Bx-2km" userLabel="Game3Btn">
                                                 <rect key="frame" x="210" y="0.0" width="70" height="70"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="UD4-Bx-2km" secondAttribute="height" multiplier="1:1" id="Dmc-Qh-BB7"/>
                                                 </constraints>
-                                                <state key="normal" image="fortniteLogo"/>
+                                                <state key="normal" image="fortnite"/>
+                                                <connections>
+                                                    <action selector="gameBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="ahy-SI-s7i"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="xS0-CB-psH" userLabel="row2Games">
                                         <rect key="frame" x="0.0" y="80" width="280" height="70"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLO-cT-dWD" userLabel="Game4Btn">
+                                            <button opaque="NO" tag="3" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLO-cT-dWD" userLabel="Game4Btn">
                                                 <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="hLO-cT-dWD" secondAttribute="height" multiplier="1:1" id="cW0-9j-Vfp"/>
                                                 </constraints>
-                                                <state key="normal" image="battlefield1Logo"/>
+                                                <state key="normal" image="battlefield1"/>
+                                                <connections>
+                                                    <action selector="gameBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="HG8-e4-dAL"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7h-FB-N6K" userLabel="Game5Btn">
+                                            <button opaque="NO" tag="4" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7h-FB-N6K" userLabel="Game5Btn">
                                                 <rect key="frame" x="105" y="0.0" width="70" height="70"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="l7h-FB-N6K" secondAttribute="height" multiplier="1:1" priority="999" id="C8C-MQ-4uG"/>
                                                 </constraints>
-                                                <state key="normal" image="halo5Logo"/>
+                                                <state key="normal" image="halo5"/>
+                                                <connections>
+                                                    <action selector="gameBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="rVZ-bS-eVa"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Rt-ux-MrR" userLabel="Game6Btn">
+                                            <button opaque="NO" tag="5" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Rt-ux-MrR" userLabel="Game6Btn">
                                                 <rect key="frame" x="210" y="0.0" width="70" height="70"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="6Rt-ux-MrR" secondAttribute="height" multiplier="1:1" id="jef-PF-70p"/>
                                                 </constraints>
-                                                <state key="normal" image="leagueOfLegendsLogo"/>
+                                                <state key="normal" image="leagueOfLegends"/>
+                                                <connections>
+                                                    <action selector="gameBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="fft-dS-zre"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -701,18 +719,18 @@
         <image name="RegisterBtn" width="273" height="40"/>
         <image name="Registration" width="199" height="31"/>
         <image name="SignInBtn" width="273" height="40"/>
-        <image name="battlefield1Logo" width="70" height="24"/>
+        <image name="battlefield1" width="70" height="24"/>
         <image name="chat" width="30" height="30"/>
         <image name="email" width="50" height="40"/>
         <image name="findGamerBG" width="375" height="554"/>
-        <image name="fortniteLogo" width="66" height="57"/>
+        <image name="fortnite" width="66" height="57"/>
         <image name="game_controller" width="30" height="30"/>
         <image name="gamerMatchBG" width="375" height="667"/>
-        <image name="halo5Logo" width="70" height="70"/>
-        <image name="leagueOfLegendsLogo" width="68" height="40"/>
-        <image name="nba2k18Logo" width="62" height="40"/>
+        <image name="halo5" width="70" height="70"/>
+        <image name="leagueOfLegends" width="68" height="40"/>
+        <image name="nba2k18" width="62" height="40"/>
         <image name="noAvatarImg" width="500" height="500"/>
-        <image name="overwatchLogo" width="70" height="70"/>
+        <image name="overwatch" width="70" height="70"/>
         <image name="password" width="50" height="40"/>
         <image name="pc" width="60" height="60"/>
         <image name="playstation" width="58" height="58"/>
