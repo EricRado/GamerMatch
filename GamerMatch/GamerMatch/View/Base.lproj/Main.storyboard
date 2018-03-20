@@ -33,17 +33,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8V-Ne-apT" userLabel="middleContainer">
                                 <rect key="frame" x="0.0" y="333.5" width="375" height="73.5"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tfz-3N-ISO">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tfz-3N-ISO">
                                         <rect key="frame" x="51" y="0.0" width="273" height="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eBm-MF-ufF">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eBm-MF-ufF">
                                         <rect key="frame" x="51" y="53.5" width="273" height="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
@@ -129,8 +129,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="emailTextField" destination="eBm-MF-ufF" id="PXf-ev-aXY"/>
-                        <outlet property="passwordTextField" destination="tfz-3N-ISO" id="wQ9-sM-7YO"/>
+                        <outlet property="emailTextField" destination="tfz-3N-ISO" id="cQv-eA-HGD"/>
+                        <outlet property="passwordTextField" destination="eBm-MF-ufF" id="VPy-r5-7k1"/>
                         <outlet property="signInButton" destination="h0x-Bx-3ku" id="DhL-7Q-Qg7"/>
                         <segue destination="euJ-xH-Wd8" kind="show" identifier="signinDashboardSegue" id="p1K-8C-PN8"/>
                     </connections>
@@ -302,14 +302,26 @@
         <!--Find Gamer-->
         <scene sceneID="lmF-aY-ziP">
             <objects>
-                <viewController id="Am9-0a-jBp" sceneMemberID="viewController">
+                <viewController id="Am9-0a-jBp" customClass="FindGamerViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GyX-c5-3jL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="findGamerBG" translatesAutoresizingMaskIntoConstraints="NO" id="3z2-ze-IJU">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iBI-rg-ugq">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="findGamerBG" translatesAutoresizingMaskIntoConstraints="NO" id="3z2-ze-IJU">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="3z2-ze-IJU" firstAttribute="top" secondItem="iBI-rg-ugq" secondAttribute="top" id="AQ3-mi-A8Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="3z2-ze-IJU" secondAttribute="trailing" id="pG7-Wn-K2x"/>
+                                    <constraint firstItem="3z2-ze-IJU" firstAttribute="leading" secondItem="iBI-rg-ugq" secondAttribute="leading" id="vCg-wg-Myh"/>
+                                    <constraint firstAttribute="bottom" secondItem="3z2-ze-IJU" secondAttribute="bottom" id="xra-Cr-hgr"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0do-Ef-5f0" userLabel="topContainer">
                                 <rect key="frame" x="0.0" y="64" width="375" height="55"/>
                                 <subviews>
@@ -327,26 +339,39 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="pde-Xs-E1y" userLabel="consoles">
                                 <rect key="frame" x="50" y="129" width="275" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OC8-Yt-Tlz" userLabel="Xbox">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OC8-Yt-Tlz" userLabel="Xbox">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="OC8-Yt-Tlz" secondAttribute="height" multiplier="1:1" id="hhg-Pd-VPj"/>
                                         </constraints>
                                         <state key="normal" image="xbox"/>
+                                        <state key="selected" image="selectedXbox"/>
+                                        <state key="highlighted" image="xbox"/>
+                                        <connections>
+                                            <action selector="consoleBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="oD7-PT-GHn"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCc-Jc-tyG" userLabel="Playstation">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCc-Jc-tyG" userLabel="Playstation">
                                         <rect key="frame" x="107.5" y="0.0" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="OCc-Jc-tyG" secondAttribute="height" multiplier="1:1" id="Jq7-Qr-Cl1"/>
                                         </constraints>
                                         <state key="normal" image="playstation"/>
+                                        <state key="selected" image="selectedPlaystation"/>
+                                        <connections>
+                                            <action selector="consoleBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="QoY-0E-P49"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" restorationIdentifier="pc" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbS-Mf-Zqc" userLabel="PC">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" restorationIdentifier="pc" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbS-Mf-Zqc" userLabel="PC">
                                         <rect key="frame" x="215" y="0.0" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="cbS-Mf-Zqc" secondAttribute="height" multiplier="1:1" id="MhT-w4-c0w"/>
                                         </constraints>
                                         <state key="normal" image="pc"/>
+                                        <state key="selected" image="selectedPC"/>
+                                        <connections>
+                                            <action selector="consoleBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="Qq0-av-zDo"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -439,29 +464,39 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="H8N-gP-IJR" firstAttribute="trailing" secondItem="3z2-ze-IJU" secondAttribute="trailing" id="3zh-py-5t0"/>
                             <constraint firstItem="pde-Xs-E1y" firstAttribute="leading" secondItem="H8N-gP-IJR" secondAttribute="leading" constant="50" id="7lF-BO-7E3"/>
+                            <constraint firstItem="iBI-rg-ugq" firstAttribute="top" secondItem="H8N-gP-IJR" secondAttribute="top" id="7p1-gr-5qz"/>
                             <constraint firstItem="H8N-gP-IJR" firstAttribute="trailing" secondItem="pde-Xs-E1y" secondAttribute="trailing" constant="50" id="8zV-Zi-lfd"/>
+                            <constraint firstItem="H8N-gP-IJR" firstAttribute="trailing" secondItem="iBI-rg-ugq" secondAttribute="trailing" id="FJL-5v-uAQ"/>
                             <constraint firstItem="cMa-gw-GUJ" firstAttribute="trailing" secondItem="H8N-gP-IJR" secondAttribute="trailing" id="J3J-zB-Adp"/>
                             <constraint firstItem="0do-Ef-5f0" firstAttribute="leading" secondItem="H8N-gP-IJR" secondAttribute="leading" id="L8x-F0-GOM"/>
                             <constraint firstItem="H8N-gP-IJR" firstAttribute="trailing" secondItem="8Pc-dp-Ydi" secondAttribute="trailing" constant="47" id="Mdz-OL-vqK"/>
                             <constraint firstItem="pde-Xs-E1y" firstAttribute="top" secondItem="0do-Ef-5f0" secondAttribute="bottom" constant="10" id="PlZ-kT-7Mg"/>
-                            <constraint firstItem="3z2-ze-IJU" firstAttribute="top" secondItem="H8N-gP-IJR" secondAttribute="top" id="Qzz-dB-HYj"/>
                             <constraint firstItem="8Pc-dp-Ydi" firstAttribute="top" secondItem="K3L-dc-v2T" secondAttribute="bottom" constant="14" id="abZ-0s-12w"/>
                             <constraint firstItem="K3L-dc-v2T" firstAttribute="leading" secondItem="H8N-gP-IJR" secondAttribute="leading" id="ao8-LB-ZrD"/>
                             <constraint firstItem="H8N-gP-IJR" firstAttribute="trailing" secondItem="K3L-dc-v2T" secondAttribute="trailing" id="e9A-8O-AeZ"/>
                             <constraint firstItem="0do-Ef-5f0" firstAttribute="top" secondItem="H8N-gP-IJR" secondAttribute="top" id="fJD-d6-OzF"/>
                             <constraint firstItem="8Pc-dp-Ydi" firstAttribute="leading" secondItem="H8N-gP-IJR" secondAttribute="leading" constant="48" id="gnS-mt-d1E"/>
                             <constraint firstItem="cMa-gw-GUJ" firstAttribute="leading" secondItem="H8N-gP-IJR" secondAttribute="leading" id="mje-Ws-cJM"/>
-                            <constraint firstItem="3z2-ze-IJU" firstAttribute="leading" secondItem="H8N-gP-IJR" secondAttribute="leading" id="moh-ni-ypg"/>
+                            <constraint firstItem="iBI-rg-ugq" firstAttribute="leading" secondItem="H8N-gP-IJR" secondAttribute="leading" id="pWd-GP-XYL"/>
                             <constraint firstItem="cMa-gw-GUJ" firstAttribute="top" secondItem="8Pc-dp-Ydi" secondAttribute="bottom" constant="10" id="uUn-k5-Xxk"/>
                             <constraint firstItem="K3L-dc-v2T" firstAttribute="top" secondItem="pde-Xs-E1y" secondAttribute="bottom" constant="8" id="v1s-6I-wkG"/>
                             <constraint firstItem="H8N-gP-IJR" firstAttribute="trailing" secondItem="0do-Ef-5f0" secondAttribute="trailing" id="v8U-dv-01R"/>
-                            <constraint firstItem="H8N-gP-IJR" firstAttribute="bottom" secondItem="3z2-ze-IJU" secondAttribute="bottom" id="xt8-ZN-q30"/>
+                            <constraint firstItem="iBI-rg-ugq" firstAttribute="bottom" secondItem="H8N-gP-IJR" secondAttribute="bottom" id="x0L-F7-o6U"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="H8N-gP-IJR"/>
                     </view>
                     <navigationItem key="navigationItem" title="Find Gamer" id="b0k-6M-NNp"/>
+                    <connections>
+                        <outlet property="bottomText" destination="BiZ-KP-hAT" id="WvX-7e-pXY"/>
+                        <outlet property="middleText" destination="njm-wq-spE" id="L7O-9Q-iUB"/>
+                        <outletCollection property="gameBtnsArr" destination="VEs-Mv-NeU" collectionClass="NSMutableArray" id="9J4-Lt-UY2"/>
+                        <outletCollection property="gameBtnsArr" destination="H9a-BR-Dbh" collectionClass="NSMutableArray" id="oNt-UF-sph"/>
+                        <outletCollection property="gameBtnsArr" destination="UD4-Bx-2km" collectionClass="NSMutableArray" id="1H9-O2-4kx"/>
+                        <outletCollection property="gameBtnsArr" destination="hLO-cT-dWD" collectionClass="NSMutableArray" id="MYF-Zr-63n"/>
+                        <outletCollection property="gameBtnsArr" destination="l7h-FB-N6K" collectionClass="NSMutableArray" id="1EG-RS-RYN"/>
+                        <outletCollection property="gameBtnsArr" destination="6Rt-ux-MrR" collectionClass="NSMutableArray" id="Chk-ha-4ty"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rSD-LB-xvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -681,6 +716,9 @@
         <image name="password" width="50" height="40"/>
         <image name="pc" width="60" height="60"/>
         <image name="playstation" width="58" height="58"/>
+        <image name="selectedPC" width="60" height="60"/>
+        <image name="selectedPlaystation" width="58" height="58"/>
+        <image name="selectedXbox" width="60" height="60"/>
         <image name="textBottom" width="281" height="44"/>
         <image name="textFieldBG" width="223" height="40"/>
         <image name="textMiddle" width="293" height="45"/>
@@ -690,6 +728,6 @@
         <image name="xbox" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dSy-8B-ZhX"/>
+        <segue reference="p1K-8C-PN8"/>
     </inferredMetricsTieBreakers>
 </document>

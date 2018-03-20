@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927F7205C7046005B0EAF /* FindGamerViewController.swift */; };
+		070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927F920608CDF005B0EAF /* VideoGame.swift */; };
 		07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586AE204F8F7500023383 /* AppDelegate.swift */; };
 		07E586B4204F8F7600023383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B2204F8F7600023383 /* Main.storyboard */; };
 		07E586B6204F8F7600023383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B5204F8F7600023383 /* Assets.xcassets */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		070927F7205C7046005B0EAF /* FindGamerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGamerViewController.swift; sourceTree = "<group>"; };
+		070927F920608CDF005B0EAF /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		07E586AB204F8F7500023383 /* GamerMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamerMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E586AE204F8F7500023383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07E586B3204F8F7600023383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 				07E586CB2050E14F00023383 /* ChatViewController.swift */,
 				07E586FA205604ED00023383 /* ChatSelectedViewController.swift */,
 				07E586FC2056170600023383 /* TournamentViewController.swift */,
+				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -115,6 +120,7 @@
 				07E586F42052FDCA00023383 /* Message.swift */,
 				07E586F620542E2C00023383 /* ChatUserDisplay.swift */,
 				07E586FE20578FA300023383 /* Tournament.swift */,
+				070927F920608CDF005B0EAF /* VideoGame.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -300,6 +306,8 @@
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
 				07E586F52052FDCA00023383 /* Message.swift in Sources */,
+				070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */,
+				070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */,
 				07E586FD2056170600023383 /* TournamentViewController.swift in Sources */,
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
 				07E586FB205604ED00023383 /* ChatSelectedViewController.swift in Sources */,
