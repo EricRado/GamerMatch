@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-
-
 struct VideoGame {
     var title: String?
     var notSelectedImage:UIImage?
