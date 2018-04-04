@@ -135,18 +135,31 @@ class FindGamerViewController: UIViewController {
     }
     
     @IBAction func gameBtnPressed(_ sender: UIButton) {
-        print("\(gamesCurrentlyDisplayed[sender.tag].title!) was selected")
-        bottomText.isHidden = false
         let gameChoice = gamesCurrentlyDisplayed[sender.tag].title!
+        print("\(gameChoice) was selected")
+        sender.isSelected = true
+        
         switch gameChoice {
         case "overwatch", "battlefield1", "nba2k18", "leagueOfLegends":
+            bottomText.isHidden = false
             displayRoleBtns(gameChoice: gameChoice)
         default:
             print("Create an alert to start query search...")
+            createAlert(btnTag: sender.tag)
+            
         }
         
-        bottomText.isHidden = false
-        
+    }
+    
+    func createAlert(btnTag: Int) {
+        let ac = UIAlertController(title: "Request", message: "Search for gamer...", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Search", style: .default){ action in
+            print("Segue to new search result screen...")
+        })
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel){ action in
+            self.gameBtnsArr[btnTag].isSelected = false
+        })
+        self.present(ac, animated: true, completion: nil)
     }
     
     func displayRoleBtns(gameChoice: String){
@@ -167,7 +180,10 @@ class FindGamerViewController: UIViewController {
             return
         }
         var counter = 0
+        print(videoGameRoles)
         for role in videoGameRoles {
+            print("role...")
+            print(role)
             roleBtnsArr[counter].setImage(role.roleImg, for: .normal)
             roleBtnsArr[counter].setImage(role.selectedRoleImg, for: .selected)
             roleBtnsArr[counter].isHidden = false
