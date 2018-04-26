@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -559,7 +554,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="H8N-gP-IJR"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Find Gamer" id="b0k-6M-NNp"/>
+                    <navigationItem key="navigationItem" title="Find Gamer" id="b0k-6M-NNp">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="jTJ-mI-JwU"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="bottomText" destination="BiZ-KP-hAT" id="WvX-7e-pXY"/>
                         <outlet property="middleText" destination="njm-wq-spE" id="L7O-9Q-iUB"/>
@@ -655,7 +652,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QQ3-2R-b5I"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Chat" id="oJq-CL-QAs"/>
+                    <navigationItem key="navigationItem" title="Chat" id="oJq-CL-QAs">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="GcO-sY-hcI"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="chatTableView" destination="AZN-q9-iPe" id="5tI-YM-BG2"/>
                         <segue destination="fIc-Yj-YGI" kind="show" identifier="chatSegue" id="das-c4-Am8"/>
@@ -675,7 +674,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="0us-RO-kBy"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Tournament" id="1gU-Um-ulg"/>
+                    <navigationItem key="navigationItem" title="Tournament" id="1gU-Um-ulg">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="WMp-wt-ccE"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AeK-Df-o0V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -696,12 +697,13 @@
             </objects>
             <point key="canvasLocation" x="4188" y="779"/>
         </scene>
-        <!--Find Gamer-->
+        <!--Item-->
         <scene sceneID="Q0w-Eh-l8m">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WUy-0d-4qX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Find Gamer" image="game_controller" selectedImage="game_controller" id="yvf-PB-R43"/>
+                    <tabBarItem key="tabBarItem" title="Item" id="8pz-sA-wLb"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TfZ-Bc-Vp2">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -787,10 +789,10 @@
         <image name="email" width="50" height="40"/>
         <image name="findGamerBG" width="375" height="554"/>
         <image name="fortnite" width="66" height="57"/>
-        <image name="game_controller" width="30" height="30"/>
         <image name="gamerMatchBG" width="375" height="667"/>
         <image name="halo5" width="70" height="70"/>
         <image name="leagueOfLegends" width="68" height="40"/>
+        <image name="menu" width="30" height="30"/>
         <image name="nba2k18" width="62" height="40"/>
         <image name="noAvatarImg" width="500" height="500"/>
         <image name="offenseOverwatchRole" width="70" height="70"/>

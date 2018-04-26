@@ -194,5 +194,6 @@ class FindGamerViewController: UIViewController {
     @IBAction func roleBtnPressed(_ sender: UIButton){
         
     }
+    
 
 }
