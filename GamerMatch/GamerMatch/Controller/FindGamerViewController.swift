@@ -8,6 +8,26 @@
 
 import UIKit
 
+extension FindGamerViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PresentMenuAnimator()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissMenuAnimator()
+    }
+    
+    /* indicate that the dismiss transition is going to be interactive,
+       but only if the user is panning */
+    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.shouldFinish ? interactor : nil
+    }
+}
+
 class FindGamerViewController: UIViewController {
     
     @IBOutlet var consoleBtnsArr: [UIButton]!
@@ -27,6 +47,8 @@ class FindGamerViewController: UIViewController {
     
     // stores video game roles based on selected game
     var videoGameRoles = [VideoGameRole]()
+    
+    var interactor = Interactor()
     
     
     override func viewDidLoad() {
@@ -195,5 +217,29 @@ class FindGamerViewController: UIViewController {
         
     }
     
+    @IBAction func openMenu(sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "openMenu", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationViewController = segue.destination as? SideMenuViewController {
+            destinationViewController.transitioningDelegate = self
+            
+            // pass the interactor object forward
+            destinationViewController.interactor = interactor
+        }
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

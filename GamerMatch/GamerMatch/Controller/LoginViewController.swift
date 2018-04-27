@@ -72,7 +72,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 print("Login successful")
                 
                 SVProgressHUD.dismiss()
-                self.storyboard?.instantiateViewController(withIdentifier: "ContainerVC")
                 self.performSegue(withIdentifier: "signinDashboardSegue", sender: self)
             }
         }

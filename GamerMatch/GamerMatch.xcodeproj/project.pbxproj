@@ -11,6 +11,10 @@
 		070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927F920608CDF005B0EAF /* VideoGame.swift */; };
 		070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927FB20619FC5005B0EAF /* VideoGameRole.swift */; };
 		07C07F88209268C30005494D /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F87209268C30005494D /* Interactor.swift */; };
+		07C07F8A20926FAB0005494D /* PresentMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8920926FAB0005494D /* PresentMenuAnimator.swift */; };
+		07C07F8C209272B50005494D /* DismissMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8B209272B50005494D /* DismissMenuAnimator.swift */; };
+		07C07F8E209274D60005494D /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8D209274D60005494D /* SideMenuViewController.swift */; };
+		07C07F90209274EF0005494D /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8F209274EF0005494D /* SideMenuTableViewCell.swift */; };
 		07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586AE204F8F7500023383 /* AppDelegate.swift */; };
 		07E586B4204F8F7600023383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B2204F8F7600023383 /* Main.storyboard */; };
 		07E586B6204F8F7600023383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B5204F8F7600023383 /* Assets.xcassets */; };
@@ -36,6 +40,10 @@
 		070927F920608CDF005B0EAF /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		070927FB20619FC5005B0EAF /* VideoGameRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameRole.swift; sourceTree = "<group>"; };
 		07C07F87209268C30005494D /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
+		07C07F8920926FAB0005494D /* PresentMenuAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentMenuAnimator.swift; sourceTree = "<group>"; };
+		07C07F8B209272B50005494D /* DismissMenuAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissMenuAnimator.swift; sourceTree = "<group>"; };
+		07C07F8D209274D60005494D /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		07C07F8F209274EF0005494D /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		07E586AB204F8F7500023383 /* GamerMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamerMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E586AE204F8F7500023383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07E586B3204F8F7600023383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -147,6 +155,10 @@
 			children = (
 				07E99B032092626F00892E73 /* MenuHelper.swift */,
 				07C07F87209268C30005494D /* Interactor.swift */,
+				07C07F8920926FAB0005494D /* PresentMenuAnimator.swift */,
+				07C07F8B209272B50005494D /* DismissMenuAnimator.swift */,
+				07C07F8D209274D60005494D /* SideMenuViewController.swift */,
+				07C07F8F209274EF0005494D /* SideMenuTableViewCell.swift */,
 			);
 			path = SideMenu;
 			sourceTree = "<group>";
@@ -323,6 +335,7 @@
 				07E586F32052FA5700023383 /* Chat.swift in Sources */,
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
+				07C07F8E209274D60005494D /* SideMenuViewController.swift in Sources */,
 				07E586F52052FDCA00023383 /* Message.swift in Sources */,
 				070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */,
 				070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */,
@@ -330,6 +343,9 @@
 				07C07F88209268C30005494D /* Interactor.swift in Sources */,
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
 				07E586FB205604ED00023383 /* ChatSelectedViewController.swift in Sources */,
+				07C07F8A20926FAB0005494D /* PresentMenuAnimator.swift in Sources */,
+				07C07F8C209272B50005494D /* DismissMenuAnimator.swift in Sources */,
+				07C07F90209274EF0005494D /* SideMenuTableViewCell.swift in Sources */,
 				070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */,
 				07E586CE2050E85300023383 /* chatTableViewCell.swift in Sources */,
 			);
