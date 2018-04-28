@@ -15,6 +15,7 @@
 		07C07F8C209272B50005494D /* DismissMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8B209272B50005494D /* DismissMenuAnimator.swift */; };
 		07C07F8E209274D60005494D /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8D209274D60005494D /* SideMenuViewController.swift */; };
 		07C07F90209274EF0005494D /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8F209274EF0005494D /* SideMenuTableViewCell.swift */; };
+		07C982F22093FA41007B46BB /* SideMenuTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F12093FA41007B46BB /* SideMenuTopTableViewCell.swift */; };
 		07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586AE204F8F7500023383 /* AppDelegate.swift */; };
 		07E586B4204F8F7600023383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B2204F8F7600023383 /* Main.storyboard */; };
 		07E586B6204F8F7600023383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B5204F8F7600023383 /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 		07C07F8B209272B50005494D /* DismissMenuAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissMenuAnimator.swift; sourceTree = "<group>"; };
 		07C07F8D209274D60005494D /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		07C07F8F209274EF0005494D /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
+		07C982F12093FA41007B46BB /* SideMenuTopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTopTableViewCell.swift; sourceTree = "<group>"; };
 		07E586AB204F8F7500023383 /* GamerMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamerMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E586AE204F8F7500023383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07E586B3204F8F7600023383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				07C07F8B209272B50005494D /* DismissMenuAnimator.swift */,
 				07C07F8D209274D60005494D /* SideMenuViewController.swift */,
 				07C07F8F209274EF0005494D /* SideMenuTableViewCell.swift */,
+				07C982F12093FA41007B46BB /* SideMenuTopTableViewCell.swift */,
 			);
 			path = SideMenu;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
 				07E586FB205604ED00023383 /* ChatSelectedViewController.swift in Sources */,
 				07C07F8A20926FAB0005494D /* PresentMenuAnimator.swift in Sources */,
+				07C982F22093FA41007B46BB /* SideMenuTopTableViewCell.swift in Sources */,
 				07C07F8C209272B50005494D /* DismissMenuAnimator.swift in Sources */,
 				07C07F90209274EF0005494D /* SideMenuTableViewCell.swift in Sources */,
 				070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */,

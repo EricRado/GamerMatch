@@ -1,16 +1,16 @@
 //
-//  SideMenuTableViewCell.swift
+//  SideMenuTopTableViewCell.swift
 //  GamerMatch
 //
-//  Created by Eric Rado on 4/26/18.
+//  Created by Eric Rado on 4/27/18.
 //  Copyright © 2018 Eric Rado. All rights reserved.
 //
 
 import UIKit
 
-class SideMenuTableViewCell: UITableViewCell {
-    @IBOutlet weak var iconNameLabel: UILabel!
-    @IBOutlet weak var iconImage: UIImageView!
+class SideMenuTopTableViewCell: UITableViewCell {
+    @IBOutlet weak var profileImg: UIImageView!
+    @IBOutlet weak var profileNameLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

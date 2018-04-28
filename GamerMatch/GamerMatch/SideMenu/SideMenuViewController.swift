@@ -8,18 +8,41 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var interactor: Interactor? = nil
+    var iconNameArray = [String]()
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        iconNameArray = ["top","Profile","Settings", "Logout"]
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return iconNameArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = SideMenuTableViewCell()
-        return cell
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "profilePicCell") as! SideMenuTopTableViewCell
+            //cell.profileNameLabel = Auth.auth().currentUser?.uid
+            return cell
+        }else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "optionsCell") as! SideMenuTableViewCell
+            cell.iconNameLabel.text = iconNameArray[indexPath.row]
+            return cell
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return view.bounds.height * 0.3
+        }
+        return view.bounds.height * 0.08
     }
     
     @IBAction func closeMenu(sender: UIButton) {
