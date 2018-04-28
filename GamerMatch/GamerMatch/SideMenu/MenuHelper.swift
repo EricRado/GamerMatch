@@ -59,8 +59,8 @@ struct MenuHelper {
             return CGFloat(positiveMovementOnAxisPercent)
             
         case .Left, .Up:
-            positiveMovementOnAxis = fmaxf(Float(movementOnAxis), 0.0)
-            positiveMovementOnAxisPercent = fminf(positiveMovementOnAxis, -1.0)
+            positiveMovementOnAxis = fminf(Float(movementOnAxis), 0.0)
+            positiveMovementOnAxisPercent = fmaxf(positiveMovementOnAxis, -1.0)
             return CGFloat(positiveMovementOnAxisPercent)
         }
     }

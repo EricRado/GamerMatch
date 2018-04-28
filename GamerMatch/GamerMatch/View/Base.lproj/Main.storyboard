@@ -534,6 +534,7 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="3z2-ze-IJU" firstAttribute="bottom" secondItem="H8N-gP-IJR" secondAttribute="bottom" id="1zJ-Yy-He5"/>
                             <constraint firstItem="cMa-gw-GUJ" firstAttribute="top" secondItem="K3L-dc-v2T" secondAttribute="bottom" id="6xJ-Up-Jig"/>
@@ -553,6 +554,9 @@
                             <constraint firstItem="0do-Ef-5f0" firstAttribute="leading" secondItem="H8N-gP-IJR" secondAttribute="leading" id="tYc-2h-JwE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="H8N-gP-IJR"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="5zq-nK-S3y" appends="YES" id="vC1-3b-7Cd"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Find Gamer" id="b0k-6M-NNp">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="jTJ-mI-JwU">
@@ -581,13 +585,19 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rSD-LB-xvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="5zq-nK-S3y">
+                    <rectEdge key="edges" left="YES"/>
+                    <connections>
+                        <action selector="edgePanGestureWithSender:" destination="Am9-0a-jBp" id="k24-Gv-S97"/>
+                    </connections>
+                </screenEdgePanGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3252" y="31.934032983508249"/>
         </scene>
-        <!--View Controller-->
+        <!--Side Menu View Controller-->
         <scene sceneID="2Qy-A4-Jfg">
             <objects>
-                <viewController id="28v-gz-Ddt" sceneMemberID="viewController">
+                <viewController id="28v-gz-Ddt" customClass="SideMenuViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aXF-E9-93P">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -639,6 +649,11 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nE6-AQ-Sxe">
                                 <rect key="frame" x="300" y="0.0" width="75" height="667"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <action selector="closeMenuWithSender:" destination="28v-gz-Ddt" eventType="touchUpInside" id="9FT-yc-Xa2"/>
+                                    <outletCollection property="gestureRecognizers" destination="Qzq-j1-zPQ" appends="YES" id="Y9u-KD-cUF"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -656,6 +671,11 @@
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UXK-i7-pR8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Qzq-j1-zPQ">
+                    <connections>
+                        <action selector="handleGestureWithSender:" destination="28v-gz-Ddt" id="0e5-J2-TaO"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4228" y="-174.06296851574214"/>
         </scene>

@@ -221,6 +221,16 @@ class FindGamerViewController: UIViewController {
         performSegue(withIdentifier: "openMenu", sender: nil)
     }
     
+    @IBAction func edgePanGesture(sender: UIScreenEdgePanGestureRecognizer) {
+        let translation = sender.translation(in: view)
+        
+        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Right)
+        
+        MenuHelper.mapGestureStateToInteractor(gestureState: sender.state, progress: progress, interactor: interactor) {
+            self.performSegue(withIdentifier: "openMenu", sender: nil)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationViewController = segue.destination as? SideMenuViewController {
             destinationViewController.transitioningDelegate = self

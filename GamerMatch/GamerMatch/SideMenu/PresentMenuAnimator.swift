@@ -32,6 +32,7 @@ extension PresentMenuAnimator: UIViewControllerAnimatedTransitioning {
         snapshot?.isUserInteractionEnabled = false
         snapshot?.layer.shadowOpacity = 0.7
         containerView.insertSubview(snapshot!, aboveSubview: toVC!.view)
+        fromVC?.view.isHidden = true
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             snapshot?.center.x += UIScreen.main.bounds.width * MenuHelper.menuWidth

@@ -22,5 +22,22 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    @IBAction func closeMenu(sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func handleGesture(sender: UIPanGestureRecognizer) {
+        // you use translation(in: view) to get the pan gesture coordinates
+        let translation = sender.translation(in: view)
+        
+        // using MenuHelper's calculateProgress() method, you convert the coordinates
+        // into progress in a specific direction
+        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Left)
+        
+        // does the work of syncing the gesture state with the interactive translation
+        MenuHelper.mapGestureStateToInteractor(gestureState: sender.state, progress: progress, interactor: interactor) {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
     
 }
