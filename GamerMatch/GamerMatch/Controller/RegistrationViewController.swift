@@ -64,8 +64,8 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
     
     func addUserToDatabase(uid: String, email: String, password: String, username: String){
-        let user = User(uid: uid, email: email, password: password, username: username)
-        dbReference.child("Users/\(uid)").setValue(user.toAnyObject())
+        //let user = User(uid: uid, email: email, password: password, username: username)
+        //dbReference.child("Users/\(uid)").setValue(user.toAnyObject())
         SVProgressHUD.dismiss()
     }
     

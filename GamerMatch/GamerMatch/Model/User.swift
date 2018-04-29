@@ -23,7 +23,7 @@ extension String {
     }
 }
 
-class User {
+final class User {
     var uid: String?
     var email: String?
     var password: String?
@@ -31,27 +31,22 @@ class User {
     var bio: String?
     var isActive: Bool?
     var avatarURL: String?
+    var userImg: UIImage?
     
-    init(uid: String, email: String, password: String, username: String){
-        self.uid = uid
-        self.email = email
-        self.password = password
-        self.username = username
-        self.bio = ""
-        self.isActive = true
-        self.avatarURL = ""
-    }
+    static var onlineUser = User()
+    private var dbRef = Database.database().reference()
     
-    init? (snapshot: DataSnapshot){
-        guard let dict = snapshot.value as? [String: String] else {return}
-        
-        guard let uid = dict["uid"] else {return nil}
-        guard let email = dict["email"] else {return nil}
-        guard let password = dict["password"] else {return nil}
-        guard let username = dict["username"] else {return nil}
-        guard let bio = dict["bio"] else {return nil}
-        guard let isActive = dict["isActive"] else {return nil}
-        guard let avatarURL = dict["avatarURL"] else {return nil}
+    private init(){}
+    
+    private init? (snapshot: DataSnapshot){
+        guard let dict = snapshot.value as? [String: Any] else {return}
+        guard let uid = dict["uid"] as! String? else {return nil}
+        guard let email = dict["email"] as! String? else {return nil}
+        guard let password = dict["password"] as! String? else {return nil}
+        guard let username = dict["username"] as! String? else {return nil}
+        guard let bio = dict["bio"] as! String? else {return nil}
+        guard let isActive = dict["isActive"] as! String? else {return nil}
+        guard let avatarURL = dict["avatarURL"] as! String? else {return nil}
         
         self.uid = uid
         self.email = email
@@ -65,6 +60,17 @@ class User {
     func toAnyObject() -> [AnyHashable: Any] {
         return ["uid": uid!, "email": email!, "password": password!,
                 "username": username!, "bio": bio!, "isActive": String(isActive!), "avatarURL": avatarURL!] as [AnyHashable: Any]
+    }
+    
+    func retrieveUserInfo(uid: String) {
+        let userDBRef = dbRef.child("Users/\(uid)")
+        userDBRef.observeSingleEvent(of: .value) { (snapshot) in
+            User.onlineUser = User(snapshot: snapshot)!
+        }
+    }
+    
+    func retrieveUserProfilePic() {
+        
     }
 }
 
