@@ -9,12 +9,15 @@
 import UIKit
 
 class SideMenuTopTableViewCell: UITableViewCell {
-    @IBOutlet weak var profileImg: UIImageView!
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileNameLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.clipsToBounds = true
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -31,12 +31,15 @@ final class User {
     var bio: String?
     var isActive: Bool?
     var avatarURL: String?
-    var userImg: UIImage?
+    var userImg:UIImageView?
     
-    static var onlineUser = User()
+    static var onlineUser = User(image: UIImage(named: "noAvatarImg")!)
     private var dbRef = Database.database().reference()
     
-    private init(){}
+    private init(image: UIImage){
+        print("initializing img...")
+        self.userImg?.image = image
+    }
     
     private init? (snapshot: DataSnapshot){
         guard let dict = snapshot.value as? [String: Any] else {return}
@@ -66,12 +69,34 @@ final class User {
         let userDBRef = dbRef.child("Users/\(uid)")
         userDBRef.observeSingleEvent(of: .value) { (snapshot) in
             User.onlineUser = User(snapshot: snapshot)!
+            User.onlineUser.self.loadUserImg()
+        }
+        
+    }
+    
+    func loadUserImg() {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        
+        // setup URL with image file name appended
+        if let pathComponent = url.appendingPathComponent("userProfileImage.jpg") {
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            
+            // check if file exists in document directory folder
+            if fileManager.fileExists(atPath: filePath){
+                print("Image exists...")
+                User.onlineUser.userImg = UIImageView(image: UIImage(contentsOfFile: filePath))
+            }else {
+                print("Image does not exist...")
+                User.onlineUser.userImg = UIImageView(image: UIImage(named: "noAvatarImg"))
+                print("IMAGE LOADED...")
+            }
+        }else {
+            print("File path not available...")
         }
     }
     
-    func retrieveUserProfilePic() {
-        
-    }
 }
 
 

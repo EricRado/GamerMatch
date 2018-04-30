@@ -613,7 +613,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="193.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noAvatarImg" translatesAutoresizingMaskIntoConstraints="NO" id="G4R-Bx-mFN">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G4R-Bx-mFN">
                                                     <rect key="frame" x="90" y="10" width="120" height="120"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="G4R-Bx-mFN" secondAttribute="height" multiplier="1:1" id="EVx-a9-A2F"/>
@@ -635,7 +635,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="profileImg" destination="G4R-Bx-mFN" id="PnI-6X-jUQ"/>
+                                            <outlet property="profileImage" destination="G4R-Bx-mFN" id="uXQ-Cp-diD"/>
                                             <outlet property="profileNameLabel" destination="wfS-rA-21e" id="cxj-Zg-4N6"/>
                                         </connections>
                                     </tableViewCell>
@@ -704,6 +704,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="Q7h-BZ-JiC" id="PB5-Ae-jKB"/>
+                        <segue destination="Dpo-m9-qJw" kind="presentation" identifier="settingsSegue" id="v49-Pu-UoE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UXK-i7-pR8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -714,6 +715,50 @@
                 </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4228" y="-174.06296851574214"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="lKS-eg-9a4">
+            <objects>
+                <viewController id="fss-gm-LwY" customClass="SettingsViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VJT-c8-TYf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWK-gB-nyD">
+                                <rect key="frame" x="79" y="235" width="217" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="22"/>
+                                <state key="normal" backgroundImage="ChangePictureBtn">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changePicturePressedWithSender:" destination="fss-gm-LwY" eventType="touchUpInside" id="WjW-63-eWy"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YN2-DA-fLe">
+                                <rect key="frame" x="127" y="91" width="120" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="KSc-fx-13H"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="1iq-6q-cEF">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="sJa-z9-bgR">
+                            <connections>
+                                <action selector="menuBtnPressed:" destination="fss-gm-LwY" id="tUi-TH-q6D"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="changePictureBtn" destination="pWK-gB-nyD" id="Tqh-B8-lgV"/>
+                        <outlet property="userProfileImg" destination="YN2-DA-fLe" id="yfy-sm-RzD"/>
+                        <segue destination="28v-gz-Ddt" kind="presentation" identifier="showMenu" id="TYE-uG-05q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="neo-g5-UYi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5980" y="-174.06296851574214"/>
         </scene>
         <!--Chat-->
         <scene sceneID="C1h-aj-YYo">
@@ -910,10 +955,29 @@
             </objects>
             <point key="canvasLocation" x="2434" y="1496"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="S3w-XD-nCx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Dpo-m9-qJw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9d5-Ul-mQa">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fss-gm-LwY" kind="relationship" relationship="rootViewController" id="mRC-wA-hhc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S9b-X3-zmq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5040.8000000000002" y="-174.06296851574214"/>
+        </scene>
     </scenes>
     <resources>
         <image name="AddPhotoBtn" width="110" height="100"/>
         <image name="Back Arrow" width="30" height="30"/>
+        <image name="ChangePictureBtn" width="217" height="40"/>
         <image name="Forgot your password" width="154" height="15"/>
         <image name="Logo" width="210" height="134"/>
         <image name="RegisterBtn" width="273" height="40"/>
@@ -929,7 +993,7 @@
         <image name="leagueOfLegends" width="68" height="40"/>
         <image name="menu" width="30" height="30"/>
         <image name="nba2k18" width="62" height="40"/>
-        <image name="noAvatarImg" width="500" height="500"/>
+        <image name="noAvatarImg" width="250" height="250"/>
         <image name="offenseOverwatchRole" width="70" height="70"/>
         <image name="overwatch" width="70" height="70"/>
         <image name="password" width="50" height="40"/>
@@ -948,5 +1012,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="p1K-8C-PN8"/>
+        <segue reference="TYE-uG-05q"/>
     </inferredMetricsTieBreakers>
 </document>

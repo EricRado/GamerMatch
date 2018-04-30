@@ -16,6 +16,8 @@
 		07C07F8E209274D60005494D /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8D209274D60005494D /* SideMenuViewController.swift */; };
 		07C07F90209274EF0005494D /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C07F8F209274EF0005494D /* SideMenuTableViewCell.swift */; };
 		07C982F22093FA41007B46BB /* SideMenuTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F12093FA41007B46BB /* SideMenuTopTableViewCell.swift */; };
+		07C982F720961B40007B46BB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F620961B40007B46BB /* ImageManager.swift */; };
+		07C982F92096B292007B46BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F82096B292007B46BB /* SettingsViewController.swift */; };
 		07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586AE204F8F7500023383 /* AppDelegate.swift */; };
 		07E586B4204F8F7600023383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B2204F8F7600023383 /* Main.storyboard */; };
 		07E586B6204F8F7600023383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B5204F8F7600023383 /* Assets.xcassets */; };
@@ -46,6 +48,8 @@
 		07C07F8D209274D60005494D /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		07C07F8F209274EF0005494D /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		07C982F12093FA41007B46BB /* SideMenuTopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTopTableViewCell.swift; sourceTree = "<group>"; };
+		07C982F620961B40007B46BB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		07C982F82096B292007B46BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		07E586AB204F8F7500023383 /* GamerMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamerMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E586AE204F8F7500023383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07E586B3204F8F7600023383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -82,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07C982F320961242007B46BB /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				07C982F620961B40007B46BB /* ImageManager.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		07E586A2204F8F7500023383 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +115,7 @@
 		07E586AD204F8F7500023383 /* GamerMatch */ = {
 			isa = PBXGroup;
 			children = (
+				07C982F320961242007B46BB /* Sources */,
 				07E99B022092625500892E73 /* SideMenu */,
 				07E586C6204F913E00023383 /* View */,
 				07E586C5204F913400023383 /* Model */,
@@ -125,6 +138,7 @@
 				07E586FA205604ED00023383 /* ChatSelectedViewController.swift */,
 				07E586FC2056170600023383 /* TournamentViewController.swift */,
 				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
+				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -338,6 +352,7 @@
 				07E586F32052FA5700023383 /* Chat.swift in Sources */,
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
+				07C982F720961B40007B46BB /* ImageManager.swift in Sources */,
 				07C07F8E209274D60005494D /* SideMenuViewController.swift in Sources */,
 				07E586F52052FDCA00023383 /* Message.swift in Sources */,
 				070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */,
@@ -352,6 +367,7 @@
 				07C07F90209274EF0005494D /* SideMenuTableViewCell.swift in Sources */,
 				070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */,
 				07E586CE2050E85300023383 /* chatTableViewCell.swift in Sources */,
+				07C982F92096B292007B46BB /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,7 +18,7 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        iconNameArray = ["top","Profile","Settings", "Logout"]
+        iconNameArray = ["top","Profile","Add a Tournament","Settings", "Logout"]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -28,7 +28,11 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "profilePicCell") as! SideMenuTopTableViewCell
-            //cell.profileNameLabel = Auth.auth().currentUser?.uid
+            cell.profileNameLabel.text = User.onlineUser.username
+            if let data = User.onlineUser.userImg?.image {
+                print("there is something here...")
+            }
+            cell.profileImage.image = User.onlineUser.userImg?.image
             return cell
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "optionsCell") as! SideMenuTableViewCell
@@ -36,6 +40,14 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
             return cell
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row >= 1 {
+            if iconNameArray[indexPath.row] == "Settings" {
+                performSegue(withIdentifier: "settingsSegue", sender: self)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

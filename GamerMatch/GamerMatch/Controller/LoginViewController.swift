@@ -70,8 +70,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 SVProgressHUD.dismiss()
             }else {
                 print("Login successful")
-                print("userID...")
-                print(user?.uid)
                 User.onlineUser.retrieveUserInfo(uid: (user?.uid)!)
                 SVProgressHUD.dismiss()
                 self.performSegue(withIdentifier: "signinDashboardSegue", sender: self)
