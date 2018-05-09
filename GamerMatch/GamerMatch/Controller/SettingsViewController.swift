@@ -29,6 +29,8 @@ extension SettingsViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+
+
 class SettingsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var userProfileImg: UIImageView!
     @IBOutlet weak var changePictureBtn: UIButton!
@@ -46,7 +48,7 @@ class SettingsViewController: UIViewController, UIImagePickerControllerDelegate,
         userProfileImg.image = User.onlineUser.userImg?.image ?? UIImage(named: "noAvatarImg")
     }
     
-    @IBAction func changePicturePressed(_ sender: UIButton){
+    @IBAction func changePicturePressed(sender: UIButton){
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
@@ -55,8 +57,19 @@ class SettingsViewController: UIViewController, UIImagePickerControllerDelegate,
         self.present(imagePicker, animated: true)
     }
     
-    @IBAction func menuBtnPressed(_ sender: UIBarButtonItem){
-        performSegue(withIdentifier: "openMenu", sender: self)
+    @IBAction func menuBtnPressed(sender: UIBarButtonItem){
+        performSegue(withIdentifier: "openMenu", sender: nil)
+    }
+    
+    @IBAction func edgePanGesture(sender: UIScreenEdgePanGestureRecognizer) {
+        print("EDGE Pan Gesture ....")
+        let translation = sender.translation(in: view)
+        
+        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Right)
+        
+        MenuHelper.mapGestureStateToInteractor(gestureState: sender.state, progress: progress, interactor: interactor) {
+            self.performSegue(withIdentifier: "openMenu", sender: nil)
+        }
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

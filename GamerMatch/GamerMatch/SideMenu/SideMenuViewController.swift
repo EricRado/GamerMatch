@@ -18,7 +18,7 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        iconNameArray = ["top","Profile","Add a Tournament","Settings", "Logout"]
+        iconNameArray = ["top", "Home","Profile","Add A Tournament","Settings", "Logout"]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,6 +46,9 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         if indexPath.row >= 1 {
             if iconNameArray[indexPath.row] == "Settings" {
                 performSegue(withIdentifier: "settingsSegue", sender: self)
+            }
+            if iconNameArray[indexPath.row] == "Add A Tournament" {
+                performSegue(withIdentifier: "addTournamentSegue", sender: self)
             }
         }
     }

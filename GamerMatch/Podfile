@@ -15,5 +15,6 @@ pod 'GoogleMaps'
 pod 'SwiftyJSON'
 pod 'MBProgressHUD'
 pod 'FontAwesome.swift'
+pod 'Alamofire'
 
 end
