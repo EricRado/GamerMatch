@@ -12,7 +12,13 @@ import SwiftyJSON
 import Firebase
 
 class AddTournamentViewController: UIViewController {
-
+    
+    @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var stateTextField: UITextField!
+    
+    @IBOutlet var photoBtnArr: [UIButton]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,7 +58,19 @@ class AddTournamentViewController: UIViewController {
         }
     }
     
-
+    func uploadCoordinates(latitude: String, longitude: String) {
+        
+    }
+    
+    
+    
+    @IBAction func addTournamentPressed(_ sender: UIButton) {
+    }
+    
+    @IBAction func addPhotoPressed(_ sender: UIButton) {
+        
+    }
+    
     /*
     // MARK: - Navigation
 

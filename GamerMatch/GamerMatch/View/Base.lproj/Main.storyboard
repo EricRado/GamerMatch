@@ -893,25 +893,144 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1N6-1k-aRk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Add Tournament Screen" translatesAutoresizingMaskIntoConstraints="NO" id="zNW-sc-BD3">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uMe-zc-o9L" userLabel="Top Container">
+                                <rect key="frame" x="0.0" y="64" width="375" height="218"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Add Tournament Screen" translatesAutoresizingMaskIntoConstraints="NO" id="gu6-IK-z7Y">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="zyS-Xx-p5P">
+                                        <rect key="frame" x="111" y="20" width="256" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="aE1-6C-Yrh">
+                                        <rect key="frame" x="111" y="146" width="256" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygd-7E-SdM" userLabel="Middle Container">
+                                <rect key="frame" x="0.0" y="282" width="375" height="134"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="uJI-sC-dpV">
+                                        <rect key="frame" x="111" y="48" width="256" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="NUX-aq-Eei">
+                                        <rect key="frame" x="111" y="89" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-V3-5Rd">
+                                        <rect key="frame" x="111" y="3" width="256" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3YR-rS-6Ym" userLabel="Bottom Container">
+                                <rect key="frame" x="0.0" y="416" width="375" height="251"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMI-Qt-iI4">
+                                        <rect key="frame" x="58" y="160" width="258" height="45"/>
+                                        <state key="normal" backgroundImage="Add Tournament Btn"/>
+                                        <connections>
+                                            <action selector="addTournamentPressed:" destination="xg4-3c-m1D" eventType="touchUpInside" id="QEd-gM-NZg"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="37" translatesAutoresizingMaskIntoConstraints="NO" id="rBn-rA-jF4">
+                                        <rect key="frame" x="16.5" y="40" width="343" height="90"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvX-3E-4Fj" userLabel="PhotoBtn1">
+                                                <rect key="frame" x="0.0" y="0.0" width="89.5" height="90"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="VvX-3E-4Fj" secondAttribute="height" multiplier="1:1" id="ENG-Bb-ae9"/>
+                                                </constraints>
+                                                <state key="normal" image="AddPhotoTournmanetPic"/>
+                                                <connections>
+                                                    <action selector="addPhotoPressed:" destination="xg4-3c-m1D" eventType="touchUpInside" id="qni-Im-YJe"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsc-NN-xYi" userLabel="PhotoBtn2">
+                                                <rect key="frame" x="126.5" y="0.0" width="90" height="90"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="hsc-NN-xYi" secondAttribute="height" multiplier="1:1" id="NS2-CZ-WmU"/>
+                                                </constraints>
+                                                <state key="normal" image="AddPhotoTournmanetPic"/>
+                                                <connections>
+                                                    <action selector="addPhotoPressed:" destination="xg4-3c-m1D" eventType="touchUpInside" id="Avz-No-cEl"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eRF-D3-Wvd" userLabel="PhotoBtn3">
+                                                <rect key="frame" x="253.5" y="0.0" width="89.5" height="90"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="eRF-D3-Wvd" secondAttribute="height" multiplier="1:1" id="9BX-i7-eIS"/>
+                                                </constraints>
+                                                <state key="normal" image="AddPhotoTournmanetPic"/>
+                                                <connections>
+                                                    <action selector="addPhotoPressed:" destination="xg4-3c-m1D" eventType="touchUpInside" id="OWh-TN-mWY"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="eRF-D3-Wvd" firstAttribute="width" secondItem="VvX-3E-4Fj" secondAttribute="width" id="US2-Fz-wpa"/>
+                                            <constraint firstItem="hsc-NN-xYi" firstAttribute="width" secondItem="VvX-3E-4Fj" secondAttribute="width" id="uGc-VQ-87R"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="VvX-3E-4Fj" firstAttribute="width" secondItem="3YR-rS-6Ym" secondAttribute="width" multiplier="0.24" id="4gJ-7s-fTf"/>
+                                    <constraint firstItem="cMI-Qt-iI4" firstAttribute="centerX" secondItem="3YR-rS-6Ym" secondAttribute="centerX" id="5uI-Tm-wNH"/>
+                                    <constraint firstAttribute="trailing" secondItem="cMI-Qt-iI4" secondAttribute="trailing" constant="58.5" id="HkF-Ue-XpT"/>
+                                    <constraint firstItem="cMI-Qt-iI4" firstAttribute="top" secondItem="rBn-rA-jF4" secondAttribute="bottom" constant="30" id="JXm-06-i8I"/>
+                                    <constraint firstItem="cMI-Qt-iI4" firstAttribute="leading" secondItem="3YR-rS-6Ym" secondAttribute="leading" constant="58.5" id="Ork-RB-ylF"/>
+                                    <constraint firstItem="rBn-rA-jF4" firstAttribute="leading" secondItem="3YR-rS-6Ym" secondAttribute="leading" constant="16" id="Rch-fl-4MR"/>
+                                    <constraint firstItem="rBn-rA-jF4" firstAttribute="top" secondItem="3YR-rS-6Ym" secondAttribute="top" constant="40" id="zHT-cw-SbF"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3YR-rS-6Ym" firstAttribute="leading" secondItem="IX0-iA-1k8" secondAttribute="leading" id="KTX-zL-QVv"/>
+                            <constraint firstItem="rBn-rA-jF4" firstAttribute="centerX" secondItem="IX0-iA-1k8" secondAttribute="centerX" id="Kye-Ow-V6W"/>
+                            <constraint firstItem="ygd-7E-SdM" firstAttribute="height" secondItem="IX0-iA-1k8" secondAttribute="height" multiplier="0.221" id="NJs-eg-lYs"/>
+                            <constraint firstItem="uMe-zc-o9L" firstAttribute="leading" secondItem="IX0-iA-1k8" secondAttribute="leading" id="W5y-oD-3ap"/>
+                            <constraint firstItem="uMe-zc-o9L" firstAttribute="trailing" secondItem="IX0-iA-1k8" secondAttribute="trailing" id="diM-go-Pmg"/>
+                            <constraint firstItem="3YR-rS-6Ym" firstAttribute="bottom" secondItem="IX0-iA-1k8" secondAttribute="bottom" id="hJ5-4j-VoJ"/>
+                            <constraint firstItem="uMe-zc-o9L" firstAttribute="height" secondItem="dVj-jt-uNV" secondAttribute="height" multiplier="0.3268" id="jNY-Hf-vlP"/>
+                            <constraint firstItem="ygd-7E-SdM" firstAttribute="top" secondItem="uMe-zc-o9L" secondAttribute="bottom" id="jga-VQ-0od"/>
+                            <constraint firstItem="3YR-rS-6Ym" firstAttribute="top" secondItem="ygd-7E-SdM" secondAttribute="bottom" id="qI4-li-j5I"/>
+                            <constraint firstItem="uMe-zc-o9L" firstAttribute="top" secondItem="IX0-iA-1k8" secondAttribute="top" id="qf2-tu-EZ1"/>
+                            <constraint firstItem="ygd-7E-SdM" firstAttribute="leading" secondItem="IX0-iA-1k8" secondAttribute="leading" id="tBC-58-YfJ"/>
+                            <constraint firstItem="ygd-7E-SdM" firstAttribute="trailing" secondItem="IX0-iA-1k8" secondAttribute="trailing" id="vIE-Dr-Nc4"/>
+                            <constraint firstItem="3YR-rS-6Ym" firstAttribute="trailing" secondItem="IX0-iA-1k8" secondAttribute="trailing" id="wxP-2H-Yxl"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="IX0-iA-1k8"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add A Tournament" id="6A1-LB-uZL">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="ycP-bZ-hxw"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="addressTextField" destination="MZx-V3-5Rd" id="w4Q-AY-FF0"/>
+                        <outlet property="cityTextField" destination="uJI-sC-dpV" id="Clp-3P-mdq"/>
+                        <outlet property="stateTextField" destination="NUX-aq-Eei" id="kdh-Yh-f5t"/>
+                        <outletCollection property="photoBtnArr" destination="VvX-3E-4Fj" collectionClass="NSMutableArray" id="aPq-5Z-uYk"/>
+                        <outletCollection property="photoBtnArr" destination="hsc-NN-xYi" collectionClass="NSMutableArray" id="MWz-RF-5iV"/>
+                        <outletCollection property="photoBtnArr" destination="eRF-D3-Wvd" collectionClass="NSMutableArray" id="blS-a3-pj9"/>
                         <segue destination="28v-gz-Ddt" kind="presentation" identifier="openMenu" id="bgd-bn-Rbp"/>
                     </connections>
                 </viewController>
@@ -1035,8 +1154,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Add Tournament Screen" width="375" height="667"/>
+        <image name="Add Tournament Btn" width="258" height="45"/>
+        <image name="Add Tournament Screen" width="375" height="603"/>
         <image name="AddPhotoBtn" width="110" height="100"/>
+        <image name="AddPhotoTournmanetPic" width="90" height="90"/>
         <image name="Back Arrow" width="30" height="30"/>
         <image name="ChangePictureBtn" width="217" height="40"/>
         <image name="Forgot your password" width="154" height="15"/>
@@ -1072,8 +1193,7 @@
         <image name="xbox" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7O7-fg-u8I"/>
-        <segue reference="p1K-8C-PN8"/>
+        <segue reference="dSy-8B-ZhX"/>
         <segue reference="bgd-bn-Rbp"/>
     </inferredMetricsTieBreakers>
 </document>
