@@ -10,6 +10,17 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Firebase
+import CoreLocation
+
+extension UIViewController {
+    func printJSONPretty(_ data: Data) {
+        if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers){
+            if let prettyPrintedData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted){
+                print(String(bytes: prettyPrintedData, encoding: String.Encoding.utf8) ?? "Nil" )
+            }
+        }
+    }
+}
 
 class AddTournamentViewController: UIViewController {
     
@@ -23,7 +34,7 @@ class AddTournamentViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        validateAddress(address: "6761 Nw 193rd Lane, Hialeah, FL") { complete in
+        validateLocation("6761 Nw 193rd Lane, Hialeah, FL") { complete in
             if complete {
                 print("Address was finished validating...")
             }else {
@@ -32,8 +43,39 @@ class AddTournamentViewController: UIViewController {
         }
     }
     
-    func validateAddress(address: String, completion: @escaping (Bool) -> Void) {
-        Alamofire.request(GeocodingRouter.geocoding(address))
+    func parseLocation() -> String? {
+        var location: String? = nil
+        
+        // check if user input a text into the location component text fields
+        // else raise an error display through AlertViewController
+        guard let address = addressTextField.text else {
+            print("No address entered")
+            return location
+        }
+        
+        guard let city = cityTextField.text else {
+            print("No city entered")
+            return location
+        }
+        
+        guard let state = stateTextField.text else {
+            print("No state entered")
+            return location
+        }
+        
+        // will contain all the componenets of an address street, city , and state
+        let locationComponents = [address, city, state]
+        
+        location = locationComponents.joined(separator: ",")
+        
+        print("This is the parsed location \(location!)")
+        
+        
+        return location
+    }
+    
+    func validateLocation(_ location: String, completion: @escaping (Bool) -> Void) {
+        Alamofire.request(GeocodingRouter.geocoding(location))
             .responseJSON { response in
                 guard response.result.isSuccess, let value = response.result.value else {
                     print("Error while validating address: \(String(describing: response.result.error))")
@@ -44,17 +86,34 @@ class AddTournamentViewController: UIViewController {
                 let status = JSON(value)["status"].stringValue
                 let latitude = JSON(value)["results"][0]["geometry"]["location"]["lat"].stringValue
                 let longitude = JSON(value)["results"][0]["geometry"]["location"]["lng"].stringValue
-                print("This is latitude \(latitude)")
-                print("This is longitude \(longitude)")
-                print("This is the status \(status)")
                 
-                if let json = try? JSONSerialization.jsonObject(with: response.data!, options: .mutableContainers){
-                    if let prettyPrintedData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted){
-                        print(String(bytes: prettyPrintedData, encoding: String.Encoding.utf8) ?? "Nil" )
-                    }
+                if status == "OKAY" {
+                    self.uploadCoordinates(latitude: latitude, longitude: longitude)
+                }
+                
+                if let data = response.data {
+                    self.printJSONPretty(data)
                 }
                 
                 completion(true)
+        }
+    }
+    
+    func validateLocation2(_ location: String) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(location) { (placemarks, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            guard let placemarks = placemarks,
+                let validLocation = placemarks.first?.location else{
+                    print("No valid location found")
+                    return
+            }
+            let latitude = validLocation.coordinate.latitude
+            let longitude = validLocation.coordinate.longitude
+            
+            print("This location latitude: \(latitude) & longitude: \(longitude)")
         }
     }
     
@@ -65,6 +124,16 @@ class AddTournamentViewController: UIViewController {
     
     
     @IBAction func addTournamentPressed(_ sender: UIButton) {
+        guard let address = parseLocation() else {return}
+        
+        validateLocation(address) { complete in
+            if complete {
+                print("Address was validated successfully")
+            }else {
+                print("Address is not valid")
+            }
+        }
+        validateLocation2(address)
     }
     
     @IBAction func addPhotoPressed(_ sender: UIButton) {

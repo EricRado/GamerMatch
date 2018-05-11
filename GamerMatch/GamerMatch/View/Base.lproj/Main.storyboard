@@ -461,63 +461,65 @@
                                 <rect key="frame" x="0.0" y="407" width="375" height="211"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="textBottom" translatesAutoresizingMaskIntoConstraints="NO" id="BiZ-KP-hAT">
-                                        <rect key="frame" x="45" y="0.0" width="285" height="44"/>
+                                        <rect key="frame" x="45" y="0.0" width="285" height="45"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcI-nj-Ied" userLabel="roles">
-                                        <rect key="frame" x="0.0" y="43" width="375" height="168"/>
+                                        <rect key="frame" x="0.0" y="50" width="375" height="161"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="siF-J1-2eh" userLabel="topRowRoles">
-                                                <rect key="frame" x="45" y="8.5" width="285" height="70.5"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D9B-n5-IMJ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="71" height="70.5"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" secondItem="D9B-n5-IMJ" secondAttribute="height" multiplier="1:1" id="Gv2-od-WN3"/>
-                                                        </constraints>
-                                                        <state key="normal" image="offenseOverwatchRole"/>
-                                                    </button>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCJ-qQ-YiI">
-                                                        <rect key="frame" x="107" y="0.0" width="71" height="70.5"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" secondItem="gCJ-qQ-YiI" secondAttribute="height" multiplier="1:1" id="SLt-74-0ya"/>
-                                                        </constraints>
-                                                        <state key="normal" image="offenseOverwatchRole"/>
-                                                    </button>
-                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zq1-Nm-zn6">
-                                                        <rect key="frame" x="214" y="0.0" width="71" height="70.5"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" secondItem="zq1-Nm-zn6" secondAttribute="height" multiplier="1:1" id="4Rj-Fv-cxT"/>
-                                                        </constraints>
-                                                        <state key="normal" image="offenseOverwatchRole"/>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="EmW-P0-3wT" userLabel="bottomRowRoles">
-                                                <rect key="frame" x="100" y="90" width="175" height="70"/>
-                                                <subviews>
-                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGx-9n-Agc">
-                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" secondItem="uGx-9n-Agc" secondAttribute="height" multiplier="1:1" id="xcS-Sx-XKr"/>
-                                                        </constraints>
-                                                        <state key="normal" image="offenseOverwatchRole"/>
-                                                    </button>
-                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdK-eM-a3N">
-                                                        <rect key="frame" x="105" y="0.0" width="70" height="70"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" secondItem="rdK-eM-a3N" secondAttribute="height" multiplier="1:1" priority="999" id="RPg-a7-Xpb"/>
-                                                        </constraints>
-                                                        <state key="normal" image="offenseOverwatchRole"/>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D9B-n5-IMJ" userLabel="role1">
+                                                <rect key="frame" x="45" y="0.0" width="70" height="69.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="D9B-n5-IMJ" secondAttribute="height" multiplier="1:1" id="4iC-J0-1fA"/>
+                                                </constraints>
+                                                <state key="normal" image="offenseOverwatchRole"/>
+                                            </button>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCJ-qQ-YiI" userLabel="role2">
+                                                <rect key="frame" x="152" y="0.0" width="70" height="69.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="gCJ-qQ-YiI" secondAttribute="height" multiplier="1:1" id="MHS-8P-zyd"/>
+                                                </constraints>
+                                                <state key="normal" image="offenseOverwatchRole"/>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zq1-Nm-zn6" userLabel="role3">
+                                                <rect key="frame" x="260" y="0.0" width="70" height="69.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="zq1-Nm-zn6" secondAttribute="height" multiplier="1:1" id="JNy-Ti-fIG"/>
+                                                </constraints>
+                                                <state key="normal" image="offenseOverwatchRole"/>
+                                            </button>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGx-9n-Agc" userLabel="role4">
+                                                <rect key="frame" x="45" y="79" width="70" height="69.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="uGx-9n-Agc" secondAttribute="height" multiplier="1:1" id="GwP-L7-9lQ"/>
+                                                </constraints>
+                                                <state key="normal" image="offenseOverwatchRole"/>
+                                            </button>
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdK-eM-a3N" userLabel="role5">
+                                                <rect key="frame" x="260" y="79" width="70" height="70"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="rdK-eM-a3N" secondAttribute="height" multiplier="1:1" id="E6z-MS-y2m"/>
+                                                </constraints>
+                                                <state key="normal" image="offenseOverwatchRole"/>
+                                            </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="D9B-n5-IMJ" firstAttribute="height" secondItem="hcI-nj-Ied" secondAttribute="height" multiplier="0.42" id="eAY-bH-K4Z"/>
-                                            <constraint firstItem="EmW-P0-3wT" firstAttribute="centerX" secondItem="hcI-nj-Ied" secondAttribute="centerX" id="hU2-aq-Uvb"/>
-                                            <constraint firstAttribute="bottom" secondItem="EmW-P0-3wT" secondAttribute="bottom" constant="8" id="tAH-6g-f0W"/>
-                                            <constraint firstItem="siF-J1-2eh" firstAttribute="top" secondItem="hcI-nj-Ied" secondAttribute="top" constant="8" id="wgq-fD-H9x"/>
-                                            <constraint firstItem="uGx-9n-Agc" firstAttribute="height" secondItem="hcI-nj-Ied" secondAttribute="height" multiplier="0.42" id="zBC-7s-0V1"/>
+                                            <constraint firstItem="rdK-eM-a3N" firstAttribute="top" secondItem="uGx-9n-Agc" secondAttribute="top" id="2p5-2Y-aIs"/>
+                                            <constraint firstItem="D9B-n5-IMJ" firstAttribute="leading" secondItem="hcI-nj-Ied" secondAttribute="leading" constant="45" id="8Dw-cn-X0p"/>
+                                            <constraint firstItem="gCJ-qQ-YiI" firstAttribute="width" secondItem="D9B-n5-IMJ" secondAttribute="width" id="9us-qk-M8w"/>
+                                            <constraint firstItem="zq1-Nm-zn6" firstAttribute="width" secondItem="D9B-n5-IMJ" secondAttribute="width" id="Bth-NS-jl9"/>
+                                            <constraint firstItem="gCJ-qQ-YiI" firstAttribute="centerX" secondItem="hcI-nj-Ied" secondAttribute="centerX" id="I2b-lv-dar"/>
+                                            <constraint firstItem="D9B-n5-IMJ" firstAttribute="top" secondItem="hcI-nj-Ied" secondAttribute="top" id="Pky-pt-UPU"/>
+                                            <constraint firstItem="uGx-9n-Agc" firstAttribute="width" secondItem="D9B-n5-IMJ" secondAttribute="width" id="UGb-S1-NP5"/>
+                                            <constraint firstItem="D9B-n5-IMJ" firstAttribute="width" secondItem="hcI-nj-Ied" secondAttribute="width" multiplier="0.187" id="VKi-w5-anz"/>
+                                            <constraint firstItem="rdK-eM-a3N" firstAttribute="width" secondItem="D9B-n5-IMJ" secondAttribute="width" id="WbH-6M-sPe"/>
+                                            <constraint firstItem="uGx-9n-Agc" firstAttribute="top" secondItem="D9B-n5-IMJ" secondAttribute="bottom" constant="9.5" id="Ybm-5J-KLF"/>
+                                            <constraint firstItem="rdK-eM-a3N" firstAttribute="trailing" secondItem="zq1-Nm-zn6" secondAttribute="trailing" id="aQm-n2-8hv"/>
+                                            <constraint firstItem="zq1-Nm-zn6" firstAttribute="top" secondItem="D9B-n5-IMJ" secondAttribute="top" id="cZi-C3-KMK"/>
+                                            <constraint firstAttribute="trailing" secondItem="zq1-Nm-zn6" secondAttribute="trailing" constant="45" id="mNR-bx-kY1"/>
+                                            <constraint firstAttribute="bottom" secondItem="rdK-eM-a3N" secondAttribute="bottom" constant="12" id="oZc-s7-sgW"/>
+                                            <constraint firstItem="uGx-9n-Agc" firstAttribute="leading" secondItem="D9B-n5-IMJ" secondAttribute="leading" id="tVD-9e-jbl"/>
+                                            <constraint firstAttribute="bottom" secondItem="uGx-9n-Agc" secondAttribute="bottom" constant="12" id="xEV-Rc-3up"/>
+                                            <constraint firstItem="gCJ-qQ-YiI" firstAttribute="top" secondItem="D9B-n5-IMJ" secondAttribute="top" id="yIn-RF-CYB"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -526,10 +528,9 @@
                                     <constraint firstAttribute="trailing" secondItem="BiZ-KP-hAT" secondAttribute="trailing" constant="45" id="6Jf-4a-JAl"/>
                                     <constraint firstItem="BiZ-KP-hAT" firstAttribute="top" secondItem="cMa-gw-GUJ" secondAttribute="top" id="9H9-Z6-H8G"/>
                                     <constraint firstItem="hcI-nj-Ied" firstAttribute="leading" secondItem="cMa-gw-GUJ" secondAttribute="leading" id="NyS-Na-ypL"/>
-                                    <constraint firstItem="siF-J1-2eh" firstAttribute="trailing" secondItem="BiZ-KP-hAT" secondAttribute="trailing" id="OOG-QZ-ssc"/>
-                                    <constraint firstAttribute="bottom" secondItem="hcI-nj-Ied" secondAttribute="bottom" id="fTO-Nd-1oJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="hcI-nj-Ied" secondAttribute="bottom" id="awG-3n-Tny"/>
+                                    <constraint firstItem="hcI-nj-Ied" firstAttribute="top" secondItem="BiZ-KP-hAT" secondAttribute="bottom" constant="5" id="d37-tJ-iHV"/>
                                     <constraint firstItem="BiZ-KP-hAT" firstAttribute="leading" secondItem="cMa-gw-GUJ" secondAttribute="leading" constant="45" id="feJ-TV-e2k"/>
-                                    <constraint firstItem="siF-J1-2eh" firstAttribute="leading" secondItem="BiZ-KP-hAT" secondAttribute="leading" id="tZd-V0-07c"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -559,7 +560,7 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Find Gamer" id="b0k-6M-NNp">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="jTJ-mI-JwU">
+                        <barButtonItem key="leftBarButtonItem" title="menu" image="menu" id="jTJ-mI-JwU">
                             <connections>
                                 <segue destination="28v-gz-Ddt" kind="presentation" identifier="openMenu" id="CqF-cV-TK5"/>
                             </connections>
@@ -571,17 +572,17 @@
                         <outletCollection property="consoleBtnsArr" destination="cbS-Mf-Zqc" collectionClass="NSMutableArray" id="q2n-u9-ETr"/>
                         <outletCollection property="consoleBtnsArr" destination="OCc-Jc-tyG" collectionClass="NSMutableArray" id="GdZ-p6-elN"/>
                         <outletCollection property="consoleBtnsArr" destination="OC8-Yt-Tlz" collectionClass="NSMutableArray" id="mvL-gj-JHc"/>
-                        <outletCollection property="roleBtnsArr" destination="D9B-n5-IMJ" collectionClass="NSMutableArray" id="54B-OT-5eh"/>
-                        <outletCollection property="roleBtnsArr" destination="gCJ-qQ-YiI" collectionClass="NSMutableArray" id="hmm-vQ-J6W"/>
-                        <outletCollection property="roleBtnsArr" destination="zq1-Nm-zn6" collectionClass="NSMutableArray" id="rs6-hE-tuF"/>
-                        <outletCollection property="roleBtnsArr" destination="rdK-eM-a3N" collectionClass="NSMutableArray" id="ihb-20-wDM"/>
-                        <outletCollection property="roleBtnsArr" destination="uGx-9n-Agc" collectionClass="NSMutableArray" id="GYJ-Ab-kis"/>
                         <outletCollection property="gameBtnsArr" destination="VEs-Mv-NeU" collectionClass="NSMutableArray" id="p5Y-M5-f1O"/>
                         <outletCollection property="gameBtnsArr" destination="H9a-BR-Dbh" collectionClass="NSMutableArray" id="YO0-id-Ulv"/>
                         <outletCollection property="gameBtnsArr" destination="UD4-Bx-2km" collectionClass="NSMutableArray" id="iIn-hT-pIr"/>
                         <outletCollection property="gameBtnsArr" destination="hLO-cT-dWD" collectionClass="NSMutableArray" id="QhF-AZ-aIy"/>
                         <outletCollection property="gameBtnsArr" destination="l7h-FB-N6K" collectionClass="NSMutableArray" id="LmJ-Yu-s2r"/>
                         <outletCollection property="gameBtnsArr" destination="6Rt-ux-MrR" collectionClass="NSMutableArray" id="pCa-W0-ZnK"/>
+                        <outletCollection property="roleBtnsArr" destination="D9B-n5-IMJ" collectionClass="NSMutableArray" id="54B-OT-5eh"/>
+                        <outletCollection property="roleBtnsArr" destination="gCJ-qQ-YiI" collectionClass="NSMutableArray" id="hmm-vQ-J6W"/>
+                        <outletCollection property="roleBtnsArr" destination="zq1-Nm-zn6" collectionClass="NSMutableArray" id="rs6-hE-tuF"/>
+                        <outletCollection property="roleBtnsArr" destination="uGx-9n-Agc" collectionClass="NSMutableArray" id="GYJ-Ab-kis"/>
+                        <outletCollection property="roleBtnsArr" destination="rdK-eM-a3N" collectionClass="NSMutableArray" id="ihb-20-wDM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rSD-LB-xvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -606,7 +607,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profilePicCell" rowHeight="194" id="PcJ-1B-ppb" customClass="SideMenuTopTableViewCell" customModule="GamerMatch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profilePicCell" rowHeight="194" id="PcJ-1B-ppb" customClass="SideMenuTopTableViewCell" customModule="GamerMatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="300" height="194"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PcJ-1B-ppb" id="3MI-tJ-NiK">
@@ -614,13 +615,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G4R-Bx-mFN">
-                                                    <rect key="frame" x="90" y="10" width="120" height="120"/>
+                                                    <rect key="frame" x="86" y="10" width="120" height="120"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="G4R-Bx-mFN" secondAttribute="height" multiplier="1:1" id="EVx-a9-A2F"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfS-rA-21e">
-                                                    <rect key="frame" x="97" y="150" width="107" height="24"/>
+                                                    <rect key="frame" x="93" y="150" width="107" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -639,7 +640,7 @@
                                             <outlet property="profileNameLabel" destination="wfS-rA-21e" id="cxj-Zg-4N6"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="optionsCell" rowHeight="55" id="I31-hx-wzE" customClass="SideMenuTableViewCell" customModule="GamerMatch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="optionsCell" rowHeight="55" id="I31-hx-wzE" customClass="SideMenuTableViewCell" customModule="GamerMatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="222" width="300" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="I31-hx-wzE" id="3DA-Ir-dxv">
@@ -647,13 +648,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYd-aw-5Uh">
-                                                    <rect key="frame" x="74" y="7.5" width="226" height="40"/>
+                                                    <rect key="frame" x="74" y="8" width="218" height="39"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LUh-V4-8UG">
-                                                    <rect key="frame" x="15" y="7.5" width="39" height="39"/>
+                                                    <rect key="frame" x="15" y="8" width="39" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="LUh-V4-8UG" secondAttribute="height" multiplier="1:1" id="twi-GN-g3o"/>
                                                     </constraints>
@@ -670,6 +671,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="iconImage" destination="LUh-V4-8UG" id="yN5-em-Yvx"/>
                                             <outlet property="iconNameLabel" destination="RYd-aw-5Uh" id="mEy-cj-Sdo"/>
                                         </connections>
                                     </tableViewCell>
@@ -780,7 +782,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatCell" rowHeight="100" id="58K-3Z-WSg" customClass="chatTableViewCell" customModule="GamerMatch" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatCell" rowHeight="100" id="58K-3Z-WSg" customClass="chatTableViewCell" customModule="GamerMatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="58K-3Z-WSg" id="BhP-aY-0za">
@@ -841,7 +843,7 @@
                         <viewLayoutGuide key="safeArea" id="QQ3-2R-b5I"/>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="oJq-CL-QAs">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="GcO-sY-hcI"/>
+                        <barButtonItem key="leftBarButtonItem" title="menu" image="menu" id="GcO-sY-hcI"/>
                     </navigationItem>
                     <connections>
                         <outlet property="chatTableView" destination="AZN-q9-iPe" id="5tI-YM-BG2"/>
@@ -863,7 +865,7 @@
                         <viewLayoutGuide key="safeArea" id="0us-RO-kBy"/>
                     </view>
                     <navigationItem key="navigationItem" title="Tournament" id="1gU-Um-ulg">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="hKI-En-Jv9"/>
+                        <barButtonItem key="leftBarButtonItem" title="menu" image="menu" id="hKI-En-Jv9"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AeK-Df-o0V" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -917,7 +919,7 @@
                                 </subviews>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygd-7E-SdM" userLabel="Middle Container">
-                                <rect key="frame" x="0.0" y="282" width="375" height="134"/>
+                                <rect key="frame" x="0.0" y="282" width="375" height="133"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="uJI-sC-dpV">
                                         <rect key="frame" x="111" y="48" width="256" height="30"/>
@@ -926,8 +928,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="NUX-aq-Eei">
-                                        <rect key="frame" x="111" y="89" width="46" height="30"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NUX-aq-Eei">
+                                        <rect key="frame" x="111" y="89" width="64" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -943,20 +945,20 @@
                                 </subviews>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3YR-rS-6Ym" userLabel="Bottom Container">
-                                <rect key="frame" x="0.0" y="416" width="375" height="251"/>
+                                <rect key="frame" x="0.0" y="415" width="375" height="252"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMI-Qt-iI4">
-                                        <rect key="frame" x="58" y="160" width="258" height="45"/>
+                                        <rect key="frame" x="58" y="159.5" width="258" height="45"/>
                                         <state key="normal" backgroundImage="Add Tournament Btn"/>
                                         <connections>
                                             <action selector="addTournamentPressed:" destination="xg4-3c-m1D" eventType="touchUpInside" id="QEd-gM-NZg"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="37" translatesAutoresizingMaskIntoConstraints="NO" id="rBn-rA-jF4">
-                                        <rect key="frame" x="16.5" y="40" width="343" height="90"/>
+                                        <rect key="frame" x="16.5" y="40" width="342" height="89.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvX-3E-4Fj" userLabel="PhotoBtn1">
-                                                <rect key="frame" x="0.0" y="0.0" width="89.5" height="90"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="89.5" height="89.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="VvX-3E-4Fj" secondAttribute="height" multiplier="1:1" id="ENG-Bb-ae9"/>
                                                 </constraints>
@@ -966,7 +968,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsc-NN-xYi" userLabel="PhotoBtn2">
-                                                <rect key="frame" x="126.5" y="0.0" width="90" height="90"/>
+                                                <rect key="frame" x="126.5" y="0.0" width="89" height="89.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="hsc-NN-xYi" secondAttribute="height" multiplier="1:1" id="NS2-CZ-WmU"/>
                                                 </constraints>
@@ -976,7 +978,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eRF-D3-Wvd" userLabel="PhotoBtn3">
-                                                <rect key="frame" x="253.5" y="0.0" width="89.5" height="90"/>
+                                                <rect key="frame" x="252.5" y="0.0" width="89.5" height="89.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="eRF-D3-Wvd" secondAttribute="height" multiplier="1:1" id="9BX-i7-eIS"/>
                                                 </constraints>
@@ -1038,11 +1040,11 @@
             </objects>
             <point key="canvasLocation" x="5980" y="580.65967016491754"/>
         </scene>
-        <!--Item-->
+        <!--Find Gamer-->
         <scene sceneID="Q0w-Eh-l8m">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WUy-0d-4qX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="8pz-sA-wLb"/>
+                    <tabBarItem key="tabBarItem" title="Find Gamer" image="search" id="8pz-sA-wLb"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TfZ-Bc-Vp2">
@@ -1181,6 +1183,7 @@
         <image name="password" width="50" height="40"/>
         <image name="pc" width="60" height="60"/>
         <image name="playstation" width="58" height="58"/>
+        <image name="search" width="30" height="30"/>
         <image name="selectedPC" width="60" height="60"/>
         <image name="selectedPlaystation" width="58" height="58"/>
         <image name="selectedXbox" width="60" height="60"/>
@@ -1194,6 +1197,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="dSy-8B-ZhX"/>
-        <segue reference="bgd-bn-Rbp"/>
+        <segue reference="CqF-cV-TK5"/>
     </inferredMetricsTieBreakers>
 </document>

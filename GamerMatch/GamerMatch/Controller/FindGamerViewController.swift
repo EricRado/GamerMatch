@@ -29,16 +29,28 @@ extension FindGamerViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+extension Array where Element == UIButton  {
+    func hideButtons() {
+        for btn in self {
+            btn.isHidden = true
+        }
+    }
+}
+
 class FindGamerViewController: UIViewController {
+    
+    // MARK: - IBOutlet Variables
     
     @IBOutlet var consoleBtnsArr: [UIButton]!
     @IBOutlet var gameBtnsArr: [UIButton]!
     @IBOutlet var roleBtnsArr: [UIButton]!
-    
     @IBOutlet weak var middleText: UIImageView!
     @IBOutlet weak var bottomText: UIImageView!
     
-    var isTapped: Bool = false
+    // MARK: - ViewController Variables
+    
+    var consoleIsTapped: Bool = false
+    var gameWithRolesTapped: Bool = false
     
     // stores video games for all systems
     var videoGames = [VideoGame]()
@@ -49,14 +61,20 @@ class FindGamerViewController: UIViewController {
     // stores video game roles based on selected game
     var videoGameRoles = [VideoGameRole]()
     
+    // stores video game button pressed by user
+    var selectedVideogameBtnPressed: UIButton?
+    
+    // stores console button pressed by user
+    var selectedConsoleBtnPressed: UIButton?
+    
     var interactor = Interactor()
     
+    // MARK: - ViewController's Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVideoGames()
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,8 +92,10 @@ class FindGamerViewController: UIViewController {
         for btn in consoleBtnsArr {
             btn.isSelected = false
         }
-        isTapped = false
+        consoleIsTapped = false
     }
+    
+    // MARK: - Display Buttons Functions
     
     func setupVideoGames() {
         videoGames.append(VideoGame(title: "halo5", notSelectedImage: UIImage(named: "halo5")!,
@@ -96,7 +116,7 @@ class FindGamerViewController: UIViewController {
                 selectedImage: UIImage(named: "selectedRocketLeague")!, gameTypes: ["xbox", "playstation", "pc"]))
     }
     
-    func showGameBtns(consoleChoice: String) {
+    func displayGameBtns(consoleChoice: String) {
         if !gamesCurrentlyDisplayed.isEmpty {
             gamesCurrentlyDisplayed.removeAll()
         }
@@ -113,67 +133,7 @@ class FindGamerViewController: UIViewController {
         }
         print(gamesCurrentlyDisplayed)
     }
-    
-    func hideGameBtns() {
-        for btn in gameBtnsArr {
-            btn.isHidden = true
-        }
-    }
 
-    @IBAction func consoleBtnPressed(_ sender: UIButton) {
-        
-        // if the same console choice is pressed again reset the questionaire
-        if sender.isSelected {
-            sender.isSelected = false
-            isTapped = false
-            middleText.isHidden = true
-            hideGameBtns()
-            bottomText.isHidden = true
-            return
-        }
-        
-        // if a console btn is selcted, dont allow other console btns to be selected
-        if isTapped {
-            return
-        }
-        
-        isTapped = true
-        sender.isSelected = true
-        
-        // show text for game choice question
-        middleText.isHidden = false
-        
-        // show games based on console image pressed
-        if sender.tag == 0 {
-            print("Xbox was pressed...")
-            showGameBtns(consoleChoice: "xbox")
-        }else if sender.tag == 1 {
-            print("Playstation was pressed...")
-            showGameBtns(consoleChoice: "playstation")
-        }else {
-            print("PC was pressed...")
-            showGameBtns(consoleChoice: "pc")
-        }
-        
-    }
-    
-    @IBAction func gameBtnPressed(_ sender: UIButton) {
-        let gameChoice = gamesCurrentlyDisplayed[sender.tag].title!
-        print("\(gameChoice) was selected")
-        sender.isSelected = true
-        
-        switch gameChoice {
-        case "overwatch", "battlefield1", "nba2k18", "leagueOfLegends":
-            bottomText.isHidden = false
-            displayRoleBtns(gameChoice: gameChoice)
-        default:
-            print("Create an alert to start query search...")
-            createAlert(btnTag: sender.tag)
-            
-        }
-        
-    }
-    
     func createAlert(btnTag: Int) {
         let ac = UIAlertController(title: "Request", message: "Search for gamer...", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Search", style: .default){ action in
@@ -186,12 +146,16 @@ class FindGamerViewController: UIViewController {
     }
     
     func displayRoleBtns(gameChoice: String){
+        if !videoGameRoles.isEmpty {
+            videoGameRoles.removeAll()
+        }
         switch gameChoice {
         case "overwatch":
             videoGameRoles.append(VideoGameRole(roleName: "offense", roleImg: UIImage(named: "offenseOverwatchRole")!, selectedRoleImg: UIImage(named: "selectedOffenseOverwatchRole")!))
             videoGameRoles.append(VideoGameRole(roleName: "defense", roleImg: UIImage(named: "defenseOverwatchRole")!, selectedRoleImg: UIImage(named: "selectedDefenseOverwatchRole")!))
             videoGameRoles.append(VideoGameRole(roleName: "support", roleImg: UIImage(named: "supportOverwatchRole")!, selectedRoleImg: UIImage(named: "selectedSupportOverwatchRole")!))
             videoGameRoles.append(VideoGameRole(roleName: "tank", roleImg: UIImage(named: "tankOverwatchRole")!, selectedRoleImg: UIImage(named: "selectedTankOverwatchRole")!))
+            
             
         case "nba2k18":
             videoGameRoles.append(VideoGameRole(roleName: "point gaurd", roleImg: UIImage(named: "pgNba2k18")!, selectedRoleImg: UIImage(named: "selectedPgNba2k18")!))
@@ -202,16 +166,85 @@ class FindGamerViewController: UIViewController {
         default:
             return
         }
+        
+        // set the images for the role buttons collection
         var counter = 0
-        print(videoGameRoles)
         for role in videoGameRoles {
-            print("role...")
-            print(role)
             roleBtnsArr[counter].setImage(role.roleImg, for: .normal)
             roleBtnsArr[counter].setImage(role.selectedRoleImg, for: .selected)
             roleBtnsArr[counter].isHidden = false
             counter += 1
         }
+    }
+    
+    // MARK: - IBAction Functions
+    
+    @IBAction func consoleBtnPressed(_ sender: UIButton) {
+        
+        // if the same console choice is pressed again reset the questionaire
+        if sender.isSelected {
+            sender.isSelected = false
+            consoleIsTapped = false
+            middleText.isHidden = true
+            gameBtnsArr.hideButtons()
+            bottomText.isHidden = true
+            return
+        }
+        
+        // if a console btn is selcted, dont allow other console btns to be selected
+        if selectedConsoleBtnPressed?.tag != sender.tag {
+            selectedConsoleBtnPressed?.isSelected = false
+            if gameWithRolesTapped {
+                bottomText.isHidden = true
+                roleBtnsArr.hideButtons()
+                selectedVideogameBtnPressed?.isSelected = false
+            }
+        }
+        
+        consoleIsTapped = true
+        sender.isSelected = true
+        
+        // show text for game choice question
+        middleText.isHidden = false
+        
+        selectedConsoleBtnPressed = sender
+        
+        // show games based on console image pressed
+        if sender.tag == 0 {
+            print("Xbox was pressed...")
+            displayGameBtns(consoleChoice: "xbox")
+        }else if sender.tag == 1 {
+            print("Playstation was pressed...")
+            displayGameBtns(consoleChoice: "playstation")
+        }else {
+            print("PC was pressed...")
+            displayGameBtns(consoleChoice: "pc")
+        }
+        
+    }
+    
+    @IBAction func gameBtnPressed(_ sender: UIButton) {
+        if gameWithRolesTapped {
+            bottomText.isHidden = true
+            roleBtnsArr.hideButtons()
+            selectedVideogameBtnPressed?.isSelected = false
+        }
+        
+        let gameChoice = gamesCurrentlyDisplayed[sender.tag].title!
+        selectedVideogameBtnPressed = sender
+        print("\(gameChoice) was selected")
+        sender.isSelected = true
+        
+        switch gameChoice {
+        case "overwatch", "battlefield1", "nba2k18", "leagueOfLegends":
+            bottomText.isHidden = false
+            displayRoleBtns(gameChoice: gameChoice)
+            gameWithRolesTapped = true
+        default:
+            print("Create an alert to start query search...")
+            createAlert(btnTag: sender.tag)
+        }
+        
     }
     
     @IBAction func roleBtnPressed(_ sender: UIButton){
@@ -231,6 +264,8 @@ class FindGamerViewController: UIViewController {
             self.performSegue(withIdentifier: "openMenu", sender: nil)
         }
     }
+    
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationViewController = segue.destination as? SideMenuViewController {

@@ -12,13 +12,13 @@ import Firebase
 
 class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var interactor: Interactor? = nil
-    var iconNameArray = [String]()
+    let iconNameArray = ["top", "Home","Profile","Add A Tournament","Settings", "Logout"]
+    let iconImageArray = [UIImage(named: "noAvatar"), UIImage(named: "home"), UIImage(named: "profile"), UIImage(named: "addTournament"), UIImage(named: "settings"), UIImage(named: "logout")]
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        iconNameArray = ["top", "Home","Profile","Add A Tournament","Settings", "Logout"]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,6 +37,7 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "optionsCell") as! SideMenuTableViewCell
             cell.iconNameLabel.text = iconNameArray[indexPath.row]
+            cell.iconImage.image = iconImageArray[indexPath.row]
             return cell
         }
         
