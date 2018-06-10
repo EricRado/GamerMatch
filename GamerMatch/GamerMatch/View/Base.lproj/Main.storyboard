@@ -472,6 +472,9 @@
                                                     <constraint firstAttribute="width" secondItem="D9B-n5-IMJ" secondAttribute="height" multiplier="1:1" id="4iC-J0-1fA"/>
                                                 </constraints>
                                                 <state key="normal" image="offenseOverwatchRole"/>
+                                                <connections>
+                                                    <action selector="roleBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="R1F-86-ScE"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCJ-qQ-YiI" userLabel="role2">
                                                 <rect key="frame" x="152" y="0.0" width="70" height="69.5"/>
@@ -479,6 +482,9 @@
                                                     <constraint firstAttribute="width" secondItem="gCJ-qQ-YiI" secondAttribute="height" multiplier="1:1" id="MHS-8P-zyd"/>
                                                 </constraints>
                                                 <state key="normal" image="offenseOverwatchRole"/>
+                                                <connections>
+                                                    <action selector="roleBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="pwk-OU-u35"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zq1-Nm-zn6" userLabel="role3">
                                                 <rect key="frame" x="260" y="0.0" width="70" height="69.5"/>
@@ -486,6 +492,9 @@
                                                     <constraint firstAttribute="width" secondItem="zq1-Nm-zn6" secondAttribute="height" multiplier="1:1" id="JNy-Ti-fIG"/>
                                                 </constraints>
                                                 <state key="normal" image="offenseOverwatchRole"/>
+                                                <connections>
+                                                    <action selector="roleBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="W4c-kq-PrZ"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGx-9n-Agc" userLabel="role4">
                                                 <rect key="frame" x="45" y="79" width="70" height="69.5"/>
@@ -493,6 +502,9 @@
                                                     <constraint firstAttribute="width" secondItem="uGx-9n-Agc" secondAttribute="height" multiplier="1:1" id="GwP-L7-9lQ"/>
                                                 </constraints>
                                                 <state key="normal" image="offenseOverwatchRole"/>
+                                                <connections>
+                                                    <action selector="roleBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="RVz-Cz-lWJ"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdK-eM-a3N" userLabel="role5">
                                                 <rect key="frame" x="260" y="79" width="70" height="70"/>
@@ -500,6 +512,9 @@
                                                     <constraint firstAttribute="width" secondItem="rdK-eM-a3N" secondAttribute="height" multiplier="1:1" id="E6z-MS-y2m"/>
                                                 </constraints>
                                                 <state key="normal" image="offenseOverwatchRole"/>
+                                                <connections>
+                                                    <action selector="roleBtnPressed:" destination="Am9-0a-jBp" eventType="touchUpInside" id="pe8-7L-yZB"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -607,7 +622,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profilePicCell" rowHeight="194" id="PcJ-1B-ppb" customClass="SideMenuTopTableViewCell" customModule="GamerMatch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profilePicCell" rowHeight="194" id="PcJ-1B-ppb" customClass="SideMenuTopTableViewCell" customModule="GamerMatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="300" height="194"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PcJ-1B-ppb" id="3MI-tJ-NiK">
@@ -615,13 +630,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G4R-Bx-mFN">
-                                                    <rect key="frame" x="86" y="10" width="120" height="120"/>
+                                                    <rect key="frame" x="90" y="10" width="120" height="120"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="G4R-Bx-mFN" secondAttribute="height" multiplier="1:1" id="EVx-a9-A2F"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfS-rA-21e">
-                                                    <rect key="frame" x="93" y="150" width="107" height="24"/>
+                                                    <rect key="frame" x="97" y="150" width="107" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -640,7 +655,7 @@
                                             <outlet property="profileNameLabel" destination="wfS-rA-21e" id="cxj-Zg-4N6"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="optionsCell" rowHeight="55" id="I31-hx-wzE" customClass="SideMenuTableViewCell" customModule="GamerMatch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="optionsCell" rowHeight="55" id="I31-hx-wzE" customClass="SideMenuTableViewCell" customModule="GamerMatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="222" width="300" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="I31-hx-wzE" id="3DA-Ir-dxv">
@@ -648,13 +663,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYd-aw-5Uh">
-                                                    <rect key="frame" x="74" y="8" width="218" height="39"/>
+                                                    <rect key="frame" x="74" y="7.5" width="226" height="40"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LUh-V4-8UG">
-                                                    <rect key="frame" x="15" y="8" width="39" height="38"/>
+                                                    <rect key="frame" x="15" y="7.5" width="39" height="39"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="LUh-V4-8UG" secondAttribute="height" multiplier="1:1" id="twi-GN-g3o"/>
                                                     </constraints>
@@ -782,7 +797,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatCell" rowHeight="100" id="58K-3Z-WSg" customClass="chatTableViewCell" customModule="GamerMatch" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatCell" rowHeight="100" id="58K-3Z-WSg" customClass="chatTableViewCell" customModule="GamerMatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="58K-3Z-WSg" id="BhP-aY-0za">

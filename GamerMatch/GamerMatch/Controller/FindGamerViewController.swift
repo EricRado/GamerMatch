@@ -37,6 +37,12 @@ extension Array where Element == UIButton  {
     }
 }
 
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+}
+
 class FindGamerViewController: UIViewController {
     
     // MARK: - IBOutlet Variables
@@ -51,6 +57,9 @@ class FindGamerViewController: UIViewController {
     
     var consoleIsTapped: Bool = false
     var gameWithRolesTapped: Bool = false
+    
+    // console name pressed
+    var consoleName = ""
     
     // stores video games for all systems
     var videoGames = [VideoGame]()
@@ -78,6 +87,7 @@ class FindGamerViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // hide all of the UI elements except the console buttons and top text
         for btn in gameBtnsArr {
             btn.isHidden = true
         }
@@ -98,21 +108,21 @@ class FindGamerViewController: UIViewController {
     // MARK: - Display Buttons Functions
     
     func setupVideoGames() {
-        videoGames.append(VideoGame(title: "halo5", notSelectedImage: UIImage(named: "halo5")!,
+        videoGames.append(VideoGame(title: "halo 5", notSelectedImage: UIImage(named: "halo5")!,
                 selectedImage: UIImage(named: "selectedHalo5")!, gameTypes: ["xbox"]))
-        videoGames.append(VideoGame(title: "leagueOfLegends", notSelectedImage: UIImage(named: "leagueOfLegends")!,
+        videoGames.append(VideoGame(title: "league Of Legends", notSelectedImage: UIImage(named: "leagueOfLegends")!,
                 selectedImage: UIImage(named: "selectedLeagueOfLegends")!, gameTypes: ["pc"]))
         videoGames.append(VideoGame(title: "fortnite", notSelectedImage: UIImage(named: "fortnite")!,
                 selectedImage: UIImage(named: "selectedFortnite")!, gameTypes: ["xbox", "playstation", "pc"]))
         videoGames.append(VideoGame(title: "overwatch", notSelectedImage: UIImage(named: "overwatch")!,
                 selectedImage: UIImage(named: "selectedOverwatch")!, gameTypes: ["xbox", "playstation", "pc"]))
-        videoGames.append(VideoGame(title: "nba2k18", notSelectedImage: UIImage(named: "nba2k18")!,
+        videoGames.append(VideoGame(title: "nba 2k18", notSelectedImage: UIImage(named: "nba2k18")!,
                 selectedImage: UIImage(named: "selectedNba2k18")!, gameTypes: ["xbox", "playstation", "pc"]))
-        videoGames.append(VideoGame(title: "battlefield1", notSelectedImage: UIImage(named: "battlefield1")!,
+        videoGames.append(VideoGame(title: "battlefield 1", notSelectedImage: UIImage(named: "battlefield1")!,
                 selectedImage: UIImage(named: "selectedBattlefield1")!, gameTypes: ["xbox", "playstation", "pc"]))
-        videoGames.append(VideoGame(title: "uncharted4", notSelectedImage: UIImage(named: "uncharted4")!,
+        videoGames.append(VideoGame(title: "uncharted 4", notSelectedImage: UIImage(named: "uncharted4")!,
                 selectedImage: UIImage(named: "selectedUncharted4")!, gameTypes: ["playstation"]))
-        videoGames.append(VideoGame(title: "rocketLeague", notSelectedImage: UIImage(named: "rocketLeague")!,
+        videoGames.append(VideoGame(title: "rocket League", notSelectedImage: UIImage(named: "rocketLeague")!,
                 selectedImage: UIImage(named: "selectedRocketLeague")!, gameTypes: ["xbox", "playstation", "pc"]))
     }
     
@@ -134,13 +144,26 @@ class FindGamerViewController: UIViewController {
         print(gamesCurrentlyDisplayed)
     }
 
-    func createAlert(btnTag: Int) {
-        let ac = UIAlertController(title: "Request", message: "Search for gamer...", preferredStyle: .alert)
+    func createAlert(gameBtnTag: Int, roleBtnTag: Int?) {
+        var message = ""
+        let gameName = gamesCurrentlyDisplayed[gameBtnTag].title?.uppercased()
+        
+        // setup search query message to display to the user
+        if let roleBtnTag = roleBtnTag {
+            let roleName = self.videoGameRoles[roleBtnTag].roleName?.uppercased()
+            
+            message = "Search for gamer who plays \(gameName!) for \(consoleName) and plays \(roleName!) role"
+        }else {
+            message = "Search for gamer who plays \(gameName!) for \(consoleName)"
+        }
+        
+        // setup alert view controller
+        let ac = UIAlertController(title: "Request", message: message, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Search", style: .default){ action in
             print("Segue to new search result screen...")
         })
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel){ action in
-            self.gameBtnsArr[btnTag].isSelected = false
+            self.gameBtnsArr[gameBtnTag].isSelected = false
         })
         self.present(ac, animated: true, completion: nil)
     }
@@ -212,12 +235,15 @@ class FindGamerViewController: UIViewController {
         // show games based on console image pressed
         if sender.tag == 0 {
             print("Xbox was pressed...")
+            consoleName = "XBOX"
             displayGameBtns(consoleChoice: "xbox")
         }else if sender.tag == 1 {
             print("Playstation was pressed...")
+            consoleName = "PLAYSTATION"
             displayGameBtns(consoleChoice: "playstation")
         }else {
             print("PC was pressed...")
+            consoleName = "PC"
             displayGameBtns(consoleChoice: "pc")
         }
         
@@ -236,19 +262,21 @@ class FindGamerViewController: UIViewController {
         sender.isSelected = true
         
         switch gameChoice {
-        case "overwatch", "battlefield1", "nba2k18", "leagueOfLegends":
+        case "overwatch", "battlefield 1", "nba 2k18", "league Of Legends":
             bottomText.isHidden = false
             displayRoleBtns(gameChoice: gameChoice)
             gameWithRolesTapped = true
         default:
             print("Create an alert to start query search...")
-            createAlert(btnTag: sender.tag)
+            createAlert(gameBtnTag: sender.tag, roleBtnTag: nil)
         }
         
     }
     
     @IBAction func roleBtnPressed(_ sender: UIButton){
-        
+        print (videoGameRoles[sender.tag].roleName)
+        print("Create an alert to start query search...")
+        createAlert(gameBtnTag: (selectedVideogameBtnPressed?.tag)!, roleBtnTag: sender.tag)
     }
     
     @IBAction func openMenu(sender: UIBarButtonItem) {
