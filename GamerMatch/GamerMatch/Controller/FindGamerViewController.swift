@@ -41,6 +41,10 @@ extension String {
     func capitalizingFirstLetter() -> String {
         return prefix(1).uppercased() + dropFirst()
     }
+    
+    func removingWhitespaces() -> String {
+        return components(separatedBy: .whitespaces).joined()
+    }
 }
 
 class FindGamerViewController: UIViewController {
@@ -96,6 +100,8 @@ class FindGamerViewController: UIViewController {
         }
         middleText.isHidden = true
         bottomText.isHidden = true
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -146,25 +152,32 @@ class FindGamerViewController: UIViewController {
 
     func createAlert(gameBtnTag: Int, roleBtnTag: Int?) {
         var message = ""
-        let gameName = gamesCurrentlyDisplayed[gameBtnTag].title?.uppercased()
+        let gameName = gamesCurrentlyDisplayed[gameBtnTag].title?.capitalizingFirstLetter()
+        var roleName: String?
         
         // setup search query message to display to the user
         if let roleBtnTag = roleBtnTag {
-            let roleName = self.videoGameRoles[roleBtnTag].roleName?.uppercased()
+            roleName = self.videoGameRoles[roleBtnTag].roleName?.capitalizingFirstLetter()
             
-            message = "Search for gamer who plays \(gameName!) for \(consoleName) and plays \(roleName!) role"
+            message = "Search for gamer who plays \(gameName!.uppercased()) for \(consoleName.uppercased()) and plays \(roleName!.uppercased()) role"
         }else {
-            message = "Search for gamer who plays \(gameName!) for \(consoleName)"
+            message = "Search for gamer who plays \(gameName!.uppercased()) for \(consoleName.uppercased())"
         }
         
         // setup alert view controller
         let ac = UIAlertController(title: "Request", message: message, preferredStyle: .alert)
+        
         ac.addAction(UIAlertAction(title: "Search", style: .default){ action in
-            print("Segue to new search result screen...")
+            if let gameName = gameName {
+                FirebaseCalls.firebaseCall.searchForGamer(consoleChoice:
+                    self.consoleName, gameChoice: gameName, roleChoice: roleName)
+            }
         })
+        
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel){ action in
             self.gameBtnsArr[gameBtnTag].isSelected = false
         })
+        
         self.present(ac, animated: true, completion: nil)
     }
     
@@ -235,11 +248,11 @@ class FindGamerViewController: UIViewController {
         // show games based on console image pressed
         if sender.tag == 0 {
             print("Xbox was pressed...")
-            consoleName = "XBOX"
+            consoleName = "Xbox"
             displayGameBtns(consoleChoice: "xbox")
         }else if sender.tag == 1 {
             print("Playstation was pressed...")
-            consoleName = "PLAYSTATION"
+            consoleName = "Playstation"
             displayGameBtns(consoleChoice: "playstation")
         }else {
             print("PC was pressed...")
@@ -274,8 +287,6 @@ class FindGamerViewController: UIViewController {
     }
     
     @IBAction func roleBtnPressed(_ sender: UIButton){
-        print (videoGameRoles[sender.tag].roleName)
-        print("Create an alert to start query search...")
         createAlert(gameBtnTag: (selectedVideogameBtnPressed?.tag)!, roleBtnTag: sender.tag)
     }
     
