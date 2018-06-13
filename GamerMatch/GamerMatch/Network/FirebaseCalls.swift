@@ -19,8 +19,7 @@ class FirebaseCalls {
     }
     
     func searchForGamer(consoleChoice: String, gameChoice: String, roleChoice: String?) {
-        print("consoleChoice: \(consoleChoice)   gameChoice: \(gameChoice)")
-        print("newGameChoice string : \(gameChoice.removingWhitespaces())")
+        print("consoleChoice: \(consoleChoice)   gameChoice: \(gameChoice.removingWhitespaces())")
         var searchRef: DatabaseReference
         
         // check if search query message contains a role choice or not
@@ -33,6 +32,9 @@ class FirebaseCalls {
         // retrieve data based on the database reference created
         searchRef.observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot)
+            if !snapshot.exists() {
+                print("No gamer was found with specified criteria")
+            }
         }) { (error) in
             print(error.localizedDescription)
         }

@@ -294,6 +294,56 @@
             </objects>
             <point key="canvasLocation" x="924.375" y="31.690140845070424"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="6Uq-yf-7vN">
+            <objects>
+                <viewController id="J42-57-qP3" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fXC-EP-6os">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dT2-8I-1i6">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="gamerCell" rowHeight="74" id="b5c-vX-wrm">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="74"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="b5c-vX-wrm" id="4bL-dQ-R3a">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="73.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Os3-ll-ncq">
+                                                    <rect key="frame" x="15" y="6" width="60" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DML-cB-oYd">
+                                                    <rect key="frame" x="91" y="26" width="268" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dT2-8I-1i6" firstAttribute="top" secondItem="fXC-EP-6os" secondAttribute="top" id="N1n-zd-AwI"/>
+                            <constraint firstItem="dT2-8I-1i6" firstAttribute="bottom" secondItem="7dp-dI-9Zn" secondAttribute="bottom" id="N6b-tn-qK4"/>
+                            <constraint firstItem="dT2-8I-1i6" firstAttribute="trailing" secondItem="7dp-dI-9Zn" secondAttribute="trailing" id="OzA-lp-Q8y"/>
+                            <constraint firstItem="dT2-8I-1i6" firstAttribute="leading" secondItem="7dp-dI-9Zn" secondAttribute="leading" id="k46-Ji-L6Y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7dp-dI-9Zn"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L1H-zu-i8O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3476" y="-659.82008995502258"/>
+        </scene>
         <!--Find Gamer-->
         <scene sceneID="lmF-aY-ziP">
             <objects>
@@ -598,6 +648,7 @@
                         <outletCollection property="roleBtnsArr" destination="zq1-Nm-zn6" collectionClass="NSMutableArray" id="rs6-hE-tuF"/>
                         <outletCollection property="roleBtnsArr" destination="uGx-9n-Agc" collectionClass="NSMutableArray" id="GYJ-Ab-kis"/>
                         <outletCollection property="roleBtnsArr" destination="rdK-eM-a3N" collectionClass="NSMutableArray" id="ihb-20-wDM"/>
+                        <segue destination="J42-57-qP3" kind="show" identifier="findGamerResultSegue" id="VgG-o6-vEZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rSD-LB-xvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
