@@ -16,7 +16,6 @@ extension UIImageView {
                 print(error.localizedDescription)
                 return
             }
-            print(data)
             print("Sending to dispatch...")
             DispatchQueue.main.async {
                 if let data = data {
