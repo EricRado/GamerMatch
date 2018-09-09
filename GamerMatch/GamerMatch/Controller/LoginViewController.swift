@@ -31,13 +31,31 @@ extension UITextField{
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField! {
+        didSet {
+            emailTextField.attributedPlaceholder = NSAttributedString(string: "Email",
+                attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        }
+    }
+    @IBOutlet weak var passwordTextField: UITextField! {
+        didSet {
+            passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        }
+    }
+    
+    @IBOutlet weak var backgroundImg: UIImageView! {
+        didSet {
+            backgroundImg.alpha = 0.80
+        }
+    }
+    
     @IBOutlet weak var signInButton: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.alpha = 0.75
 
         // Do any additional setup after loading the view.
         signInButton.layer.cornerRadius = 10

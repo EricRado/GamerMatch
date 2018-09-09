@@ -128,7 +128,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! chatTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatTableViewCell
         
         let chatCell = chats[indexPath.row]
         

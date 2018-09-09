@@ -124,6 +124,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundImg" destination="Dsi-OW-asN" id="YIh-lr-W8s"/>
                         <outlet property="emailTextField" destination="tfz-3N-ISO" id="cQv-eA-HGD"/>
                         <outlet property="passwordTextField" destination="eBm-MF-ufF" id="VPy-r5-7k1"/>
                         <outlet property="signInButton" destination="h0x-Bx-3ku" id="DhL-7Q-Qg7"/>
@@ -1214,8 +1215,8 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Iambutters305" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Bo-LT-m7n">
-                                        <rect key="frame" x="119" y="129.5" width="138.5" height="24"/>
-                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="22"/>
+                                        <rect key="frame" x="124.5" y="129.5" width="126" height="22"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1224,7 +1225,6 @@
                                         <state key="normal" image="AddGamerBtn"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.97060709680000001" green="0.16373391640000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="OZh-Hw-DAm" firstAttribute="centerX" secondItem="EAa-Jh-GhN" secondAttribute="centerX" id="6CD-bk-TTN"/>
                                     <constraint firstItem="Th2-ij-9pg" firstAttribute="centerX" secondItem="EAa-Jh-GhN" secondAttribute="centerX" id="9Dr-tn-84H"/>
@@ -1239,50 +1239,66 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfj-hz-Eni" userLabel="Middle Container">
                                 <rect key="frame" x="0.0" y="274" width="375" height="230"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Games I Play :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MGJ-UB-TlE">
-                                        <rect key="frame" x="16" y="16" width="122" height="21.5"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Games I Play :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MGJ-UB-TlE">
+                                        <rect key="frame" x="16" y="45" width="108.5" height="19.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Consoles I Own :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMx-va-5UI">
-                                        <rect key="frame" x="16" y="68" width="145" height="22"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UgS-AY-EM4">
-                                        <rect key="frame" x="16" y="102" width="343" height="128"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Uncharted 4 , Overwatch , Halo 5 , Rocket League , Battlefield 1 , Nba 2k18  " adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BmZ-H8-BMY" userLabel="Bio Text View">
+                                        <rect key="frame" x="132" y="45" width="228" height="58"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XCu-AF-0Cd">
+                                        <rect key="frame" x="8" y="8" width="359" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Consoles I Own :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMx-va-5UI">
+                                                <rect key="frame" x="8" y="8" width="129" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" fixedFrame="YES" text="Xbox, PC, Playstation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZQ-Te-06c">
+                                                <rect key="frame" x="153" y="8" width="198" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.17823055760000001" green="0.91038307380000005" blue="0.92703045689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="UgS-AY-EM4" userLabel="Game Text View">
+                                        <rect key="frame" x="16" y="137" width="343" height="93"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.2159880049" green="0.4937459521" blue="0.091812423379999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="MGJ-UB-TlE" firstAttribute="leading" secondItem="bfj-hz-Eni" secondAttribute="leading" constant="16" id="3zz-0A-OHJ"/>
-                                    <constraint firstAttribute="trailing" secondItem="UgS-AY-EM4" secondAttribute="trailing" constant="16" id="AAn-bl-9wL"/>
-                                    <constraint firstItem="PMx-va-5UI" firstAttribute="leading" secondItem="bfj-hz-Eni" secondAttribute="leading" constant="16" id="OUC-Jh-tT5"/>
-                                    <constraint firstAttribute="bottom" secondItem="UgS-AY-EM4" secondAttribute="bottom" id="exq-Lx-g6Y"/>
-                                    <constraint firstItem="UgS-AY-EM4" firstAttribute="leading" secondItem="bfj-hz-Eni" secondAttribute="leading" constant="16" id="gar-cu-8GN"/>
-                                    <constraint firstItem="MGJ-UB-TlE" firstAttribute="top" secondItem="bfj-hz-Eni" secondAttribute="top" constant="16" id="h5T-hB-Ubf"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Oh-vb-e4p" userLabel="Bottom Container">
                                 <rect key="frame" x="0.0" y="504" width="375" height="114"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="V2i-gl-QlZ">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="V2i-gl-QlZ">
                                         <rect key="frame" x="8" y="14.5" width="359" height="86"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5tk-Z2-J1o" userLabel="Image1">
-                                                <rect key="frame" x="0.0" y="0.0" width="113" height="86"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="109" height="86"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wou-fN-ChX" userLabel="Image2">
-                                                <rect key="frame" x="123" y="0.0" width="113" height="86"/>
+                                                <rect key="frame" x="125" y="0.0" width="109" height="86"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K60-qA-6Lh" userLabel="Image3">
-                                                <rect key="frame" x="246" y="0.0" width="113" height="86"/>
+                                                <rect key="frame" x="250" y="0.0" width="109" height="86"/>
                                             </imageView>
                                         </subviews>
                                     </stackView>
@@ -1397,7 +1413,7 @@
         <image name="xbox" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dSy-8B-ZhX"/>
+        <segue reference="p1K-8C-PN8"/>
         <segue reference="bgd-bn-Rbp"/>
     </inferredMetricsTieBreakers>
 </document>
