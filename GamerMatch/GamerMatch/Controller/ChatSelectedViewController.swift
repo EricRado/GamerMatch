@@ -2,7 +2,7 @@
 //  ChatSelectedViewController.swift
 //  GamerMatch
 //
-//  Created by Eric Rado on 3/11/18.
+//  Created by Eric Rado on 9/9/18.
 //  Copyright © 2018 Eric Rado. All rights reserved.
 //
 
@@ -54,7 +54,7 @@ class ChatSelectedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         print("Chat Selected View Controller...")
         print(participantIds)
         
@@ -95,22 +95,7 @@ class ChatSelectedViewController: UIViewController {
     @objc func sendMessage(sender: UIButton!) {
         
     }
-
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

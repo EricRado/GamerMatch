@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0701F3BD2145FF7000A73A77 /* ChatSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0701F3BC2145FF7000A73A77 /* ChatSelectedViewController.swift */; };
 		070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927F7205C7046005B0EAF /* FindGamerViewController.swift */; };
 		070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927F920608CDF005B0EAF /* VideoGame.swift */; };
 		070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927FB20619FC5005B0EAF /* VideoGameRole.swift */; };
@@ -35,7 +36,6 @@
 		07E586F32052FA5700023383 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F22052FA5700023383 /* Chat.swift */; };
 		07E586F52052FDCA00023383 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F42052FDCA00023383 /* Message.swift */; };
 		07E586F720542E2C00023383 /* ChatUserDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F620542E2C00023383 /* ChatUserDisplay.swift */; };
-		07E586FB205604ED00023383 /* ChatSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586FA205604ED00023383 /* ChatSelectedViewController.swift */; };
 		07E586FD2056170600023383 /* TournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586FC2056170600023383 /* TournamentViewController.swift */; };
 		07E586FF20578FA400023383 /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586FE20578FA300023383 /* Tournament.swift */; };
 		07E99B042092626F00892E73 /* MenuHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E99B032092626F00892E73 /* MenuHelper.swift */; };
@@ -43,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0701F3BC2145FF7000A73A77 /* ChatSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectedViewController.swift; sourceTree = "<group>"; };
 		070927F7205C7046005B0EAF /* FindGamerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGamerViewController.swift; sourceTree = "<group>"; };
 		070927F920608CDF005B0EAF /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		070927FB20619FC5005B0EAF /* VideoGameRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameRole.swift; sourceTree = "<group>"; };
@@ -73,7 +74,6 @@
 		07E586F22052FA5700023383 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		07E586F42052FDCA00023383 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		07E586F620542E2C00023383 /* ChatUserDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserDisplay.swift; sourceTree = "<group>"; };
-		07E586FA205604ED00023383 /* ChatSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectedViewController.swift; sourceTree = "<group>"; };
 		07E586FC2056170600023383 /* TournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentViewController.swift; sourceTree = "<group>"; };
 		07E586FE20578FA300023383 /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		07E99B032092626F00892E73 /* MenuHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHelper.swift; sourceTree = "<group>"; };
@@ -153,11 +153,11 @@
 				07E586C0204F90E700023383 /* LoginViewController.swift */,
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07E586CB2050E14F00023383 /* ChatViewController.swift */,
-				07E586FA205604ED00023383 /* ChatSelectedViewController.swift */,
 				07E586FC2056170600023383 /* TournamentViewController.swift */,
 				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 				0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */,
+				0701F3BC2145FF7000A73A77 /* ChatSelectedViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -385,10 +385,10 @@
 				07E586FD2056170600023383 /* TournamentViewController.swift in Sources */,
 				07C07F88209268C30005494D /* Interactor.swift in Sources */,
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
-				07E586FB205604ED00023383 /* ChatSelectedViewController.swift in Sources */,
 				07C07F8A20926FAB0005494D /* PresentMenuAnimator.swift in Sources */,
 				07C982F22093FA41007B46BB /* SideMenuTopTableViewCell.swift in Sources */,
 				07C07F8C209272B50005494D /* DismissMenuAnimator.swift in Sources */,
+				0701F3BD2145FF7000A73A77 /* ChatSelectedViewController.swift in Sources */,
 				07C07F90209274EF0005494D /* SideMenuTableViewCell.swift in Sources */,
 				070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */,
 				07E586CE2050E85300023383 /* ChatTableViewCell.swift in Sources */,
