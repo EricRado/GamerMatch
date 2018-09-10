@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GamerMatch/Controller/ChatSelectedViewController.swift"
-            timestampString = "558290658.405642"
+            timestampString = "558292045.624814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "getMessages()"
             landmarkType = "7">
          </BreakpointContent>

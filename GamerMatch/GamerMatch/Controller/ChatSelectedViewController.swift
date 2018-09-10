@@ -159,6 +159,8 @@ class ChatSelectedViewController: UIViewController {
             } catch let error {
                 print(error)
             }
+            print("reloading...")
+            self.collectionView.reloadData()
         }) { (error) in
             print(error)
         }
@@ -199,11 +201,28 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
             if messages[indexPath.item].senderId != Auth.auth().currentUser?.uid {
                 
                 // messages recieved
+                cell.messageTextView.frame = CGRect(x: 48 + 8, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+                cell.textBubbleView.frame = CGRect(x: 48 - 10, y: -4, width: estimatedFrame.width + 40, height: estimatedFrame.height + 26)
                 
+                cell.profileImageView.isHidden = false
+                
+                cell.bubbleImageView.image = ChatMessageCollectionViewCell.grayBubbleImage
+                cell.bubbleImageView.tintColor = UIColor(white: 0.95, alpha: 1)
+                cell.messageTextView.textColor = UIColor.black
+                
+                //cell.profileImageView.image =
                 
             } else {
                 
                 // messages sent
+                cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 40, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+                cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 40, y: -4, width: estimatedFrame.width + 34, height: estimatedFrame.height + 26)
+                
+                cell.profileImageView.isHidden = true
+                
+                cell.bubbleImageView.image = ChatMessageCollectionViewCell.blueBubbleImage
+                cell.bubbleImageView.tintColor = UIColor(red: 0, green: 137/255, blue: 249/255, alpha: 1)
+                cell.messageTextView.textColor = UIColor.white
             }
         }
         
