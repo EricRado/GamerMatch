@@ -23,9 +23,13 @@ extension UIView {
 }
 
 class ChatSelectedViewController: UIViewController {
+    private let cellId = "messageCell"
     var participantIds = [String]()
     var selectedChatUser: ChatUserDisplay?
     var chat: Chat?
+    var messages = [Message]()
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     let messageInputContainerView: UIView = {
         let view = UIView()
@@ -58,6 +62,10 @@ class ChatSelectedViewController: UIViewController {
         print("Chat Selected View Controller...")
         print(participantIds)
         
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = UIColor.white
+        
         // setup message field and send button
         view.addSubview(messageInputContainerView)
         view.addConstraintsWithFormat("H:|[v0]|", views: messageInputContainerView)
@@ -69,6 +77,10 @@ class ChatSelectedViewController: UIViewController {
         setupInputComponents()
         
         // add notification observers to handle keyboard display when typing message
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        self.navigationItem.title = chat?.title
     }
     
     fileprivate func setupInputComponents() {
@@ -92,10 +104,67 @@ class ChatSelectedViewController: UIViewController {
         textField.text = ""
     }
     
+    @objc func handleKeyboardNotification(_ notification: Notification) {
+        if let userInfo = notification.userInfo {
+            let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect
+            print(keyboardFrame!)
+            
+            let isKeyboardShowing = notification.name == NSNotification.Name.UIKeyboardWillShow
+            
+            bottomConstraint?.constant = isKeyboardShowing ? -keyboardFrame!.height : 0
+            
+            UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                if isKeyboardShowing {
+                    if self.messages.count != 0 {
+                        let indexPath = IndexPath(item: self.messages.count - 1, section: 0)
+                        self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+                    }
+                }
+            }
+        }
+    }
+    
     @objc func sendMessage(sender: UIButton!) {
         
     }
     
+    
 }
+
+extension ChatSelectedViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        inputTextField.endEditing(true)
+    }
+}
+
+extension ChatSelectedViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCollectionViewCell
+        
+        
+        return cell
+    }
+}
+
+extension ChatSelectedViewController: UICollectionViewDelegateFlowLayout {
+
+}
+
+
+
+
+
+
+
+
+
+
 
 

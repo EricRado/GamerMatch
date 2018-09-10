@@ -958,9 +958,40 @@
                     <view key="view" contentMode="scaleToFill" id="91U-Wd-dPx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GJ1-OK-Rsg">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ei7-eP-9Wr">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="messageCell" id="v2Y-YO-8Rt" customClass="ChatMessageCollectionViewCell" customModule="GamerMatch" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PI7-Ma-HIY" firstAttribute="trailing" secondItem="GJ1-OK-Rsg" secondAttribute="trailing" id="454-Vf-UZC"/>
+                            <constraint firstItem="GJ1-OK-Rsg" firstAttribute="top" secondItem="PI7-Ma-HIY" secondAttribute="top" id="axn-hn-feu"/>
+                            <constraint firstItem="PI7-Ma-HIY" firstAttribute="bottom" secondItem="GJ1-OK-Rsg" secondAttribute="bottom" id="kru-8F-d78"/>
+                            <constraint firstItem="GJ1-OK-Rsg" firstAttribute="leading" secondItem="PI7-Ma-HIY" secondAttribute="leading" id="yPq-2J-e4R"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="PI7-Ma-HIY"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="GJ1-OK-Rsg" id="aBA-q9-doR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujL-IP-XsX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
