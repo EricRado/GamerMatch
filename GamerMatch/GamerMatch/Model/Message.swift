@@ -9,25 +9,30 @@
 import Foundation
 import Firebase
 
-class Message{
-    var body: String?
-    var senderId: String?
+struct Message: Decodable{
+    let body: String?
+    let senderId: String?
+    let timestamp: String?
     
-    init(body: String, senderId: String){
+    init(body: String, senderId: String, timestamp: String){
         self.body = body
         self.senderId = senderId
+        self.timestamp = timestamp
     }
     
     init?(snapshot: DataSnapshot){
         guard let dict = snapshot.value as? [String: String] else{return nil}
         guard let body = dict["body"] else {return nil}
         guard let senderId = dict["senderId"] else {return nil}
+        guard let timestamp = dict["timestamp"] else {return nil}
         
         self.body = body
         self.senderId = senderId
+        self.timestamp = timestamp
     }
     
+    
     func toAnyObject() -> [AnyHashable: Any]{
-        return ["body": body!, "senderId": senderId!] as [AnyHashable: Any]
+        return ["body": body!, "senderId": senderId!, "timestamp": timestamp!] as [AnyHashable: Any]
     }
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
 
 extension UIView {
     
@@ -22,12 +24,26 @@ extension UIView {
     }
 }
 
+extension Date {
+    func toMillis() -> Int64! {
+        return Int64(self.timeIntervalSince1970 * 1000)
+    }
+}
+
+extension Int64 {
+    func timestampToDate() -> Date {
+        let timeInterval = Double(self / 1000)
+        return Date(timeIntervalSince1970: timeInterval)
+    }
+}
+
 class ChatSelectedViewController: UIViewController {
     private let cellId = "messageCell"
     var participantIds = [String]()
     var selectedChatUser: ChatUserDisplay?
     var chat: Chat?
     var messages = [Message]()
+    let dbRef = Database.database().reference()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -81,6 +97,8 @@ class ChatSelectedViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.navigationItem.title = chat?.title
+        
+        getMessages()
     }
     
     fileprivate func setupInputComponents() {
@@ -126,8 +144,31 @@ class ChatSelectedViewController: UIViewController {
         }
     }
     
-    @objc func sendMessage(sender: UIButton!) {
+    fileprivate func getMessages() {
+        guard let chatId = chat?.id else { return }
         
+        let messagesRef = dbRef.child("Messages/\(chatId)/")
+        messagesRef.queryOrdered(byChild: "timestamp").observe(.childAdded, with: { (snapshot) in
+            guard let dict = snapshot.value as? [String: Any] else {return}
+            print(dict)
+            
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
+                let message = try JSONDecoder().decode(Message.self, from: jsonData)
+                self.messages.append(message)
+            } catch let error {
+                print(error)
+            }
+        }) { (error) in
+            print(error)
+        }
+    }
+    
+    @objc func sendMessage(sender: UIButton!) {
+        print("Sending message")
+        if inputTextField.text == "" {
+            return
+        }
     }
     
     
@@ -142,19 +183,51 @@ extension ChatSelectedViewController: UICollectionViewDelegate {
 extension ChatSelectedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return messages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCollectionViewCell
         
+        if let messageText = messages[indexPath.item].body {
+            cell.messageTextView.text = "\(messageText)"
+            
+            let size = CGSize(width: 250, height: 1000)
+            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+            let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
+            
+            if messages[indexPath.item].senderId != Auth.auth().currentUser?.uid {
+                
+                // messages recieved
+                
+                
+            } else {
+                
+                // messages sent
+            }
+        }
         
         return cell
     }
 }
 
 extension ChatSelectedViewController: UICollectionViewDelegateFlowLayout {
-
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if let messageText = messages[indexPath.item].body {
+            let size = CGSize(width: 250, height: 1000)
+            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+            let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
+            
+            return CGSize(width: view.frame.width, height: estimatedFrame.height + 20)
+        }
+        
+        return CGSize(width: view.frame.width, height: 100)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+    }
 }
 
 

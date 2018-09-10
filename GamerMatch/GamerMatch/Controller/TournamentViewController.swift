@@ -95,7 +95,6 @@ class TournamentViewController: UIViewController {
         
         view.addSubview(mapView)
         
-        
     }
     
     func getTournaments(){
