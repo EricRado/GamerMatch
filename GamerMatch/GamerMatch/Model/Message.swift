@@ -10,11 +10,13 @@ import Foundation
 import Firebase
 
 struct Message: Decodable{
-    let body: String?
+    let id: String?
     let senderId: String?
+    let body: String?
     let timestamp: String?
     
-    init(body: String, senderId: String, timestamp: String){
+    init(id: String, senderId: String, body: String, timestamp: String){
+        self.id = id
         self.body = body
         self.senderId = senderId
         self.timestamp = timestamp
@@ -22,10 +24,12 @@ struct Message: Decodable{
     
     init?(snapshot: DataSnapshot){
         guard let dict = snapshot.value as? [String: String] else{return nil}
+        guard let id = dict["id"] else { return nil }
         guard let body = dict["body"] else {return nil}
         guard let senderId = dict["senderId"] else {return nil}
         guard let timestamp = dict["timestamp"] else {return nil}
         
+        self.id = id
         self.body = body
         self.senderId = senderId
         self.timestamp = timestamp
@@ -33,6 +37,6 @@ struct Message: Decodable{
     
     
     func toAnyObject() -> [AnyHashable: Any]{
-        return ["body": body!, "senderId": senderId!, "timestamp": timestamp!] as [AnyHashable: Any]
+        return ["id": id!,"body": body!, "senderId": senderId!, "timestamp": timestamp!] as [AnyHashable: Any]
     }
 }

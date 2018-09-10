@@ -28,7 +28,7 @@ extension UITextField{
     }
 }
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController {
     
     
     @IBOutlet weak var emailTextField: UITextField! {
@@ -65,11 +65,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return true
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -99,15 +95,5 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func registerPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "registrationSegue", sender: self)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -24,6 +24,24 @@ extension UIView {
     }
 }
 
+extension UIViewController: UITextFieldDelegate {
+    func hideKeyboardWhenTappedAround(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        print("something was tapped")
+    }
+    
+    @objc func dismissKeyboard(){
+        view.endEditing(true)
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
 extension Date {
     func toMillis() -> Int64! {
         return Int64(self.timeIntervalSince1970 * 1000)
@@ -44,6 +62,13 @@ class ChatSelectedViewController: UIViewController {
     var chat: Chat?
     var messages = [Message]()
     let dbRef = Database.database().reference()
+    lazy var messagesRef: DatabaseReference? = {
+        if let id = self.chat?.id {
+            print("this is id: \(id)")
+           return self.dbRef.child("Messages/\(id)/")
+        }
+        return nil
+    }()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -81,6 +106,9 @@ class ChatSelectedViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = UIColor.white
+        collectionView.keyboardDismissMode = .onDrag
+        
+        inputTextField.delegate = self
         
         // setup message field and send button
         view.addSubview(messageInputContainerView)
@@ -93,7 +121,7 @@ class ChatSelectedViewController: UIViewController {
         setupInputComponents()
         
         // add notification observers to handle keyboard display when typing message
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.navigationItem.title = chat?.title
@@ -145,10 +173,10 @@ class ChatSelectedViewController: UIViewController {
     }
     
     fileprivate func getMessages() {
-        guard let chatId = chat?.id else { return }
+        guard messagesRef != nil else { return }
         
-        let messagesRef = dbRef.child("Messages/\(chatId)/")
-        messagesRef.queryOrdered(byChild: "timestamp").observe(.childAdded, with: { (snapshot) in
+        messagesRef?.queryOrdered(byChild: "timestamp").observe(.childAdded, with: { (snapshot) in
+            
             guard let dict = snapshot.value as? [String: Any] else {return}
             print(dict)
             
@@ -164,6 +192,7 @@ class ChatSelectedViewController: UIViewController {
         }) { (error) in
             print(error)
         }
+        
     }
     
     @objc func sendMessage(sender: UIButton!) {
@@ -171,13 +200,27 @@ class ChatSelectedViewController: UIViewController {
         if inputTextField.text == "" {
             return
         }
+        
+        if let senderId = Auth.auth().currentUser?.uid,
+           let body = inputTextField.text{
+            
+            let timestamp = "\(Date().toMillis() ?? 0)"
+            let newMessageRef = messagesRef?.childByAutoId()
+            let id = newMessageRef?.key
+            let message = Message(id: id!, senderId: senderId, body: body, timestamp: timestamp)
+            messagesRef?.childByAutoId().setValue(message.toAnyObject(), withCompletionBlock: { (error, _) in
+                if let error = error {
+                    print(error)
+                }
+            })
+        }
+        
+        textFieldDidBeginEditing(textField: inputTextField)
     }
-    
-    
 }
 
 extension ChatSelectedViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         inputTextField.endEditing(true)
     }
 }
@@ -201,6 +244,7 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
             if messages[indexPath.item].senderId != Auth.auth().currentUser?.uid {
                 
                 // messages recieved
+                
                 cell.messageTextView.frame = CGRect(x: 48 + 8, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
                 cell.textBubbleView.frame = CGRect(x: 48 - 10, y: -4, width: estimatedFrame.width + 40, height: estimatedFrame.height + 26)
                 
@@ -215,8 +259,9 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
             } else {
                 
                 // messages sent
+                
                 cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 40, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
-                cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 40, y: -4, width: estimatedFrame.width + 34, height: estimatedFrame.height + 26)
+                cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 40 - 10, y: -4, width: estimatedFrame.width + 34, height: estimatedFrame.height + 26)
                 
                 cell.profileImageView.isHidden = true
                 
@@ -233,6 +278,7 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
 extension ChatSelectedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         if let messageText = messages[indexPath.item].body {
             let size = CGSize(width: 250, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)

@@ -14,6 +14,7 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.text = "Sample message"
         textView.backgroundColor = UIColor.clear
+        textView.isEditable = false
         return textView
     }()
     
