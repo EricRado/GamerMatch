@@ -82,8 +82,9 @@ class LoginViewController: UIViewController {
             if error != nil {
                 print("There was an error : \((error?.localizedDescription)!)")
                 SVProgressHUD.dismiss()
-            }else {
+            } else {
                 print("Login successful")
+                // setup all of the signed in user info to User singleton object
                 User.onlineUser.retrieveUserInfo(uid: (user?.uid)!)
                 SVProgressHUD.dismiss()
                 self.performSegue(withIdentifier: "signinDashboardSegue", sender: self)

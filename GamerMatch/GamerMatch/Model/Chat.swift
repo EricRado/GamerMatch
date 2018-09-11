@@ -9,19 +9,32 @@
 import Foundation
 import Firebase
 
-struct Chat {
-    var id: String?
-    var creatorId: String?
+struct Chat: Decodable {
+    let id: String?
+    let creatorId: String?
+    var adminId: String?
     var title: String?
-    var isGroupChat: Bool?
+    let isGroupChat: Bool?
     var lastMessage: String?
+    var members: [String: Bool]?
     
     init(id: String, creatorId: String, isGroupChat: Bool, title: String, lastMessage: String = ""){
         self.id = id
         self.creatorId = creatorId
+        self.adminId = creatorId
         self.isGroupChat = isGroupChat
         self.title = title
         self.lastMessage = lastMessage
+    }
+    
+    init(id: String, creatorId: String, adminId: String, title: String, isGroupChat: Bool, lastMessage: String, members: [String: Bool]) {
+        self.id = id
+        self.creatorId = creatorId
+        self.adminId = adminId
+        self.isGroupChat = isGroupChat
+        self.title = title
+        self.lastMessage = lastMessage
+        self.members = members
     }
     
     init?(snapshot: DataSnapshot){

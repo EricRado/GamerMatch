@@ -9,11 +9,13 @@
 import UIKit
 import Firebase
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChatViewController: UIViewController {
     
     @IBOutlet weak var chatTableView: UITableView!
     
-    let dbRef = Database.database().reference()
+    let chatRef: DatabaseReference = {
+        return Database.database().reference().child("Chats/")
+    }()
     
     /* - chats - stores all of the user's chats meta data
        - chatParticipantDict - stores chat's participants ids, keyed to the chat id
@@ -37,13 +39,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         chatTableView.dataSource = self
         chatTableView.delegate = self
         
-        getUserChatsId()
+        print(User.onlineUser.chatIds)
+        
+        //getUserChatsId()
         
     }
     
+    
     func getUserChatsId(){
-        let userChatsRef = dbRef.child("Users").child((Auth.auth().currentUser?.uid)!).child("chatIds")
-        userChatsRef.observe(.value) { (snapshot) in
+        guard userChatsRef != nil else { return }
+        
+        userChatsRef?.observe(.value) { (snapshot) in
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 self.getChatDetails(chatId: child.key)
                 self.getParticipantsId(chatId: child.key)
@@ -52,7 +58,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getChatDetails(chatId: String){
-        let chatRef = dbRef.child("Chats").child(chatId)
         
         var creatorId = ""
         var id = ""
@@ -60,7 +65,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         var title = ""
         var lastMessage = ""
         
-        chatRef.observe(.value) { (snapshot) in
+        chatRef.child("\(chatId)/").observe(.value) { (snapshot) in
             if let dict = snapshot.value as? [String: Any] {
                 if let unwrapCreatorId = dict["creatorId"] as? String {
                     creatorId = unwrapCreatorId
@@ -84,7 +89,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getParticipantsId(chatId: String){
-        let chatMemberRef = dbRef.child("Chats").child(chatId).child("members")
+        let chatMemberRef = chatRef.child(chatId).child("members")
      
         chatMemberRef.observeSingleEvent(of: .value) { (snapshot) in
             for child in snapshot.children.allObjects as! [DataSnapshot] {
@@ -101,7 +106,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         var username: String = ""
         var avatarURL: String = ""
        
-        let userPicURL = dbRef.child("Users/").child(id)
+        let userPicURL = Database.database().reference().child("Users/").child(id)
         
         userPicURL.observeSingleEvent(of: .value) { (snapshot) in
             // get the username and img url from the participant id
@@ -127,9 +132,55 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatParticipantDict.count
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "chatSegue" {
+            let vc = segue.destination as! ChatSelectedViewController
+            
+            // if the chat is 1on1 set title for message log screen to user's
+            // username else to group chat's title
+            if let user = selectedChatUser {
+                vc.navigationItem.title = user.username
+                vc.selectedChatUser = user
+            }else {
+                vc.navigationItem.title = selectedChat?.title
+            }
+            
+            // send chat meta data and participant ids to message log screen
+            vc.chat = selectedChat
+            vc.participantIds = selectedParticipantIds
+            
+            // reset selectedChatUser
+            selectedChatUser = nil
+        }
     }
+}
+
+
+extension ChatViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedChatId = chats[indexPath.row].id
+        
+        selectedChat = chats[indexPath.row]
+        selectedParticipantIds = chatParticipantDict[selectedChatId!]!
+        
+        // this is a 1on1 chat get user's username and avatar pic
+        if selectedParticipantIds.count == 1 {
+            let user = chatUsers.filter({$0.id == selectedParticipantIds[0]})
+            selectedChatUser = user.first
+        }
+        
+        performSegue(withIdentifier: "chatSegue", sender: self)
+        
+        chatTableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return chatTableView.rowHeight
+    }
+}
+
+extension ChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatTableViewCell
@@ -155,48 +206,36 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedChatId = chats[indexPath.row].id
-        
-        selectedChat = chats[indexPath.row]
-        selectedParticipantIds = chatParticipantDict[selectedChatId!]!
-    
-        // this is a 1on1 chat get user's username and avatar pic
-        if selectedParticipantIds.count == 1 {
-            let user = chatUsers.filter({$0.id == selectedParticipantIds[0]})
-            selectedChatUser = user.first
-        }
-        
-        performSegue(withIdentifier: "chatSegue", sender: self)
-        
-        chatTableView.deselectRow(at: indexPath, animated: true)
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chatParticipantDict.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return chatTableView.rowHeight
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "chatSegue" {
-            let vc = segue.destination as! ChatSelectedViewController
-            
-            // if the chat is 1on1 set title for message log screen to user's
-            // username else to group chat's title
-            if let user = selectedChatUser {
-                vc.navigationItem.title = user.username
-                vc.selectedChatUser = user
-            }else {
-                vc.navigationItem.title = selectedChat?.title
-            }
-            
-            // send chat meta data and participant ids to message log screen
-            vc.chat = selectedChat
-            vc.participantIds = selectedParticipantIds
-            
-            // reset selectedChatUser
-            selectedChatUser = nil
-        }
-    }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

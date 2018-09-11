@@ -32,6 +32,7 @@ final class User {
     var isActive: Bool?
     var avatarURL: String?
     var userImg:UIImageView?
+    var chatIds: [String: String]?
     
     static var onlineUser = User(image: UIImage(named: "noAvatarImg")!)
     private var dbRef = Database.database().reference()
@@ -50,6 +51,7 @@ final class User {
         guard let bio = dict["bio"] as! String? else {return nil}
         guard let isActive = dict["isActive"] as! String? else {return nil}
         guard let avatarURL = dict["avatarURL"] as! String? else {return nil}
+        guard let chatIds = dict["chatIds"] as? [String: String] else { return nil }
         
         self.uid = uid
         self.email = email
@@ -58,6 +60,7 @@ final class User {
         self.bio = bio
         self.isActive = isActive.toBool()
         self.avatarURL = avatarURL
+        self.chatIds = chatIds
     }
     
     func toAnyObject() -> [AnyHashable: Any] {
@@ -71,7 +74,6 @@ final class User {
             User.onlineUser = User(snapshot: snapshot)!
             User.onlineUser.self.loadUserImg()
         }
-        
     }
     
     func loadUserImg() {
