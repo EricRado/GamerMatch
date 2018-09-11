@@ -12,8 +12,8 @@ import Firebase
 
 class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var interactor: Interactor? = nil
-    let iconNameArray = ["top", "Home","Profile","Add A Tournament","Settings", "Logout"]
-    let iconImageArray = [UIImage(named: "noAvatar"), UIImage(named: "home"), UIImage(named: "profile"), UIImage(named: "addTournament"), UIImage(named: "settings"), UIImage(named: "logout")]
+    let iconNameArray = ["top", "Home","Profile", "Friend Requests","Add A Tournament","Settings", "Logout"]
+    let iconImageArray = [UIImage(named: "noAvatar"), UIImage(named: "home"), UIImage(named: "profile"), UIImage(named: "friendRequest"),UIImage(named: "addTournament"), UIImage(named: "settings"), UIImage(named: "logout")]
     
     @IBOutlet weak var tableView: UITableView!
     

@@ -58,6 +58,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         var id = ""
         var isGroupChat = false
         var title = ""
+        var lastMessage = ""
         
         chatRef.observe(.value) { (snapshot) in
             if let dict = snapshot.value as? [String: Any] {
@@ -73,8 +74,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if let unwrapTitle = dict["title"] as? String {
                     title = unwrapTitle
                 }
+                if let unwrapLastMessage = dict["lastMessage"] as? String {
+                    lastMessage = unwrapLastMessage
+                }
                 self.chats.append(Chat(id: id, creatorId: creatorId,
-                                    isGroupChat: isGroupChat, title: title))
+                                       isGroupChat: isGroupChat, title: title, lastMessage: lastMessage))
             }
         }
     }
@@ -145,6 +149,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let user = chatUsers.filter({$0.id == chatDict[0]})
                 cell.chatUsernameLabel.text = user.first?.username
             }
+            cell.lastMessageLabel.text = chats[indexPath.row].lastMessage
         }
         
         return cell

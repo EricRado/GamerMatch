@@ -9,17 +9,19 @@
 import Foundation
 import Firebase
 
-class Chat {
+struct Chat {
     var id: String?
     var creatorId: String?
     var title: String?
     var isGroupChat: Bool?
+    var lastMessage: String?
     
-    init(id: String, creatorId: String, isGroupChat: Bool, title: String){
+    init(id: String, creatorId: String, isGroupChat: Bool, title: String, lastMessage: String = ""){
         self.id = id
         self.creatorId = creatorId
         self.isGroupChat = isGroupChat
         self.title = title
+        self.lastMessage = lastMessage
     }
     
     init?(snapshot: DataSnapshot){

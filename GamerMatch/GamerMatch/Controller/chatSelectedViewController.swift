@@ -62,10 +62,17 @@ class ChatSelectedViewController: UIViewController {
     var chat: Chat?
     var messages = [Message]()
     let dbRef = Database.database().reference()
+    
     lazy var messagesRef: DatabaseReference? = {
         if let id = self.chat?.id {
-            print("this is id: \(id)")
            return self.dbRef.child("Messages/\(id)/")
+        }
+        return nil
+    }()
+    
+    lazy var chatRef: DatabaseReference? = {
+        if let id = self.chat?.id {
+            return self.dbRef.child("Chats/\(id)/")
         }
         return nil
     }()
@@ -213,9 +220,18 @@ class ChatSelectedViewController: UIViewController {
                     print(error)
                 }
             })
+            updateChatLastMessage(text: body)
         }
         
         textFieldDidBeginEditing(textField: inputTextField)
+    }
+    
+    fileprivate func updateChatLastMessage(text: String) {
+        chatRef?.updateChildValues(["lastMessage": text], withCompletionBlock: { (error, _) in
+            if let error = error {
+                print(error)
+            }
+        })
     }
 }
 
