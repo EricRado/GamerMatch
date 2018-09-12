@@ -28,6 +28,44 @@ extension UIImageView {
     }
 }
 
-class ImageManager: NSObject {
-
+final class ImageManager: NSObject {
+    static let shared = ImageManager()
+    let sessionTag = "downloadImage"
+    
+    private override init() {}
+    
+    func downloadImage(urlString: String, completion: @escaping (UIImage?, Error?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        
+        let session = URLSession(configuration: .background(withIdentifier: sessionTag))
+        session.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                completion(nil, error)
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200 else { return }
+            
+            DispatchQueue.main.async {
+                if let data = data {
+                    print("Image is done downloading...")
+                    let image = UIImage(data: data)
+                    completion(image, nil)
+                }
+            }
+        }.resume()
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

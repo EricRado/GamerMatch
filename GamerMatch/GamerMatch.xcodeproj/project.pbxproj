@@ -13,6 +13,7 @@
 		070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927F920608CDF005B0EAF /* VideoGame.swift */; };
 		070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927FB20619FC5005B0EAF /* VideoGameRole.swift */; };
 		071A7A132148717500099BCA /* UserCacheInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A122148717500099BCA /* UserCacheInfo.swift */; };
+		071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A142148C29B00099BCA /* AllExtensions.swift */; };
 		0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329721477B8200D491CD /* comic_sans_ms.ttf */; };
 		0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */; };
 		07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */; };
@@ -53,6 +54,7 @@
 		070927F920608CDF005B0EAF /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		070927FB20619FC5005B0EAF /* VideoGameRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameRole.swift; sourceTree = "<group>"; };
 		071A7A122148717500099BCA /* UserCacheInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCacheInfo.swift; sourceTree = "<group>"; };
+		071A7A142148C29B00099BCA /* AllExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExtensions.swift; sourceTree = "<group>"; };
 		0721329721477B8200D491CD /* comic_sans_ms.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms.ttf; sourceTree = "<group>"; };
 		0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms_bold.ttf; sourceTree = "<group>"; };
 		07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCalls.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				07C982F620961B40007B46BB /* ImageManager.swift */,
+				071A7A142148C29B00099BCA /* AllExtensions.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				07E586C3204F911300023383 /* RegistrationViewController.swift in Sources */,
 				07E586F32052FA5700023383 /* Chat.swift in Sources */,
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
+				071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */,
 				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
 				07C982F720961B40007B46BB /* ImageManager.swift in Sources */,
 				07C07F8E209274D60005494D /* SideMenuViewController.swift in Sources */,

@@ -17,6 +17,7 @@ struct Chat: Decodable {
     let isGroupChat: Bool?
     var lastMessage: String?
     var members: [String: String]?
+    var urlString: String?
     
     init(id: String, creatorId: String, isGroupChat: Bool, title: String, members: [String: String] ){
         self.id = id
@@ -28,7 +29,7 @@ struct Chat: Decodable {
         self.members = members
     }
     
-    init(id: String, creatorId: String, adminId: String, title: String, isGroupChat: Bool, lastMessage: String, members: [String: String]) {
+    init(id: String, creatorId: String, adminId: String, title: String, isGroupChat: Bool, lastMessage: String, members: [String: String], urlString: String = "") {
         self.id = id
         self.creatorId = creatorId
         self.adminId = adminId
@@ -36,6 +37,7 @@ struct Chat: Decodable {
         self.title = title
         self.lastMessage = lastMessage
         self.members = members
+        self.urlString = urlString
     }
     
     init?(snapshot: DataSnapshot){
@@ -47,6 +49,7 @@ struct Chat: Decodable {
         guard let isGroupChat = dict["isGroupChat"] as? String else { return nil }
         guard let lastMessage = dict["lastMessage"] as? String else { return nil }
         guard let members = dict["members"] as? [String:String] else { return nil }
+        guard let urlString = dict["url"] as? String? else { return nil }
         
         self.id = id
         self.adminId = adminId
@@ -55,6 +58,7 @@ struct Chat: Decodable {
         self.isGroupChat = isGroupChat.toBool()
         self.lastMessage = lastMessage
         self.members = members
+        self.urlString = urlString
     }
     
     func toAnyObject() -> [AnyHashable: Any]{

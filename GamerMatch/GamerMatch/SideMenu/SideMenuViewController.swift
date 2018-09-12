@@ -29,10 +29,10 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "profilePicCell") as! SideMenuTopTableViewCell
             cell.profileNameLabel.text = User.onlineUser.username
-            if let data = User.onlineUser.userImg?.image {
+            if let data = User.onlineUser.userImg{
                 print("there is something here...")
             }
-            cell.profileImage.image = User.onlineUser.userImg?.image
+            cell.profileImage.image = User.onlineUser.userImg
             return cell
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "optionsCell") as! SideMenuTableViewCell

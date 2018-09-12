@@ -9,19 +9,6 @@
 import Foundation
 import Firebase
 
-extension String {
-    func toBool() -> Bool? {
-        switch self  {
-        case "True", "true":
-            return true
-        case "False", "false":
-            return false
-        default:
-            return nil
-        }
-        
-    }
-}
 
 final class User {
     var uid: String?
@@ -31,16 +18,13 @@ final class User {
     var bio: String?
     var isActive: Bool?
     var avatarURL: String?
-    var userImg:UIImageView?
+    var userImg:UIImage?
     var chatIds: [String: String]?
     
-    static var onlineUser = User(image: UIImage(named: "noAvatarImg")!)
+    static var onlineUser = User()
     private var dbRef = Database.database().reference()
     
-    private init(image: UIImage){
-        print("initializing img...")
-        self.userImg?.image = image
-    }
+    private init(){}
     
     private init? (snapshot: DataSnapshot){
         guard let dict = snapshot.value as? [String: Any] else {return}
@@ -78,26 +62,33 @@ final class User {
     
     func loadUserImg() {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
-        let url = NSURL(fileURLWithPath: path)
+        let url = URL(fileURLWithPath: path)
         
-        // setup URL with image file name appended
-        if let pathComponent = url.appendingPathComponent("userProfileImage.jpg") {
-            let filePath = pathComponent.path
-            let fileManager = FileManager.default
-            
-            // check if file exists in document directory folder
-            if fileManager.fileExists(atPath: filePath){
-                print("Image exists...")
-                User.onlineUser.userImg = UIImageView(image: UIImage(contentsOfFile: filePath))
-            }else {
-                print("Image does not exist...")
-                User.onlineUser.userImg = UIImageView(image: UIImage(named: "noAvatarImg"))
-                print("IMAGE LOADED...")
+        let pathComponent = url.appendingPathComponent("userProfileImage.jpg")
+        print("this is path component : \(pathComponent)")
+        
+        let filePath = pathComponent.path
+        let fileManager = FileManager.default
+        
+        // check if file exists in document directory folder
+        if fileManager.fileExists(atPath: filePath) {
+            print("Image exists...")
+            User.onlineUser.userImg = UIImage(contentsOfFile: filePath)
+        } else {
+            if let urlString = User.onlineUser.avatarURL {
+                print("User avatarURL : \(urlString)")
+                ImageManager.shared.downloadImage(urlString: urlString) { (image, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    print("storing image to User singleton")
+                    User.onlineUser.userImg = image
+                }
             }
-        }else {
-            print("File path not available...")
         }
     }
+    
     
 }
 

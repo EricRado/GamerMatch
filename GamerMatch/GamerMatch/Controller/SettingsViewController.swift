@@ -45,7 +45,7 @@ class SettingsViewController: UIViewController, UIImagePickerControllerDelegate,
         changePictureBtn.layer.cornerRadius = 10.0
         changePictureBtn.layer.masksToBounds = true
         
-        userProfileImg.image = User.onlineUser.userImg?.image ?? UIImage(named: "noAvatarImg")
+        userProfileImg.image = User.onlineUser.userImg ?? UIImage(named: "noAvatarImg")
     }
     
     @IBAction func changePicturePressed(sender: UIButton){
@@ -94,7 +94,7 @@ class SettingsViewController: UIViewController, UIImagePickerControllerDelegate,
                     try jpegData.write(to: imageURL)
                 }
                 
-                User.onlineUser.userImg?.image = image
+                User.onlineUser.userImg = image
                 
             }catch {
                 print("Failed to save to disk...")

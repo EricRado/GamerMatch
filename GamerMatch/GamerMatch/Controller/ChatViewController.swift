@@ -47,6 +47,12 @@ class ChatViewController: UIViewController {
         
     }
     
+    fileprivate func updateChatRow(at id: String, chat: Chat) {
+        guard let index = self.chatsAlreadyDisplayed[id] else { return }
+        self.chats[index] = chat
+        self.chatTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+    }
+    
     func getUserChatsDetails(){
         guard let dict = User.onlineUser.chatIds else { return }
         guard let userId = Auth.auth().currentUser?.uid else { return }
@@ -58,10 +64,7 @@ class ChatViewController: UIViewController {
                 
                 // if chat was updated reload the cell with the latest data
                 if self.chatsAlreadyDisplayed[id] != nil {
-                    print("updating chat ")
-                    guard let index = self.chatsAlreadyDisplayed[id] else { return }
-                    self.chats[index] = chat
-                    self.chatTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                    self.updateChatRow(at: id, chat: chat)
                     return
                 }
                 
@@ -95,7 +98,6 @@ class ChatViewController: UIViewController {
                 let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
                 let userCacheInfo = try JSONDecoder().decode(UserCacheInfo.self, from: jsonData)
                 self.chat1on1TitleDict[chatId] = userCacheInfo.username
-                print(userCacheInfo)
             } catch let error {
                 print(error)
             }
@@ -164,8 +166,17 @@ extension ChatViewController: UITableViewDataSource {
         
         let chat = chats[indexPath.row]
         
-        if let title = chat.title, title != "" {
+        if let title = chat.title, title != "", let urlString = chat.urlString {
             cell.chatUsernameLabel.text = title
+            if !(urlString.isEmpty) {
+                ImageManager.shared.downloadImage(urlString: urlString) { (image, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                    cell.chatUserPic.image = image
+                }
+            }
+           
         } else {
             cell.chatUsernameLabel.text = chat1on1TitleDict[chat.id!]
         }

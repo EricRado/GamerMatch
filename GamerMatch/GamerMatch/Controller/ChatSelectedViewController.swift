@@ -10,51 +10,6 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
-extension UIView {
-    
-    func addConstraintsWithFormat(_ format: String, views: UIView...) {
-        var viewsDictionary = [String: UIView]()
-        for (index, view) in views.enumerated() {
-            let key = "v\(index)"
-            viewsDictionary[key] = view
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
-    }
-}
-
-extension UIViewController: UITextFieldDelegate {
-    func hideKeyboardWhenTappedAround(){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-        print("something was tapped")
-    }
-    
-    @objc func dismissKeyboard(){
-        view.endEditing(true)
-    }
-    
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}
-
-extension Date {
-    func toMillis() -> Int64! {
-        return Int64(self.timeIntervalSince1970 * 1000)
-    }
-}
-
-extension Int64 {
-    func timestampToDate() -> Date {
-        let timeInterval = Double(self / 1000)
-        return Date(timeIntervalSince1970: timeInterval)
-    }
-}
-
 class ChatSelectedViewController: UIViewController {
     private let cellId = "messageCell"
     var participantIds = [String: String]()
