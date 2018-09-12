@@ -9,23 +9,13 @@
 import Foundation
 import UIKit
 
-struct ChatUserDisplay: Hashable {
-    var id: String?
+struct ChatUserDisplay {
     var username: String?
-    var avatarURL: String?
+    let image: UIImage
     
-    init(id: String, username: String, avatarURL: String){
-        self.id = id
+    init(username: String, image: UIImage) {
         self.username = username
-        self.avatarURL = avatarURL
+        self.image = image
     }
     
-    var hashValue: Int {
-        return (id?.hashValue)!
-    }
-    
-    static func == (lhs: ChatUserDisplay, rhs: ChatUserDisplay) -> Bool {
-        return lhs.id == rhs.id && lhs.username == rhs.username
-            && lhs.avatarURL == rhs.avatarURL
-    }
 }

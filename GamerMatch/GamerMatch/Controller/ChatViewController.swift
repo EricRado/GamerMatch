@@ -17,119 +17,81 @@ class ChatViewController: UIViewController {
         return Database.database().reference().child("Chats/")
     }()
     
+    let userCacheInfoRef: DatabaseReference = {
+        return Database.database().reference().child("UserCacheInfo/")
+    }()
+    
     /* - chats - stores all of the user's chats meta data
-       - chatParticipantDict - stores chat's participants ids, keyed to the chat id
+       - chatParticipantDict - stores array of chat's participants ids, keyed to the chat id
        - chatUsers - stores all 1on1 chats participant username and avatar picture
     */
     
     var chats = [Chat]()
-    var chatParticipantDict = [String: [String]]()
-    var chatUsers = Set<ChatUserDisplay>()
+    var chatImageDict = [String: UIImage]()
+    var chat1on1TitleDict = [String: String]()
     
     // selected chat information to pass to ChatSelectedViewController
     var selectedChat: Chat?
-    var selectedParticipantIds = [String]()
+    var selectedParticipantIds = [String: String]()
     var selectedChatUser: ChatUserDisplay?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         chatTableView.dataSource = self
         chatTableView.delegate = self
         
-        print(User.onlineUser.chatIds)
-        
-        //getUserChatsId()
+        getUserChatsDetails()
         
     }
     
-    
-    func getUserChatsId(){
-        guard userChatsRef != nil else { return }
+    func getUserChatsDetails(){
+        guard let dict = User.onlineUser.chatIds else { return }
+        guard let userId = Auth.auth().currentUser?.uid else { return }
         
-        userChatsRef?.observe(.value) { (snapshot) in
-            for child in snapshot.children.allObjects as! [DataSnapshot] {
-                self.getChatDetails(chatId: child.key)
-                self.getParticipantsId(chatId: child.key)
-            }
-        }
-    }
-    
-    func getChatDetails(chatId: String){
-        
-        var creatorId = ""
-        var id = ""
-        var isGroupChat = false
-        var title = ""
-        var lastMessage = ""
-        
-        chatRef.child("\(chatId)/").observe(.value) { (snapshot) in
-            if let dict = snapshot.value as? [String: Any] {
-                if let unwrapCreatorId = dict["creatorId"] as? String {
-                    creatorId = unwrapCreatorId
+        for (key, _) in dict {
+            chatRef.child("\(key)/").observe(.value, with: { (snapshot) in
+                let chat = Chat(snapshot: snapshot)
+                guard chat != nil else { return }
+                
+                self.chats.append(chat!)
+                if (chat?.isGroupChat)! {
+                    print(chat?.lastMessage)
+                } else {
+                    for (key, _) in (chat?.members)! {
+                        if key != userId {
+                            self.getUsernameAndPic(id: String(key), chatId: (chat?.id)!)
+                        }
+                    }
                 }
-                if let unwrapId = dict["id"] as? String {
-                    id = unwrapId
-                }
-                if let unwrapIsGroupChat = dict["isGroupChat"] as? String {
-                    isGroupChat = unwrapIsGroupChat.toBool()!
-                }
-                if let unwrapTitle = dict["title"] as? String {
-                    title = unwrapTitle
-                }
-                if let unwrapLastMessage = dict["lastMessage"] as? String {
-                    lastMessage = unwrapLastMessage
-                }
-                self.chats.append(Chat(id: id, creatorId: creatorId,
-                                       isGroupChat: isGroupChat, title: title, lastMessage: lastMessage))
-            }
-        }
-    }
-    
-    func getParticipantsId(chatId: String){
-        let chatMemberRef = chatRef.child(chatId).child("members")
-     
-        chatMemberRef.observeSingleEvent(of: .value) { (snapshot) in
-            for child in snapshot.children.allObjects as! [DataSnapshot] {
-                if child.key != Auth.auth().currentUser?.uid {
-                    
-                    /* modify so it only runs for 1on1 chats */
-                    self.getUsernameAndPic(id: child.key, chatId: chatId)
-                }
+                self.chatTableView.reloadData()
+            }) { (error) in
+                print(error.localizedDescription)
             }
         }
     }
     
     func getUsernameAndPic(id: String, chatId: String){
-        var username: String = ""
-        var avatarURL: String = ""
        
-        let userPicURL = Database.database().reference().child("Users/").child(id)
+        let userInfoRef = userCacheInfoRef.child("\(id)/")
         
-        userPicURL.observeSingleEvent(of: .value) { (snapshot) in
-            // get the username and img url from the participant id
-            if let dict = snapshot.value as? [String: Any]{
-                username = (dict["username"] as? String)!
-                if let imgURL = dict["avatarURL"] as? String{
-                    avatarURL = imgURL
-                }
-                let chatUserDisplay = ChatUserDisplay(id: id, username: username, avatarURL: avatarURL)
-                if !self.chatUsers.contains(chatUserDisplay) {
-                    self.chatUsers.insert(chatUserDisplay)
-                }
-                
-                var list = self.chatParticipantDict[chatId] ?? []
-                list.append(id)
-                self.chatParticipantDict[chatId] = list
-                
-                print(self.chatUsers)
-                print(self.chatParticipantDict)
+        userInfoRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+            guard let dict = snapshot.value as? [String: Any] else { return }
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
+                let userCacheInfo = try JSONDecoder().decode(UserCacheInfo.self, from: jsonData)
+                self.chat1on1TitleDict[chatId] = userCacheInfo.username
+                print(userCacheInfo)
+            } catch let error {
+                print(error)
             }
             self.chatTableView.reloadData()
+        }) { (error) in
+            print(error.localizedDescription)
         }
-        
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -159,15 +121,18 @@ class ChatViewController: UIViewController {
 extension ChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedChatId = chats[indexPath.row].id
+        let chat = chats[indexPath.row]
         
-        selectedChat = chats[indexPath.row]
-        selectedParticipantIds = chatParticipantDict[selectedChatId!]!
+        selectedChat = chat
+        selectedParticipantIds = chat.members!
         
         // this is a 1on1 chat get user's username and avatar pic
-        if selectedParticipantIds.count == 1 {
-            let user = chatUsers.filter({$0.id == selectedParticipantIds[0]})
-            selectedChatUser = user.first
+        if selectedParticipantIds.count == 2 {
+            let userId = chat.members?.filter({$0.key != Auth.auth().currentUser?.uid}).first?.key
+            if let userId = userId, let username = chat1on1TitleDict[userId],
+                let image = chatImageDict[userId]{
+                selectedChatUser = ChatUserDisplay(username: username, image: image)
+            }
         }
         
         performSegue(withIdentifier: "chatSegue", sender: self)
@@ -185,29 +150,23 @@ extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatTableViewCell
         
-        let chatCell = chats[indexPath.row]
+        let chat = chats[indexPath.row]
         
-        if let chatDict = chatParticipantDict[chatCell.id!] {
-            print("THIS IS CHATDICT...")
-            print(chatDict)
-            if chatDict.count >= 2 {
-                print("This is a group chat...")
-                if let title = chatCell.title {
-                    cell.chatUsernameLabel.text = title
-                }
-            }else {
-                print("This is a 1on1 chat...")
-                let user = chatUsers.filter({$0.id == chatDict[0]})
-                cell.chatUsernameLabel.text = user.first?.username
-            }
-            cell.lastMessageLabel.text = chats[indexPath.row].lastMessage
+        if let title = chat.title, title != "" {
+            cell.chatUsernameLabel.text = title
+        } else {
+            cell.chatUsernameLabel.text = chat1on1TitleDict[chat.id!]
+        }
+        
+        if let message = chat.lastMessage {
+            cell.lastMessageLabel.text = message
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatParticipantDict.count
+        return chats.count
     }
     
 }

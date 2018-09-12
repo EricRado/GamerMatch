@@ -57,7 +57,7 @@ extension Int64 {
 
 class ChatSelectedViewController: UIViewController {
     private let cellId = "messageCell"
-    var participantIds = [String]()
+    var participantIds = [String: String]()
     var selectedChatUser: ChatUserDisplay?
     var chat: Chat?
     var messages = [Message]()

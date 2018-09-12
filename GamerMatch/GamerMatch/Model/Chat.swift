@@ -16,18 +16,19 @@ struct Chat: Decodable {
     var title: String?
     let isGroupChat: Bool?
     var lastMessage: String?
-    var members: [String: Bool]?
+    var members: [String: String]?
     
-    init(id: String, creatorId: String, isGroupChat: Bool, title: String, lastMessage: String = ""){
+    init(id: String, creatorId: String, isGroupChat: Bool, title: String, members: [String: String] ){
         self.id = id
         self.creatorId = creatorId
         self.adminId = creatorId
         self.isGroupChat = isGroupChat
         self.title = title
-        self.lastMessage = lastMessage
+        self.lastMessage = ""
+        self.members = members
     }
     
-    init(id: String, creatorId: String, adminId: String, title: String, isGroupChat: Bool, lastMessage: String, members: [String: Bool]) {
+    init(id: String, creatorId: String, adminId: String, title: String, isGroupChat: Bool, lastMessage: String, members: [String: String]) {
         self.id = id
         self.creatorId = creatorId
         self.adminId = adminId
@@ -38,20 +39,26 @@ struct Chat: Decodable {
     }
     
     init?(snapshot: DataSnapshot){
-        guard let dict = snapshot.value as? [String: String] else {return nil}
-        guard let id = dict["id"] else {return nil}
-        guard let creatorId = dict["creatorId"] else {return nil}
-        guard let title = dict["title"] else {return nil}
-        guard let isGroupChat = dict["isGroupChat"] else {return nil}
+        guard let dict = snapshot.value as? [String: Any] else { return nil }
+        guard let id = dict["id"] as? String? else { return nil }
+        guard let adminId = dict["adminId"] as? String? else { return nil }
+        guard let creatorId = dict["creatorId"] as? String? else { return nil }
+        guard let title = dict["title"] as? String? else { return nil }
+        guard let isGroupChat = dict["isGroupChat"] as? String else { return nil }
+        guard let lastMessage = dict["lastMessage"] as? String else { return nil }
+        guard let members = dict["members"] as? [String:String] else { return nil }
         
         self.id = id
+        self.adminId = adminId
         self.creatorId = creatorId
         self.title = title
         self.isGroupChat = isGroupChat.toBool()
+        self.lastMessage = lastMessage
+        self.members = members
     }
     
     func toAnyObject() -> [AnyHashable: Any]{
-        return ["id": id!, "creatorId": creatorId!, "title": title!, "isGroupChat": String(isGroupChat!)] as [AnyHashable: Any]
+        return ["id": id!, "creatorId": creatorId!, "title": title!, "isGroupChat": String(isGroupChat!), "lastMessage": lastMessage!, "members": members!] as [AnyHashable: Any]
     }
     
 }
