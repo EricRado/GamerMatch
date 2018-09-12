@@ -27,6 +27,7 @@ class ChatViewController: UIViewController {
     */
     
     var chats = [Chat]()
+    var chatsAlreadyDisplayed = [String: Int]()
     var chatImageDict = [String: UIImage]()
     var chat1on1TitleDict = [String: String]()
     
@@ -52,16 +53,27 @@ class ChatViewController: UIViewController {
         
         for (key, _) in dict {
             chatRef.child("\(key)/").observe(.value, with: { (snapshot) in
-                let chat = Chat(snapshot: snapshot)
-                guard chat != nil else { return }
+                guard let chat = Chat(snapshot: snapshot) else { return }
+                guard let id = chat.id else { return }
                 
-                self.chats.append(chat!)
-                if (chat?.isGroupChat)! {
-                    print(chat?.lastMessage)
+                // if chat was updated reload the cell with the latest data
+                if self.chatsAlreadyDisplayed[id] != nil {
+                    print("updating chat ")
+                    guard let index = self.chatsAlreadyDisplayed[id] else { return }
+                    self.chats[index] = chat
+                    self.chatTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                    return
+                }
+                
+                self.chats.append(chat)
+                self.chatsAlreadyDisplayed[id] = self.chats.count - 1
+                
+                if (chat.isGroupChat)! {
+                    print(chat.lastMessage)
                 } else {
-                    for (key, _) in (chat?.members)! {
+                    for (key, _) in (chat.members)! {
                         if key != userId {
-                            self.getUsernameAndPic(id: String(key), chatId: (chat?.id)!)
+                            self.getUsernameAndPic(id: String(key), chatId: (chat.id)!)
                         }
                     }
                 }
