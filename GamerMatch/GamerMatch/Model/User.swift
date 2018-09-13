@@ -77,14 +77,7 @@ final class User {
         } else {
             if let urlString = User.onlineUser.avatarURL {
                 print("User avatarURL : \(urlString)")
-                ImageManager.shared.downloadImage(urlString: urlString) { (image, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                        return
-                    }
-                    print("storing image to User singleton")
-                    User.onlineUser.userImg = image
-                }
+                //ImageManager.shared.downloadImage(urlString: urlString)
             }
         }
     }

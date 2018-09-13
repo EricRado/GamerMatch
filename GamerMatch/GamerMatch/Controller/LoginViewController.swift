@@ -14,6 +14,7 @@ import SVProgressHUD
 class LoginViewController: UIViewController {
     
     
+    
     @IBOutlet weak var emailTextField: UITextField! {
         didSet {
             emailTextField.attributedPlaceholder = NSAttributedString(string: "Email",
@@ -37,6 +38,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         self.view.alpha = 0.75
 

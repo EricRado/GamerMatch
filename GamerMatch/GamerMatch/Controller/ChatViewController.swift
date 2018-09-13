@@ -13,6 +13,15 @@ class ChatViewController: UIViewController {
     
     @IBOutlet weak var chatTableView: UITableView!
     
+    lazy var downloadSession: URLSession = {
+        let configuration = URLSessionConfiguration
+            .background(withIdentifier: "bgSessionConfiguration")
+        let session = URLSession(configuration: configuration,
+                                 delegate: self,
+                                 delegateQueue: nil)
+        return session
+    }()
+    
     let chatRef: DatabaseReference = {
         return Database.database().reference().child("Chats/")
     }()
@@ -26,7 +35,7 @@ class ChatViewController: UIViewController {
        - chatUsers - stores all 1on1 chats participant username and avatar picture
     */
     
-    var chats = [Chat]()
+    var chats: [Chat]?
     var chatsAlreadyDisplayed = [String: Int]()
     var chatImageDict = [String: UIImage]()
     var chat1on1TitleDict = [String: String]()
@@ -39,23 +48,34 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        chats = [Chat]()
         chatTableView.dataSource = self
         chatTableView.delegate = self
         
-        getUserChatsDetails()
+        ImageManager.shared.downloadSession = downloadSession
+        
+        getUserChatsDetails { (chats, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            self.chats = chats
+            self.chatTableView.reloadData()
+        }
         
     }
     
     fileprivate func updateChatRow(at id: String, chat: Chat) {
         guard let index = self.chatsAlreadyDisplayed[id] else { return }
-        self.chats[index] = chat
-        self.chatTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        
+        chats?[index] = chat
+        chatTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-    func getUserChatsDetails(){
+    func getUserChatsDetails(completion: @escaping ([Chat]?, Error?) -> Void){
         guard let dict = User.onlineUser.chatIds else { return }
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        var counter = 0
+        var chats = [Chat]()
         
         for (key, _) in dict {
             chatRef.child("\(key)/").observe(.value, with: { (snapshot) in
@@ -68,28 +88,39 @@ class ChatViewController: UIViewController {
                     return
                 }
                 
-                self.chats.append(chat)
-                self.chatsAlreadyDisplayed[id] = self.chats.count - 1
+                chats.append(chat)
+                self.chatsAlreadyDisplayed[id] = chats.count - 1
                 
-                if (chat.isGroupChat)! {
-                    print(chat.lastMessage)
-                } else {
-                    for (key, _) in (chat.members)! {
-                        if key != userId {
-                            self.getUsernameAndPic(id: String(key), chatId: (chat.id)!)
-                        }
+                if !(chat.isGroupChat)! {
+                    self.getUserCacheInfo(membersDict: chat.members, chatId: chat.id) {
+                        self.updateChatRow(at: id, chat: chat)
                     }
                 }
-                self.chatTableView.reloadData()
+                
+                counter += 1
+                
+                if counter == dict.count {
+                    completion(chats, nil)
+                }
+                
             }) { (error) in
                 print(error.localizedDescription)
             }
         }
     }
     
-    func getUsernameAndPic(id: String, chatId: String){
+    func getUserCacheInfo(membersDict: [String: String]?, chatId: String?, completion: @escaping () -> Void){
+        guard let dict = membersDict else { return }
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        var friendId: String?
+        
+        for (key, _) in dict {
+            if key != userId {
+                friendId = key
+            }
+        }
        
-        let userInfoRef = userCacheInfoRef.child("\(id)/")
+        let userInfoRef = userCacheInfoRef.child("\(friendId!)/")
         
         userInfoRef.observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot)
@@ -97,15 +128,14 @@ class ChatViewController: UIViewController {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
                 let userCacheInfo = try JSONDecoder().decode(UserCacheInfo.self, from: jsonData)
-                self.chat1on1TitleDict[chatId] = userCacheInfo.username
+                self.chat1on1TitleDict[chatId!] = userCacheInfo.username
+                completion()
             } catch let error {
                 print(error)
             }
-            self.chatTableView.reloadData()
         }) { (error) in
             print(error.localizedDescription)
         }
-    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -135,7 +165,7 @@ class ChatViewController: UIViewController {
 extension ChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chat = chats[indexPath.row]
+        guard let chat = chats?[indexPath.row] else { return }
         
         selectedChat = chat
         selectedParticipantIds = chat.members!
@@ -164,17 +194,13 @@ extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatTableViewCell
         
-        let chat = chats[indexPath.row]
+        guard let chat = chats?[indexPath.row] else { return cell }
         
         if let title = chat.title, title != "", let urlString = chat.urlString {
             cell.chatUsernameLabel.text = title
             if !(urlString.isEmpty) {
-                ImageManager.shared.downloadImage(urlString: urlString) { (image, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    }
-                    cell.chatUserPic.image = image
-                }
+                print("About to download the fucking image...")
+                ImageManager.shared.downloadImage(urlString: urlString)
             }
            
         } else {
@@ -189,12 +215,33 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chats.count
+        if let chats = chats {
+            return chats.count
+        }
+        return 0
     }
     
 }
 
-
+extension ChatViewController: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        print("Finish downloading to : \(location)")
+        guard let sourceURL = downloadTask.originalRequest?.url else { return }
+        print(sourceURL)
+    
+        
+    }
+    
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                completionHandler()
+            }
+        }
+    }
+}
 
 
 
