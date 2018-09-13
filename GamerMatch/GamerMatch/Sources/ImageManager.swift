@@ -34,10 +34,13 @@ final class ImageManager {
     
     private init() {}
     
-    func downloadImage(urlString: String) {
-        guard let url = URL(string: urlString) else { return }
+    func downloadImage(urlString: String) -> Int? {
+        guard let url = URL(string: urlString) else { return nil }
         print("Download task is about to start with : \(urlString)")
-        downloadSession.downloadTask(with: url).resume()
+        let downloadTask = downloadSession.downloadTask(with: url)
+        downloadTask.resume()
+        
+        return downloadTask.taskIdentifier
     }
 }
 

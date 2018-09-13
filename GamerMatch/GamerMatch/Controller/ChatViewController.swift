@@ -39,6 +39,7 @@ class ChatViewController: UIViewController {
     var chatsAlreadyDisplayed = [String: Int]()
     var chatImageDict = [String: UIImage]()
     var chat1on1TitleDict = [String: String]()
+    var taskIdToCellRowAndChatIdDict = [Int: (Int,String)]()
     
     // selected chat information to pass to ChatSelectedViewController
     var selectedChat: Chat?
@@ -193,22 +194,30 @@ extension ChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatTableViewCell
-        
         guard let chat = chats?[indexPath.row] else { return cell }
         
-        if let title = chat.title, title != "", let urlString = chat.urlString {
+        if let title = chat.title, title != "" {
             cell.chatUsernameLabel.text = title
-            if !(urlString.isEmpty) {
-                print("About to download the fucking image...")
-                ImageManager.shared.downloadImage(urlString: urlString)
-            }
-           
         } else {
             cell.chatUsernameLabel.text = chat1on1TitleDict[chat.id!]
         }
         
         if let message = chat.lastMessage {
             cell.lastMessageLabel.text = message
+        }
+        
+        // image was downloaded and stored to the dictionary
+        if let image = chatImageDict[chat.id!] {
+            cell.chatUserPic.image = image
+            return cell
+        }
+        
+        // if image was not downloaded create a background download task
+        if let urlString = chat.urlString, !urlString.isEmpty {
+            print("About to download the fucking image...")
+            if let taskIdentifier = ImageManager.shared.downloadImage(urlString: urlString) {
+                taskIdToCellRowAndChatIdDict[taskIdentifier] = (indexPath.row, chat.id!)
+            }
         }
         
         return cell
@@ -225,11 +234,20 @@ extension ChatViewController: UITableViewDataSource {
 
 extension ChatViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print("Finish downloading to : \(location)")
-        guard let sourceURL = downloadTask.originalRequest?.url else { return }
-        print(sourceURL)
-    
+        let taskId = downloadTask.taskIdentifier
         
+        do {
+            let data = try Data(contentsOf: location)
+            DispatchQueue.main.async {
+                if let (index, chatId) = self.taskIdToCellRowAndChatIdDict[taskId] {
+                    let image = UIImage(data: data)
+                    self.chatImageDict[chatId] = image
+                    self.chatTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                }
+            }
+        } catch let error {
+            print(error)
+        }
     }
     
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
