@@ -86,7 +86,6 @@ class ChatSelectedViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        self.navigationItem.title = chat?.title
         
         getMessages()
     }
@@ -220,6 +219,10 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
                 cell.textBubbleView.frame = CGRect(x: 48 - 10, y: -4, width: estimatedFrame.width + 40, height: estimatedFrame.height + 26)
                 
                 cell.profileImageView.isHidden = false
+                
+                if !(chat?.isGroupChat)! {
+                    cell.profileImageView.image = selectedChatUser?.image
+                }
                 
                 cell.bubbleImageView.image = ChatMessageCollectionViewCell.grayBubbleImage
                 cell.bubbleImageView.tintColor = UIColor(white: 0.95, alpha: 1)

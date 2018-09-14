@@ -14,6 +14,7 @@
 		070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927FB20619FC5005B0EAF /* VideoGameRole.swift */; };
 		071A7A132148717500099BCA /* UserCacheInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A122148717500099BCA /* UserCacheInfo.swift */; };
 		071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A142148C29B00099BCA /* AllExtensions.swift */; };
+		071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */; };
 		0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329721477B8200D491CD /* comic_sans_ms.ttf */; };
 		0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */; };
 		07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */; };
@@ -55,6 +56,7 @@
 		070927FB20619FC5005B0EAF /* VideoGameRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameRole.swift; sourceTree = "<group>"; };
 		071A7A122148717500099BCA /* UserCacheInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCacheInfo.swift; sourceTree = "<group>"; };
 		071A7A142148C29B00099BCA /* AllExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExtensions.swift; sourceTree = "<group>"; };
+		071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGamerResultsViewController.swift; sourceTree = "<group>"; };
 		0721329721477B8200D491CD /* comic_sans_ms.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms.ttf; sourceTree = "<group>"; };
 		0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms_bold.ttf; sourceTree = "<group>"; };
 		07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCalls.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 				0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */,
 				0701F3BC2145FF7000A73A77 /* ChatSelectedViewController.swift */,
+				071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
 				07C982F720961B40007B46BB /* ImageManager.swift in Sources */,
 				07C07F8E209274D60005494D /* SideMenuViewController.swift in Sources */,
+				071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */,
 				07E586F52052FDCA00023383 /* Message.swift in Sources */,
 				070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */,
 				0784A8DF20A2380D003FE32C /* AddTournamentViewController.swift in Sources */,

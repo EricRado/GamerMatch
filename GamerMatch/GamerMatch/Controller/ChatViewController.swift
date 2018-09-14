@@ -38,7 +38,7 @@ class ChatViewController: UIViewController {
     var chats: [Chat]?
     var chatsAlreadyDisplayed = [String: Int]()
     var chatImageDict = [String: UIImage]()
-    var chat1on1TitleDict = [String: String]()
+    var chat1on1TitleDict = [String: UserCacheInfo]()
     var taskIdToCellRowAndChatIdDict = [Int: (Int,String)]()
     
     // selected chat information to pass to ChatSelectedViewController
@@ -129,7 +129,7 @@ class ChatViewController: UIViewController {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
                 let userCacheInfo = try JSONDecoder().decode(UserCacheInfo.self, from: jsonData)
-                self.chat1on1TitleDict[chatId!] = userCacheInfo.username
+                self.chat1on1TitleDict[chatId!] = userCacheInfo
                 completion()
             } catch let error {
                 print(error)
@@ -173,10 +173,8 @@ extension ChatViewController: UITableViewDelegate {
         
         // this is a 1on1 chat get user's username and avatar pic
         if selectedParticipantIds.count == 2 {
-            let userId = chat.members?.filter({$0.key != Auth.auth().currentUser?.uid}).first?.key
-            if let userId = userId, let username = chat1on1TitleDict[userId],
-                let image = chatImageDict[userId]{
-                selectedChatUser = ChatUserDisplay(username: username, image: image)
+            if let user = chat1on1TitleDict[chat.id!], let image = chatImageDict[chat.id!] {
+               selectedChatUser = ChatUserDisplay(username: user.username!, image: image)
             }
         }
         
@@ -199,7 +197,7 @@ extension ChatViewController: UITableViewDataSource {
         if let title = chat.title, title != "" {
             cell.chatUsernameLabel.text = title
         } else {
-            cell.chatUsernameLabel.text = chat1on1TitleDict[chat.id!]
+            cell.chatUsernameLabel.text = chat1on1TitleDict[chat.id!]?.username
         }
         
         if let message = chat.lastMessage {
@@ -213,8 +211,8 @@ extension ChatViewController: UITableViewDataSource {
         }
         
         // if image was not downloaded create a background download task
-        if let urlString = chat.urlString, !urlString.isEmpty {
-            print("About to download the fucking image...")
+        let urlString = chat.isGroupChat! ? chat.urlString : chat1on1TitleDict[chat.id!]?.avatarURL
+        if let urlString = urlString, !urlString.isEmpty {
             if let taskIdentifier = ImageManager.shared.downloadImage(urlString: urlString) {
                 taskIdToCellRowAndChatIdDict[taskIdentifier] = (indexPath.row, chat.id!)
             }

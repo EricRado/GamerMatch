@@ -303,10 +303,10 @@
             </objects>
             <point key="canvasLocation" x="924.375" y="31.690140845070424"/>
         </scene>
-        <!--View Controller-->
+        <!--Find Gamer Results View Controller-->
         <scene sceneID="6Uq-yf-7vN">
             <objects>
-                <viewController id="J42-57-qP3" sceneMemberID="viewController">
+                <viewController id="J42-57-qP3" customClass="FindGamerResultsViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fXC-EP-6os">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -360,6 +360,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7dp-dI-9Zn"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="dT2-8I-1i6" id="tab-SZ-XaX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L1H-zu-i8O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

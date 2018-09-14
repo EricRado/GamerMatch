@@ -29,23 +29,7 @@ extension FindGamerViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension Array where Element == UIButton  {
-    func hideButtons() {
-        for btn in self {
-            btn.isHidden = true
-        }
-    }
-}
 
-extension String {
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).uppercased() + dropFirst()
-    }
-    
-    func removingWhitespaces() -> String {
-        return components(separatedBy: .whitespaces).joined()
-    }
-}
 
 class FindGamerViewController: UIViewController {
     
