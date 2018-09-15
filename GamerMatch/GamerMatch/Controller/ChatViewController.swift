@@ -93,7 +93,7 @@ class ChatViewController: UIViewController {
                 self.chatsAlreadyDisplayed[id] = chats.count - 1
                 
                 if !(chat.isGroupChat)! {
-                    self.getUserCacheInfo(membersDict: chat.members, chatId: chat.id) {
+                    self.getUserInfo(membersDict: chat.members, chatId: chat.id) {
                         self.updateChatRow(at: id, chat: chat)
                     }
                 }
@@ -110,7 +110,7 @@ class ChatViewController: UIViewController {
         }
     }
     
-    func getUserCacheInfo(membersDict: [String: String]?, chatId: String?, completion: @escaping () -> Void){
+    func getUserInfo(membersDict: [String: String]?, chatId: String?, completion: @escaping () -> Void){
         guard let dict = membersDict else { return }
         guard let userId = Auth.auth().currentUser?.uid else { return }
         var friendId: String?
@@ -120,8 +120,17 @@ class ChatViewController: UIViewController {
                 friendId = key
             }
         }
+        
+        FirebaseCalls.shared.getUserCacheInfo(userId: friendId) { (userCacheInfo, error) in
+            if let error = error {
+                print(error)
+            } else {
+                self.chat1on1TitleDict[chatId!] = userCacheInfo
+                completion()
+            }
+        }
        
-        let userInfoRef = userCacheInfoRef.child("\(friendId!)/")
+        /*let userInfoRef = userCacheInfoRef.child("\(friendId!)/")
         
         userInfoRef.observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot)
@@ -136,7 +145,7 @@ class ChatViewController: UIViewController {
             }
         }) { (error) in
             print(error.localizedDescription)
-        }
+        }*/
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

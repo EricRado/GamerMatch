@@ -11,34 +11,65 @@ import Firebase
 
 class FirebaseCalls {
     let dbRef = Database.database().reference()
+    lazy var userCacheInfoRef: DatabaseReference = {
+        return dbRef.child("UserCacheInfo/")
+    }()
     
-    static var firebaseCall = FirebaseCalls()
+    static var shared = FirebaseCalls()
     
-    private init () {
-        
-    }
+    private init () {}
     
-    func searchForGamer(consoleChoice: String, gameChoice: String, roleChoice: String?) {
-        print("consoleChoice: \(consoleChoice)   gameChoice: \(gameChoice.removingWhitespaces())")
-        var searchRef: DatabaseReference
-        
-        // check if search query message contains a role choice or not
-        if let roleChoice = roleChoice {
-            searchRef = dbRef.child("\(consoleChoice)/\(gameChoice.removingWhitespaces())/\(roleChoice)")
-        }else {
-            searchRef = dbRef.child("\(consoleChoice)/\(gameChoice.removingWhitespaces())")
-        }
+    func searchForGamer(searchRef: DatabaseReference?,
+                        completion: @escaping ([String]?, Error?) -> Void) {
+        guard let ref = searchRef else { return }
+        var ids = [String]()
         
         // retrieve data based on the database reference created
-        searchRef.observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot)
             if !snapshot.exists() {
                 print("No gamer was found with specified criteria")
             }
+            
+            for snap in snapshot.children.allObjects as! [DataSnapshot] {
+                print(snap)
+                print(snap.key)
+                ids.append(snap.key)
+            }
+            
+            completion(ids, nil)
         }) { (error) in
             print(error.localizedDescription)
+            completion(nil, error)
         }
         
     }
+    
+    func getUserCacheInfo(userId: String?,
+                          completion: @escaping (UserCacheInfo?, Error?) -> Void) {
+        
+        guard let id = userId else { return }
+        let userRef = userCacheInfoRef.child("\(id)/")
+        
+        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            print("Call coming from getUserCacheInfo")
+            if let dict = snapshot.value as? [String: Any] {
+                print(snapshot)
+                do {
+                    let jsonDict = try JSONSerialization.data(withJSONObject: dict, options: [])
+                    let userCacheInfo = try JSONDecoder().decode(UserCacheInfo.self, from: jsonDict)
+                    completion(userCacheInfo, nil)
+                } catch let error {
+                    completion(nil, error)
+                }
+            } else {
+                print("Snapshot is empty")
+            }
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     
 }

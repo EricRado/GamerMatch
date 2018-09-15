@@ -173,15 +173,15 @@
 		07E586C4204F912100023383 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				07E586C0204F90E700023383 /* LoginViewController.swift */,
-				07E586C2204F911300023383 /* RegistrationViewController.swift */,
-				07E586CB2050E14F00023383 /* ChatViewController.swift */,
-				07E586FC2056170600023383 /* TournamentViewController.swift */,
-				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
-				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 				0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */,
 				0701F3BC2145FF7000A73A77 /* ChatSelectedViewController.swift */,
+				07E586CB2050E14F00023383 /* ChatViewController.swift */,
 				071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */,
+				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
+				07E586C0204F90E700023383 /* LoginViewController.swift */,
+				07E586C2204F911300023383 /* RegistrationViewController.swift */,
+				07C982F82096B292007B46BB /* SettingsViewController.swift */,
+				07E586FC2056170600023383 /* TournamentViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

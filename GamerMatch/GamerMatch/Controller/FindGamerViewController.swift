@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import Firebase
+import SVProgressHUD
 
 extension FindGamerViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -32,6 +33,10 @@ extension FindGamerViewController: UIViewControllerTransitioningDelegate {
 
 
 class FindGamerViewController: UIViewController {
+    
+    private let findGamerResultsSegueId = "findGamerResultsSegue"
+    private var searchRef: DatabaseReference?
+    private var ids: [String]?
     
     // MARK: - IBOutlet Variables
     
@@ -133,6 +138,17 @@ class FindGamerViewController: UIViewController {
         }
         print(gamesCurrentlyDisplayed)
     }
+    
+    fileprivate func createGamerMatchDBRef(console: String, game: String, role: String?) -> DatabaseReference {
+        
+        let ref = Database.database().reference().child(console).child(game.removingWhitespaces())
+        
+        if let role = role {
+            ref.child(role.removingWhitespaces())
+        }
+        
+        return ref
+    }
 
     func createAlert(gameBtnTag: Int, roleBtnTag: Int?) {
         var message = ""
@@ -153,8 +169,22 @@ class FindGamerViewController: UIViewController {
         
         ac.addAction(UIAlertAction(title: "Search", style: .default){ action in
             if let gameName = gameName {
-                FirebaseCalls.firebaseCall.searchForGamer(consoleChoice:
-                    self.consoleName, gameChoice: gameName, roleChoice: roleName)
+                self.searchRef = self.createGamerMatchDBRef(console: self.consoleName,
+                                                     game: gameName,
+                                                     role: roleName)
+                print("This is the created reference : \(self.searchRef)")
+                SVProgressHUD.show(withStatus: "Searching...")
+                
+                FirebaseCalls.shared
+                    .searchForGamer(searchRef: self.searchRef) { (ids, error) in
+                        if let error = error {
+                            print(error.localizedDescription)
+                            return
+                        }
+                        self.ids = ids
+                        SVProgressHUD.dismiss()
+                        self.performSegue(withIdentifier: self.findGamerResultsSegueId, sender: nil)
+                }
             }
         })
         
@@ -296,8 +326,12 @@ class FindGamerViewController: UIViewController {
             
             // pass the interactor object forward
             destinationViewController.interactor = interactor
+        } else if let destinationViewController = segue.destination as? FindGamerResultsViewController {
+            destinationViewController.gamerMatchRef = searchRef
+            destinationViewController.resultIds = ids
         }
     }
+    
 
 }
 
