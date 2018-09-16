@@ -44,7 +44,7 @@ class FindGamerResultsViewController: UIViewController {
         
         for id in ids {
             print("This is the id : \(id)")
-            FirebaseCalls.shared.getUserCacheInfo(userId: id) { (userCacheInfo, error) in
+            FirebaseCalls.shared.getUserCacheInfo(for: id) { (userCacheInfo, error) in
                 if let error = error {
                     print(error.localizedDescription)
                 }

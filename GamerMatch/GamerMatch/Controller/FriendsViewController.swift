@@ -13,9 +13,27 @@ import Firebase
 class FriendsViewController: UIViewController {
     
     private let cellId = "friendCell"
+    private let onlineSectionId = 0
+    private let offlineSectionId = 1
+    
     private let friendRef: DatabaseReference? = {
         guard let id = Auth.auth().currentUser?.uid else { return nil }
         return Database.database().reference().child("Friends/\(id)/")
+    }()
+    
+    lazy var onlineFriends: [UserCacheInfo] = {
+        var arr = [UserCacheInfo]()
+        return arr
+    }()
+    
+    lazy var offlineFriends: [UserCacheInfo] = {
+        var arr = [UserCacheInfo]()
+        return arr
+    }()
+    
+    lazy var taskIdsToIndexPathRowDict: [Int: (Int, Int)] = {
+        var dict = [Int: (Int, Int)]()
+        return dict
     }()
     
     @IBOutlet weak var collectionView: UICollectionView! {
@@ -32,11 +50,32 @@ class FriendsViewController: UIViewController {
         collectionView.register(nib,
                                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                                 withReuseIdentifier: FriendCollectionViewHeader.identifier)
+        getUserFriends()
     }
     
     fileprivate func getUserFriends() {
-        FirebaseCalls.shared.getIdListFromNode(for: friendRef) { (ids, error) in
-            
+        guard let friendIds = User.onlineUser.friendsIds else { return }
+        
+        for (id, _) in friendIds {
+            FirebaseCalls.shared.getUserCacheInfo(for: id) { (userCacheInfo, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                guard let friend = userCacheInfo else { return }
+                guard let status = friend.isOnline?.toBool() else { return }
+                
+                if status {
+                    self.onlineFriends.append(friend)
+                    let row = self.onlineFriends.count - 1
+                    self.collectionView
+                        .insertItems(at: [IndexPath(item: row, section: self.onlineSectionId)])
+                } else {
+                    self.offlineFriends.append(friend)
+                    let row = self.offlineFriends.count - 1
+                    self.collectionView
+                        .insertItems(at: [IndexPath(item: row, section: self.offlineSectionId)])
+                }
+            }
         }
     }
 
@@ -55,16 +94,20 @@ extension FriendsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return 2
+            return onlineFriends.count
         } else {
-            return 3
+            return offlineFriends.count
         }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FriendCollectionViewCell
+        let friend = indexPath.section == onlineSectionId ? onlineFriends[indexPath.item] : offlineFriends[indexPath.item]
+        
+        cell.friendUsernameLabel.text = friend.username
         cell.friendImageView.image = UIImage(named: "noAvatarImg")
-        cell.friendUsernameLabel.text = "Some Username"
+        
         return cell
     }
 }
@@ -72,17 +115,16 @@ extension FriendsViewController: UICollectionViewDataSource {
 extension FriendsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        print("setting up a header for collectionView...")
         let headerCell = collectionView
             .dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
                                               withReuseIdentifier: FriendCollectionViewHeader.identifier,
                                               for: indexPath) as! FriendCollectionViewHeader
-        print("This is the section header : \(indexPath.section)")
         if indexPath.section == 0 {
             headerCell.friendStatusLabel.text = "Online"
-        } else {
-            headerCell.friendStatusLabel.text = "Offline"
         }
+        /*else {
+            headerCell.friendStatusLabel.text = "Offline"
+        }*/
         
         return headerCell
     }

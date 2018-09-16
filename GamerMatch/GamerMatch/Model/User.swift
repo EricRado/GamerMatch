@@ -16,10 +16,11 @@ final class User {
     var password: String?
     var username: String?
     var bio: String?
-    var isActive: Bool?
+    var isOnline: Bool?
     var avatarURL: String?
     var userImg:UIImage?
     var chatIds: [String: String]?
+    var friendsIds: [String: String]?
     
     static var onlineUser = User()
     private var dbRef = Database.database().reference()
@@ -33,23 +34,28 @@ final class User {
         guard let password = dict["password"] as! String? else {return nil}
         guard let username = dict["username"] as! String? else {return nil}
         guard let bio = dict["bio"] as! String? else {return nil}
-        guard let isActive = dict["isActive"] as! String? else {return nil}
+        guard let isOnline = dict["isOnline"] as! String? else {return nil}
         guard let avatarURL = dict["avatarURL"] as! String? else {return nil}
         guard let chatIds = dict["chatIds"] as? [String: String] else { return nil }
+        
+        if let friendsIds = dict["friends"] as? [String: String] {
+            self.friendsIds = friendsIds
+        }
         
         self.uid = uid
         self.email = email
         self.password = password
         self.username = username
         self.bio = bio
-        self.isActive = isActive.toBool()
+        self.isOnline = isOnline.toBool()
         self.avatarURL = avatarURL
         self.chatIds = chatIds
+        
     }
     
     func toAnyObject() -> [AnyHashable: Any] {
         return ["uid": uid!, "email": email!, "password": password!,
-                "username": username!, "bio": bio!, "isActive": String(isActive!), "avatarURL": avatarURL!] as [AnyHashable: Any]
+                "username": username!, "bio": bio!, "isOnline": String(isOnline!), "avatarURL": avatarURL!] as [AnyHashable: Any]
     }
     
     func retrieveUserInfo(uid: String) {

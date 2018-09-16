@@ -45,7 +45,7 @@ class FirebaseCalls {
         
     }
     
-    func getUserCacheInfo(userId: String?,
+    func getUserCacheInfo(for userId: String?,
                           completion: @escaping (UserCacheInfo?, Error?) -> Void) {
         
         guard let id = userId else { return }

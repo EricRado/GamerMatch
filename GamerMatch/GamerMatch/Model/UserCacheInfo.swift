@@ -12,4 +12,5 @@ struct UserCacheInfo: Decodable {
     let id: String?
     let username: String?
     let avatarURL: String?
+    let isOnline: String?
 }

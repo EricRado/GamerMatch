@@ -121,7 +121,7 @@ class ChatViewController: UIViewController {
             }
         }
         
-        FirebaseCalls.shared.getUserCacheInfo(userId: friendId) { (userCacheInfo, error) in
+        FirebaseCalls.shared.getUserCacheInfo(for: friendId) { (userCacheInfo, error) in
             if let error = error {
                 print(error)
             } else {
