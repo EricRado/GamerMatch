@@ -17,6 +17,8 @@
 		071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */; };
 		071BC836214E0E4500621899 /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */; };
 		071BC838214E108000621899 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC837214E108000621899 /* FriendsViewController.swift */; };
+		071E900F214EB026005ED404 /* FriendCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */; };
+		071E9011214EB04B005ED404 /* FriendCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */; };
 		0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329721477B8200D491CD /* comic_sans_ms.ttf */; };
 		0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */; };
 		07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */; };
@@ -61,6 +63,8 @@
 		071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGamerResultsViewController.swift; sourceTree = "<group>"; };
 		071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
 		071BC837214E108000621899 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCollectionViewHeader.xib; sourceTree = "<group>"; };
+		071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewHeader.swift; sourceTree = "<group>"; };
 		0721329721477B8200D491CD /* comic_sans_ms.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms.ttf; sourceTree = "<group>"; };
 		0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms_bold.ttf; sourceTree = "<group>"; };
 		07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCalls.swift; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 				07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */,
 				0701F3BE2146087E00A73A77 /* ChatMessageCollectionViewCell.swift */,
 				071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */,
+				071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */,
+				071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -316,6 +322,7 @@
 				07E586B9204F8F7600023383 /* LaunchScreen.storyboard in Resources */,
 				07E586CA205057D600023383 /* GoogleService-Info.plist in Resources */,
 				07E586B6204F8F7600023383 /* Assets.xcassets in Resources */,
+				071E900F214EB026005ED404 /* FriendCollectionViewHeader.xib in Resources */,
 				07E586B4204F8F7600023383 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,6 +421,7 @@
 				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
 				07C982F720961B40007B46BB /* ImageManager.swift in Sources */,
 				07C07F8E209274D60005494D /* SideMenuViewController.swift in Sources */,
+				071E9011214EB04B005ED404 /* FriendCollectionViewHeader.swift in Sources */,
 				071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */,
 				07E586F52052FDCA00023383 /* Message.swift in Sources */,
 				070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */,

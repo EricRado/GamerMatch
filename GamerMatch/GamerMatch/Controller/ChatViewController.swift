@@ -239,6 +239,10 @@ extension ChatViewController: UITableViewDataSource {
     
 }
 
+extension ChatViewController: UICollectionViewDelegateFlowLayout {
+    
+}
+
 extension ChatViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         let taskId = downloadTask.taskIdentifier

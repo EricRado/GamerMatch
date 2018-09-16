@@ -19,7 +19,7 @@ class FirebaseCalls {
     
     private init () {}
     
-    func searchForGamer(searchRef: DatabaseReference?,
+    func getIdListFromNode(for searchRef: DatabaseReference?,
                         completion: @escaping ([String]?, Error?) -> Void) {
         guard let ref = searchRef else { return }
         var ids = [String]()

@@ -176,7 +176,7 @@ class FindGamerViewController: UIViewController {
                 SVProgressHUD.show(withStatus: "Searching...")
                 
                 FirebaseCalls.shared
-                    .searchForGamer(searchRef: self.searchRef) { (ids, error) in
+                    .getIdListFromNode(for: self.searchRef) { (ids, error) in
                         if let error = error {
                             print(error.localizedDescription)
                             return

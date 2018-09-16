@@ -827,7 +827,7 @@
                                 </segments>
                             </segmentedControl>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O0a-ME-iPY">
-                                <rect key="frame" x="0.0" y="92" width="375" height="526"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="518"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ddh-SV-oKf">
                                     <size key="itemSize" width="116" height="133"/>
@@ -844,20 +844,23 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gmS-Ny-mHe">
-                                                    <rect key="frame" x="16" y="16" width="84" height="80"/>
+                                                    <rect key="frame" x="16" y="16" width="84" height="84"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="gmS-Ny-mHe" secondAttribute="height" multiplier="1:1" id="9qA-N1-thl"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbG-WM-df1">
-                                                    <rect key="frame" x="8" y="112" width="100" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="8" y="116" width="100" height="17"/>
+                                                    <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="vbG-WM-df1" firstAttribute="top" secondItem="gmS-Ny-mHe" secondAttribute="bottom" constant="16" id="10v-gR-KtE"/>
                                             <constraint firstItem="vbG-WM-df1" firstAttribute="leading" secondItem="GkR-o9-ohd" secondAttribute="leading" constant="8" id="8gG-Dn-1of"/>
                                             <constraint firstItem="gmS-Ny-mHe" firstAttribute="leading" secondItem="GkR-o9-ohd" secondAttribute="leading" constant="16" id="Acn-yU-fKB"/>
+                                            <constraint firstItem="vbG-WM-df1" firstAttribute="centerX" secondItem="gmS-Ny-mHe" secondAttribute="centerX" id="SWC-Ze-TP1"/>
                                             <constraint firstAttribute="trailing" secondItem="vbG-WM-df1" secondAttribute="trailing" constant="8" id="mx6-zz-SfJ"/>
                                             <constraint firstAttribute="trailing" secondItem="gmS-Ny-mHe" secondAttribute="trailing" constant="16" id="rxt-F1-Hg3"/>
                                             <constraint firstAttribute="bottom" secondItem="vbG-WM-df1" secondAttribute="bottom" id="uPK-8D-IFc"/>
@@ -878,7 +881,7 @@
                             <constraint firstItem="iNP-CS-PKa" firstAttribute="top" secondItem="BSC-jW-ELK" secondAttribute="top" id="V6i-7d-gnc"/>
                             <constraint firstItem="O0a-ME-iPY" firstAttribute="leading" secondItem="BSC-jW-ELK" secondAttribute="leading" id="W7y-Hj-dyn"/>
                             <constraint firstItem="BSC-jW-ELK" firstAttribute="trailing" secondItem="iNP-CS-PKa" secondAttribute="trailing" id="cv8-02-oSw"/>
-                            <constraint firstItem="O0a-ME-iPY" firstAttribute="top" secondItem="iNP-CS-PKa" secondAttribute="bottom" id="cw2-CM-et8"/>
+                            <constraint firstItem="O0a-ME-iPY" firstAttribute="top" secondItem="iNP-CS-PKa" secondAttribute="bottom" constant="8" id="cw2-CM-et8"/>
                             <constraint firstItem="BSC-jW-ELK" firstAttribute="trailing" secondItem="O0a-ME-iPY" secondAttribute="trailing" id="gEj-gd-E2y"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BSC-jW-ELK"/>
