@@ -10,18 +10,18 @@ import UIKit
 
 class ChatTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var chatUserPic: UIImageView!
+    @IBOutlet weak var chatUserPic: UIImageView! {
+        didSet {
+            chatUserPic.layer.cornerRadius = chatUserPic.frame.height / 2
+            chatUserPic.clipsToBounds = true
+        }
+    }
     
     @IBOutlet weak var chatUsernameLabel: UILabel!
     @IBOutlet weak var lastMessageLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        chatUserPic.layer.masksToBounds = false
-        chatUserPic.layer.cornerRadius = chatUserPic.frame.height / 2
-        chatUserPic.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

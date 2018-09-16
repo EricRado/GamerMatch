@@ -326,8 +326,8 @@ class FindGamerViewController: UIViewController {
             
             // pass the interactor object forward
             destinationViewController.interactor = interactor
-        } else if let destinationViewController = segue.destination as? FindGamerResultsViewController {
-            destinationViewController.gamerMatchRef = searchRef
+        } else if let destinationViewController = segue.destination
+            as? FindGamerResultsViewController {
             destinationViewController.resultIds = ids
         }
     }

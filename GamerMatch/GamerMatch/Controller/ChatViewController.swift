@@ -222,7 +222,7 @@ extension ChatViewController: UITableViewDataSource {
         // if image was not downloaded create a background download task
         let urlString = chat.isGroupChat! ? chat.urlString : chat1on1TitleDict[chat.id!]?.avatarURL
         if let urlString = urlString, !urlString.isEmpty {
-            if let taskIdentifier = ImageManager.shared.downloadImage(urlString: urlString) {
+            if let taskIdentifier = ImageManager.shared.downloadImage(from: urlString) {
                 taskIdToCellRowAndChatIdDict[taskIdentifier] = (indexPath.row, chat.id!)
             }
         }

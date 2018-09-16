@@ -11,7 +11,12 @@ import UIKit
 class GamerMatchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var gamerUsernameLabel: UILabel!
-    @IBOutlet weak var gamerAvatarImageView: UIImageView!
+    @IBOutlet weak var gamerAvatarImageView: UIImageView! {
+        didSet {
+            gamerAvatarImageView.layer.cornerRadius = gamerAvatarImageView.frame.height / 2.0
+            gamerAvatarImageView.clipsToBounds = true
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

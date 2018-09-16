@@ -14,7 +14,7 @@ final class ImageManager {
     
     private init() {}
     
-    func downloadImage(urlString: String) -> Int? {
+    func downloadImage(from urlString: String) -> Int? {
         guard let url = URL(string: urlString) else { return nil }
         print("Download task is about to start with : \(urlString)")
         

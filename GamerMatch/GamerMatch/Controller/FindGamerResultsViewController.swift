@@ -12,20 +12,30 @@ import Firebase
 class FindGamerResultsViewController: UIViewController {
     
     private let cellId = "gamerCell"
-    @IBOutlet weak var tableView: UITableView!
     var results: [UserCacheInfo]?
     var resultIds: [String]?
-    var gamerMatchRef: DatabaseReference?
+    var taskIdToCellRowDict = [Int: Int]()
     
+    lazy var downloadSession: URLSession = {
+        let configuration = URLSessionConfiguration
+            .background(withIdentifier: "bgSessionConfiguration")
+        let session = URLSession(configuration: configuration,
+                                 delegate: self,
+                                 delegateQueue: nil)
+        return session
+    }()
+    
+    @IBOutlet weak var tableView: UITableView!
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
         results = [UserCacheInfo]()
+        ImageManager.shared.downloadSession = downloadSession
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        print("FindGamerResultsVC : \(gamerMatchRef)")
         getUsersResults(from: resultIds)
     }
     
@@ -46,7 +56,6 @@ class FindGamerResultsViewController: UIViewController {
                     print("Inserting at row : \(indexPath.item)")
                     self.tableView.insertRows(at: [indexPath], with: .none)
                 }
-                
             }
         }
     }
@@ -64,7 +73,12 @@ extension FindGamerResultsViewController: UITableViewDataSource {
         
         cell.gamerUsernameLabel.text = userCacheInfo.username
         
-        if userCacheInfo.avatarURL == "" {
+        if let urlString = userCacheInfo.avatarURL, urlString != "" {
+            let id = ImageManager.shared.downloadImage(from: urlString)
+            guard let taskId = id else { return cell }
+            taskIdToCellRowDict[taskId] = indexPath.row
+            
+        } else {
             cell.gamerAvatarImageView.image = UIImage(named: "noAvatarImg")
         }
         
@@ -74,10 +88,42 @@ extension FindGamerResultsViewController: UITableViewDataSource {
 
 extension FindGamerResultsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        guard let userCacheInfo = results?[indexPath.row] else { return }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.rowHeight
     }
 }
+
+extension FindGamerResultsViewController: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
+                    didFinishDownloadingTo location: URL) {
+        let taskId = downloadTask.taskIdentifier
+        
+        do {
+            let data = try Data(contentsOf: location)
+            DispatchQueue.main.async {
+                guard let row = self.taskIdToCellRowDict[taskId] else { return }
+                guard let cell = self.tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? GamerMatchTableViewCell else { return }
+                let image = UIImage(data: data)
+                cell.gamerAvatarImageView.image = image
+            }
+        } catch let error {
+            print(error)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
