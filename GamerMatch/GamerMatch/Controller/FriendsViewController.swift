@@ -36,6 +36,15 @@ class FriendsViewController: UIViewController {
         return dict
     }()
     
+    lazy var downloadSession: URLSession = {
+        let configuration = URLSessionConfiguration
+            .background(withIdentifier: "FriendVCBgSessionConfiguration")
+        let session = URLSession(configuration: configuration,
+                                 delegate: self,
+                                 delegateQueue: nil)
+        return session
+    }()
+    
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.delegate = self
@@ -46,15 +55,31 @@ class FriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ImageManager.shared.downloadSession = downloadSession
         let nib = UINib(nibName: FriendCollectionViewHeader.identifier, bundle: nil)
         collectionView.register(nib,
                                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                                 withReuseIdentifier: FriendCollectionViewHeader.identifier)
-        getUserFriends()
+        getUserFriends() {
+            guard let onlineView = self.collectionView
+                .supplementaryView(forElementKind: UICollectionElementKindSectionHeader,
+                                   at: IndexPath(item: 0, section: 0)) as?
+                FriendCollectionViewHeader else { return }
+        
+            guard let offlineView = self.collectionView
+                .supplementaryView(forElementKind: UICollectionElementKindSectionHeader,
+                                   at: IndexPath(item: 0, section: 1)) as?
+                FriendCollectionViewHeader else { return }
+
+            onlineView.friendsCountLabel.text = "\(self.onlineFriends.count)"
+            offlineView.friendsCountLabel.text = "\(self.offlineFriends.count)"
+        }
     }
     
-    fileprivate func getUserFriends() {
+    fileprivate func getUserFriends(completion: @escaping (() -> Void)) {
         guard let friendIds = User.onlineUser.friendsIds else { return }
+        let dictCount = friendIds.count
+        var counter = 0
         
         for (id, _) in friendIds {
             FirebaseCalls.shared.getUserCacheInfo(for: id) { (userCacheInfo, error) in
@@ -75,10 +100,13 @@ class FriendsViewController: UIViewController {
                     self.collectionView
                         .insertItems(at: [IndexPath(item: row, section: self.offlineSectionId)])
                 }
+                if counter == dictCount {
+                    completion()
+                }
             }
+            counter += 1
         }
     }
-
 }
 
 extension FriendsViewController: UICollectionViewDelegate {
@@ -106,6 +134,12 @@ extension FriendsViewController: UICollectionViewDataSource {
         let friend = indexPath.section == onlineSectionId ? onlineFriends[indexPath.item] : offlineFriends[indexPath.item]
         
         cell.friendUsernameLabel.text = friend.username
+        
+        if let url = friend.avatarURL, url != "" {
+            let id = ImageManager.shared.downloadImage(from: url)
+            guard let taskId = id else { return cell }
+            taskIdsToIndexPathRowDict[taskId] = (indexPath.item, indexPath.section)
+        }
         cell.friendImageView.image = UIImage(named: "noAvatarImg")
         
         return cell
@@ -122,9 +156,9 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.section == 0 {
             headerCell.friendStatusLabel.text = "Online"
         }
-        /*else {
+        else {
             headerCell.friendStatusLabel.text = "Offline"
-        }*/
+        }
         
         return headerCell
     }
@@ -135,7 +169,34 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
+extension FriendsViewController: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        let taskId = downloadTask.taskIdentifier
+        
+        do {
+            let data = try Data(contentsOf: location)
+            DispatchQueue.main.async {
+                guard let (row, section) = self.taskIdsToIndexPathRowDict[taskId] else { return }
+                let indexPath = IndexPath(row: row, section: section)
+                guard let cell = self.collectionView.cellForItem(at: indexPath) as? FriendCollectionViewCell else { return }
+                let image = UIImage(data: data)
+                cell.friendImageView.image = image
+            }
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                completionHandler()
+            }
+        }
+    }
+}
 
 
 

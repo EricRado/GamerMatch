@@ -18,7 +18,7 @@ class FindGamerResultsViewController: UIViewController {
     
     lazy var downloadSession: URLSession = {
         let configuration = URLSessionConfiguration
-            .background(withIdentifier: "bgSessionConfiguration")
+            .background(withIdentifier: "GamerResultsVCBgSessionConfiguration")
         let session = URLSession(configuration: configuration,
                                  delegate: self,
                                  delegateQueue: nil)

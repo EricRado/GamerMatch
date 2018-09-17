@@ -15,7 +15,7 @@ class ChatViewController: UIViewController {
     
     lazy var downloadSession: URLSession = {
         let configuration = URLSessionConfiguration
-            .background(withIdentifier: "bgSessionConfiguration")
+            .background(withIdentifier: "chatVCBgSessionConfiguration")
         let session = URLSession(configuration: configuration,
                                  delegate: self,
                                  delegateQueue: nil)
@@ -129,23 +129,6 @@ class ChatViewController: UIViewController {
                 completion()
             }
         }
-       
-        /*let userInfoRef = userCacheInfoRef.child("\(friendId!)/")
-        
-        userInfoRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot)
-            guard let dict = snapshot.value as? [String: Any] else { return }
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
-                let userCacheInfo = try JSONDecoder().decode(UserCacheInfo.self, from: jsonData)
-                self.chat1on1TitleDict[chatId!] = userCacheInfo
-                completion()
-            } catch let error {
-                print(error)
-            }
-        }) { (error) in
-            print(error.localizedDescription)
-        }*/
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
