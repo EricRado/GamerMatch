@@ -19,6 +19,9 @@
 		071BC838214E108000621899 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC837214E108000621899 /* FriendsViewController.swift */; };
 		071E900F214EB026005ED404 /* FriendCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */; };
 		071E9011214EB04B005ED404 /* FriendCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */; };
+		071E901321500145005ED404 /* CreateNewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071E901221500145005ED404 /* CreateNewChatViewController.swift */; };
+		071E90152150255E005ED404 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071E90142150255E005ED404 /* UserTableViewCell.swift */; };
+		071E901721502571005ED404 /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071E901621502571005ED404 /* UserTableViewCell.xib */; };
 		0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329721477B8200D491CD /* comic_sans_ms.ttf */; };
 		0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */; };
 		07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */; };
@@ -65,6 +68,9 @@
 		071BC837214E108000621899 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCollectionViewHeader.xib; sourceTree = "<group>"; };
 		071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewHeader.swift; sourceTree = "<group>"; };
+		071E901221500145005ED404 /* CreateNewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewChatViewController.swift; sourceTree = "<group>"; };
+		071E90142150255E005ED404 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		071E901621502571005ED404 /* UserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
 		0721329721477B8200D491CD /* comic_sans_ms.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms.ttf; sourceTree = "<group>"; };
 		0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms_bold.ttf; sourceTree = "<group>"; };
 		07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCalls.swift; sourceTree = "<group>"; };
@@ -184,13 +190,14 @@
 				0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */,
 				0701F3BC2145FF7000A73A77 /* ChatSelectedViewController.swift */,
 				07E586CB2050E14F00023383 /* ChatViewController.swift */,
+				071E901221500145005ED404 /* CreateNewChatViewController.swift */,
 				071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */,
 				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
+				071BC837214E108000621899 /* FriendsViewController.swift */,
 				07E586C0204F90E700023383 /* LoginViewController.swift */,
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 				07E586FC2056170600023383 /* TournamentViewController.swift */,
-				071BC837214E108000621899 /* FriendsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -198,14 +205,14 @@
 		07E586C5204F913400023383 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				07E586C7205050A400023383 /* User.swift */,
 				07E586F22052FA5700023383 /* Chat.swift */,
-				07E586F42052FDCA00023383 /* Message.swift */,
 				07E586F620542E2C00023383 /* ChatUserDisplay.swift */,
+				07E586F42052FDCA00023383 /* Message.swift */,
 				07E586FE20578FA300023383 /* Tournament.swift */,
+				07E586C7205050A400023383 /* User.swift */,
+				071A7A122148717500099BCA /* UserCacheInfo.swift */,
 				070927F920608CDF005B0EAF /* VideoGame.swift */,
 				070927FB20619FC5005B0EAF /* VideoGameRole.swift */,
-				071A7A122148717500099BCA /* UserCacheInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -213,13 +220,15 @@
 		07E586C6204F913E00023383 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				07E586B2204F8F7600023383 /* Main.storyboard */,
-				07E586CD2050E85300023383 /* ChatTableViewCell.swift */,
-				07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */,
 				0701F3BE2146087E00A73A77 /* ChatMessageCollectionViewCell.swift */,
+				07E586CD2050E85300023383 /* ChatTableViewCell.swift */,
 				071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */,
-				071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */,
 				071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */,
+				071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */,
+				07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */,
+				07E586B2204F8F7600023383 /* Main.storyboard */,
+				071E90142150255E005ED404 /* UserTableViewCell.swift */,
+				071E901621502571005ED404 /* UserTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -317,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				071E901721502571005ED404 /* UserTableViewCell.xib in Resources */,
 				0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */,
 				0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */,
 				07E586B9204F8F7600023383 /* LaunchScreen.storyboard in Resources */,
@@ -414,6 +424,8 @@
 				071BC838214E108000621899 /* FriendsViewController.swift in Sources */,
 				0784A8DD20A20EA6003FE32C /* GeocodingRouter.swift in Sources */,
 				07E586C8205050A400023383 /* User.swift in Sources */,
+				071E90152150255E005ED404 /* UserTableViewCell.swift in Sources */,
+				071E901321500145005ED404 /* CreateNewChatViewController.swift in Sources */,
 				07E586C3204F911300023383 /* RegistrationViewController.swift in Sources */,
 				07E586F32052FA5700023383 /* Chat.swift in Sources */,
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,

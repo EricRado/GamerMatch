@@ -13,6 +13,8 @@ class ChatViewController: UIViewController {
     
     @IBOutlet weak var chatTableView: UITableView!
     
+    let createNewChatSegueId = "createNewChatSegue"
+    
     lazy var downloadSession: URLSession = {
         let configuration = URLSessionConfiguration
             .background(withIdentifier: "chatVCBgSessionConfiguration")
@@ -64,6 +66,20 @@ class ChatViewController: UIViewController {
             self.chatTableView.reloadData()
         }
         
+        setupAddChatBarButton()
+        
+    }
+    
+    fileprivate func setupAddChatBarButton() {
+        let addBarButton = UIBarButtonItem(barButtonSystemItem: .add,
+                                           target: self,
+                                           action: #selector(addButtonPressed(sender:)))
+        navigationItem.rightBarButtonItem = addBarButton
+    }
+    
+    @objc func addButtonPressed(sender: UIBarButtonItem) {
+        print("add button pressed")
+        performSegue(withIdentifier: createNewChatSegueId, sender: nil)
     }
     
     fileprivate func updateChatRow(at id: String, chat: Chat) {
@@ -150,6 +166,9 @@ class ChatViewController: UIViewController {
             
             // reset selectedChatUser
             selectedChatUser = nil
+        } else if segue.identifier == createNewChatSegueId {
+            let vc = segue.destination as! CreateNewChatViewController
+            
         }
     }
 }

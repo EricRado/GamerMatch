@@ -172,7 +172,6 @@ class FindGamerViewController: UIViewController {
                 self.searchRef = self.createGamerMatchDBRef(console: self.consoleName,
                                                      game: gameName,
                                                      role: roleName)
-                print("This is the created reference : \(self.searchRef)")
                 SVProgressHUD.show(withStatus: "Searching...")
                 
                 FirebaseCalls.shared
