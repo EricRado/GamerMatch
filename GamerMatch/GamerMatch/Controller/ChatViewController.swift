@@ -66,20 +66,27 @@ class ChatViewController: UIViewController {
             self.chatTableView.reloadData()
         }
         
-        setupAddChatBarButton()
+        setupBarButtonItems()
         
     }
     
-    fileprivate func setupAddChatBarButton() {
+    fileprivate func setupBarButtonItems() {
         let addBarButton = UIBarButtonItem(barButtonSystemItem: .add,
                                            target: self,
                                            action: #selector(addButtonPressed(sender:)))
         navigationItem.rightBarButtonItem = addBarButton
+        
+        let newGroupButton = UIBarButtonItem(title: "New Group", style: .plain, target: self, action: #selector(newGroupButtonPressed(sender:)))
+        navigationItem.leftBarButtonItem = newGroupButton
     }
     
     @objc func addButtonPressed(sender: UIBarButtonItem) {
         print("add button pressed")
         performSegue(withIdentifier: createNewChatSegueId, sender: nil)
+    }
+    
+    @objc func newGroupButtonPressed(sender: UIBarButtonItem) {
+        print("new group pressed")
     }
     
     fileprivate func updateChatRow(at id: String, chat: Chat) {
@@ -168,7 +175,7 @@ class ChatViewController: UIViewController {
             selectedChatUser = nil
         } else if segue.identifier == createNewChatSegueId {
             let vc = segue.destination as! CreateNewChatViewController
-            
+            vc.chat1on1Dict = chat1on1TitleDict
         }
     }
 }

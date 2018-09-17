@@ -25,7 +25,7 @@ class CreateNewChatViewController: UIViewController {
     }()
     
     var friends: [UserCacheInfo]?
-    private var selectedUserIds: [String]?
+    var chat1on1Dict: [String: UserCacheInfo]?
     private let cellId = "cellId"
     private var taskIdToCellRowDict = [Int: Int]()
     
@@ -72,10 +72,35 @@ class CreateNewChatViewController: UIViewController {
         }
     }
     
+    fileprivate func createNewChat() {
+        
+    }
+    
     @objc func createPressed(sender: UIBarButtonItem) {
         print("Create was pressed")
         print(selectedUsers)
+        if selectedUsers.count > 1 {
+            createAlert()
+        } else {
+            
+        }
+    }
+    
+    fileprivate func createAlert() {
+        let ac = UIAlertController(title: "Group Chat", message: "Set a name for this group chat", preferredStyle: .alert)
         
+        ac.addTextField(configurationHandler: nil)
+        ac.addAction(UIAlertAction(title: "Submit", style: .default) { (alert) in
+            print("Submit was pressed")
+            let input = ac.textFields?.first?.text
+            print("This is the input : \(input ?? "nothing")")
+        })
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+            ac.dismiss(animated: true, completion: nil)
+        })
+        
+        present(ac, animated: true, completion: nil)
     }
 
 }
