@@ -36,6 +36,10 @@
 		07C982F22093FA41007B46BB /* SideMenuTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F12093FA41007B46BB /* SideMenuTopTableViewCell.swift */; };
 		07C982F720961B40007B46BB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F620961B40007B46BB /* ImageManager.swift */; };
 		07C982F92096B292007B46BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F82096B292007B46BB /* SettingsViewController.swift */; };
+		07DDCB65215071CF00584BD6 /* NewGroupChatSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */; };
+		07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */; };
+		07DDCB692150773600584BD6 /* Create1On1ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */; };
+		07DDCB6B2150B63500584BD6 /* FriendCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */; };
 		07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586AE204F8F7500023383 /* AppDelegate.swift */; };
 		07E586B4204F8F7600023383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B2204F8F7600023383 /* Main.storyboard */; };
 		07E586B6204F8F7600023383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B5204F8F7600023383 /* Assets.xcassets */; };
@@ -85,6 +89,10 @@
 		07C982F12093FA41007B46BB /* SideMenuTopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTopTableViewCell.swift; sourceTree = "<group>"; };
 		07C982F620961B40007B46BB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		07C982F82096B292007B46BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupChatSetupViewController.swift; sourceTree = "<group>"; };
+		07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupChatViewController.swift; sourceTree = "<group>"; };
+		07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Create1On1ChatViewController.swift; sourceTree = "<group>"; };
+		07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCollectionViewCell.xib; sourceTree = "<group>"; };
 		07E586AB204F8F7500023383 /* GamerMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamerMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E586AE204F8F7500023383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07E586B3204F8F7600023383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -198,6 +206,9 @@
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 				07E586FC2056170600023383 /* TournamentViewController.swift */,
+				07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */,
+				07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */,
+				07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -223,6 +234,7 @@
 				0701F3BE2146087E00A73A77 /* ChatMessageCollectionViewCell.swift */,
 				07E586CD2050E85300023383 /* ChatTableViewCell.swift */,
 				071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */,
+				07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */,
 				071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */,
 				071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */,
 				07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */,
@@ -294,7 +306,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Eric Rado";
 				TargetAttributes = {
 					07E586AA204F8F7500023383 = {
@@ -331,6 +343,7 @@
 				0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */,
 				07E586B9204F8F7600023383 /* LaunchScreen.storyboard in Resources */,
 				07E586CA205057D600023383 /* GoogleService-Info.plist in Resources */,
+				07DDCB6B2150B63500584BD6 /* FriendCollectionViewCell.xib in Resources */,
 				07E586B6204F8F7600023383 /* Assets.xcassets in Resources */,
 				071E900F214EB026005ED404 /* FriendCollectionViewHeader.xib in Resources */,
 				07E586B4204F8F7600023383 /* Main.storyboard in Resources */,
@@ -436,6 +449,8 @@
 				071E9011214EB04B005ED404 /* FriendCollectionViewHeader.swift in Sources */,
 				071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */,
 				07E586F52052FDCA00023383 /* Message.swift in Sources */,
+				07DDCB692150773600584BD6 /* Create1On1ChatViewController.swift in Sources */,
+				07DDCB65215071CF00584BD6 /* NewGroupChatSetupViewController.swift in Sources */,
 				070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */,
 				0784A8DF20A2380D003FE32C /* AddTournamentViewController.swift in Sources */,
 				070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */,
@@ -449,6 +464,7 @@
 				07C982F22093FA41007B46BB /* SideMenuTopTableViewCell.swift in Sources */,
 				07C07F8C209272B50005494D /* DismissMenuAnimator.swift in Sources */,
 				0701F3BD2145FF7000A73A77 /* ChatSelectedViewController.swift in Sources */,
+				07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */,
 				07C07F90209274EF0005494D /* SideMenuTableViewCell.swift in Sources */,
 				070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */,
 				07E586CE2050E85300023383 /* ChatTableViewCell.swift in Sources */,
@@ -493,6 +509,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -500,6 +517,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -550,6 +568,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -557,6 +576,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

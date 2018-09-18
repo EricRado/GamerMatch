@@ -45,6 +45,11 @@ class FriendsViewController: UIViewController {
         return session
     }()
     
+    lazy var mediaManager: ImageManager = {
+        let manager = ImageManager(downloadSession: downloadSession)
+        return manager
+    }()
+    
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.delegate = self
@@ -55,7 +60,6 @@ class FriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ImageManager.shared.downloadSession = downloadSession
         let nib = UINib(nibName: FriendCollectionViewHeader.identifier, bundle: nil)
         collectionView.register(nib,
                                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
@@ -136,7 +140,7 @@ extension FriendsViewController: UICollectionViewDataSource {
         cell.friendUsernameLabel.text = friend.username
         
         if let url = friend.avatarURL, url != "" {
-            let id = ImageManager.shared.downloadImage(from: url)
+            let id = mediaManager.downloadImage(from: url)
             guard let taskId = id else { return cell }
             taskIdsToIndexPathRowDict[taskId] = (indexPath.item, indexPath.section)
         }
@@ -163,7 +167,8 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
         return headerCell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 50.0)
     }

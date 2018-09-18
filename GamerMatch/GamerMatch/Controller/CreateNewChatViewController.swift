@@ -9,29 +9,41 @@
 import UIKit
 
 class CreateNewChatViewController: UIViewController {
+    var downloadSessionId: String?
+    let groupSetupVCId: String = "NewGroupSetupVC"
     
     lazy var selectedUsers: [String: UserCacheInfo] = {
         var users = [String: UserCacheInfo]()
         return users
     }()
     
-    lazy var downloadSession: URLSession = {
+    lazy var selectedUsersIdToUIImage: [String: UIImage] = {
+        var dict = [String: UIImage]()
+        return dict
+    }()
+    
+    lazy var downloadSession: URLSession? = {
+        guard let id = downloadSessionId else { return nil }
         let configuration = URLSessionConfiguration
-            .background(withIdentifier: "CreateNewChatVCBgSessionConfiguration")
+            .background(withIdentifier: id)
         let session = URLSession(configuration: configuration,
                                  delegate: self,
                                  delegateQueue: nil)
         return session
     }()
     
+    lazy var mediaManager: ImageManager? = {
+        guard let session = downloadSession else { return nil }
+        let manager = ImageManager(downloadSession: session)
+        return manager
+    }()
+    
     var friends: [UserCacheInfo]?
-    var chat1on1Dict: [String: UserCacheInfo]?
     private let cellId = "cellId"
     private var taskIdToCellRowDict = [Int: Int]()
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableView.delegate = self
             tableView.dataSource = self
         }
     }
@@ -40,17 +52,10 @@ class CreateNewChatViewController: UIViewController {
         super.viewDidLoad()
         
         friends = [UserCacheInfo]()
-        ImageManager.shared.downloadSession = downloadSession
+        
         
         let nib = UINib(nibName: UserTableViewCell.identifier, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: cellId)
-        tableView.allowsMultipleSelection = true
-        
-        navigationItem.title = "New Chat"
-        let item = UIBarButtonItem(title: "Create",
-                                   style: .plain, target: self,
-                                   action: #selector(createPressed(sender:)))
-        navigationItem.rightBarButtonItem = item
         
         getUserFriends()
     }
@@ -62,6 +67,7 @@ class CreateNewChatViewController: UIViewController {
             FirebaseCalls.shared.getUserCacheInfo(for: id) { (userCacheInfo, error) in
                 if let error = error {
                     print(error.localizedDescription)
+                    return
                 }
                 guard let friend = userCacheInfo else { return }
                 self.friends?.append(friend)
@@ -71,61 +77,7 @@ class CreateNewChatViewController: UIViewController {
             }
         }
     }
-    
-    fileprivate func createNewChat() {
-        
-    }
-    
-    @objc func createPressed(sender: UIBarButtonItem) {
-        print("Create was pressed")
-        print(selectedUsers)
-        if selectedUsers.count > 1 {
-            createAlert()
-        } else {
-            
-        }
-    }
-    
-    fileprivate func createAlert() {
-        let ac = UIAlertController(title: "Group Chat", message: "Set a name for this group chat", preferredStyle: .alert)
-        
-        ac.addTextField(configurationHandler: nil)
-        ac.addAction(UIAlertAction(title: "Submit", style: .default) { (alert) in
-            print("Submit was pressed")
-            let input = ac.textFields?.first?.text
-            print("This is the input : \(input ?? "nothing")")
-        })
-        
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
-            ac.dismiss(animated: true, completion: nil)
-        })
-        
-        present(ac, animated: true, completion: nil)
-    }
-
 }
-
-extension CreateNewChatViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let friend = friends?[indexPath.row] else { return }
-        selectedUsers[friend.id!] = friend
-        print(selectedUsers)
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        print("deselect")
-        guard let friend = friends?[indexPath.row] else { return }
-        selectedUsers.removeValue(forKey: friend.id!)
-        print(selectedUsers)
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.height / 7
-    }
-
-}
-
 
 extension CreateNewChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,7 +94,7 @@ extension CreateNewChatViewController: UITableViewDataSource {
         cell.usernameLabel.text = friend.username
         
         if let url = friend.avatarURL, !url.isEmpty {
-            let id = ImageManager.shared.downloadImage(from: url)
+            let id = mediaManager?.downloadImage(from: url)
             guard let taskId = id else { return cell }
             taskIdToCellRowDict[taskId] = indexPath.row
         } else {

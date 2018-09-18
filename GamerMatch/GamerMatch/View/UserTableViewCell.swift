@@ -13,7 +13,12 @@ class UserTableViewCell: UITableViewCell {
     static let identifier = "UserTableViewCell"
     
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var userImageView: UIImageView! {
+        didSet {
+            userImageView.layer.cornerRadius = userImageView.frame.height / 2
+            userImageView.clipsToBounds = true
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

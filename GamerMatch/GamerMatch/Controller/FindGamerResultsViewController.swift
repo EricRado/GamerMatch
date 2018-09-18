@@ -25,13 +25,17 @@ class FindGamerResultsViewController: UIViewController {
         return session
     }()
     
+    lazy var mediaManager: ImageManager = {
+        let manager = ImageManager(downloadSession: downloadSession)
+        return manager
+    }()
+    
     @IBOutlet weak var tableView: UITableView!
   
     override func viewDidLoad() {
         super.viewDidLoad()
         
         results = [UserCacheInfo]()
-        ImageManager.shared.downloadSession = downloadSession
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -74,7 +78,7 @@ extension FindGamerResultsViewController: UITableViewDataSource {
         cell.gamerUsernameLabel.text = userCacheInfo.username
         
         if let urlString = userCacheInfo.avatarURL, urlString != "" {
-            let id = ImageManager.shared.downloadImage(from: urlString)
+            let id = mediaManager.downloadImage(from: urlString)
             guard let taskId = id else { return cell }
             taskIdToCellRowDict[taskId] = indexPath.row
             

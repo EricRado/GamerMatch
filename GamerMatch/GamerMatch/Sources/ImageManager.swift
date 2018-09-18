@@ -9,10 +9,12 @@
 import UIKit
 
 final class ImageManager {
-    static let shared = ImageManager()
+    
     var downloadSession: URLSession!
     
-    private init() {}
+    init(downloadSession: URLSession) {
+        self.downloadSession = downloadSession
+    }
     
     func downloadImage(from urlString: String) -> Int? {
         guard let url = URL(string: urlString) else { return nil }

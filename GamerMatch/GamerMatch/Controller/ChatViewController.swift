@@ -13,7 +13,7 @@ class ChatViewController: UIViewController {
     
     @IBOutlet weak var chatTableView: UITableView!
     
-    let createNewChatSegueId = "createNewChatSegue"
+    private let createNewChatVCId = "CreateNewChatVC"
     
     lazy var downloadSession: URLSession = {
         let configuration = URLSessionConfiguration
@@ -22,6 +22,11 @@ class ChatViewController: UIViewController {
                                  delegate: self,
                                  delegateQueue: nil)
         return session
+    }()
+    
+    lazy var mediaManager: ImageManager = {
+        let manager = ImageManager(downloadSession: downloadSession)
+        return manager
     }()
     
     let chatRef: DatabaseReference = {
@@ -56,8 +61,6 @@ class ChatViewController: UIViewController {
         chatTableView.dataSource = self
         chatTableView.delegate = self
         
-        ImageManager.shared.downloadSession = downloadSession
-        
         getUserChatsDetails { (chats, error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -76,17 +79,30 @@ class ChatViewController: UIViewController {
                                            action: #selector(addButtonPressed(sender:)))
         navigationItem.rightBarButtonItem = addBarButton
         
-        let newGroupButton = UIBarButtonItem(title: "New Group", style: .plain, target: self, action: #selector(newGroupButtonPressed(sender:)))
+        let newGroupButton = UIBarButtonItem(title: "New Group",
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(newGroupButtonPressed(sender:)))
         navigationItem.leftBarButtonItem = newGroupButton
     }
     
     @objc func addButtonPressed(sender: UIBarButtonItem) {
         print("add button pressed")
-        performSegue(withIdentifier: createNewChatSegueId, sender: nil)
+        guard let vc = storyboard?
+            .instantiateViewController(withIdentifier: createNewChatVCId) as? CreateNewChatViewController else { return }
+        vc.downloadSessionId = "CreateGroupChatVCBgConfig"
+        object_setClass(vc, Create1On1ChatViewController.self)
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func newGroupButtonPressed(sender: UIBarButtonItem) {
         print("new group pressed")
+        guard let vc = storyboard?
+            .instantiateViewController(withIdentifier: createNewChatVCId) as? CreateNewChatViewController else { return }
+        vc.downloadSessionId = "Create1On1ChatVCBgConfig"
+        object_setClass(vc, CreateGroupChatViewController.self)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     fileprivate func updateChatRow(at id: String, chat: Chat) {
@@ -173,9 +189,6 @@ class ChatViewController: UIViewController {
             
             // reset selectedChatUser
             selectedChatUser = nil
-        } else if segue.identifier == createNewChatSegueId {
-            let vc = segue.destination as! CreateNewChatViewController
-            vc.chat1on1Dict = chat1on1TitleDict
         }
     }
 }
@@ -231,7 +244,7 @@ extension ChatViewController: UITableViewDataSource {
         // if image was not downloaded create a background download task
         let urlString = chat.isGroupChat! ? chat.urlString : chat1on1TitleDict[chat.id!]?.avatarURL
         if let urlString = urlString, !urlString.isEmpty {
-            if let taskIdentifier = ImageManager.shared.downloadImage(from: urlString) {
+            if let taskIdentifier = mediaManager.downloadImage(from: urlString) {
                 taskIdToCellRowAndChatIdDict[taskIdentifier] = (indexPath.row, chat.id!)
             }
         }

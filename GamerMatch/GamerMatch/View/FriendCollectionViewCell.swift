@@ -9,7 +9,7 @@
 import UIKit
 
 class FriendCollectionViewCell: UICollectionViewCell {
-    
+    static let identifier = "FriendCollectionViewCell"
     @IBOutlet weak var friendImageView: UIImageView! {
         didSet {
             friendImageView.layer.cornerRadius = friendImageView.frame.height / 2.0
