@@ -8,14 +8,21 @@
 
 import UIKit
 
-final class NewGroupChatSetupViewController: UIViewController {
+final class NewGroupChatSetupViewController: UIViewController,
+    UINavigationControllerDelegate {
     let cellId = "friendCell"
     let headerId = "headerCell"
     var selectedUsers: [UserCacheInfo]?
     var selectedUsersIdToUIImage: [String: UIImage]?
     var groupTitle: String?
     
-    @IBOutlet weak var addPhotoBtn: UIButton!
+    @IBOutlet weak var addPhotoBtn: UIButton! {
+        didSet {
+            addPhotoBtn.addTarget(self,
+                                  action: #selector(addPhotoBtnPressed(sender:)),
+                                  for: .touchUpInside)
+        }
+    }
     @IBOutlet weak var groupTitleTextView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
@@ -40,11 +47,47 @@ final class NewGroupChatSetupViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
+    fileprivate func openPhotoLibrary() {
+        print("Photo button pressed")
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("This device has no access to photo library")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     @objc func createPressed(sender: UIBarButtonItem) {
         groupTitle = groupTitleTextView.text
         print(groupTitle ?? "noTitle")
     }
+    
+    @objc func addPhotoBtnPressed(sender: UIButton) {
+        openPhotoLibrary()
+    }
 
+}
+
+extension NewGroupChatSetupViewController: UIImagePickerControllerDelegate{
+    @objc func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
+        defer {
+            picker.dismiss(animated: true, completion: nil)
+        }
+        
+        // get the image
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            print("Image was not retrieved")
+            return
+        }
+        addPhotoBtn.setImage(image, for: .normal)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension NewGroupChatSetupViewController: UICollectionViewDelegate {
