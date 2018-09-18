@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,26 +24,25 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I2u-nO-OFa">
-                    <rect key="frame" x="16" y="16" width="88" height="88"/>
+                    <rect key="frame" x="18" y="16" width="84" height="84"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="I2u-nO-OFa" secondAttribute="height" multiplier="1:1" id="cRc-rW-bcR"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PYH-42-VLA">
-                    <rect key="frame" x="8" y="120" width="104" height="17"/>
+                    <rect key="frame" x="8" y="108" width="104" height="14"/>
                     <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="I2u-nO-OFa" secondAttribute="trailing" constant="16" id="0wY-e4-bfW"/>
                 <constraint firstItem="PYH-42-VLA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="1qB-77-B85"/>
                 <constraint firstItem="I2u-nO-OFa" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="7xe-j8-wLX"/>
-                <constraint firstItem="PYH-42-VLA" firstAttribute="top" secondItem="I2u-nO-OFa" secondAttribute="bottom" constant="16" id="Qbo-Z5-Dq8"/>
+                <constraint firstItem="I2u-nO-OFa" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="DpH-Da-rV2"/>
+                <constraint firstItem="PYH-42-VLA" firstAttribute="top" secondItem="I2u-nO-OFa" secondAttribute="bottom" constant="8" id="Qbo-Z5-Dq8"/>
                 <constraint firstItem="PYH-42-VLA" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="SNb-4q-8ov"/>
-                <constraint firstItem="I2u-nO-OFa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="uap-Vd-3g5"/>
+                <constraint firstItem="I2u-nO-OFa" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.7" id="ms4-b2-eQE"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

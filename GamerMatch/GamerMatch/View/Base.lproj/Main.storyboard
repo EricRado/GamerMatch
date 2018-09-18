@@ -850,7 +850,6 @@
         <!--Create New Chat View Controller-->
         <scene sceneID="yc2-Su-uJr">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9c4-RY-lJE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="CreateNewChatVC" id="wBi-iw-OfJ" customClass="CreateNewChatViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dEI-eq-mpK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -874,6 +873,7 @@
                         <outlet property="tableView" destination="7H9-ZS-yHs" id="sL1-jA-Q1F"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9c4-RY-lJE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4241" y="1546"/>
         </scene>
@@ -886,7 +886,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04l-B9-POn" userLabel="Top Container">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="210.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IYG-8u-spl" userLabel="addPhotoBtn">
                                         <rect key="frame" x="16" y="24" width="70" height="70"/>
@@ -896,7 +896,7 @@
                                         <state key="normal" title="Button" image="AddPhotoBtn"/>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Please provide this group a name and an optional picture for the group." textAlignment="natural" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hjl-7s-cnr" userLabel="Instructions">
-                                        <rect key="frame" x="110" y="121.5" width="249" height="81"/>
+                                        <rect key="frame" x="110" y="122" width="249" height="81"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -962,10 +962,10 @@
                             <constraint firstItem="YpR-6V-jKD" firstAttribute="trailing" secondItem="MuT-Di-1Dd" secondAttribute="trailing" id="1JL-qy-ZPT"/>
                             <constraint firstItem="04l-B9-POn" firstAttribute="trailing" secondItem="MuT-Di-1Dd" secondAttribute="trailing" id="CHc-hP-LDC"/>
                             <constraint firstItem="YpR-6V-jKD" firstAttribute="bottom" secondItem="MuT-Di-1Dd" secondAttribute="bottom" id="EP6-ry-cpT"/>
-                            <constraint firstItem="YpR-6V-jKD" firstAttribute="top" secondItem="04l-B9-POn" secondAttribute="bottom" id="PVS-EE-iH5"/>
+                            <constraint firstItem="YpR-6V-jKD" firstAttribute="top" secondItem="04l-B9-POn" secondAttribute="bottom" id="Twi-cB-FCu"/>
+                            <constraint firstItem="04l-B9-POn" firstAttribute="height" secondItem="MuT-Di-1Dd" secondAttribute="height" multiplier="0.35" id="V3s-89-1bg"/>
                             <constraint firstItem="04l-B9-POn" firstAttribute="top" secondItem="MuT-Di-1Dd" secondAttribute="top" id="Xo0-P3-0WP"/>
                             <constraint firstItem="04l-B9-POn" firstAttribute="leading" secondItem="MuT-Di-1Dd" secondAttribute="leading" id="ZaO-9k-z8b"/>
-                            <constraint firstItem="YpR-6V-jKD" firstAttribute="height" secondItem="GNM-6U-Wfr" secondAttribute="height" multiplier="0.65" id="mPW-Fj-CuR"/>
                             <constraint firstItem="YpR-6V-jKD" firstAttribute="leading" secondItem="MuT-Di-1Dd" secondAttribute="leading" id="zGc-2P-jso"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MuT-Di-1Dd"/>
