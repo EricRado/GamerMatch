@@ -62,7 +62,7 @@ struct Chat: Decodable {
     }
     
     func toAnyObject() -> [AnyHashable: Any]{
-        return ["id": id!, "creatorId": creatorId!, "title": title!, "isGroupChat": String(isGroupChat!), "lastMessage": lastMessage!, "members": members!] as [AnyHashable: Any]
+        return ["id": id!, "creatorId": creatorId!,"adminId": adminId!, "title": title!, "isGroupChat": String(isGroupChat!), "lastMessage": lastMessage!, "members": members!, "url": urlString!] as [AnyHashable: Any]
     }
     
 }

@@ -7,23 +7,33 @@
 //
 
 import UIKit
+import Firebase
 
-final class NewGroupChatSetupViewController: UIViewController,
+final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegate,
     UINavigationControllerDelegate {
     let cellId = "friendCell"
     let headerId = "headerCell"
+    let chatRef: DatabaseReference = {
+        return Database.database().reference().child("Chats/")
+    }()
     var selectedUsers: [UserCacheInfo]?
     var selectedUsersIdToUIImage: [String: UIImage]?
-    var groupTitle: String?
+    var groupImage: UIImage?
     
     @IBOutlet weak var addPhotoBtn: UIButton! {
         didSet {
             addPhotoBtn.addTarget(self,
                                   action: #selector(addPhotoBtnPressed(sender:)),
                                   for: .touchUpInside)
+            addPhotoBtn.layer.cornerRadius = addPhotoBtn.frame.height / 2.0
+            addPhotoBtn.clipsToBounds = true
         }
     }
-    @IBOutlet weak var groupTitleTextView: UITextView!
+    @IBOutlet weak var groupTitleTextView: UITextView! {
+        didSet {
+            groupTitleTextView.delegate = self
+        }
+    }
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             let cellNib = UINib(nibName: FriendCollectionViewCell.identifier, bundle: nil)
@@ -31,7 +41,10 @@ final class NewGroupChatSetupViewController: UIViewController,
             
             let headerNib = UINib(nibName: FriendCollectionViewHeader.identifier,
                                   bundle: nil)
-            collectionView.register(headerNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader , withReuseIdentifier: headerId)
+            collectionView
+                .register(headerNib,
+                          forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                          withReuseIdentifier: headerId)
             
             collectionView.delegate = self
             collectionView.dataSource = self
@@ -59,13 +72,68 @@ final class NewGroupChatSetupViewController: UIViewController,
         present(imagePicker, animated: true, completion: nil)
     }
     
+    fileprivate func uploadToDatabase(chat: Chat, at ref: DatabaseReference) {
+        ref.setValue(chat.toAnyObject()) { (error, _) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    fileprivate func createChat(with title: String) {
+        let newRef = chatRef.childByAutoId()
+        let id = newRef.key
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        // transform the selected members to dictionary which contains {memberId : true}
+        let dict = selectedUsers?.reduce(into: [String: String]()) {
+            $0[$1.id!] = "true"
+        }
+        guard var members = dict else { return }
+        members[userId] = "true"
+        let chat = Chat(id: id, creatorId: userId, isGroupChat: true,
+                        title: title, members: members)
+        uploadToDatabase(chat: chat, at: newRef)
+    }
+    
+    func createAlert() {
+        let ac = UIAlertController(title: "Empty Text Field",
+                                   message: "Please enter a name for this group",
+                                   preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Dismiss",
+                                   style: .cancel,
+                                   handler: nil))
+        self.present(ac, animated: true, completion: nil)
+    }
+    
     @objc func createPressed(sender: UIBarButtonItem) {
-        groupTitle = groupTitleTextView.text
-        print(groupTitle ?? "noTitle")
+        // verify group title was set
+        guard !groupTitleTextView.text.isEmpty else {
+            createAlert()
+            return
+        }
+        
+        if let title = groupTitleTextView.text {
+            createChat(with: title)
+        }
+        // verify if photo was selected
+        if let image = groupImage {
+            print("image was set")
+        }
+        
     }
     
     @objc func addPhotoBtnPressed(sender: UIButton) {
         openPhotoLibrary()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
 
 }
@@ -82,6 +150,7 @@ extension NewGroupChatSetupViewController: UIImagePickerControllerDelegate{
             print("Image was not retrieved")
             return
         }
+        groupImage = image
         addPhotoBtn.setImage(image, for: .normal)
     }
     
@@ -104,7 +173,6 @@ extension NewGroupChatSetupViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        print(selectedUsers?.count ?? 0)
         return selectedUsers?.count ?? 0
     }
     
@@ -124,7 +192,9 @@ extension NewGroupChatSetupViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
         let headerCell = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionElementKindSectionHeader,
             withReuseIdentifier: headerId,
@@ -151,7 +221,9 @@ extension NewGroupChatSetupViewController: UICollectionViewDelegateFlowLayout {
                       height: collectionView.frame.height / 3)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
 }
