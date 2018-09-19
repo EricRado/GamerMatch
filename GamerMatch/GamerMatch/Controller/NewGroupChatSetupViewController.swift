@@ -8,11 +8,13 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegate,
     UINavigationControllerDelegate {
     let cellId = "friendCell"
     let headerId = "headerCell"
+    let destVCId = "ChatSelectedVC"
     
     let chatRef: DatabaseReference = {
         return Database.database().reference().child("Chats/")
@@ -83,13 +85,19 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
                 print(error.localizedDescription)
             }
         }
-        FirebaseCalls.shared.updateReferenceList(ref: userRef, values: chat.members)
-        
+        guard let members = chat.members else { return }
+        // add chat ids to each user node who is in the group chat
+        for (key, value) in members {
+            let chatIdsUserRef = userRef.child("\(key)/chatIds/")
+            FirebaseCalls.shared.updateReferenceList(ref: chatIdsUserRef,
+                                                     values: [chat.id!: value])
+        }
     }
     
     fileprivate func createChat(with title: String) {
         let newRef = chatRef.childByAutoId()
         let id = newRef.key
+        let message = "\(User.onlineUser.username ?? "") created group chat."
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         // transform the selected members to dictionary which contains {memberId : true}
@@ -99,7 +107,7 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
         guard var members = dict else { return }
         members[userId] = "true"
         let chat = Chat(id: id, creatorId: userId, isGroupChat: true,
-                        title: title, members: members)
+                        title: title, members: members, lastMessage: message)
         self.chat = chat
         uploadToDatabase(chat: chat, at: newRef)
     }
@@ -114,35 +122,53 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
         self.present(ac, animated: true, completion: nil)
     }
     
+    fileprivate func transitionToSelectedChatVC() {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: destVCId)
+            as? ChatSelectedViewController else { return }
+        vc.chat = self.chat
+        vc.participantIds = (self.chat?.members)!
+        
+        // pop the select users for new chat and group chat setup VCs
+        navigationController?.popViewController(animated: false)
+        navigationController?.popViewController(animated: false)
+        
+        // push selected chat VC to the top
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @objc func createPressed(sender: UIBarButtonItem) {
         // verify group title was set
         guard !groupTitleTextView.text.isEmpty else {
             createAlert()
             return
         }
-        
+        SVProgressHUD.show(withStatus: "Creating Group Chat")
         if let title = groupTitleTextView.text {
             createChat(with: title)
         }
         // verify if photo was selected
-        guard let image = groupImage else { return }
+        guard let image = groupImage else {
+            transitionToSelectedChatVC()
+            return
+        }
         guard let createdChat = chat else { return }
-        print("image was set")
+    
         let manager = ImageManager()
         manager.uploadImage(image: image,
             at: "groupProfileImages/\(createdChat.id!)") {
-                (urlString, error) in
+                [unowned self] (urlString, error) in
             
             if let error = error {
                 print(error.localizedDescription)
                 return
             }
             guard let url = urlString else { return }
-            let groupUrlDict: [String: String] = ["url" : url]
-            let createdChatRef = self.chatRef.child("\(createdChat.id!)/")
-            FirebaseCalls.shared
-                .updateReferenceWithDictionary(ref: createdChatRef,
-                                               values: groupUrlDict)
+            FirebaseCalls.shared.updateReferenceWithDictionary(
+                ref: self.chatRef.child("\(createdChat.id!)"),
+                values: ["url": url])
+            print("Finish all uploads")
+            SVProgressHUD.dismiss()
+            self.transitionToSelectedChatVC()
         }
     }
     

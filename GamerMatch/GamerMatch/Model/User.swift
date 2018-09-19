@@ -13,7 +13,6 @@ import Firebase
 final class User {
     var uid: String?
     var email: String?
-    var password: String?
     var username: String?
     var bio: String?
     var isOnline: Bool?
@@ -31,31 +30,31 @@ final class User {
         guard let dict = snapshot.value as? [String: Any] else {return}
         guard let uid = dict["uid"] as! String? else {return nil}
         guard let email = dict["email"] as! String? else {return nil}
-        guard let password = dict["password"] as! String? else {return nil}
         guard let username = dict["username"] as! String? else {return nil}
         guard let bio = dict["bio"] as! String? else {return nil}
         guard let isOnline = dict["isOnline"] as! String? else {return nil}
-        guard let avatarURL = dict["avatarURL"] as! String? else {return nil}
-        guard let chatIds = dict["chatIds"] as? [String: String] else { return nil }
+        guard let avatarURL = dict["url"] as! String? else {return nil}
         
         if let friendsIds = dict["friends"] as? [String: String] {
             self.friendsIds = friendsIds
         }
         
+        if let chatIds = dict["chatIds"] as? [String: String] {
+            self.chatIds = chatIds
+        }
+        
         self.uid = uid
         self.email = email
-        self.password = password
         self.username = username
         self.bio = bio
         self.isOnline = isOnline.toBool()
         self.avatarURL = avatarURL
-        self.chatIds = chatIds
-        
     }
     
     func toAnyObject() -> [AnyHashable: Any] {
-        return ["uid": uid!, "email": email!, "password": password!,
-                "username": username!, "bio": bio!, "isOnline": String(isOnline!), "avatarURL": avatarURL!] as [AnyHashable: Any]
+        return ["uid": uid!, "email": email!, "username": username!,
+                "bio": bio!, "isOnline": String(isOnline!), "url":
+                    avatarURL!] as [AnyHashable: Any]
     }
     
     func retrieveUserInfo(uid: String) {

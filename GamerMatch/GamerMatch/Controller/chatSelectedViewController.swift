@@ -86,6 +86,8 @@ class ChatSelectedViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        let title = selectedChatUser != nil ? selectedChatUser?.username : chat?.title
+        navigationItem.title = title
         
         getMessages()
     }

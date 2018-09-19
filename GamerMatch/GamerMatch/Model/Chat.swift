@@ -19,7 +19,8 @@ struct Chat: Decodable {
     var members: [String: String]?
     var urlString: String?
     
-    init(id: String, creatorId: String, isGroupChat: Bool, title: String, members: [String: String] ){
+    init(id: String, creatorId: String, isGroupChat: Bool, title: String,
+         members: [String: String], lastMessage: String ){
         self.id = id
         self.creatorId = creatorId
         self.adminId = creatorId
@@ -28,6 +29,7 @@ struct Chat: Decodable {
         self.lastMessage = ""
         self.members = members
         self.urlString = ""
+        self.lastMessage = lastMessage
     }
     
     init?(snapshot: DataSnapshot){
