@@ -16,23 +16,30 @@ class ChatSelectedViewController: UIViewController {
     var selectedChatUser: ChatUserDisplay?
     var chat: Chat?
     var messages = [Message]()
-    let dbRef = Database.database().reference()
+    var image: UIImage?
     
     lazy var messagesRef: DatabaseReference? = {
         if let id = self.chat?.id {
-           return self.dbRef.child("Messages/\(id)/")
+           return Database.database().reference().child("Messages/\(id)/")
         }
         return nil
     }()
     
     lazy var chatRef: DatabaseReference? = {
         if let id = self.chat?.id {
-            return self.dbRef.child("Chats/\(id)/")
+            return Database.database().reference().child("Chats/\(id)/")
         }
         return nil
     }()
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.delegate = self
+            collectionView.dataSource = self
+            collectionView.backgroundColor = UIColor.white
+            collectionView.keyboardDismissMode = .onDrag
+        }
+    }
     
     let messageInputContainerView: UIView = {
         let view = UIView()
@@ -62,13 +69,7 @@ class ChatSelectedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Chat Selected View Controller...")
         print(participantIds)
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = UIColor.white
-        collectionView.keyboardDismissMode = .onDrag
         
         inputTextField.delegate = self
         
@@ -90,6 +91,14 @@ class ChatSelectedViewController: UIViewController {
         navigationItem.title = title
         
         getMessages()
+    }
+    
+    fileprivate func setImageInNavBar() {
+        guard let img = image else { return }
+        
+        let imageView = UIImageView(image: img)
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
     }
     
     fileprivate func setupInputComponents() {
@@ -176,19 +185,13 @@ class ChatSelectedViewController: UIViewController {
                     print(error)
                 }
             })
-            updateChatLastMessage(text: body)
+            FirebaseCalls.shared
+                .updateReferenceWithDictionary(ref: chatRef!, values: ["lastMessage": body])
         }
         
         textFieldDidBeginEditing(textField: inputTextField)
     }
     
-    fileprivate func updateChatLastMessage(text: String) {
-        chatRef?.updateChildValues(["lastMessage": text], withCompletionBlock: { (error, _) in
-            if let error = error {
-                print(error)
-            }
-        })
-    }
 }
 
 extension ChatSelectedViewController: UICollectionViewDelegate {
