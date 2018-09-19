@@ -56,8 +56,10 @@ class FirebaseCalls {
             if let dict = snapshot.value as? [String: Any] {
                 print(snapshot)
                 do {
-                    let jsonDict = try JSONSerialization.data(withJSONObject: dict, options: [])
-                    let userCacheInfo = try JSONDecoder().decode(UserCacheInfo.self, from: jsonDict)
+                    let jsonDict = try JSONSerialization
+                        .data(withJSONObject: dict, options: [])
+                    let userCacheInfo = try JSONDecoder()
+                        .decode(UserCacheInfo.self, from: jsonDict)
                     completion(userCacheInfo, nil)
                 } catch let error {
                     completion(nil, error)
@@ -68,6 +70,24 @@ class FirebaseCalls {
             
         }) { (error) in
             print(error.localizedDescription)
+        }
+    }
+    
+    func updateReferenceList(ref: DatabaseReference, values: [String: String]?) {
+        guard let dict = values else { return }
+        for (key, value) in dict {
+            ref.child("\(key)/").setValue([key: value])
+        }
+    }
+    
+    func updateReferenceWithDictionary(ref: DatabaseReference,
+                                       values: [String: String]?) {
+        guard let dict = values else { return }
+        ref.updateChildValues(dict) { (error, _) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
         }
     }
     

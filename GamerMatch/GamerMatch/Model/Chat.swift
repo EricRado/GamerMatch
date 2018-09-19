@@ -27,17 +27,7 @@ struct Chat: Decodable {
         self.title = title
         self.lastMessage = ""
         self.members = members
-    }
-    
-    init(id: String, creatorId: String, adminId: String, title: String, isGroupChat: Bool, lastMessage: String, members: [String: String], urlString: String = "") {
-        self.id = id
-        self.creatorId = creatorId
-        self.adminId = adminId
-        self.isGroupChat = isGroupChat
-        self.title = title
-        self.lastMessage = lastMessage
-        self.members = members
-        self.urlString = urlString
+        self.urlString = ""
     }
     
     init?(snapshot: DataSnapshot){

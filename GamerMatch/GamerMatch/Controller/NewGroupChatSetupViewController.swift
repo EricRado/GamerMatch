@@ -13,11 +13,17 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
     UINavigationControllerDelegate {
     let cellId = "friendCell"
     let headerId = "headerCell"
+    
     let chatRef: DatabaseReference = {
         return Database.database().reference().child("Chats/")
     }()
+    let userRef: DatabaseReference = {
+        return Database.database().reference().child("Users/")
+    }()
+    
     var selectedUsers: [UserCacheInfo]?
     var selectedUsersIdToUIImage: [String: UIImage]?
+    var chat: Chat?
     var groupImage: UIImage?
     
     @IBOutlet weak var addPhotoBtn: UIButton! {
@@ -61,7 +67,6 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
     }
     
     fileprivate func openPhotoLibrary() {
-        print("Photo button pressed")
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             print("This device has no access to photo library")
             return
@@ -78,6 +83,8 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
                 print(error.localizedDescription)
             }
         }
+        FirebaseCalls.shared.updateReferenceList(ref: userRef, values: chat.members)
+        
     }
     
     fileprivate func createChat(with title: String) {
@@ -93,6 +100,7 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
         members[userId] = "true"
         let chat = Chat(id: id, creatorId: userId, isGroupChat: true,
                         title: title, members: members)
+        self.chat = chat
         uploadToDatabase(chat: chat, at: newRef)
     }
     
@@ -117,10 +125,25 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
             createChat(with: title)
         }
         // verify if photo was selected
-        if let image = groupImage {
-            print("image was set")
+        guard let image = groupImage else { return }
+        guard let createdChat = chat else { return }
+        print("image was set")
+        let manager = ImageManager()
+        manager.uploadImage(image: image,
+            at: "groupProfileImages/\(createdChat.id!)") {
+                (urlString, error) in
+            
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            guard let url = urlString else { return }
+            let groupUrlDict: [String: String] = ["url" : url]
+            let createdChatRef = self.chatRef.child("\(createdChat.id!)/")
+            FirebaseCalls.shared
+                .updateReferenceWithDictionary(ref: createdChatRef,
+                                               values: groupUrlDict)
         }
-        
     }
     
     @objc func addPhotoBtnPressed(sender: UIButton) {
