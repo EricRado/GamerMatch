@@ -31,7 +31,15 @@ class DisplayChatMetaDataViewController: UIViewController {
          
         }
     }
-    @IBOutlet weak var changeButton: UIButton!
+    @IBOutlet weak var savePhotoButton: UIButton! {
+        didSet {
+            savePhotoButton.isEnabled = false
+            savePhotoButton.setTitleColor(UIColor.lightGray, for: .disabled)
+            savePhotoButton.addTarget(
+                self, action: #selector(savePhotoBtnPressed(sender:)),
+                for: .touchUpInside)
+        }
+    }
     
     var groupImage: UIImage?
     var chat: Chat?
@@ -52,38 +60,90 @@ class DisplayChatMetaDataViewController: UIViewController {
                     print(error.localizedDescription)
                     return
                 }
-                print(member)
                 self.members?.append(member!)
                 let row = (self.members?.count)! - 1
-                self.tableView.insertRows(at: [IndexPath(row: row, section: 0)], with: .none)
+                self.tableView.insertRows(at: [IndexPath(row: row, section: 1)], with: .none)
             }
         }
+    }
+    
+    @objc fileprivate func savePhotoBtnPressed(sender: UIButton) {
+        print("save pressed")
+        let ac = UIAlertController(title: "Upload new image", message: "Do you want to change the group picture to the selected one?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Confirm", style: .default) { _ in
+            print("confirm pressed")
+            
+        })
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(ac, animated: true, completion: nil)
     }
     
     @objc fileprivate func imagePressed(sender: UIButton) {
         print("image pressed")
         CamaraHandler.shared.showActionSheet(vc: self)
-        CamaraHandler.shared.imagePickedBlock =
+        CamaraHandler.shared.imagePickedBlock = { (image) in
+            self.groupImageButton.setBackgroundImage(image, for: .normal)
+            self.savePhotoButton.isEnabled = true
+            self.savePhotoButton.setTitleColor(UIColor.blue, for: .normal)
+        }
     }
 }
 
 extension DisplayChatMetaDataViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let ac = UIAlertController(title: "Group name", message: "Do you want to change the name of the group?", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Confirm", style: .default) { _ in
+                print("group name confirm")
+            })
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(ac, animated: true, completion: nil)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
         
     }
-}
-
-extension DisplayChatMetaDataViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-        if let count = members?.count {
-            return count
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 || section == 1 {
+            return 50.0
         }
         return 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
-        -> UITableViewCell {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.frame.height / 10
+    }
+}
+
+extension DisplayChatMetaDataViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return members?.count ?? 0
+        default:
+            return 0
+        }
+
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let cell = UITableViewCell()
+            cell.textLabel?.font = UIFont(name: "ComicSansMS-Bold", size: 17)
+            cell.textLabel?.text = chat?.title
+            cell.accessoryType = .disclosureIndicator
+            
+            return cell
+        }
+        
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: cellId, for: indexPath)
             as? UserTableViewCell else { return UITableViewCell() }
@@ -92,6 +152,18 @@ extension DisplayChatMetaDataViewController: UITableViewDataSource {
         cell.usernameLabel.text = user.username
             
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Group Name"
+        case 1:
+            return "Participants"
+        default:
+            return nil
+        }
+    
     }
 }
 

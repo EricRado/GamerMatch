@@ -889,7 +889,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="200"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Image To Change Group Picture" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZJq-It-RL0">
-                                <rect key="frame" x="0.0" y="272" width="375" height="24"/>
+                                <rect key="frame" x="16" y="272" width="284.5" height="24"/>
                                 <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -898,13 +898,19 @@
                                 <rect key="frame" x="0.0" y="304" width="375" height="363"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3R-zt-arM">
+                                <rect key="frame" x="325" y="269" width="34" height="30"/>
+                                <state key="normal" title="Save"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="y3R-zt-arM" firstAttribute="centerY" secondItem="ZJq-It-RL0" secondAttribute="centerY" id="4EG-B2-2xH"/>
                             <constraint firstItem="jlH-KM-O89" firstAttribute="leading" secondItem="eVm-ao-eMT" secondAttribute="leading" id="Cq6-we-xmH"/>
                             <constraint firstItem="jlH-KM-O89" firstAttribute="height" secondItem="8fE-f8-Stv" secondAttribute="height" multiplier="0.3" id="NE7-EG-2Cm"/>
-                            <constraint firstItem="ZJq-It-RL0" firstAttribute="trailing" secondItem="eVm-ao-eMT" secondAttribute="trailing" id="Nf1-xE-4Ot"/>
                             <constraint firstItem="UVb-pA-lNu" firstAttribute="leading" secondItem="eVm-ao-eMT" secondAttribute="leading" id="PXq-rb-O88"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZJq-It-RL0" secondAttribute="trailing" constant="20" symbolic="YES" id="T15-qZ-1x8"/>
+                            <constraint firstItem="eVm-ao-eMT" firstAttribute="trailing" secondItem="y3R-zt-arM" secondAttribute="trailing" constant="16" id="TTR-wh-OBV"/>
                             <constraint firstItem="eVm-ao-eMT" firstAttribute="bottom" secondItem="UVb-pA-lNu" secondAttribute="bottom" id="WgI-fd-N2o"/>
                             <constraint firstItem="jlH-KM-O89" firstAttribute="trailing" secondItem="eVm-ao-eMT" secondAttribute="trailing" id="e7J-Rd-hRC"/>
                             <constraint firstItem="jlH-KM-O89" firstAttribute="top" secondItem="eVm-ao-eMT" secondAttribute="top" id="hcF-cX-yRQ"/>
@@ -912,13 +918,15 @@
                             <constraint firstItem="UVb-pA-lNu" firstAttribute="top" secondItem="ZJq-It-RL0" secondAttribute="bottom" constant="8" id="nOq-FU-jpJ"/>
                             <constraint firstItem="eVm-ao-eMT" firstAttribute="trailing" secondItem="UVb-pA-lNu" secondAttribute="trailing" id="vWu-yS-WHZ"/>
                             <constraint firstItem="ZJq-It-RL0" firstAttribute="top" secondItem="jlH-KM-O89" secondAttribute="bottom" constant="8" id="wH4-pB-yhA"/>
-                            <constraint firstItem="ZJq-It-RL0" firstAttribute="leading" secondItem="eVm-ao-eMT" secondAttribute="leading" id="xKS-LE-l28"/>
+                            <constraint firstItem="ZJq-It-RL0" firstAttribute="leading" secondItem="eVm-ao-eMT" secondAttribute="leading" constant="16" id="xKS-LE-l28"/>
+                            <constraint firstItem="y3R-zt-arM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8fE-f8-Stv" secondAttribute="leading" constant="20" symbolic="YES" id="yX0-eo-pXh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eVm-ao-eMT"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="groupImageButton" destination="jlH-KM-O89" id="Fuh-xj-aP3"/>
+                        <outlet property="savePhotoButton" destination="y3R-zt-arM" id="TRy-fA-vQ4"/>
                         <outlet property="tableView" destination="UVb-pA-lNu" id="TXW-wa-PMi"/>
                     </connections>
                 </viewController>
