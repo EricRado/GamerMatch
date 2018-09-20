@@ -42,6 +42,9 @@
 		07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */; };
 		07DDCB692150773600584BD6 /* Create1On1ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */; };
 		07DDCB6B2150B63500584BD6 /* FriendCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */; };
+		07DE23DF2153CECC0079F338 /* FriendRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE23DD2153CECC0079F338 /* FriendRequestTableViewCell.swift */; };
+		07DE23E02153CECC0079F338 /* FriendRequestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07DE23DE2153CECC0079F338 /* FriendRequestTableViewCell.xib */; };
+		07DE23E22153D59F0079F338 /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE23E12153D59F0079F338 /* FriendRequestViewController.swift */; };
 		07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586AE204F8F7500023383 /* AppDelegate.swift */; };
 		07E586B4204F8F7600023383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B2204F8F7600023383 /* Main.storyboard */; };
 		07E586B6204F8F7600023383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B5204F8F7600023383 /* Assets.xcassets */; };
@@ -97,6 +100,9 @@
 		07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupChatViewController.swift; sourceTree = "<group>"; };
 		07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Create1On1ChatViewController.swift; sourceTree = "<group>"; };
 		07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCollectionViewCell.xib; sourceTree = "<group>"; };
+		07DE23DD2153CECC0079F338 /* FriendRequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestTableViewCell.swift; sourceTree = "<group>"; };
+		07DE23DE2153CECC0079F338 /* FriendRequestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendRequestTableViewCell.xib; sourceTree = "<group>"; };
+		07DE23E12153D59F0079F338 /* FriendRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
 		07E586AB204F8F7500023383 /* GamerMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamerMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E586AE204F8F7500023383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07E586B3204F8F7600023383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -206,15 +212,16 @@
 				07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */,
 				07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */,
 				071E901221500145005ED404 /* CreateNewChatViewController.swift */,
+				071EB7062152F8A100688D32 /* DisplayChatMetaDataViewController.swift */,
 				071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */,
 				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
+				07DE23E12153D59F0079F338 /* FriendRequestViewController.swift */,
 				071BC837214E108000621899 /* FriendsViewController.swift */,
 				07E586C0204F90E700023383 /* LoginViewController.swift */,
 				07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */,
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 				07E586FC2056170600023383 /* TournamentViewController.swift */,
-				071EB7062152F8A100688D32 /* DisplayChatMetaDataViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -247,6 +254,8 @@
 				07E586B2204F8F7600023383 /* Main.storyboard */,
 				071E90142150255E005ED404 /* UserTableViewCell.swift */,
 				071E901621502571005ED404 /* UserTableViewCell.xib */,
+				07DE23DD2153CECC0079F338 /* FriendRequestTableViewCell.swift */,
+				07DE23DE2153CECC0079F338 /* FriendRequestTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -347,6 +356,7 @@
 				071E901721502571005ED404 /* UserTableViewCell.xib in Resources */,
 				0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */,
 				0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */,
+				07DE23E02153CECC0079F338 /* FriendRequestTableViewCell.xib in Resources */,
 				07E586B9204F8F7600023383 /* LaunchScreen.storyboard in Resources */,
 				07E586CA205057D600023383 /* GoogleService-Info.plist in Resources */,
 				07DDCB6B2150B63500584BD6 /* FriendCollectionViewCell.xib in Resources */,
@@ -462,9 +472,11 @@
 				0784A8DF20A2380D003FE32C /* AddTournamentViewController.swift in Sources */,
 				070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */,
 				07E586FD2056170600023383 /* TournamentViewController.swift in Sources */,
+				07DE23E22153D59F0079F338 /* FriendRequestViewController.swift in Sources */,
 				07C07F88209268C30005494D /* Interactor.swift in Sources */,
 				0701F3BF2146087E00A73A77 /* ChatMessageCollectionViewCell.swift in Sources */,
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
+				07DE23DF2153CECC0079F338 /* FriendRequestTableViewCell.swift in Sources */,
 				071EB70921531C5A00688D32 /* CamaraHandler.swift in Sources */,
 				07C07F8A20926FAB0005494D /* PresentMenuAnimator.swift in Sources */,
 				071A7A132148717500099BCA /* UserCacheInfo.swift in Sources */,
