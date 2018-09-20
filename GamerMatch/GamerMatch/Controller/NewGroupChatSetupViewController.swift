@@ -88,7 +88,7 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
         guard let members = chat.members else { return }
         // add chat ids to each user node who is in the group chat
         for (key, value) in members {
-            let chatIdsUserRef = userRef.child("\(key)/chatIds/")
+            let chatIdsUserRef = userRef.child("\(key)/chatIds")
             FirebaseCalls.shared.updateReferenceList(ref: chatIdsUserRef,
                                                      values: [chat.id!: value])
         }
@@ -126,7 +126,6 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
         guard let vc = storyboard?.instantiateViewController(withIdentifier: destVCId)
             as? ChatSelectedViewController else { return }
         vc.chat = self.chat
-        vc.participantIds = (self.chat?.members)!
         
         // pop the select users for new chat and group chat setup VCs
         navigationController?.popViewController(animated: false)

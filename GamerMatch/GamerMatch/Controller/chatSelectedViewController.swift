@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class ChatSelectedViewController: UIViewController {
     private let cellId = "messageCell"
-    var participantIds = [String: String]()
+    private let chatMetaDataVCId = "DisplayChatMetaDataVC"
     var selectedChatUser: ChatUserDisplay?
     var chat: Chat?
     var messages = [Message]()
@@ -69,9 +69,9 @@ class ChatSelectedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(participantIds)
-        
         inputTextField.delegate = self
+        setNavBarTitleView()
+        setSettingsButton()
         
         // setup message field and send button
         view.addSubview(messageInputContainerView)
@@ -87,18 +87,31 @@ class ChatSelectedViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        let title = selectedChatUser != nil ? selectedChatUser?.username : chat?.title
-        navigationItem.title = title
+        //let title = selectedChatUser != nil ? selectedChatUser?.username : chat?.title
+        //navigationItem.title = title
         
         getMessages()
     }
     
-    fileprivate func setImageInNavBar() {
-        guard let img = image else { return }
+    fileprivate func setSettingsButton() {
+        if (chat?.isGroupChat)! {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "Settings", style: .plain, target: self,
+                action: #selector(settingsPressed(sender:)))
+            
+        }
+    }
+    
+    @objc func settingsPressed(sender: UIBarButtonItem) {
+        print("settings pressed")
+        guard let vc = storyboard?
+            .instantiateViewController(withIdentifier: chatMetaDataVCId)
+            as? DisplayChatMetaDataViewController else { return }
+        vc.chat = chat
+        vc.groupImage = image
+        navigationItem.title = ""
+        navigationController?.pushViewController(vc, animated: true)
         
-        let imageView = UIImageView(image: img)
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
     }
     
     fileprivate func setupInputComponents() {
@@ -275,7 +288,34 @@ extension ChatSelectedViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
-
+extension ChatSelectedViewController {
+    fileprivate func setNavBarTitleView() {
+        let navView = UIView()
+        
+        // Create the label
+        let label = UILabel()
+        label.text = chat?.title
+        label.sizeToFit()
+        label.center = navView.center
+        label.textAlignment = NSTextAlignment.center
+        
+        // create the image view
+        let image = UIImageView()
+        image.image = self.image
+        let imageAspect = image.image!.size.width / image.image!.size.height
+        image.frame = CGRect(x: label.frame.origin.x - label.frame.size.height*imageAspect,
+                             y: label.frame.origin.y,
+                             width: label.frame.size.height * imageAspect,
+                             height: label.frame.size.height)
+        image.contentMode = UIViewContentMode.scaleAspectFit
+        
+        navView.addSubview(label)
+        navView.addSubview(image)
+        
+        self.navigationItem.titleView = navView
+        navView.sizeToFit()
+    }
+}
 
 
 

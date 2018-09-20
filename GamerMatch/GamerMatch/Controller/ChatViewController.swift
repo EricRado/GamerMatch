@@ -11,7 +11,12 @@ import Firebase
 
 class ChatViewController: UIViewController {
     
-    @IBOutlet weak var chatTableView: UITableView!
+    @IBOutlet weak var chatTableView: UITableView! {
+        didSet {
+            chatTableView.dataSource = self
+            chatTableView.delegate = self
+        }
+    }
     
     private let createNewChatVCId = "CreateNewChatVC"
     
@@ -43,14 +48,13 @@ class ChatViewController: UIViewController {
     */
     
     var chats: [Chat]?
-    var chatsAlreadyDisplayed = [String: Int]()
+    var chatsAlreadyDisplayedToCellRow = [String: Int]()
     var chatImageDict = [String: UIImage]()
     var chat1on1TitleDict = [String: UserCacheInfo]()
     var taskIdToCellRowAndChatIdDict = [Int: (Int,String)]()
     
     // selected chat information to pass to ChatSelectedViewController
     var selectedChat: Chat?
-    var selectedParticipantIds = [String: String]()
     var selectedChatUser: ChatUserDisplay?
     
     
@@ -58,20 +62,10 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         
         chats = [Chat]()
-        chatTableView.dataSource = self
-        chatTableView.delegate = self
-        
-        getUserChatsDetails { (chats, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            self.chats = chats
-            self.chatTableView.reloadData()
-        }
-        
         setupBarButtonItems()
-        
+        getUserChatsDetails()
     }
+    
     
     fileprivate func setupBarButtonItems() {
         let addBarButton = UIBarButtonItem(barButtonSystemItem: .add,
@@ -87,7 +81,6 @@ class ChatViewController: UIViewController {
     }
     
     @objc func addButtonPressed(sender: UIBarButtonItem) {
-        print("add button pressed")
         guard let vc = storyboard?
             .instantiateViewController(withIdentifier: createNewChatVCId) as? CreateNewChatViewController else { return }
         vc.downloadSessionId = "CreateGroupChatVCBgConfig"
@@ -97,7 +90,6 @@ class ChatViewController: UIViewController {
     }
     
     @objc func newGroupButtonPressed(sender: UIBarButtonItem) {
-        print("new group pressed")
         guard let vc = storyboard?
             .instantiateViewController(withIdentifier: createNewChatVCId) as? CreateNewChatViewController else { return }
         vc.downloadSessionId = "Create1On1ChatVCBgConfig"
@@ -106,43 +98,40 @@ class ChatViewController: UIViewController {
     }
     
     fileprivate func updateChatRow(at id: String, chat: Chat) {
-        guard let index = self.chatsAlreadyDisplayed[id] else { return }
+        guard let index = self.chatsAlreadyDisplayedToCellRow[id] else { return }
         
         chats?[index] = chat
         chatTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-    func getUserChatsDetails(completion: @escaping ([Chat]?, Error?) -> Void){
+    fileprivate func insertChatToTableView(_ chat: Chat) {
+        chats?.append(chat)
+        let row = (chats?.count)! - 1
+        chatsAlreadyDisplayedToCellRow[chat.id!] = row
+        chatTableView.insertRows(at: [IndexPath(row: row, section: 0)], with: .none)
+    }
+    
+    func getUserChatsDetails(){
         guard let dict = User.onlineUser.chatIds else { return }
-        var counter = 0
-        var chats = [Chat]()
-        
+   
         for (key, _) in dict {
             chatRef.child("\(key)/").observe(.value, with: { (snapshot) in
                 guard let chat = Chat(snapshot: snapshot) else { return }
                 guard let id = chat.id else { return }
                 
                 // if chat was updated reload the cell with the latest data
-                if self.chatsAlreadyDisplayed[id] != nil {
+                if self.chatsAlreadyDisplayedToCellRow[id] != nil {
                     self.updateChatRow(at: id, chat: chat)
                     return
                 }
                 
-                chats.append(chat)
-                self.chatsAlreadyDisplayed[id] = chats.count - 1
+                self.insertChatToTableView(chat)
                 
                 if !(chat.isGroupChat)! {
                     self.getUserInfo(membersDict: chat.members, chatId: chat.id) {
                         self.updateChatRow(at: id, chat: chat)
                     }
                 }
-                
-                counter += 1
-                
-                if counter == dict.count {
-                    completion(chats, nil)
-                }
-                
             }) { (error) in
                 print(error.localizedDescription)
             }
@@ -173,19 +162,24 @@ class ChatViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "chatSegue" {
             let vc = segue.destination as! ChatSelectedViewController
+            guard let chat = selectedChat else { return }
             
             // if the chat is 1on1 set title for message log screen to user's
             // username else to group chat's title
             if let user = selectedChatUser {
                 vc.navigationItem.title = user.username
                 vc.selectedChatUser = user
-            }else {
-                vc.navigationItem.title = selectedChat?.title
+            } else {
+                vc.navigationItem.title = chat.title
+            }
+            
+            // if chat has an image pass it to the next VC
+            if let img = chatImageDict[chat.id!] {
+                vc.image = img
             }
             
             // send chat meta data and participant ids to message log screen
-            vc.chat = selectedChat
-            vc.participantIds = selectedParticipantIds
+            vc.chat = chat
             
             // reset selectedChatUser
             selectedChatUser = nil
@@ -200,10 +194,9 @@ extension ChatViewController: UITableViewDelegate {
         guard let chat = chats?[indexPath.row] else { return }
         
         selectedChat = chat
-        selectedParticipantIds = chat.members!
         
         // this is a 1on1 chat get user's username and avatar pic
-        if selectedParticipantIds.count == 2 {
+        if (chat.isGroupChat)! {
             if let user = chat1on1TitleDict[chat.id!], let image = chatImageDict[chat.id!] {
                selectedChatUser = ChatUserDisplay(username: user.username!, image: image)
             }
@@ -261,9 +254,6 @@ extension ChatViewController: UITableViewDataSource {
     
 }
 
-extension ChatViewController: UICollectionViewDelegateFlowLayout {
-    
-}
 
 extension ChatViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {

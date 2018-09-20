@@ -76,7 +76,7 @@ class FirebaseCalls {
     func updateReferenceList(ref: DatabaseReference, values: [String: String]?) {
         guard let dict = values else { return }
         for (key, value) in dict {
-            ref.child("\(key)/").updateChildValues([key: value]) { (error, _) in
+            ref.updateChildValues([key: value]) { (error, _) in
                 if let error = error {
                     print(error.localizedDescription)
                     return 
