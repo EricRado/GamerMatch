@@ -141,7 +141,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="33.251231527093594"/>
+            <point key="canvasLocation" x="-873" y="35"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="CFB-F3-sn5">
@@ -301,7 +301,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zJc-48-JIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="924.375" y="31.690140845070424"/>
+            <point key="canvasLocation" x="-23" y="35"/>
         </scene>
         <!--Find Gamer Results View Controller-->
         <scene sceneID="6Uq-yf-7vN">
@@ -1291,6 +1291,176 @@
             </objects>
             <point key="canvasLocation" x="5287.1999999999998" y="-913.49325337331345"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="2Rs-wc-eN8">
+            <objects>
+                <viewController storyboardIdentifier="ConsoleAndGameSelectionVC" id="Kvm-p2-dI0" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NN9-4Y-ebb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="gameSelectionBG" translatesAutoresizingMaskIntoConstraints="NO" id="6ED-gM-llf">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MjK-BN-s3M" userLabel="Top Container">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="148"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consoles You Play" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKf-he-s60">
+                                        <rect key="frame" x="35" y="16" width="305" height="50.5"/>
+                                        <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="36"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="U66-QH-L2q" userLabel="Consoles">
+                                        <rect key="frame" x="35" y="80" width="305" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Et1-3f-d7y" userLabel="Xbox">
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                <state key="normal" backgroundImage="xbox"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N31-2q-Qy1" userLabel="Playstation">
+                                                <rect key="frame" x="123.5" y="0.0" width="58" height="60"/>
+                                                <state key="normal" image="playstation"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1an-zP-2Qu" userLabel="PC">
+                                                <rect key="frame" x="245" y="0.0" width="60" height="60"/>
+                                                <state key="normal" image="pc"/>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="NKf-he-s60" firstAttribute="centerX" secondItem="MjK-BN-s3M" secondAttribute="centerX" id="0VC-M2-StW"/>
+                                    <constraint firstAttribute="bottom" secondItem="U66-QH-L2q" secondAttribute="bottom" constant="8" id="AVt-Zq-JuS"/>
+                                    <constraint firstItem="U66-QH-L2q" firstAttribute="trailing" secondItem="NKf-he-s60" secondAttribute="trailing" id="Z1q-ac-ViX"/>
+                                    <constraint firstItem="NKf-he-s60" firstAttribute="top" secondItem="MjK-BN-s3M" secondAttribute="top" constant="16" id="u5U-ji-woc"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fF9-Mk-lvF" userLabel="Middle Container">
+                                <rect key="frame" x="0.0" y="148" width="375" height="247"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Games You Play" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duG-Gi-epn">
+                                        <rect key="frame" x="52" y="8" width="271" height="50.5"/>
+                                        <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="36"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="r9v-Sf-iEu" userLabel="Games">
+                                        <rect key="frame" x="23" y="75" width="328" height="164"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6mk-ck-B5F" userLabel="Top Games">
+                                                <rect key="frame" x="0.0" y="0.0" width="328" height="70"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4t-iv-MZ9" userLabel="nba2k18">
+                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                        <state key="normal" backgroundImage="nba2k18"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kjj-lq-IcD" userLabel="overwatch">
+                                                        <rect key="frame" x="86" y="0.0" width="70" height="70"/>
+                                                        <state key="normal" backgroundImage="overwatch"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zat-xD-El6" userLabel="fortnite">
+                                                        <rect key="frame" x="172" y="0.0" width="70" height="70"/>
+                                                        <state key="normal" backgroundImage="fortnite"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYh-iW-SI4" userLabel="battlefield1">
+                                                        <rect key="frame" x="258" y="0.0" width="70" height="70"/>
+                                                        <state key="normal" backgroundImage="battlefield1"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6WG-Pr-y6Y" userLabel="Bottom Games">
+                                                <rect key="frame" x="0.0" y="94" width="328" height="70"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONY-55-Bww" userLabel="rocketLeague">
+                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                        <state key="normal" backgroundImage="rocketLeague"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="93A-Pp-36d" userLabel="halo5">
+                                                        <rect key="frame" x="86.5" y="0.0" width="70" height="70"/>
+                                                        <state key="normal" backgroundImage="halo5"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gq6-R3-VT6" userLabel="leagueOfLegends">
+                                                        <rect key="frame" x="173.5" y="0.0" width="68" height="70"/>
+                                                        <state key="normal" backgroundImage="leagueOfLegends"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8g-53-LMp" userLabel="uncharted4">
+                                                        <rect key="frame" x="258" y="0.0" width="70" height="70"/>
+                                                        <state key="normal" backgroundImage="uncharted4"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="6mk-ck-B5F" firstAttribute="leading" secondItem="6WG-Pr-y6Y" secondAttribute="leading" id="4TR-rw-ae4"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="duG-Gi-epn" firstAttribute="top" secondItem="fF9-Mk-lvF" secondAttribute="top" constant="8" id="7Bd-p4-Ag4"/>
+                                    <constraint firstAttribute="bottom" secondItem="r9v-Sf-iEu" secondAttribute="bottom" constant="8" id="bcC-lk-lq6"/>
+                                    <constraint firstItem="duG-Gi-epn" firstAttribute="centerX" secondItem="fF9-Mk-lvF" secondAttribute="centerX" id="bo1-uF-gFA"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TxQ-yi-4Jo" userLabel="Bottom Container">
+                                <rect key="frame" x="0.0" y="395.5" width="375" height="271.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dub-Aj-QaH">
+                                        <rect key="frame" x="161" y="8" width="52" height="50.5"/>
+                                        <fontDescription key="fontDescription" name="ComicSansMS-Bold" family="Comic Sans MS" pointSize="36"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWB-P3-hvh">
+                                        <rect key="frame" x="47" y="215" width="281" height="40"/>
+                                        <state key="normal" backgroundImage="SubmitBtn"/>
+                                    </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UmM-vE-AGE">
+                                        <rect key="frame" x="16" y="74" width="343" height="125"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="UmM-vE-AGE" secondAttribute="trailing" constant="16" id="1Qf-hn-cCP"/>
+                                    <constraint firstItem="dub-Aj-QaH" firstAttribute="centerX" secondItem="TxQ-yi-4Jo" secondAttribute="centerX" id="9Yn-bd-0TN"/>
+                                    <constraint firstItem="BWB-P3-hvh" firstAttribute="centerX" secondItem="TxQ-yi-4Jo" secondAttribute="centerX" id="9aq-fx-RvO"/>
+                                    <constraint firstItem="dub-Aj-QaH" firstAttribute="top" secondItem="TxQ-yi-4Jo" secondAttribute="top" constant="8" id="I44-Ip-p8z"/>
+                                    <constraint firstItem="UmM-vE-AGE" firstAttribute="top" secondItem="dub-Aj-QaH" secondAttribute="bottom" constant="15.5" id="Iuf-zp-pdJ"/>
+                                    <constraint firstItem="UmM-vE-AGE" firstAttribute="leading" secondItem="TxQ-yi-4Jo" secondAttribute="leading" constant="16" id="Z84-vz-nZC"/>
+                                    <constraint firstAttribute="bottom" secondItem="BWB-P3-hvh" secondAttribute="bottom" constant="16" id="aUw-xq-PTk"/>
+                                    <constraint firstItem="BWB-P3-hvh" firstAttribute="width" secondItem="TxQ-yi-4Jo" secondAttribute="width" multiplier="0.75" id="enY-ko-kcX"/>
+                                    <constraint firstItem="BWB-P3-hvh" firstAttribute="top" secondItem="UmM-vE-AGE" secondAttribute="bottom" constant="16" id="qo3-i5-3Vr"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="MjK-BN-s3M" firstAttribute="top" secondItem="NN9-4Y-ebb" secondAttribute="top" id="0dp-L3-mRW"/>
+                            <constraint firstItem="TxQ-yi-4Jo" firstAttribute="top" secondItem="fF9-Mk-lvF" secondAttribute="bottom" id="1kA-7o-PWU"/>
+                            <constraint firstItem="N2e-22-co4" firstAttribute="bottom" secondItem="TxQ-yi-4Jo" secondAttribute="bottom" id="2Fb-NK-69a"/>
+                            <constraint firstItem="MjK-BN-s3M" firstAttribute="height" secondItem="NN9-4Y-ebb" secondAttribute="height" multiplier="0.222" id="4fZ-Mk-kat"/>
+                            <constraint firstItem="fF9-Mk-lvF" firstAttribute="trailing" secondItem="N2e-22-co4" secondAttribute="trailing" id="DCx-Id-EPg"/>
+                            <constraint firstItem="TxQ-yi-4Jo" firstAttribute="trailing" secondItem="N2e-22-co4" secondAttribute="trailing" id="El1-80-fDy"/>
+                            <constraint firstItem="MjK-BN-s3M" firstAttribute="trailing" secondItem="N2e-22-co4" secondAttribute="trailing" id="Ivw-jw-W4i"/>
+                            <constraint firstItem="fF9-Mk-lvF" firstAttribute="height" secondItem="NN9-4Y-ebb" secondAttribute="height" multiplier="0.37" id="OCY-3j-KvQ"/>
+                            <constraint firstItem="fF9-Mk-lvF" firstAttribute="leading" secondItem="N2e-22-co4" secondAttribute="leading" id="U2b-Zg-MpS"/>
+                            <constraint firstItem="fF9-Mk-lvF" firstAttribute="top" secondItem="MjK-BN-s3M" secondAttribute="bottom" id="UGs-6H-qBE"/>
+                            <constraint firstItem="MjK-BN-s3M" firstAttribute="leading" secondItem="N2e-22-co4" secondAttribute="leading" id="V3e-HM-C7s"/>
+                            <constraint firstItem="TxQ-yi-4Jo" firstAttribute="leading" secondItem="N2e-22-co4" secondAttribute="leading" id="hUe-RF-sBI"/>
+                            <constraint firstItem="U66-QH-L2q" firstAttribute="centerX" secondItem="N2e-22-co4" secondAttribute="centerX" id="qy1-9l-oFS"/>
+                            <constraint firstItem="r9v-Sf-iEu" firstAttribute="centerX" secondItem="N2e-22-co4" secondAttribute="centerX" id="yKQ-bq-J06"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="N2e-22-co4"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kec-kc-kWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="608.79999999999995" y="-716.49175412293857"/>
+        </scene>
         <!--Friends-->
         <scene sceneID="I6p-Jp-3OV">
             <objects>
@@ -1320,11 +1490,13 @@
         <image name="RegisterBtn" width="273" height="40"/>
         <image name="Registration" width="199" height="31"/>
         <image name="SignInBtn" width="273" height="40"/>
+        <image name="SubmitBtn" width="273" height="40"/>
         <image name="battlefield1" width="70" height="24"/>
         <image name="chat" width="30" height="30"/>
         <image name="email" width="50" height="40"/>
         <image name="findGamerBG" width="375" height="554"/>
         <image name="fortnite" width="66" height="57"/>
+        <image name="gameSelectionBG" width="4608" height="2592"/>
         <image name="gamerMatchBG" width="375" height="667"/>
         <image name="halo5" width="70" height="70"/>
         <image name="leagueOfLegends" width="68" height="40"/>
@@ -1336,6 +1508,7 @@
         <image name="pc" width="60" height="60"/>
         <image name="people" width="30" height="30"/>
         <image name="playstation" width="58" height="58"/>
+        <image name="rocketLeague" width="70" height="70"/>
         <image name="search" width="30" height="30"/>
         <image name="selectedPC" width="60" height="60"/>
         <image name="selectedPlaystation" width="58" height="58"/>
@@ -1344,6 +1517,7 @@
         <image name="textFieldBG" width="223" height="40"/>
         <image name="textMiddle" width="293" height="45"/>
         <image name="topText" width="321" height="45"/>
+        <image name="uncharted4" width="70" height="70"/>
         <image name="user" width="50" height="40"/>
         <image name="xbox" width="60" height="60"/>
     </resources>

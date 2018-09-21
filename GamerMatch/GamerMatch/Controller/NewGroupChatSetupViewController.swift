@@ -154,7 +154,7 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
     
         let manager = ImageManager()
         manager.uploadImage(image: image,
-            at: "groupProfileImages/\(createdChat.id!)") {
+            at: "groupProfileImages/\(createdChat.id!).jpg") {
                 [unowned self] (urlString, error) in
             
             if let error = error {
