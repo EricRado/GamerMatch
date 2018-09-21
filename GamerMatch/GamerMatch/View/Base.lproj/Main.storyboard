@@ -1291,10 +1291,10 @@
             </objects>
             <point key="canvasLocation" x="5287.1999999999998" y="-913.49325337331345"/>
         </scene>
-        <!--View Controller-->
+        <!--Game And Console Selection View Controller-->
         <scene sceneID="2Rs-wc-eN8">
             <objects>
-                <viewController storyboardIdentifier="ConsoleAndGameSelectionVC" id="Kvm-p2-dI0" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConsoleAndGameSelectionVC" id="Kvm-p2-dI0" customClass="GameAndConsoleSelectionViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NN9-4Y-ebb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1319,11 +1319,11 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                 <state key="normal" backgroundImage="xbox"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N31-2q-Qy1" userLabel="Playstation">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N31-2q-Qy1" userLabel="Playstation">
                                                 <rect key="frame" x="123.5" y="0.0" width="58" height="60"/>
                                                 <state key="normal" image="playstation"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1an-zP-2Qu" userLabel="PC">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1an-zP-2Qu" userLabel="PC">
                                                 <rect key="frame" x="245" y="0.0" width="60" height="60"/>
                                                 <state key="normal" image="pc"/>
                                             </button>
@@ -1356,15 +1356,15 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                         <state key="normal" backgroundImage="nba2k18"/>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kjj-lq-IcD" userLabel="overwatch">
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kjj-lq-IcD" userLabel="overwatch">
                                                         <rect key="frame" x="86" y="0.0" width="70" height="70"/>
                                                         <state key="normal" backgroundImage="overwatch"/>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zat-xD-El6" userLabel="fortnite">
+                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zat-xD-El6" userLabel="fortnite">
                                                         <rect key="frame" x="172" y="0.0" width="70" height="70"/>
                                                         <state key="normal" backgroundImage="fortnite"/>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYh-iW-SI4" userLabel="battlefield1">
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYh-iW-SI4" userLabel="battlefield1">
                                                         <rect key="frame" x="258" y="0.0" width="70" height="70"/>
                                                         <state key="normal" backgroundImage="battlefield1"/>
                                                     </button>
@@ -1373,19 +1373,19 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6WG-Pr-y6Y" userLabel="Bottom Games">
                                                 <rect key="frame" x="0.0" y="94" width="328" height="70"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONY-55-Bww" userLabel="rocketLeague">
+                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONY-55-Bww" userLabel="rocketLeague">
                                                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                         <state key="normal" backgroundImage="rocketLeague"/>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="93A-Pp-36d" userLabel="halo5">
+                                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="93A-Pp-36d" userLabel="halo5">
                                                         <rect key="frame" x="86.5" y="0.0" width="70" height="70"/>
                                                         <state key="normal" backgroundImage="halo5"/>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gq6-R3-VT6" userLabel="leagueOfLegends">
+                                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gq6-R3-VT6" userLabel="leagueOfLegends">
                                                         <rect key="frame" x="173.5" y="0.0" width="68" height="70"/>
                                                         <state key="normal" backgroundImage="leagueOfLegends"/>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8g-53-LMp" userLabel="uncharted4">
+                                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8g-53-LMp" userLabel="uncharted4">
                                                         <rect key="frame" x="258" y="0.0" width="70" height="70"/>
                                                         <state key="normal" backgroundImage="uncharted4"/>
                                                     </button>
@@ -1456,6 +1456,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="N2e-22-co4"/>
                     </view>
+                    <connections>
+                        <outlet property="bioTextView" destination="UmM-vE-AGE" id="14f-VP-I2T"/>
+                        <outlet property="submitBtn" destination="BWB-P3-hvh" id="Jks-e9-5cn"/>
+                        <outletCollection property="consoleBtns" destination="Et1-3f-d7y" collectionClass="NSMutableArray" id="UKl-o1-eyP"/>
+                        <outletCollection property="consoleBtns" destination="N31-2q-Qy1" collectionClass="NSMutableArray" id="55d-fx-bew"/>
+                        <outletCollection property="consoleBtns" destination="1an-zP-2Qu" collectionClass="NSMutableArray" id="49C-IW-LA9"/>
+                        <outletCollection property="gameBtns" destination="v4t-iv-MZ9" collectionClass="NSMutableArray" id="b44-As-VxR"/>
+                        <outletCollection property="gameBtns" destination="kjj-lq-IcD" collectionClass="NSMutableArray" id="Nnb-Wd-W11"/>
+                        <outletCollection property="gameBtns" destination="Zat-xD-El6" collectionClass="NSMutableArray" id="SSH-RQ-xNa"/>
+                        <outletCollection property="gameBtns" destination="RYh-iW-SI4" collectionClass="NSMutableArray" id="fGm-YO-JJe"/>
+                        <outletCollection property="gameBtns" destination="ONY-55-Bww" collectionClass="NSMutableArray" id="pAl-Nm-ULI"/>
+                        <outletCollection property="gameBtns" destination="93A-Pp-36d" collectionClass="NSMutableArray" id="dNM-r8-Ra5"/>
+                        <outletCollection property="gameBtns" destination="Gq6-R3-VT6" collectionClass="NSMutableArray" id="BI6-vx-AIm"/>
+                        <outletCollection property="gameBtns" destination="s8g-53-LMp" collectionClass="NSMutableArray" id="BET-Xa-Gap"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kec-kc-kWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

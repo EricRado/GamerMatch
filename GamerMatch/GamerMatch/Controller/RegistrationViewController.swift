@@ -12,6 +12,8 @@ import SVProgressHUD
 
 class RegistrationViewController: UIViewController {
     
+    fileprivate let nextVCId = "ConsoleAndGameSelectionVC"
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
@@ -51,14 +53,17 @@ class RegistrationViewController: UIViewController {
         SVProgressHUD.show()
         if usernameTextField.text != nil {
             SVProgressHUD.show()
-            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
+            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [unowned self] (user, error) in
                 if error != nil {
                     print("There was an error: \(error!)")
-                }else {
-                    print("User registered successfully")
-                    self.addUserToDatabase(uid: (user?.uid)!, email: self.emailTextField.text!, password: self.passwordTextField.text!, username: self.usernameTextField.text!)
-                    self.performSegue(withIdentifier: "dashboardSegue", sender: self)
                 }
+                print("User registered successfully")
+                self.addUserToDatabase(uid: (user?.uid)!,
+                                       email: self.emailTextField.text!,
+                                       password: self.passwordTextField.text!,
+                                       username: self.usernameTextField.text!)
+                guard let vc = self.storyboard?.instantiateViewController(withIdentifier: self.nextVCId) else { return }
+                self.present(vc, animated: true, completion: nil)
             })
         }
     }
