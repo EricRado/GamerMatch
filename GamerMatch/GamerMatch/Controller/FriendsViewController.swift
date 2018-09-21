@@ -259,6 +259,7 @@ extension FriendsViewController: UITableViewDataSource {
 }
 
 extension FriendsViewController: URLSessionDownloadDelegate {
+    
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         let taskId = downloadTask.taskIdentifier
         

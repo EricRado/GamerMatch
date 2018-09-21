@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class DisplayChatMetaDataViewController: UIViewController {
     
@@ -44,9 +45,28 @@ class DisplayChatMetaDataViewController: UIViewController {
     var groupImage: UIImage?
     var chat: Chat?
     var members: [UserCacheInfo]?
+    fileprivate var taskIdsToIndexPathDict: [Int: IndexPath]?
+    
+    lazy var chatRef: DatabaseReference? = {
+        guard let id = chat?.id else { return nil }
+        var ref = Database.database().reference().child("Chats/\(id)/")
+        return ref
+    }()
+    
+    lazy var downloadSession: URLSession = {
+        let configuration = URLSessionConfiguration.background(withIdentifier: "DisplayChatMetaDataSessionConfiguration")
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+        return session
+    }()
+    
+    lazy var mediaManager: ImageManager = {
+        let manager = ImageManager(downloadSession: downloadSession)
+        return manager
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        taskIdsToIndexPathDict = [Int: IndexPath]()
         navigationItem.title = "Chat Settings"
         members = [UserCacheInfo]()
         getUsers()
@@ -69,7 +89,9 @@ class DisplayChatMetaDataViewController: UIViewController {
     
     @objc fileprivate func savePhotoBtnPressed(sender: UIButton) {
         print("save pressed")
-        let ac = UIAlertController(title: "Upload new image", message: "Do you want to change the group picture to the selected one?", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Upload new image",
+                                   message: "Do you want to change the group picture to the selected one?",
+                                   preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Confirm", style: .default) { _ in
             print("confirm pressed")
             
@@ -79,7 +101,6 @@ class DisplayChatMetaDataViewController: UIViewController {
     }
     
     @objc fileprivate func imagePressed(sender: UIButton) {
-        print("image pressed")
         CamaraHandler.shared.showActionSheet(vc: self)
         CamaraHandler.shared.imagePickedBlock = { (image) in
             self.groupImageButton.setBackgroundImage(image, for: .normal)
@@ -92,9 +113,18 @@ class DisplayChatMetaDataViewController: UIViewController {
 extension DisplayChatMetaDataViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
-            let ac = UIAlertController(title: "Group name", message: "Do you want to change the name of the group?", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Group name",
+                                       message: "Do you want to change the name of the group?",
+                                       preferredStyle: .alert)
+            ac.addTextField(configurationHandler: nil)
             ac.addAction(UIAlertAction(title: "Confirm", style: .default) { _ in
-                print("group name confirm")
+                guard let ref = self.chatRef else { return }
+                guard let groupName = ac.textFields?.first?.text else { return }
+                
+                FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref,
+                                                                   values: ["title" : groupName])
+                self.chat?.title = groupName
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             })
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(ac, animated: true, completion: nil)
@@ -147,9 +177,17 @@ extension DisplayChatMetaDataViewController: UITableViewDataSource {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: cellId, for: indexPath)
             as? UserTableViewCell else { return UITableViewCell() }
-        guard let user = members?[indexPath.row] else { return UITableViewCell()}
+        guard let user = members?[indexPath.row] else { return UITableViewCell() }
         
         cell.usernameLabel.text = user.username
+        guard let url = user.avatarURL, !url.isEmpty else {
+            cell.userImageView.image = UIImage(named: "noAvatarImg")
+            return cell
+        }
+        
+        let id = mediaManager.downloadImage(from: url)
+        guard let taskId = id else { return cell }
+        taskIdsToIndexPathDict?[taskId] = indexPath
             
         return cell
     }
@@ -159,7 +197,7 @@ extension DisplayChatMetaDataViewController: UITableViewDataSource {
         case 0:
             return "Group Name"
         case 1:
-            return "Participants"
+            return "Participants : \(members?.count ?? 0)"
         default:
             return nil
         }
@@ -167,7 +205,34 @@ extension DisplayChatMetaDataViewController: UITableViewDataSource {
     }
 }
 
-
+extension DisplayChatMetaDataViewController: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        let taskId = downloadTask.taskIdentifier
+        
+        do {
+            let data = try Data(contentsOf: location)
+            DispatchQueue.main.async {
+                guard let indexPath = self.taskIdsToIndexPathDict?[taskId] else { return }
+                guard let cell = self.tableView.cellForRow(at: indexPath)
+                    as? UserTableViewCell else { return }
+                let image = UIImage(data: data)
+                cell.userImageView.image = image
+            }
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                completionHandler()
+            }
+        }
+    }
+}
 
 
 

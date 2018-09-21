@@ -9,34 +9,11 @@
 import UIKit
 import Firebase
 
-extension SettingsViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PresentMenuAnimator()
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return DismissMenuAnimator()
-    }
-    
-    /* indicate that the dismiss transition is going to be interactive,
-     but only if the user is panning */
-    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor.hasStarted ? interactor : nil
-    }
-    
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor.shouldFinish ? interactor : nil
-    }
-}
-
-
-
 class SettingsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var userProfileImg: UIImageView!
     @IBOutlet weak var changePictureBtn: UIButton!
     
     let storageRef = Storage.storage().reference()
-    var interactor = Interactor()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,17 +36,6 @@ class SettingsViewController: UIViewController, UIImagePickerControllerDelegate,
     
     @IBAction func menuBtnPressed(sender: UIBarButtonItem){
         performSegue(withIdentifier: "openMenu", sender: nil)
-    }
-    
-    @IBAction func edgePanGesture(sender: UIScreenEdgePanGestureRecognizer) {
-        print("EDGE Pan Gesture ....")
-        let translation = sender.translation(in: view)
-        
-        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Right)
-        
-        MenuHelper.mapGestureStateToInteractor(gestureState: sender.state, progress: progress, interactor: interactor) {
-            self.performSegue(withIdentifier: "openMenu", sender: nil)
-        }
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -143,15 +109,6 @@ class SettingsViewController: UIViewController, UIImagePickerControllerDelegate,
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsPath = paths[0]
         return documentsPath
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationViewController = segue.destination as? SideMenuViewController {
-            destinationViewController.transitioningDelegate = self
-            
-            // pass the interactor object forward
-            destinationViewController.interactor = interactor
-        }
     }
 
 }

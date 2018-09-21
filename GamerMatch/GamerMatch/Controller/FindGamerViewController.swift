@@ -10,28 +10,6 @@ import UIKit
 import Firebase
 import SVProgressHUD
 
-extension FindGamerViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PresentMenuAnimator()
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return DismissMenuAnimator()
-    }
-    
-    /* indicate that the dismiss transition is going to be interactive,
-       but only if the user is panning */
-    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor.hasStarted ? interactor : nil
-    }
-    
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor.shouldFinish ? interactor : nil
-    }
-}
-
-
-
 class FindGamerViewController: UIViewController {
     
     private let findGamerResultsSegueId = "findGamerResultsSegue"
@@ -68,8 +46,6 @@ class FindGamerViewController: UIViewController {
     
     // stores console button pressed by user
     var selectedConsoleBtnPressed: UIButton?
-    
-    var interactor = Interactor()
     
     // MARK: - ViewController's Lifecycle Methods
     
@@ -303,35 +279,14 @@ class FindGamerViewController: UIViewController {
         createAlert(gameBtnTag: (selectedVideogameBtnPressed?.tag)!, roleBtnTag: sender.tag)
     }
     
-    @IBAction func openMenu(sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "openMenu", sender: nil)
-    }
-    
-    @IBAction func edgePanGesture(sender: UIScreenEdgePanGestureRecognizer) {
-        let translation = sender.translation(in: view)
-        
-        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Right)
-        
-        MenuHelper.mapGestureStateToInteractor(gestureState: sender.state, progress: progress, interactor: interactor) {
-            self.performSegue(withIdentifier: "openMenu", sender: nil)
-        }
-    }
-    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationViewController = segue.destination as? SideMenuViewController {
-            destinationViewController.transitioningDelegate = self
-            
-            // pass the interactor object forward
-            destinationViewController.interactor = interactor
-        } else if let destinationViewController = segue.destination
+        if let destinationViewController = segue.destination
             as? FindGamerResultsViewController {
             destinationViewController.resultIds = ids
         }
     }
-    
-
 }
 
 
