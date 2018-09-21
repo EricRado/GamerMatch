@@ -12,9 +12,8 @@ pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'SVProgressHUD'
 pod 'GoogleMaps'
-pod 'SwiftyJSON'
 pod 'MBProgressHUD'
 pod 'FontAwesome.swift'
-pod 'Alamofire'
+pod 'ValidationComponents'
 
 end

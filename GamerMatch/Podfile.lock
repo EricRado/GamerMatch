@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (4.7.2)
   - Firebase (4.9.0):
     - Firebase/Core (= 4.9.0)
   - Firebase/Auth (4.9.0):
@@ -60,10 +59,11 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - SVProgressHUD (2.2.5)
-  - SwiftyJSON (4.0.0)
+  - ValidationComponents (0.3.0):
+    - ValidationToolkit (~> 0.4.1)
+  - ValidationToolkit (0.4.1)
 
 DEPENDENCIES:
-  - Alamofire
   - Firebase
   - Firebase/Auth
   - Firebase/Database
@@ -72,11 +72,10 @@ DEPENDENCIES:
   - GoogleMaps
   - MBProgressHUD
   - SVProgressHUD
-  - SwiftyJSON
+  - ValidationComponents
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - Alamofire
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -92,10 +91,10 @@ SPEC REPOS:
     - MBProgressHUD
     - nanopb
     - SVProgressHUD
-    - SwiftyJSON
+    - ValidationComponents
+    - ValidationToolkit
 
 SPEC CHECKSUMS:
-  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Firebase: 632216af3ed7f31e3be34776947fdc7546cfb572
   FirebaseAnalytics: 388b630c15713f5dbf364071f5f3d6077fb52f4e
   FirebaseAuth: aaaf68d5064a6c8fec435758f83a43b8db26ccaa
@@ -111,8 +110,9 @@ SPEC CHECKSUMS:
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  ValidationComponents: fad1f9e9d7fbf3e10c893c880ef9d27627e90382
+  ValidationToolkit: ce8e9c1a5d49eddc3266a009d46df5ea22042dbc
 
-PODFILE CHECKSUM: ba1d33edd190ef1c2433fa8b2d88dbf4893eb6c7
+PODFILE CHECKSUM: 5d145b70c4286b32fa258e0c8d2aba40de1dc5fe
 
 COCOAPODS: 1.5.0

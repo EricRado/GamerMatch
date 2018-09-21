@@ -28,7 +28,6 @@
 		0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329721477B8200D491CD /* comic_sans_ms.ttf */; };
 		0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */; };
 		07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */; };
-		0784A8DD20A20EA6003FE32C /* GeocodingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0784A8DC20A20EA6003FE32C /* GeocodingRouter.swift */; };
 		0784A8DF20A2380D003FE32C /* AddTournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */; };
 		07BF4CA720E5621600044C86 /* GamerMatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */; };
 		07C982F720961B40007B46BB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F620961B40007B46BB /* ImageManager.swift */; };
@@ -52,7 +51,6 @@
 		07E586F32052FA5700023383 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F22052FA5700023383 /* Chat.swift */; };
 		07E586F52052FDCA00023383 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F42052FDCA00023383 /* Message.swift */; };
 		07E586F720542E2C00023383 /* ChatUserDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F620542E2C00023383 /* ChatUserDisplay.swift */; };
-		07E586FD2056170600023383 /* TournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586FC2056170600023383 /* TournamentViewController.swift */; };
 		07E586FF20578FA400023383 /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586FE20578FA300023383 /* Tournament.swift */; };
 		7105DC45CB9B5E0CBF066D2E /* Pods_GamerMatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */; };
 /* End PBXBuildFile section */
@@ -79,7 +77,6 @@
 		0721329721477B8200D491CD /* comic_sans_ms.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms.ttf; sourceTree = "<group>"; };
 		0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms_bold.ttf; sourceTree = "<group>"; };
 		07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCalls.swift; sourceTree = "<group>"; };
-		0784A8DC20A20EA6003FE32C /* GeocodingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingRouter.swift; sourceTree = "<group>"; };
 		0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTournamentViewController.swift; sourceTree = "<group>"; };
 		07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchTableViewCell.swift; sourceTree = "<group>"; };
 		07C982F620961B40007B46BB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
@@ -105,7 +102,6 @@
 		07E586F22052FA5700023383 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		07E586F42052FDCA00023383 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		07E586F620542E2C00023383 /* ChatUserDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserDisplay.swift; sourceTree = "<group>"; };
-		07E586FC2056170600023383 /* TournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentViewController.swift; sourceTree = "<group>"; };
 		07E586FE20578FA300023383 /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GamerMatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AF9417A7AC9D821680FE172 /* Pods-GamerMatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamerMatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GamerMatch/Pods-GamerMatch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -127,7 +123,6 @@
 		0712C97F20A1159E00775C63 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				0784A8DC20A20EA6003FE32C /* GeocodingRouter.swift */,
 				07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */,
 			);
 			path = Network;
@@ -201,12 +196,11 @@
 				071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */,
 				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
 				071BC837214E108000621899 /* FriendsViewController.swift */,
+				071EE7A72155526A006A6401 /* GameAndConsoleSelectionViewController.swift */,
 				07E586C0204F90E700023383 /* LoginViewController.swift */,
 				07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */,
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
-				07E586FC2056170600023383 /* TournamentViewController.swift */,
-				071EE7A72155526A006A6401 /* GameAndConsoleSelectionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -347,25 +341,25 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-GamerMatch/Pods-GamerMatch-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/ValidationComponents/ValidationComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/ValidationToolkit/ValidationToolkit.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ValidationComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ValidationToolkit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -422,7 +416,6 @@
 				071EB7072152F8A100688D32 /* DisplayChatMetaDataViewController.swift in Sources */,
 				07E586F720542E2C00023383 /* ChatUserDisplay.swift in Sources */,
 				071BC838214E108000621899 /* FriendsViewController.swift in Sources */,
-				0784A8DD20A20EA6003FE32C /* GeocodingRouter.swift in Sources */,
 				07E586C8205050A400023383 /* User.swift in Sources */,
 				071EE7A82155526A006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */,
 				071E90152150255E005ED404 /* UserTableViewCell.swift in Sources */,
@@ -441,7 +434,6 @@
 				070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */,
 				0784A8DF20A2380D003FE32C /* AddTournamentViewController.swift in Sources */,
 				070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */,
-				07E586FD2056170600023383 /* TournamentViewController.swift in Sources */,
 				0701F3BF2146087E00A73A77 /* ChatMessageCollectionViewCell.swift in Sources */,
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
 				07DE23DF2153CECC0079F338 /* FriendRequestTableViewCell.swift in Sources */,

@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SVProgressHUD
+import ValidationComponents
 
 class RegistrationViewController: UIViewController {
     
@@ -21,7 +22,15 @@ class RegistrationViewController: UIViewController {
     
     @IBOutlet weak var signUpButton: UIButton!
     
-    let dbReference = Database.database().reference()
+    let userRef: DatabaseReference = {
+        let ref = Database.database().reference().child("Users/")
+        return ref
+    }()
+    
+    lazy var userDict: [String: String] = {
+        var dict = [String: String]()
+        return dict
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +58,47 @@ class RegistrationViewController: UIViewController {
         return true
     }
     
+    fileprivate func validateForEmptyFields(updateUI: @escaping (UITextField?) -> Void) {
+        if (usernameTextField.text?.isEmpty)! {
+            updateUI(usernameTextField)
+        }
+        
+        if (emailTextField.text?.isEmpty)! {
+            updateUI(emailTextField)
+        }
+        
+        if (passwordTextField.text?.isEmpty)! {
+            updateUI(passwordTextField)
+        }
+        
+        if (reconfirmPasswordTextField.text?.isEmpty)! {
+            updateUI(reconfirmPasswordTextField)
+        }
+        
+        updateUI(nil)
+    }
+    
     func validateForm() {
+        validateForEmptyFields { (textField) in
+            if let textField = textField {
+                
+            }
+        }
+        
+        if 6 ... 16 ~= (usernameTextField.text?.count)!  {
+            
+        }
+        
+        if 8 ... 18 ~= (passwordTextField.text?.count)! {
+            
+        }
+        
+        if passwordTextField.text != reconfirmPasswordTextField.text {
+           
+        }
+        
+        
+        
         SVProgressHUD.show()
         if usernameTextField.text != nil {
             SVProgressHUD.show()
@@ -68,8 +117,9 @@ class RegistrationViewController: UIViewController {
         }
     }
     
+    
     func addUserToDatabase(uid: String, email: String, password: String, username: String){
-        //let user = User(uid: uid, email: email, password: password, username: username)
+        
         //dbReference.child("Users/\(uid)").setValue(user.toAnyObject())
         SVProgressHUD.dismiss()
     }
