@@ -50,20 +50,48 @@ class FriendsViewController: UIViewController {
         return manager
     }()
     
+   
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            let nib = UINib(nibName: FriendRequestTableViewCell.identifier,
+                            bundle: nil)
+            tableView.register(nib, forCellReuseIdentifier: FriendRequestTableViewCell.identifier)
+            tableView.delegate = self
+            tableView.dataSource = self
+        }
+    }
+    
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
+            let nib = UINib(nibName: FriendCollectionViewHeader.identifier, bundle: nil)
+            collectionView.register(
+                nib,
+                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                withReuseIdentifier: FriendCollectionViewHeader.identifier)
             collectionView.delegate = self
             collectionView.dataSource = self
         }
     }
     
+    @IBOutlet weak var segmentedControl: UISegmentedControl! {
+        didSet {
+            segmentedControl.addTarget(
+                self,
+                action: #selector(segmentedControlPressed(sender:)),
+                for: .valueChanged)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.isHidden = true
+        segmentedControl.selectedSegmentIndex = 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let nib = UINib(nibName: FriendCollectionViewHeader.identifier, bundle: nil)
-        collectionView.register(nib,
-                                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                withReuseIdentifier: FriendCollectionViewHeader.identifier)
+       
         getUserFriends() {
             guard let onlineView = self.collectionView
                 .supplementaryView(forElementKind: UICollectionElementKindSectionHeader,
@@ -78,6 +106,26 @@ class FriendsViewController: UIViewController {
             onlineView.friendsCountLabel.text = "\(self.onlineFriends.count)"
             offlineView.friendsCountLabel.text = "\(self.offlineFriends.count)"
         }
+    }
+    
+    @objc fileprivate func segmentedControlPressed(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            print("Friends control pressed")
+            tableView.isHidden = true
+            collectionView.isHidden = false
+            
+        case 1:
+            print("Friend requests pressed")
+            collectionView.isHidden = true
+            tableView.isHidden = false
+        default:
+            break
+        }
+    }
+    
+    @objc func acceptFriendRequestBtnPressed(sender: UIButton) {
+        print("accept btn pressed")
     }
     
     fileprivate func getUserFriends(completion: @escaping (() -> Void)) {
@@ -140,7 +188,7 @@ extension FriendsViewController: UICollectionViewDataSource {
         cell.friendUsernameLabel.text = friend.username
         
         if let url = friend.avatarURL, url != "" {
-            let id = mediaManager.downloadImage(from: url)
+            let id = mediaManager .downloadImage(from: url)
             guard let taskId = id else { return cell }
             taskIdsToIndexPathRowDict[taskId] = (indexPath.item, indexPath.section)
         }
@@ -171,6 +219,42 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 50.0)
+    }
+}
+
+
+
+extension FriendsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("row pressed")
+    }
+}
+
+extension FriendsViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendRequestTableViewCell.identifier, for: indexPath)
+            as? FriendRequestTableViewCell else { return UITableViewCell() }
+        
+        cell.friendUsernameLabel.text = "Username"
+        cell.friendImageView.image = UIImage(named: "noAvatarImg")
+        
+        cell.acceptFriendRequestBtn.tag = indexPath.row
+        cell.acceptFriendRequestBtn.addTarget(
+            self,
+            action: #selector(acceptFriendRequestBtnPressed(sender:)),
+            for: .touchUpInside)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height / 6
     }
 }
 

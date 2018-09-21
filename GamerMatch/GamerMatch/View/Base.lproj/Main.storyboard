@@ -696,6 +696,10 @@
                                     <segment title="Friend Requests"/>
                                 </segments>
                             </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="q6K-yT-7HK">
+                                <rect key="frame" x="0.0" y="100" width="375" height="518"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O0a-ME-iPY">
                                 <rect key="frame" x="0.0" y="100" width="375" height="518"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -747,10 +751,14 @@
                         <constraints>
                             <constraint firstItem="BSC-jW-ELK" firstAttribute="bottom" secondItem="O0a-ME-iPY" secondAttribute="bottom" id="9g7-GR-VeP"/>
                             <constraint firstItem="iNP-CS-PKa" firstAttribute="leading" secondItem="BSC-jW-ELK" secondAttribute="leading" id="BqP-IG-l2f"/>
+                            <constraint firstItem="BSC-jW-ELK" firstAttribute="bottom" secondItem="q6K-yT-7HK" secondAttribute="bottom" id="Hs0-x8-cL5"/>
+                            <constraint firstItem="q6K-yT-7HK" firstAttribute="leading" secondItem="BSC-jW-ELK" secondAttribute="leading" id="QHE-IC-Dwh"/>
                             <constraint firstItem="iNP-CS-PKa" firstAttribute="top" secondItem="BSC-jW-ELK" secondAttribute="top" id="V6i-7d-gnc"/>
                             <constraint firstItem="O0a-ME-iPY" firstAttribute="leading" secondItem="BSC-jW-ELK" secondAttribute="leading" id="W7y-Hj-dyn"/>
+                            <constraint firstItem="BSC-jW-ELK" firstAttribute="trailing" secondItem="q6K-yT-7HK" secondAttribute="trailing" id="ata-YT-IND"/>
                             <constraint firstItem="BSC-jW-ELK" firstAttribute="trailing" secondItem="iNP-CS-PKa" secondAttribute="trailing" id="cv8-02-oSw"/>
                             <constraint firstItem="O0a-ME-iPY" firstAttribute="top" secondItem="iNP-CS-PKa" secondAttribute="bottom" constant="8" id="cw2-CM-et8"/>
+                            <constraint firstItem="q6K-yT-7HK" firstAttribute="top" secondItem="iNP-CS-PKa" secondAttribute="bottom" constant="8" id="fFV-LH-jv4"/>
                             <constraint firstItem="BSC-jW-ELK" firstAttribute="trailing" secondItem="O0a-ME-iPY" secondAttribute="trailing" id="gEj-gd-E2y"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BSC-jW-ELK"/>
@@ -758,6 +766,8 @@
                     <navigationItem key="navigationItem" title="Friends" id="Qrj-3g-YuN"/>
                     <connections>
                         <outlet property="collectionView" destination="O0a-ME-iPY" id="Cnc-mJ-lVO"/>
+                        <outlet property="segmentedControl" destination="iNP-CS-PKa" id="VcA-aI-oXz"/>
+                        <outlet property="tableView" destination="q6K-yT-7HK" id="OUj-za-ozV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KZB-Vp-ZZg" userLabel="First Responder" sceneMemberID="firstResponder"/>
