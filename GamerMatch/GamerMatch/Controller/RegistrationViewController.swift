@@ -78,49 +78,59 @@ class RegistrationViewController: UIViewController {
         updateUI(nil)
     }
     
-    func validateForm() {
+    fileprivate func validateForm() {
         validateForEmptyFields { (textField) in
             if let textField = textField {
-                
+                textField.layer.borderColor = UIColor.red.cgColor
             }
         }
         
-        if 6 ... 16 ~= (usernameTextField.text?.count)!  {
-            
+        if !(6 ... 16 ~= (usernameTextField.text?.count)!)  {
+            print("username should be from 6 - 16 characters")
+            return
         }
         
-        if 8 ... 18 ~= (passwordTextField.text?.count)! {
-            
+        if !(8 ... 18 ~= (passwordTextField.text?.count)!) {
+            print("password should be from 8 - 18 characters")
+            return
         }
         
         if passwordTextField.text != reconfirmPasswordTextField.text {
-           
+            print("passwords do not match")
+            return
         }
         
-        
-        
-        SVProgressHUD.show()
-        if usernameTextField.text != nil {
-            SVProgressHUD.show()
-            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [unowned self] (user, error) in
-                if error != nil {
-                    print("There was an error: \(error!)")
-                }
-                print("User registered successfully")
-                self.addUserToDatabase(uid: (user?.uid)!,
-                                       email: self.emailTextField.text!,
-                                       password: self.passwordTextField.text!,
-                                       username: self.usernameTextField.text!)
-                guard let vc = self.storyboard?.instantiateViewController(withIdentifier: self.nextVCId) else { return }
-                self.present(vc, animated: true, completion: nil)
-            })
+        let predicate = EmailValidationPredicate()
+        if !predicate.evaluate(with: emailTextField.text) {
+            print("email is not valid")
+            return
         }
+        
+        registerUser()
+    }
+    
+    fileprivate func registerUser() {
+        SVProgressHUD.show(withStatus: "Registering")
+        Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [unowned self] (user, error) in
+            if error != nil {
+                print("There was an error: \(error!)")
+                return
+            }
+            print("User registered successfully")
+            self.addUserToDatabase(uid: (user?.uid)!,
+                                   email: self.emailTextField.text!,
+                                   username: self.usernameTextField.text!)
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: self.nextVCId) else { return }
+            self.present(vc, animated: true, completion: nil)
+        })
     }
     
     
-    func addUserToDatabase(uid: String, email: String, password: String, username: String){
-        
-        //dbReference.child("Users/\(uid)").setValue(user.toAnyObject())
+    fileprivate func addUserToDatabase(uid: String, email: String, username: String){
+        let userDict = ["uid": uid, "email": email, "username": username,
+                        "isOnline": "true", "url": "", "bio": ""]
+        let ref = userRef.child("\(uid)")
+        FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: userDict)
         SVProgressHUD.dismiss()
     }
     

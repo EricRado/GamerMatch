@@ -25,10 +25,10 @@
 		071EB7072152F8A100688D32 /* DisplayChatMetaDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EB7062152F8A100688D32 /* DisplayChatMetaDataViewController.swift */; };
 		071EB70921531C5A00688D32 /* CamaraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EB70821531C5A00688D32 /* CamaraHandler.swift */; };
 		071EE7A82155526A006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7A72155526A006A6401 /* GameAndConsoleSelectionViewController.swift */; };
+		071EE7AA21559D26006A6401 /* VideoGameSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7A921559D26006A6401 /* VideoGameSelection.swift */; };
 		0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329721477B8200D491CD /* comic_sans_ms.ttf */; };
 		0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */; };
 		07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */; };
-		0784A8DF20A2380D003FE32C /* AddTournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */; };
 		07BF4CA720E5621600044C86 /* GamerMatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */; };
 		07C982F720961B40007B46BB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F620961B40007B46BB /* ImageManager.swift */; };
 		07C982F92096B292007B46BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F82096B292007B46BB /* SettingsViewController.swift */; };
@@ -74,10 +74,10 @@
 		071EB7062152F8A100688D32 /* DisplayChatMetaDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayChatMetaDataViewController.swift; sourceTree = "<group>"; };
 		071EB70821531C5A00688D32 /* CamaraHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamaraHandler.swift; sourceTree = "<group>"; };
 		071EE7A72155526A006A6401 /* GameAndConsoleSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAndConsoleSelectionViewController.swift; sourceTree = "<group>"; };
+		071EE7A921559D26006A6401 /* VideoGameSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameSelection.swift; sourceTree = "<group>"; };
 		0721329721477B8200D491CD /* comic_sans_ms.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms.ttf; sourceTree = "<group>"; };
 		0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms_bold.ttf; sourceTree = "<group>"; };
 		07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCalls.swift; sourceTree = "<group>"; };
-		0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTournamentViewController.swift; sourceTree = "<group>"; };
 		07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchTableViewCell.swift; sourceTree = "<group>"; };
 		07C982F620961B40007B46BB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		07C982F82096B292007B46BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -186,7 +186,6 @@
 		07E586C4204F912100023383 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0784A8DE20A2380D003FE32C /* AddTournamentViewController.swift */,
 				0701F3BC2145FF7000A73A77 /* ChatSelectedViewController.swift */,
 				07E586CB2050E14F00023383 /* ChatViewController.swift */,
 				07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */,
@@ -216,6 +215,7 @@
 				071A7A122148717500099BCA /* UserCacheInfo.swift */,
 				070927F920608CDF005B0EAF /* VideoGame.swift */,
 				070927FB20619FC5005B0EAF /* VideoGameRole.swift */,
+				071EE7A921559D26006A6401 /* VideoGameSelection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -411,6 +411,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				071EE7AA21559D26006A6401 /* VideoGameSelection.swift in Sources */,
 				07BF4CA720E5621600044C86 /* GamerMatchTableViewCell.swift in Sources */,
 				07E586FF20578FA400023383 /* Tournament.swift in Sources */,
 				071EB7072152F8A100688D32 /* DisplayChatMetaDataViewController.swift in Sources */,
@@ -432,7 +433,6 @@
 				07DDCB692150773600584BD6 /* Create1On1ChatViewController.swift in Sources */,
 				07DDCB65215071CF00584BD6 /* NewGroupChatSetupViewController.swift in Sources */,
 				070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */,
-				0784A8DF20A2380D003FE32C /* AddTournamentViewController.swift in Sources */,
 				070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */,
 				0701F3BF2146087E00A73A77 /* ChatMessageCollectionViewCell.swift in Sources */,
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,

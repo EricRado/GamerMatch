@@ -10,6 +10,16 @@ import UIKit
 
 class GameAndConsoleSelectionViewController: UIViewController {
     
+    private lazy var consoleChoices: [String] = {
+        var arr = [String]()
+        return arr
+    }()
+    
+    /*private lazy var gameChoices: [Game] = {
+        var arr = [Game]()
+        return arr
+    }*/
+    
     @IBOutlet var consoleBtns: [UIButton]! {
         didSet {
             for btn in consoleBtns {
