@@ -1458,7 +1458,10 @@
                     </view>
                     <connections>
                         <outlet property="bioTextView" destination="UmM-vE-AGE" id="14f-VP-I2T"/>
+                        <outlet property="confirmPopupBtn" destination="k9a-gZ-9Lc" id="o1d-md-EF0"/>
+                        <outlet property="gameSelectedOptionsView" destination="Tbb-1Z-aFf" id="0B9-Wy-6mZ"/>
                         <outlet property="submitBtn" destination="BWB-P3-hvh" id="Jks-e9-5cn"/>
+                        <outlet property="tableView" destination="0S5-7r-RWv" id="NeY-t4-WUB"/>
                         <outletCollection property="consoleBtns" destination="Et1-3f-d7y" collectionClass="NSMutableArray" id="UKl-o1-eyP"/>
                         <outletCollection property="consoleBtns" destination="N31-2q-Qy1" collectionClass="NSMutableArray" id="55d-fx-bew"/>
                         <outletCollection property="consoleBtns" destination="1an-zP-2Qu" collectionClass="NSMutableArray" id="49C-IW-LA9"/>
@@ -1473,6 +1476,33 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kec-kc-kWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Tbb-1Z-aFf">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="219"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0S5-7r-RWv">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="186"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9a-gZ-9Lc">
+                            <rect key="frame" x="0.0" y="186" width="240" height="33"/>
+                            <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
+                            <state key="normal" title="Confirm"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="leading" secondItem="OLC-sg-hdf" secondAttribute="leading" id="CUZ-iU-MU1"/>
+                        <constraint firstItem="0S5-7r-RWv" firstAttribute="leading" secondItem="OLC-sg-hdf" secondAttribute="leading" id="EY7-8w-Z0M"/>
+                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="trailing" secondItem="OLC-sg-hdf" secondAttribute="trailing" id="dAo-Lm-f29"/>
+                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="bottom" secondItem="OLC-sg-hdf" secondAttribute="bottom" id="hKo-Vb-m5C"/>
+                        <constraint firstItem="0S5-7r-RWv" firstAttribute="top" secondItem="OLC-sg-hdf" secondAttribute="top" id="hra-PW-cLn"/>
+                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="height" secondItem="Tbb-1Z-aFf" secondAttribute="height" multiplier="0.15" id="j1r-6M-KJE"/>
+                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="top" secondItem="0S5-7r-RWv" secondAttribute="bottom" id="oDN-DG-SsH"/>
+                        <constraint firstItem="0S5-7r-RWv" firstAttribute="trailing" secondItem="OLC-sg-hdf" secondAttribute="trailing" id="xT6-2h-q9U"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="OLC-sg-hdf"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="608.79999999999995" y="-716.49175412293857"/>
         </scene>
