@@ -9,8 +9,28 @@
 import Foundation
 import UIKit
 
+enum ConsoleType: String {
+    case Xbox = "Xbox"
+    case Playstation = "Playstation"
+    case PC = "PC"
+}
+
+struct Console {
+    let name: String
+    var notSelectedImage: UIImage?
+    var selectedImage: UIImage?
+    
+    init(name: String, notSelectedImage: UIImage?, selectedImage: UIImage?) {
+        self.name = name
+        self.notSelectedImage = notSelectedImage
+        self.selectedImage = selectedImage
+    }
+}
+
 class VideoGameRepo {
     static var shared = VideoGameRepo()
+    
+    private var consoles: [Console]?
     
     private var videoGames: [VideoGame]?
     
@@ -18,11 +38,20 @@ class VideoGameRepo {
     private var nba2k18Roles: [VideoGameRole]?
     
     private init() {
+        consoles = [Console]()
         videoGames = [VideoGame]()
         overwatchRoles = [VideoGameRole]()
         nba2k18Roles = [VideoGameRole]()
+        
+        setConsoles()
         setVideoGameRoles()
         populateRepo()
+    }
+    
+    fileprivate func setConsoles() {
+        consoles?.append(Console(name: "Xbox", notSelectedImage: UIImage(named: "xbox"), selectedImage: UIImage(named: "selectedXbox")))
+        consoles?.append(Console(name: "Playstation", notSelectedImage: UIImage(named: "playstation"), selectedImage: UIImage(named: "selectedPlaystation")))
+        consoles?.append(Console(name: "PC", notSelectedImage: UIImage(named: "pc"), selectedImage: UIImage(named: "selectedPC")))
     }
     
     fileprivate func setVideoGameRoles() {
@@ -58,7 +87,11 @@ class VideoGameRepo {
                                      selectedImage: UIImage(named: "selectedRocketLeague")!, gameTypes: ["xbox", "playstation", "pc"], roles: nil))
     }
     
-    func getRepo() -> [VideoGame]? {
+    func getConsoles() -> [Console]? {
+        return consoles
+    }
+    
+    func getVideoGames() -> [VideoGame]? {
         return videoGames
     }
 }

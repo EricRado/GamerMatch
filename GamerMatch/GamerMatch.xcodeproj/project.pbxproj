@@ -24,9 +24,9 @@
 		071E901721502571005ED404 /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071E901621502571005ED404 /* UserTableViewCell.xib */; };
 		071EB7072152F8A100688D32 /* DisplayChatMetaDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EB7062152F8A100688D32 /* DisplayChatMetaDataViewController.swift */; };
 		071EB70921531C5A00688D32 /* CamaraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EB70821531C5A00688D32 /* CamaraHandler.swift */; };
-		071EE7AA21559D26006A6401 /* VideoGameSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7A921559D26006A6401 /* VideoGameSelection.swift */; };
-		071EE7B02155B5C3006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7AF2155B5C3006A6401 /* GameAndConsoleSelectionViewController.swift */; };
+		071EE7AA21559D26006A6401 /* VideoGameSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7A921559D26006A6401 /* VideoGameSelected.swift */; };
 		071EE7B22155C2A9006A6401 /* VideoGameRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7B12155C2A9006A6401 /* VideoGameRepo.swift */; };
+		071EE7B4215709A6006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7B3215709A6006A6401 /* GameAndConsoleSelectionViewController.swift */; };
 		0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329721477B8200D491CD /* comic_sans_ms.ttf */; };
 		0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */; };
 		07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */; };
@@ -74,9 +74,9 @@
 		071E901621502571005ED404 /* UserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
 		071EB7062152F8A100688D32 /* DisplayChatMetaDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayChatMetaDataViewController.swift; sourceTree = "<group>"; };
 		071EB70821531C5A00688D32 /* CamaraHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamaraHandler.swift; sourceTree = "<group>"; };
-		071EE7A921559D26006A6401 /* VideoGameSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameSelection.swift; sourceTree = "<group>"; };
-		071EE7AF2155B5C3006A6401 /* GameAndConsoleSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameAndConsoleSelectionViewController.swift; path = ../../../../../../.Trash/GameAndConsoleSelectionViewController.swift; sourceTree = "<group>"; };
+		071EE7A921559D26006A6401 /* VideoGameSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameSelected.swift; sourceTree = "<group>"; };
 		071EE7B12155C2A9006A6401 /* VideoGameRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameRepo.swift; sourceTree = "<group>"; };
+		071EE7B3215709A6006A6401 /* GameAndConsoleSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAndConsoleSelectionViewController.swift; sourceTree = "<group>"; };
 		0721329721477B8200D491CD /* comic_sans_ms.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms.ttf; sourceTree = "<group>"; };
 		0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms_bold.ttf; sourceTree = "<group>"; };
 		07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCalls.swift; sourceTree = "<group>"; };
@@ -197,9 +197,9 @@
 				071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */,
 				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
 				071BC837214E108000621899 /* FriendsViewController.swift */,
+				071EE7B3215709A6006A6401 /* GameAndConsoleSelectionViewController.swift */,
 				07E586C0204F90E700023383 /* LoginViewController.swift */,
 				07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */,
-				071EE7AF2155B5C3006A6401 /* GameAndConsoleSelectionViewController.swift */,
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 			);
@@ -217,7 +217,7 @@
 				071A7A122148717500099BCA /* UserCacheInfo.swift */,
 				070927F920608CDF005B0EAF /* VideoGame.swift */,
 				070927FB20619FC5005B0EAF /* VideoGameRole.swift */,
-				071EE7A921559D26006A6401 /* VideoGameSelection.swift */,
+				071EE7A921559D26006A6401 /* VideoGameSelected.swift */,
 				071EE7B12155C2A9006A6401 /* VideoGameRepo.swift */,
 			);
 			path = Model;
@@ -414,13 +414,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				071EE7AA21559D26006A6401 /* VideoGameSelection.swift in Sources */,
+				071EE7AA21559D26006A6401 /* VideoGameSelected.swift in Sources */,
 				07BF4CA720E5621600044C86 /* GamerMatchTableViewCell.swift in Sources */,
 				07E586FF20578FA400023383 /* Tournament.swift in Sources */,
+				071EE7B4215709A6006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */,
 				071EB7072152F8A100688D32 /* DisplayChatMetaDataViewController.swift in Sources */,
 				07E586F720542E2C00023383 /* ChatUserDisplay.swift in Sources */,
 				071BC838214E108000621899 /* FriendsViewController.swift in Sources */,
-				071EE7B02155B5C3006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */,
 				07E586C8205050A400023383 /* User.swift in Sources */,
 				071E90152150255E005ED404 /* UserTableViewCell.swift in Sources */,
 				071E901321500145005ED404 /* CreateNewChatViewController.swift in Sources */,
