@@ -79,7 +79,7 @@ class FindGamerViewController: UIViewController {
     // MARK: - Display Buttons Functions
     
     func setupVideoGames() {
-        videoGames.append(VideoGame(title: "halo 5", notSelectedImage: UIImage(named: "halo5")!,
+        /*videoGames.append(VideoGame(title: "halo 5", notSelectedImage: UIImage(named: "halo5")!,
                 selectedImage: UIImage(named: "selectedHalo5")!, gameTypes: ["xbox"]))
         videoGames.append(VideoGame(title: "league Of Legends", notSelectedImage: UIImage(named: "leagueOfLegends")!,
                 selectedImage: UIImage(named: "selectedLeagueOfLegends")!, gameTypes: ["pc"]))
@@ -94,7 +94,7 @@ class FindGamerViewController: UIViewController {
         videoGames.append(VideoGame(title: "uncharted 4", notSelectedImage: UIImage(named: "uncharted4")!,
                 selectedImage: UIImage(named: "selectedUncharted4")!, gameTypes: ["playstation"]))
         videoGames.append(VideoGame(title: "rocket League", notSelectedImage: UIImage(named: "rocketLeague")!,
-                selectedImage: UIImage(named: "selectedRocketLeague")!, gameTypes: ["xbox", "playstation", "pc"]))
+                selectedImage: UIImage(named: "selectedRocketLeague")!, gameTypes: ["xbox", "playstation", "pc"]))*/
     }
     
     func displayGameBtns(consoleChoice: String) {
