@@ -10,7 +10,7 @@ import Foundation
 
 class VideoGameSelected {
     var videoGame: VideoGame?
-    var selectedConsoles: [ConsoleType]?
+    var selectedConsoles: Set<ConsoleType>?
     var selectedRoles: [VideoGameRole]?
     
     init() {}
