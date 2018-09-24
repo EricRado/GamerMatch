@@ -295,13 +295,12 @@
                         <outlet property="reconfirmPasswordTextField" destination="IGW-f4-TEu" id="ieb-4q-ZVZ"/>
                         <outlet property="signUpButton" destination="wyT-yb-dMk" id="ajw-d3-N41"/>
                         <outlet property="usernameTextField" destination="GKE-Nv-6Va" id="R7Y-0o-B3C"/>
-                        <segue destination="euJ-xH-Wd8" kind="show" identifier="dashboardSegue" id="dSy-8B-ZhX"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="returnSegue" id="9iT-u1-uYN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zJc-48-JIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-23" y="35"/>
+            <point key="canvasLocation" x="-102" y="-136"/>
         </scene>
         <!--Find Gamer Results View Controller-->
         <scene sceneID="6Uq-yf-7vN">
@@ -1471,6 +1470,7 @@
                         <outletCollection property="gameBtns" destination="93A-Pp-36d" collectionClass="NSMutableArray" id="dNM-r8-Ra5"/>
                         <outletCollection property="gameBtns" destination="Gq6-R3-VT6" collectionClass="NSMutableArray" id="BI6-vx-AIm"/>
                         <outletCollection property="gameBtns" destination="s8g-53-LMp" collectionClass="NSMutableArray" id="BET-Xa-Gap"/>
+                        <segue destination="euJ-xH-Wd8" kind="show" identifier="registrationDashboardSegue" id="SZl-6X-ud1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kec-kc-kWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1582,6 +1582,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9iT-u1-uYN"/>
-        <segue reference="dSy-8B-ZhX"/>
+        <segue reference="SZl-6X-ud1"/>
     </inferredMetricsTieBreakers>
 </document>

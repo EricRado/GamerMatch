@@ -87,18 +87,18 @@ class VideoGameRepo {
     }
     
     fileprivate func populateRepo() {
-        videoGames?.append(VideoGame(title: "Halo 5", notSelectedImage: UIImage(named: "halo5")!, selectedImage: UIImage(named: "selectedHalo5")!, gameTypes: [.Xbox], roles: nil))
+        videoGames?.append(VideoGame(title: "Halo 5", notSelectedImage: UIImage(named: "halo5")!, selectedImage: UIImage(named: "selectedHalo5")!, consoleTypes: [.Xbox], roles: nil))
         videoGames?.append(VideoGame(title: "League Of Legends", notSelectedImage:
             UIImage(named: "leagueOfLegends")!, selectedImage:
-            UIImage(named: "selectedLeagueOfLegends")!, gameTypes: [.PC], roles: lolRoles))
+            UIImage(named: "selectedLeagueOfLegends")!, consoleTypes: [.PC], roles: lolRoles))
         videoGames?.append(VideoGame(title: "Fortnite", notSelectedImage: UIImage(named: "fortnite")!, selectedImage: UIImage(named: "selectedFortnite")!,
-            gameTypes: [.Xbox, .Playstation, .PC], roles: nil))
-        videoGames?.append(VideoGame(title: "Overwatch", notSelectedImage: UIImage(named: "overwatch")!, selectedImage: UIImage(named: "selectedOverwatch")!, gameTypes: [.Xbox, .Playstation, .PC], roles: overwatchRoles))
+            consoleTypes: [.Xbox, .Playstation, .PC], roles: nil))
+        videoGames?.append(VideoGame(title: "Overwatch", notSelectedImage: UIImage(named: "overwatch")!, selectedImage: UIImage(named: "selectedOverwatch")!, consoleTypes: [.Xbox, .Playstation, .PC], roles: overwatchRoles))
         videoGames?.append(VideoGame(title: "Nba 2k18", notSelectedImage: UIImage(named: "nba2k18")!,
-            selectedImage: UIImage(named: "selectedNba2k18")!, gameTypes: [.Xbox, .Playstation, .PC], roles: nba2k18Roles))
-        videoGames?.append(VideoGame(title: "Battlefield 1", notSelectedImage: UIImage(named: "battlefield1")!, selectedImage: UIImage(named: "selectedBattlefield1")!, gameTypes: [.Xbox, .Playstation, .PC], roles: battlefieldRoles))
-        videoGames?.append(VideoGame(title: "Uncharted 4", notSelectedImage: UIImage(named: "uncharted4")!, selectedImage: UIImage(named: "selectedUncharted4")!, gameTypes: [.Playstation], roles: nil))
-        videoGames?.append(VideoGame(title: "Rocket League", notSelectedImage: UIImage(named: "rocketLeague")!, selectedImage: UIImage(named: "selectedRocketLeague")!, gameTypes: [.Xbox, .Playstation, .PC], roles: nil))
+            selectedImage: UIImage(named: "selectedNba2k18")!, consoleTypes: [.Xbox, .Playstation, .PC], roles: nba2k18Roles))
+        videoGames?.append(VideoGame(title: "Battlefield 1", notSelectedImage: UIImage(named: "battlefield1")!, selectedImage: UIImage(named: "selectedBattlefield1")!, consoleTypes: [.Xbox, .Playstation, .PC], roles: battlefieldRoles))
+        videoGames?.append(VideoGame(title: "Uncharted 4", notSelectedImage: UIImage(named: "uncharted4")!, selectedImage: UIImage(named: "selectedUncharted4")!, consoleTypes: [.Playstation], roles: nil))
+        videoGames?.append(VideoGame(title: "Rocket League", notSelectedImage: UIImage(named: "rocketLeague")!, selectedImage: UIImage(named: "selectedRocketLeague")!, consoleTypes: [.Xbox, .Playstation, .PC], roles: nil))
     }
     
     func getConsoles() -> [Console]? {

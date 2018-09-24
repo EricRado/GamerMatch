@@ -14,14 +14,21 @@ class GameAndConsoleSelectionViewController: UIViewController {
     // MARK: - Instance variables
     
     private let cellId = "cellId"
+    private let segueId = "registrationDashboardSegue"
+    private let databaseRef: DatabaseReference = {
+        return Database.database().reference()
+    }()
     
     // store the user's selcted consoles
     private var selectedConsoles = [ConsoleType]()
     
+    // store the user's current tapped video game selection
     private var selectedVideoGame: VideoGameSelected?
     
-    // store the user's selected video games
+    // store the user's selected video games after selecting console
+    // and role type
     private var selectedVideoGames = [String: VideoGameSelected]()
+    private var selectedVideoGameStringRefs = [String]()
     
     private var buttonTagToConsoleDict = [Int: Console]()
     private var buttonTagToVideoGameDict = [Int: VideoGame]()
@@ -71,7 +78,14 @@ class GameAndConsoleSelectionViewController: UIViewController {
             }
         }
     }
-    @IBOutlet weak var bioTextView: UITextView!
+    
+    @IBOutlet weak var bioTextView: UITextView! {
+        didSet {
+            bioTextView.layer.cornerRadius = 10
+            bioTextView.text = ""
+        }
+    }
+    
     @IBOutlet weak var submitBtn: UIButton! {
         didSet {
             submitBtn.addTarget(
@@ -161,15 +175,13 @@ class GameAndConsoleSelectionViewController: UIViewController {
     fileprivate func checkIfVideoGameWasAlreadySelected(tag: Int) {
         guard let title = buttonTagToVideoGameDict[tag]?.title else { return }
         if let game = selectedVideoGames[title] {
-            print("game already in dict")
             selectedVideoGame = game
             
         } else {
-            print("game not in dict")
             selectedVideoGame = VideoGameSelected()
             selectedVideoGame?.selectedConsoles = Set<ConsoleType>()
             selectedVideoGame?.selectedRoles = [VideoGameRole]()
-            selectedVideoGame?.videoGame = buttonTagToVideoGameDict[tag]
+            selectedVideoGame?.name = buttonTagToVideoGameDict[tag]?.title
         }
     }
     
@@ -177,10 +189,13 @@ class GameAndConsoleSelectionViewController: UIViewController {
         checkIfVideoGameWasAlreadySelected(tag: sender.tag)
         selectedVideoGameBtnTag = sender.tag
         
-        // check if video game is only available for 1 console type
-        if let consoles = buttonTagToVideoGameDict[selectedVideoGameBtnTag]?.gameTypes, consoles.count == 1 {
-            print("game has only one console type")
-            guard let title = selectedVideoGame?.videoGame?.title else { return }
+        guard let consoles = buttonTagToVideoGameDict[selectedVideoGameBtnTag]?.consoleTypes
+            else { return }
+        
+        // check if video game is only available for 1 console type and has no role types
+        if consoles.count == 1 &&
+            buttonTagToVideoGameDict[selectedVideoGameBtnTag]?.roles == nil {
+            guard let title = selectedVideoGame?.name else { return }
             if sender.isSelected {
                 selectedVideoGames.removeValue(forKey: title)
                 sender.isSelected = false
@@ -195,7 +210,31 @@ class GameAndConsoleSelectionViewController: UIViewController {
         setupPopupView()
     }
     
+    fileprivate func parseVideoGameSelectionToDatabaseReference(videoGameName: String, consoleTypes: Set<ConsoleType>, roles: [VideoGameRole]?) -> [String] {
+        var refs = [String]()
+        
+        for console in consoleTypes {
+            let game = videoGameName.removingWhitespaces()
+            if let roles = roles, !roles.isEmpty {
+                for role in roles {
+                    guard let role = role.roleName?.removingWhitespaces() else { continue }
+                    let ref = "\(console.rawValue)/\(game)/\(role)/"
+                    refs.append(ref)
+                }
+            } else {
+                let ref = "\(console.rawValue)/\(game)/"
+                refs.append(ref)
+            }
+        }
+        
+        return refs
+    }
+    
+    // save data retrieved to Firebase and transition to dashboard
     @objc fileprivate func submitBtnPressed(sender: UIButton) {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let userIdDict = [userId: "true"]
+        
         if selectedConsoles.isEmpty {
             print("At least one console must be selected to move on")
             return
@@ -204,46 +243,54 @@ class GameAndConsoleSelectionViewController: UIViewController {
             print("At least one game must be selected to move on")
             return
         }
-        print("the selected games are ...")
+        
+        // parse the selected video games to database references
         for game in selectedVideoGames {
-            print(game.value.videoGame)
-            print(game.value.selectedConsoles)
-            print(game.value.selectedRoles)
+            guard let name = game.value.name else { return }
+            let refs = parseVideoGameSelectionToDatabaseReference(videoGameName: name, consoleTypes: game.value.selectedConsoles!, roles: game.value.selectedRoles)
+            selectedVideoGameStringRefs.append(contentsOf: refs)
         }
+        
+        // save data to database
+        print("all the refs")
+        for ref in selectedVideoGameStringRefs {
+            let gameRef = databaseRef.child(ref)
+            FirebaseCalls.shared
+                .updateReferenceWithDictionary(ref: gameRef, values: userIdDict)
+        }
+        
+        // transition to user's dashboard
+        
     }
     
     @objc fileprivate func confirmFromPopupPressed(sender: UIButton) {
         gameSelectedOptionsView.removeFromSuperview()
-        print(selectedVideoGame)
         
-        guard let title = selectedVideoGame?.videoGame?.title else { return }
+        guard let title = selectedVideoGame?.name else { return }
         guard !(selectedVideoGame?.selectedConsoles?.isEmpty)! else { return }
         
         // if the selected video game does not have any roles
         // just store the selected console types
-        guard ((selectedVideoGame?.videoGame?.roles) != nil) else {
+        guard ((buttonTagToVideoGameDict[selectedVideoGameBtnTag]?.roles) != nil) else {
             selectedVideoGames[title] = selectedVideoGame
-            print(selectedVideoGames)
             gameBtns[selectedVideoGameBtnTag].isSelected = true
             return
         }
         
+        // if the selected video game does have roles check if
+        // user selected any roles from table view
         if let roles = selectedVideoGame?.selectedRoles, !roles.isEmpty {
-            print("selected roles is not empty")
             selectedVideoGames[title] = selectedVideoGame
             gameBtns[selectedVideoGameBtnTag].isSelected = true
         }
-        
-        print(selectedVideoGames)
     }
     
     @objc fileprivate func removeFromPopupPressed(sender: UIButton) {
-        print("remove pressed")
         gameSelectedOptionsView.removeFromSuperview()
-        guard let title = selectedVideoGame?.videoGame?.title else { return }
+        
+        guard let title = selectedVideoGame?.name else { return }
         selectedVideoGames.removeValue(forKey: title)
         gameBtns[selectedVideoGameBtnTag].isSelected = false
-        
     }
 
 }
@@ -251,8 +298,10 @@ class GameAndConsoleSelectionViewController: UIViewController {
 // MARK: - Table View Delegate Helper Functions
 extension GameAndConsoleSelectionViewController {
     fileprivate func insertConsoleTypeTableViewSelection(row: Int) {
+        guard let availableConsoles = buttonTagToVideoGameDict[selectedVideoGameBtnTag]?.consoleTypes
+            else { return }
         let consoleType: ConsoleType
-        switch buttonTagToConsoleDict[row]?.name {
+        switch availableConsoles[row].rawValue {
         case ConsoleType.Xbox.rawValue:
             consoleType = .Xbox
         case ConsoleType.Playstation.rawValue:
@@ -266,8 +315,10 @@ extension GameAndConsoleSelectionViewController {
     }
     
     fileprivate func removeConsoleTypeTableViewSelection(row: Int) {
+        guard let availableConsoles = buttonTagToVideoGameDict[selectedVideoGameBtnTag]?.consoleTypes
+            else { return }
         let consoleType: ConsoleType
-        switch buttonTagToConsoleDict[row]?.name {
+        switch availableConsoles[row].rawValue {
         case ConsoleType.Xbox.rawValue:
             consoleType = .Xbox
         case ConsoleType.Playstation.rawValue:
@@ -332,32 +383,43 @@ extension GameAndConsoleSelectionViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
+        guard let videoGame = buttonTagToVideoGameDict[selectedVideoGameBtnTag]
+            else { return 0 }
+        
+        // video game is only available for 1 console type
+        if section == 0 && videoGame.consoleTypes.count == 1 {
+            return 1
+        }
         if section == 0 {
             return 3
         }
         
-        return selectedVideoGame?.videoGame?.roles?.count ?? 0
+        return videoGame.roles?.count ?? 0
     }
+    
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+        guard let videoGame = buttonTagToVideoGameDict[selectedVideoGameBtnTag]
+            else { return cell }
         
         if indexPath.section == 0 {
-            guard let console = buttonTagToConsoleDict[indexPath.row] else { return cell }
-            cell.textLabel?.text = console.name
+            let console = videoGame.consoleTypes[indexPath.row]
+            cell.textLabel?.text = console.rawValue
+            
+            // set checkmarks for consoles that were previously selected
             guard let consoles = selectedVideoGame?.selectedConsoles else { return cell }
-            if consoles.contains(ConsoleType.init(rawValue: console.name)!) {
+            if consoles.contains(console) {
                 cell.accessoryType = .checkmark
             }
         }
         
         if indexPath.section == 1 {
-            guard let videoGame = buttonTagToVideoGameDict[selectedVideoGameBtnTag]
-                else { return cell }
             guard let roles = videoGame.roles else { return cell }
-    
             cell.textLabel?.text = roles[indexPath.row].roleName
-            guard let selectedRoles = selectedVideoGames[videoGame.title!]?.selectedRoles
+            
+            // set checkmarks for roles that were previously selected
+            guard let selectedRoles = selectedVideoGame?.selectedRoles
                 else { return cell }
             let results = selectedRoles
                 .filter { $0.roleName == roles[indexPath.row].roleName}

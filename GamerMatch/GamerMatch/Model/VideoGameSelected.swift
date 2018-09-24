@@ -9,7 +9,7 @@
 import Foundation
 
 class VideoGameSelected {
-    var videoGame: VideoGame?
+    var name: String?
     var selectedConsoles: Set<ConsoleType>?
     var selectedRoles: [VideoGameRole]?
     
