@@ -13,10 +13,11 @@ struct VideoGame {
     var title: String?
     var notSelectedImage:UIImage?
     var selectedImage: UIImage?
-    var gameTypes =  [String]()
+    var gameTypes =  [ConsoleType]()
     var roles: [VideoGameRole]?
     
-    init(title: String, notSelectedImage: UIImage, selectedImage: UIImage, gameTypes: [String], roles: [VideoGameRole]?) {
+    init(title: String, notSelectedImage: UIImage, selectedImage: UIImage,
+         gameTypes: [ConsoleType], roles: [VideoGameRole]?) {
         self.title = title
         self.notSelectedImage = notSelectedImage
         self.selectedImage = selectedImage

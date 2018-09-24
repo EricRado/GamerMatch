@@ -1457,6 +1457,7 @@
                         <outlet property="bioTextView" destination="UmM-vE-AGE" id="14f-VP-I2T"/>
                         <outlet property="confirmPopupBtn" destination="k9a-gZ-9Lc" id="o1d-md-EF0"/>
                         <outlet property="gameSelectedOptionsView" destination="Tbb-1Z-aFf" id="0B9-Wy-6mZ"/>
+                        <outlet property="removePopupBtn" destination="0OP-Hh-xm2" id="HQJ-G7-0jY"/>
                         <outlet property="submitBtn" destination="BWB-P3-hvh" id="Jks-e9-5cn"/>
                         <outlet property="tableView" destination="0S5-7r-RWv" id="NeY-t4-WUB"/>
                         <outletCollection property="consoleBtns" destination="Et1-3f-d7y" collectionClass="NSMutableArray" id="UKl-o1-eyP"/>
@@ -1481,21 +1482,37 @@
                             <rect key="frame" x="0.0" y="0.0" width="240" height="186"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9a-gZ-9Lc">
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hkN-ke-UjS" userLabel="Options">
                             <rect key="frame" x="0.0" y="186" width="240" height="33"/>
-                            <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
-                            <state key="normal" title="Confirm"/>
-                        </button>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9a-gZ-9Lc">
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="33"/>
+                                    <color key="backgroundColor" red="0.20304709197203352" green="0.32995152013127371" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
+                                    <state key="normal" title="Add">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0OP-Hh-xm2">
+                                    <rect key="frame" x="120" y="0.0" width="120" height="33"/>
+                                    <color key="backgroundColor" red="1" green="0.28015546389109203" blue="0.19638898235379421" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
+                                    <state key="normal" title="Remove">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="leading" secondItem="OLC-sg-hdf" secondAttribute="leading" id="CUZ-iU-MU1"/>
                         <constraint firstItem="0S5-7r-RWv" firstAttribute="leading" secondItem="OLC-sg-hdf" secondAttribute="leading" id="EY7-8w-Z0M"/>
-                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="trailing" secondItem="OLC-sg-hdf" secondAttribute="trailing" id="dAo-Lm-f29"/>
-                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="bottom" secondItem="OLC-sg-hdf" secondAttribute="bottom" id="hKo-Vb-m5C"/>
+                        <constraint firstItem="hkN-ke-UjS" firstAttribute="leading" secondItem="OLC-sg-hdf" secondAttribute="leading" id="U59-nq-Ndc"/>
+                        <constraint firstItem="hkN-ke-UjS" firstAttribute="bottom" secondItem="OLC-sg-hdf" secondAttribute="bottom" id="X1S-IT-3Em"/>
                         <constraint firstItem="0S5-7r-RWv" firstAttribute="top" secondItem="OLC-sg-hdf" secondAttribute="top" id="hra-PW-cLn"/>
-                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="height" secondItem="Tbb-1Z-aFf" secondAttribute="height" multiplier="0.15" id="j1r-6M-KJE"/>
-                        <constraint firstItem="k9a-gZ-9Lc" firstAttribute="top" secondItem="0S5-7r-RWv" secondAttribute="bottom" id="oDN-DG-SsH"/>
+                        <constraint firstItem="hkN-ke-UjS" firstAttribute="top" secondItem="0S5-7r-RWv" secondAttribute="bottom" id="jjE-Te-aW4"/>
+                        <constraint firstItem="OLC-sg-hdf" firstAttribute="trailing" secondItem="hkN-ke-UjS" secondAttribute="trailing" id="szH-B5-xea"/>
+                        <constraint firstItem="hkN-ke-UjS" firstAttribute="height" secondItem="Tbb-1Z-aFf" secondAttribute="height" multiplier="0.15" id="uuo-fh-rRa"/>
                         <constraint firstItem="0S5-7r-RWv" firstAttribute="trailing" secondItem="OLC-sg-hdf" secondAttribute="trailing" id="xT6-2h-q9U"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="OLC-sg-hdf"/>

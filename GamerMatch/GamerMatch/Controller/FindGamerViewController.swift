@@ -97,7 +97,7 @@ class FindGamerViewController: UIViewController {
                 selectedImage: UIImage(named: "selectedRocketLeague")!, gameTypes: ["xbox", "playstation", "pc"]))*/
     }
     
-    func displayGameBtns(consoleChoice: String) {
+    /*func displayGameBtns(consoleChoice: String) {
         if !gamesCurrentlyDisplayed.isEmpty {
             gamesCurrentlyDisplayed.removeAll()
         }
@@ -113,7 +113,7 @@ class FindGamerViewController: UIViewController {
             btn.isHidden = false
         }
         print(gamesCurrentlyDisplayed)
-    }
+    }*/
     
     fileprivate func createGamerMatchDBRef(console: String, game: String, role: String?) -> DatabaseReference {
         
@@ -238,15 +238,15 @@ class FindGamerViewController: UIViewController {
         if sender.tag == 0 {
             print("Xbox was pressed...")
             consoleName = "Xbox"
-            displayGameBtns(consoleChoice: "xbox")
+            
         }else if sender.tag == 1 {
             print("Playstation was pressed...")
             consoleName = "Playstation"
-            displayGameBtns(consoleChoice: "playstation")
+            
         }else {
             print("PC was pressed...")
             consoleName = "PC"
-            displayGameBtns(consoleChoice: "pc")
+            
         }
         
     }

@@ -98,6 +98,16 @@ class GameAndConsoleSelectionViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var removePopupBtn: UIButton! {
+        didSet {
+            removePopupBtn.addTarget(
+                self,
+                action: #selector(removeFromPopupPressed(sender:)),
+                for: .touchUpInside)
+            removePopupBtn.isHidden = true
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedVideoGames = [String: VideoGameSelected]()
@@ -133,7 +143,12 @@ class GameAndConsoleSelectionViewController: UIViewController {
         tableView.reloadData()
         gameSelectedOptionsView.frame = CGRect(x: view.center.x, y: view.center.y,
                                                width: 250.0, height: 250.0)
-        
+        if !(selectedVideoGame?.selectedConsoles?.isEmpty)! {
+            confirmPopupBtn.setTitle("Update", for: .normal)
+            removePopupBtn.isHidden = false
+        } else {
+            removePopupBtn.isHidden = true
+        }
         view.addSubview(gameSelectedOptionsView)
         gameSelectedOptionsView.center = view.center
     }
@@ -158,9 +173,24 @@ class GameAndConsoleSelectionViewController: UIViewController {
     }
     
     @objc fileprivate func gameBtnPressed(sender: UIButton) {
-        print("game pressed : \(buttonTagToVideoGameDict[sender.tag]!)")
         checkIfVideoGameWasAlreadySelected(tag: sender.tag)
         selectedVideoGameBtnTag = sender.tag
+        
+        // check if video game is only available for 1 console type
+        if let consoles = buttonTagToVideoGameDict[selectedVideoGameBtnTag]?.gameTypes, consoles.count == 1 {
+            print("game has only one console type")
+            guard let title = selectedVideoGame?.videoGame?.title else { return }
+            if sender.isSelected {
+                selectedVideoGames.removeValue(forKey: title)
+                sender.isSelected = false
+                return
+            }
+            selectedVideoGame?.selectedConsoles?.insert(consoles.first!)
+            selectedVideoGames[title] = selectedVideoGame
+            sender.isSelected = true
+            return
+        }
+        
         setupPopupView()
     }
     
@@ -204,6 +234,15 @@ class GameAndConsoleSelectionViewController: UIViewController {
         }
         
         print(selectedVideoGames)
+    }
+    
+    @objc fileprivate func removeFromPopupPressed(sender: UIButton) {
+        print("remove pressed")
+        gameSelectedOptionsView.removeFromSuperview()
+        guard let title = selectedVideoGame?.videoGame?.title else { return }
+        selectedVideoGames.removeValue(forKey: title)
+        gameBtns[selectedVideoGameBtnTag].isSelected = false
+        
     }
 
 }
@@ -292,11 +331,11 @@ extension GameAndConsoleSelectionViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        guard let roles = buttonTagToVideoGameDict[selectedVideoGameBtnTag]?.roles else {
+        if section == 0 {
             return 3
         }
         
-        return roles.count
+        return selectedVideoGame?.videoGame?.roles?.count ?? 0
     }
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
