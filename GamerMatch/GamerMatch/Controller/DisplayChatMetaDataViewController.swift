@@ -180,7 +180,7 @@ extension DisplayChatMetaDataViewController: UITableViewDataSource {
         guard let user = members?[indexPath.row] else { return UITableViewCell() }
         
         cell.usernameLabel.text = user.username
-        guard let url = user.avatarURL, !url.isEmpty else {
+        guard let url = user.url, !url.isEmpty else {
             cell.userImageView.image = UIImage(named: "noAvatarImg")
             return cell
         }

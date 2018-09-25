@@ -11,6 +11,6 @@ import Foundation
 struct UserCacheInfo: Decodable {
     let id: String?
     let username: String?
-    let avatarURL: String?
+    let url: String?
     let isOnline: String?
 }

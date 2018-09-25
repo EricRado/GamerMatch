@@ -144,7 +144,7 @@ class RegistrationViewController: UIViewController {
     fileprivate func addUserToDatabase(uid: String, email: String, username: String){
         let userDict = ["uid": uid, "email": email, "username": username,
                         "isOnline": "true", "url": "", "bio": ""]
-        let userInfoDict = ["uid": uid, "email": email,
+        let userInfoDict = ["uid": uid, "email": email, "url": "",
                             "username": username, "isOnline": "true"]
         
         let ref = userRef.child("\(uid)")
@@ -165,8 +165,9 @@ class RegistrationViewController: UIViewController {
     @objc func addPhotoBtnPressed(_ sender: UIButton) {
         print("Add photo btn pressed...")
         CamaraHandler.shared.showActionSheet(vc: self)
-        CamaraHandler.shared.imagePickedBlock = { image in
+        CamaraHandler.shared.imagePickedBlock = { [unowned self] image in
             self.addPhotoBtn.setBackgroundImage(image, for: .normal)
+            self.userImg = image
         }
     }
     

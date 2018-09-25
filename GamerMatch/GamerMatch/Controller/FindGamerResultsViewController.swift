@@ -77,7 +77,7 @@ extension FindGamerResultsViewController: UITableViewDataSource {
         
         cell.gamerUsernameLabel.text = userCacheInfo.username
         
-        if let urlString = userCacheInfo.avatarURL, urlString != "" {
+        if let urlString = userCacheInfo.url, urlString != "" {
             let id = mediaManager.downloadImage(from: urlString)
             guard let taskId = id else { return cell }
             taskIdToCellRowDict[taskId] = indexPath.row

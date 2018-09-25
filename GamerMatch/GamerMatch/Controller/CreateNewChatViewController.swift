@@ -93,7 +93,7 @@ extension CreateNewChatViewController: UITableViewDataSource {
         guard let friend = friends?[indexPath.row] else { return cell }
         cell.usernameLabel.text = friend.username
         
-        if let url = friend.avatarURL, !url.isEmpty {
+        if let url = friend.url, !url.isEmpty {
             let id = mediaManager?.downloadImage(from: url)
             guard let taskId = id else { return cell }
             taskIdToCellRowDict[taskId] = indexPath.row

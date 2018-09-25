@@ -21,6 +21,16 @@ class FriendsViewController: UIViewController {
         return Database.database().reference().child("Friends/\(id)/")
     }()
     
+    private let receivedFriendRequestsRef: DatabaseReference? = {
+        guard let id = Auth.auth().currentUser?.uid else { return nil }
+        return Database.database().reference().child("ReceivedFriendRequests/\(id)")
+    }()
+    
+    private let pendingFriendRequestsRef: DatabaseReference? = {
+        guard let id = Auth.auth().currentUser?.uid else { return nil }
+        return Database.database().reference().child("PendingFriendRequests/\(id)")
+    }()
+    
     lazy var onlineFriends: [UserCacheInfo] = {
         var arr = [UserCacheInfo]()
         return arr
@@ -106,6 +116,8 @@ class FriendsViewController: UIViewController {
             onlineView.friendsCountLabel.text = "\(self.onlineFriends.count)"
             offlineView.friendsCountLabel.text = "\(self.offlineFriends.count)"
         }
+        getPendingFriendRequests()
+        getReceivedFriendRequests()
     }
     
     @objc fileprivate func segmentedControlPressed(sender: UISegmentedControl) {
@@ -159,6 +171,24 @@ class FriendsViewController: UIViewController {
             counter += 1
         }
     }
+    
+    fileprivate func getReceivedFriendRequests() {
+        print("gettingReceivedFriendRequests...")
+        receivedFriendRequestsRef?.observe(.childAdded, with: { (snapshot) in
+            print(snapshot)
+        }, withCancel: { (error) in
+            print(error.localizedDescription)
+        })
+    }
+    
+    fileprivate func getPendingFriendRequests() {
+        print("pendingReceivedFriendRequests...")
+        pendingFriendRequestsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+        }, withCancel: { (error) in
+            print(error.localizedDescription)
+        })
+    }
 }
 
 extension FriendsViewController: UICollectionViewDelegate {
@@ -187,7 +217,7 @@ extension FriendsViewController: UICollectionViewDataSource {
         
         cell.friendUsernameLabel.text = friend.username
         
-        if let url = friend.avatarURL, url != "" {
+        if let url = friend.url, url != "" {
             let id = mediaManager .downloadImage(from: url)
             guard let taskId = id else { return cell }
             taskIdsToIndexPathRowDict[taskId] = (indexPath.item, indexPath.section)
