@@ -15,8 +15,15 @@ class GameAndConsoleSelectionViewController: UIViewController {
     
     private let cellId = "cellId"
     private let segueId = "registrationDashboardSegue"
+    
     private let databaseRef: DatabaseReference = {
         return Database.database().reference()
+    }()
+    
+    private let userRef: DatabaseReference? = {
+        guard let id = Auth.auth().currentUser?.uid else { return nil }
+        let ref = Database.database().reference().child("Users/\(id)/")
+        return ref
     }()
     
     // store the user's selcted consoles
@@ -230,6 +237,15 @@ class GameAndConsoleSelectionViewController: UIViewController {
         return refs
     }
     
+    fileprivate func saveConsoleChoicesToDB(_ consoles: [ConsoleType]) {
+        for console in consoles {
+            let choice = console.rawValue
+            guard let ref = userRef?.child("Consoles/") else { return }
+            FirebaseCalls.shared
+                .updateReferenceWithDictionary(ref: ref, values: [choice: "true"])
+        }
+    }
+    
     // save data retrieved to Firebase and transition to dashboard
     @objc fileprivate func submitBtnPressed(sender: UIButton) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
@@ -244,9 +260,15 @@ class GameAndConsoleSelectionViewController: UIViewController {
             return
         }
         
+        // save console choices to database
+        saveConsoleChoicesToDB(selectedConsoles)
+        
+        guard let userGameRef = userRef?.child("Games/") else { return }
         // parse the selected video games to database references
         for game in selectedVideoGames {
             guard let name = game.value.name else { return }
+            FirebaseCalls.shared
+                  .updateReferenceWithDictionary(ref: userGameRef, values: [name: "true"])
             let refs = parseVideoGameSelectionToDatabaseReference(videoGameName: name, consoleTypes: game.value.selectedConsoles!, roles: game.value.selectedRoles)
             selectedVideoGameStringRefs.append(contentsOf: refs)
         }
@@ -260,7 +282,7 @@ class GameAndConsoleSelectionViewController: UIViewController {
         }
         
         // transition to user's dashboard
-        
+        performSegue(withIdentifier: segueId, sender: nil)
     }
     
     @objc fileprivate func confirmFromPopupPressed(sender: UIButton) {
