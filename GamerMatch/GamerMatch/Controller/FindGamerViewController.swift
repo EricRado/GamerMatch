@@ -112,7 +112,6 @@ class FindGamerViewController: UIViewController {
             btn.setImage(gamesCurrentlyDisplayed[index].selectedImage, for: .selected)
             btn.isHidden = false
         }
-        print(gamesCurrentlyDisplayed)
     }
     
     fileprivate func createGamerMatchDBRef(console: String, game: String, role: String?) -> DatabaseReference {
@@ -128,38 +127,37 @@ class FindGamerViewController: UIViewController {
 
     func createAlert(gameBtnTag: Int, roleBtnTag: Int?) {
         var message = ""
-        let gameName = gamesCurrentlyDisplayed[gameBtnTag].title?.capitalizingFirstLetter()
+        guard let gameName = gamesCurrentlyDisplayed[gameBtnTag].title
+            else { return}
         var roleName: String?
         
         // setup search query message to display to the user
         if let roleBtnTag = roleBtnTag {
-            roleName = self.videoGameRoles[roleBtnTag].roleName?.capitalizingFirstLetter()
+            roleName = self.videoGameRoles[roleBtnTag].roleName
             
-            message = "Search for gamer who plays \(gameName!.uppercased()) for \(consoleName.uppercased()) and plays \(roleName!.uppercased()) role"
+            message = "Search for gamer who plays \(gameName) for \(consoleName.uppercased()) and plays \(roleName!) role"
         }else {
-            message = "Search for gamer who plays \(gameName!.uppercased()) for \(consoleName.uppercased())"
+            message = "Search for gamer who plays \(gameName) for \(consoleName.uppercased())"
         }
         
         // setup alert view controller
         let ac = UIAlertController(title: "Request", message: message, preferredStyle: .alert)
         
         ac.addAction(UIAlertAction(title: "Search", style: .default){ action in
-            if let gameName = gameName {
-                self.searchRef = self.createGamerMatchDBRef(console: self.consoleName,
-                                                     game: gameName,
-                                                     role: roleName)
-                SVProgressHUD.show(withStatus: "Searching...")
-                
-                FirebaseCalls.shared
-                    .getIdListFromNode(for: self.searchRef) { (ids, error) in
-                        if let error = error {
-                            print(error.localizedDescription)
-                            return
-                        }
-                        self.ids = ids
-                        SVProgressHUD.dismiss()
-                        self.performSegue(withIdentifier: self.findGamerResultsSegueId, sender: nil)
-                }
+            self.searchRef = self.createGamerMatchDBRef(console: self.consoleName,
+                                                        game: gameName,
+                                                        role: roleName)
+            SVProgressHUD.show(withStatus: "Searching...")
+            
+            FirebaseCalls.shared
+                .getIdListFromNode(for: self.searchRef) { (ids, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    self.ids = ids
+                    SVProgressHUD.dismiss()
+                    self.performSegue(withIdentifier: self.findGamerResultsSegueId, sender: nil)
             }
         })
         
@@ -170,7 +168,7 @@ class FindGamerViewController: UIViewController {
         self.present(ac, animated: true, completion: nil)
     }
     
-    func displayRoleBtns(gameChoice: String){
+    func displayRoleBtns(){
         if !videoGameRoles.isEmpty {
             videoGameRoles.removeAll()
         }
@@ -237,17 +235,14 @@ class FindGamerViewController: UIViewController {
             selectedVideogameBtnPressed?.isSelected = false
         }
         
-        let gameChoice = gamesCurrentlyDisplayed[sender.tag].title!
         selectedVideogameBtnPressed = sender
-        print("\(gameChoice) was selected")
         sender.isSelected = true
         
-        switch gameChoice {
-        case "overwatch", "battlefield 1", "nba 2k18", "league Of Legends":
+        if gamesCurrentlyDisplayed[sender.tag].roles != nil {
             bottomText.isHidden = false
-            displayRoleBtns(gameChoice: gameChoice)
+            displayRoleBtns()
             gameWithRolesTapped = true
-        default:
+        } else {
             print("Create an alert to start query search...")
             createAlert(gameBtnTag: sender.tag, roleBtnTag: nil)
         }

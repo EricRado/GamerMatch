@@ -14,16 +14,30 @@ import ValidationComponents
 class RegistrationViewController: UIViewController {
     
     fileprivate let nextVCId = "ConsoleAndGameSelectionVC"
+    fileprivate var userImg: UIImage?
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var reconfirmPasswordTextField: UITextField!
+    @IBOutlet weak var addPhotoBtn: UIButton! {
+        didSet {
+            addPhotoBtn.addTarget(
+                self,
+                action: #selector(addPhotoBtnPressed(_:)),
+                for: .touchUpInside)
+        }
+    }
     
     @IBOutlet weak var signUpButton: UIButton!
     
     let userRef: DatabaseReference = {
         let ref = Database.database().reference().child("Users/")
+        return ref
+    }()
+    
+    let userCacheRef: DatabaseReference = {
+        let ref = Database.database().reference().child("UserCacheInfo/")
         return ref
     }()
     
@@ -120,7 +134,8 @@ class RegistrationViewController: UIViewController {
             self.addUserToDatabase(uid: (user?.uid)!,
                                    email: self.emailTextField.text!,
                                    username: self.usernameTextField.text!)
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: self.nextVCId) else { return }
+            guard let vc = self.storyboard?
+                .instantiateViewController(withIdentifier: self.nextVCId) else { return }
             self.present(vc, animated: true, completion: nil)
         })
     }
@@ -129,8 +144,16 @@ class RegistrationViewController: UIViewController {
     fileprivate func addUserToDatabase(uid: String, email: String, username: String){
         let userDict = ["uid": uid, "email": email, "username": username,
                         "isOnline": "true", "url": "", "bio": ""]
+        let userInfoDict = ["uid": uid, "email": email,
+                            "username": username, "isOnline": "true"]
+        
         let ref = userRef.child("\(uid)")
         FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: userDict)
+        
+        let cacheRef = userCacheRef.child("\(uid)")
+        FirebaseCalls.shared
+            .updateReferenceWithDictionary(ref: cacheRef, values: userInfoDict)
+        
         SVProgressHUD.dismiss()
     }
     
@@ -139,9 +162,12 @@ class RegistrationViewController: UIViewController {
         performSegue(withIdentifier: "returnSegue", sender: self)
     }
     
-    
-    @IBAction func addPhotoBtnPressed(_ sender: UIButton) {
+    @objc func addPhotoBtnPressed(_ sender: UIButton) {
         print("Add photo btn pressed...")
+        CamaraHandler.shared.showActionSheet(vc: self)
+        CamaraHandler.shared.imagePickedBlock = { image in
+            self.addPhotoBtn.setBackgroundImage(image, for: .normal)
+        }
     }
     
     

@@ -290,6 +290,7 @@
                         <viewLayoutGuide key="safeArea" id="nrA-Kg-89f"/>
                     </view>
                     <connections>
+                        <outlet property="addPhotoBtn" destination="MDT-C3-hmh" id="lUy-vH-eoe"/>
                         <outlet property="emailTextField" destination="gsL-9P-ewo" id="8q4-Rl-VOj"/>
                         <outlet property="passwordTextField" destination="Wyw-Xy-2Zg" id="tSq-vS-H73"/>
                         <outlet property="reconfirmPasswordTextField" destination="IGW-f4-TEu" id="ieb-4q-ZVZ"/>
