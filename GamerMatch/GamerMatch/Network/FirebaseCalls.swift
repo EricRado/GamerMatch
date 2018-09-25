@@ -11,8 +11,13 @@ import Firebase
 
 class FirebaseCalls {
     let dbRef = Database.database().reference()
+    
     lazy var userCacheInfoRef: DatabaseReference = {
         return dbRef.child("UserCacheInfo/")
+    }()
+    
+    lazy var friendRequestRef: DatabaseReference = {
+        return dbRef.child("FriendRequests/")
     }()
     
     static var shared = FirebaseCalls()
@@ -70,6 +75,26 @@ class FirebaseCalls {
             
         }) { (error) in
             print(error.localizedDescription)
+        }
+    }
+    
+    func getFriendRequest(for id: String,
+                          completion: @escaping (FriendRequest?, Error?) -> Void) {
+        let ref = friendRequestRef.child("\(id)/")
+    
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dict = snapshot.value as? [String: Any] else { return }
+            do {
+                let jsonDict = try JSONSerialization
+                    .data(withJSONObject: dict, options: [])
+                let friendRequest = try JSONDecoder()
+                    .decode(FriendRequest.self, from: jsonDict)
+                completion(friendRequest, nil)
+            } catch let error {
+                completion(nil, error)
+            }
+        }) { (error) in
+            completion(nil, error)
         }
     }
     

@@ -41,6 +41,16 @@ class FriendsViewController: UIViewController {
         return arr
     }()
     
+    lazy var receivedFriendRequests: [FriendRequest] = {
+        var arr = [FriendRequest]()
+        return arr
+    }()
+    
+    lazy var pendingFriendRequests: [FriendRequest] = {
+        var arr = [FriendRequest]()
+        return arr
+    }()
+    
     lazy var taskIdsToIndexPathRowDict: [Int: (Int, Int)] = {
         var dict = [Int: (Int, Int)]()
         return dict
@@ -173,18 +183,40 @@ class FriendsViewController: UIViewController {
     }
     
     fileprivate func getReceivedFriendRequests() {
-        print("gettingReceivedFriendRequests...")
+        print(receivedFriendRequestsRef ?? "nothing")
         receivedFriendRequestsRef?.observe(.childAdded, with: { (snapshot) in
-            print(snapshot)
+            if !snapshot.exists() {
+                print("snapshot is empty for received friend requests...")
+                return
+            }
+            FirebaseCalls.shared
+                .getFriendRequest(for: snapshot.key) { (friendRequest, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    self.receivedFriendRequests.append(friendRequest!)
+            }
         }, withCancel: { (error) in
             print(error.localizedDescription)
         })
     }
     
     fileprivate func getPendingFriendRequests() {
-        print("pendingReceivedFriendRequests...")
-        pendingFriendRequestsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
+        print(pendingFriendRequestsRef ?? "nothing")
+        pendingFriendRequestsRef?.observeSingleEvent(of: .childAdded, with: { (snapshot) in
             print(snapshot)
+            if !snapshot.exists() {
+                print("snapshot is empty pending friend requests...")
+                return
+            }
+            FirebaseCalls.shared
+                .getFriendRequest(for: snapshot.key) { (friendRequest, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                    self.pendingFriendRequests.append(friendRequest!)
+            }
         }, withCancel: { (error) in
             print(error.localizedDescription)
         })
