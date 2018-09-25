@@ -18,7 +18,17 @@ class FindGamerViewController: UIViewController {
     
     // MARK: - IBOutlet Variables
     
-    @IBOutlet var consoleBtnsArr: [UIButton]!
+    @IBOutlet var consoleBtnsArr: [UIButton]! {
+        didSet {
+            guard let consoles = VideoGameRepo.shared.getConsoles() else { return }
+            for btn in consoleBtnsArr {
+                let console = consoles[btn.tag]
+                btn.setBackgroundImage(console.notSelectedImage, for: .normal)
+                btn.setBackgroundImage(console.selectedImage, for: .selected)
+                buttonTagToConsoleDict[btn.tag] = console
+            }
+        }
+    }
     @IBOutlet var gameBtnsArr: [UIButton]!
     @IBOutlet var roleBtnsArr: [UIButton]!
     @IBOutlet weak var middleText: UIImageView!
@@ -31,9 +41,17 @@ class FindGamerViewController: UIViewController {
     
     // console name pressed
     var consoleName = ""
+    private var buttonTagToConsoleDict = [Int: Console]()
     
     // stores video games for all systems
-    var videoGames = [VideoGame]()
+    private lazy var videoGames: [String: VideoGame]? = {
+        guard let arr = VideoGameRepo.shared.getVideoGames() else { return nil }
+        var dict = [String: VideoGame]()
+        for game in arr {
+            dict[game.title!] = game
+        }
+        return dict
+    }()
     
     // stores video games based on selected system
     var gamesCurrentlyDisplayed = [VideoGame]()
@@ -44,14 +62,13 @@ class FindGamerViewController: UIViewController {
     // stores video game button pressed by user
     var selectedVideogameBtnPressed: UIButton?
     
-    // stores console button pressed by user
+    // stores the tag of the console button pressed by user
     var selectedConsoleBtnPressed: UIButton?
     
     // MARK: - ViewController's Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupVideoGames()
 
     }
     
@@ -78,32 +95,15 @@ class FindGamerViewController: UIViewController {
     
     // MARK: - Display Buttons Functions
     
-    func setupVideoGames() {
-        /*videoGames.append(VideoGame(title: "halo 5", notSelectedImage: UIImage(named: "halo5")!,
-                selectedImage: UIImage(named: "selectedHalo5")!, gameTypes: ["xbox"]))
-        videoGames.append(VideoGame(title: "league Of Legends", notSelectedImage: UIImage(named: "leagueOfLegends")!,
-                selectedImage: UIImage(named: "selectedLeagueOfLegends")!, gameTypes: ["pc"]))
-        videoGames.append(VideoGame(title: "fortnite", notSelectedImage: UIImage(named: "fortnite")!,
-                selectedImage: UIImage(named: "selectedFortnite")!, gameTypes: ["xbox", "playstation", "pc"]))
-        videoGames.append(VideoGame(title: "overwatch", notSelectedImage: UIImage(named: "overwatch")!,
-                selectedImage: UIImage(named: "selectedOverwatch")!, gameTypes: ["xbox", "playstation", "pc"]))
-        videoGames.append(VideoGame(title: "nba 2k18", notSelectedImage: UIImage(named: "nba2k18")!,
-                selectedImage: UIImage(named: "selectedNba2k18")!, gameTypes: ["xbox", "playstation", "pc"]))
-        videoGames.append(VideoGame(title: "battlefield 1", notSelectedImage: UIImage(named: "battlefield1")!,
-                selectedImage: UIImage(named: "selectedBattlefield1")!, gameTypes: ["xbox", "playstation", "pc"]))
-        videoGames.append(VideoGame(title: "uncharted 4", notSelectedImage: UIImage(named: "uncharted4")!,
-                selectedImage: UIImage(named: "selectedUncharted4")!, gameTypes: ["playstation"]))
-        videoGames.append(VideoGame(title: "rocket League", notSelectedImage: UIImage(named: "rocketLeague")!,
-                selectedImage: UIImage(named: "selectedRocketLeague")!, gameTypes: ["xbox", "playstation", "pc"]))*/
-    }
-    
-    /*func displayGameBtns(consoleChoice: String) {
+    func displayGameBtns(consoleChoice: String) {
         if !gamesCurrentlyDisplayed.isEmpty {
             gamesCurrentlyDisplayed.removeAll()
         }
+        guard let games = videoGames else { return }
         print("ShowGameBtns ... \(consoleChoice)")
-        for videoGame in videoGames {
-            if videoGame.gameTypes.contains(consoleChoice) {
+        for (_, videoGame) in games {
+            let consoles = videoGame.consoleTypes
+            if consoles.contains(ConsoleType(rawValue: consoleChoice)!) {
                 gamesCurrentlyDisplayed.append(videoGame)
             }
         }
@@ -113,7 +113,7 @@ class FindGamerViewController: UIViewController {
             btn.isHidden = false
         }
         print(gamesCurrentlyDisplayed)
-    }*/
+    }
     
     fileprivate func createGamerMatchDBRef(console: String, game: String, role: String?) -> DatabaseReference {
         
@@ -174,23 +174,11 @@ class FindGamerViewController: UIViewController {
         if !videoGameRoles.isEmpty {
             videoGameRoles.removeAll()
         }
-        switch gameChoice {
-        case "overwatch":
-            videoGameRoles.append(VideoGameRole(roleName: "offense", roleImg: UIImage(named: "offenseOverwatchRole")!, selectedRoleImg: UIImage(named: "selectedOffenseOverwatchRole")!))
-            videoGameRoles.append(VideoGameRole(roleName: "defense", roleImg: UIImage(named: "defenseOverwatchRole")!, selectedRoleImg: UIImage(named: "selectedDefenseOverwatchRole")!))
-            videoGameRoles.append(VideoGameRole(roleName: "support", roleImg: UIImage(named: "supportOverwatchRole")!, selectedRoleImg: UIImage(named: "selectedSupportOverwatchRole")!))
-            videoGameRoles.append(VideoGameRole(roleName: "tank", roleImg: UIImage(named: "tankOverwatchRole")!, selectedRoleImg: UIImage(named: "selectedTankOverwatchRole")!))
-            
-            
-        case "nba 2k18":
-            videoGameRoles.append(VideoGameRole(roleName: "point gaurd", roleImg: UIImage(named: "pgNba2k18")!, selectedRoleImg: UIImage(named: "selectedPgNba2k18")!))
-            videoGameRoles.append(VideoGameRole(roleName: "shooting gaurd", roleImg: UIImage(named: "sgNba2k18")!, selectedRoleImg: UIImage(named: "selectedSgNba2k18")!))
-            videoGameRoles.append(VideoGameRole(roleName: "small forward", roleImg: UIImage(named: "sfNba2k18")!, selectedRoleImg: UIImage(named: "selectedSfNba2k18")!))
-            videoGameRoles.append(VideoGameRole(roleName: "power forward", roleImg: UIImage(named: "pfNba2k18")!, selectedRoleImg: UIImage(named: "selectedPfNba2k18")!))
-            videoGameRoles.append(VideoGameRole(roleName: "center", roleImg: UIImage(named: "cNba2k18")!, selectedRoleImg: UIImage(named: "selectedCNba2k18")!))
-        default:
-            return
-        }
+        
+        guard let index = selectedVideogameBtnPressed?.tag else { return }
+        guard let title = gamesCurrentlyDisplayed[index].title else { return }
+        guard let roles = videoGames?[title]?.roles else { return }
+        videoGameRoles = roles
         
         // set the images for the role buttons collection
         var counter = 0
@@ -235,19 +223,10 @@ class FindGamerViewController: UIViewController {
         selectedConsoleBtnPressed = sender
         
         // show games based on console image pressed
-        if sender.tag == 0 {
-            print("Xbox was pressed...")
-            consoleName = "Xbox"
-            
-        }else if sender.tag == 1 {
-            print("Playstation was pressed...")
-            consoleName = "Playstation"
-            
-        }else {
-            print("PC was pressed...")
-            consoleName = "PC"
-            
-        }
+        guard let name = buttonTagToConsoleDict[(selectedConsoleBtnPressed?.tag)!]?.name
+            else { return }
+        consoleName = name
+        displayGameBtns(consoleChoice: consoleName)
         
     }
     
