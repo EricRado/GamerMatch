@@ -18,7 +18,11 @@ class FriendsViewController: UIViewController {
     
     private let friendRef: DatabaseReference? = {
         guard let id = Auth.auth().currentUser?.uid else { return nil }
-        return Database.database().reference().child("Friends/\(id)/")
+        return Database.database().reference().child("Friends/")
+    }()
+    
+    private let friendRequestRef: DatabaseReference = {
+        return Database.database().reference().child("FriendRequests/")
     }()
     
     private let receivedFriendRequestsRef: DatabaseReference? = {
@@ -171,7 +175,31 @@ class FriendsViewController: UIViewController {
     }
     
     @objc func acceptFriendRequestBtnPressed(sender: UIButton) {
-        print("accept btn pressed")
+        let friendRequest = receivedFriendRequests[sender.tag]
+        guard let fromId = friendRequest.fromId else { return }
+        guard let toId = friendRequest.toId else { return }
+        
+        // insert new friend to user's frinds list
+        guard let toRef = friendRef?.child("\(toId)/") else { return }
+        FirebaseCalls.shared
+            .updateReferenceWithDictionary(ref: toRef, values: [fromId: "true"])
+        
+        // insert user's id to new friend's friends list
+        guard let fromRef = friendRef?.child("\(fromId)/") else { return }
+        FirebaseCalls.shared
+            .updateReferenceWithDictionary(ref: fromRef, values: [toId: "true"])
+        
+        // update friend request accepted field
+        let requestRef = friendRequestRef.child("\(friendRequest.id!)/")
+        FirebaseCalls.shared
+            .updateReferenceWithDictionary(ref: requestRef, values: ["accepted": "true"])
+        
+        // remove accepted friend request from table view
+        receivedFriendRequests.remove(at: sender.tag)
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [IndexPath(row: sender.tag, section: 0)],
+                             with: .right)
+        tableView.endUpdates()
     }
     
     fileprivate func getUserFriends(completion: @escaping (() -> Void)) {
