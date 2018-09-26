@@ -51,7 +51,17 @@ class FriendsViewController: UIViewController {
         return arr
     }()
     
-    lazy var taskIdsToIndexPathRowDict: [Int: (Int, Int)] = {
+    lazy var friendRequestUsersDict: [String: UserCacheInfo] = {
+        var arr = [String: UserCacheInfo]()
+        return arr
+    }()
+    
+    lazy var taskIdsToIndexPathCVDict: [Int: (Int, Int)] = {
+        var dict = [Int: (Int, Int)]()
+        return dict
+    }()
+    
+    lazy var taskIdsToIndexPathTVDict: [Int: (Int, Int)] = {
         var dict = [Int: (Int, Int)]()
         return dict
     }()
@@ -79,6 +89,7 @@ class FriendsViewController: UIViewController {
             tableView.register(nib, forCellReuseIdentifier: FriendRequestTableViewCell.identifier)
             tableView.delegate = self
             tableView.dataSource = self
+            tableView.insertSections([0, 1], with: .automatic)
         }
     }
     
@@ -103,14 +114,11 @@ class FriendsViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        tableView.isHidden = true
-        segmentedControl.selectedSegmentIndex = 0
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.isHidden = true
+        segmentedControl.selectedSegmentIndex = 0
        
         getUserFriends() {
             guard let onlineView = self.collectionView
@@ -126,8 +134,24 @@ class FriendsViewController: UIViewController {
             onlineView.friendsCountLabel.text = "\(self.onlineFriends.count)"
             offlineView.friendsCountLabel.text = "\(self.offlineFriends.count)"
         }
-        getPendingFriendRequests()
-        getReceivedFriendRequests()
+        
+        getReceivedFriendRequests() { userCacheInfo, error in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            guard let user = userCacheInfo else { return }
+            self.updateTableViewRow(with: user, section: 0)
+        }
+        
+        getPendingFriendRequests() { userCacheInfo, error in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            guard let user = userCacheInfo else { return }
+            self.updateTableViewRow(with: user, section: 1)
+        }
     }
     
     @objc fileprivate func segmentedControlPressed(sender: UISegmentedControl) {
@@ -182,40 +206,66 @@ class FriendsViewController: UIViewController {
         }
     }
     
-    fileprivate func getReceivedFriendRequests() {
-        print(receivedFriendRequestsRef ?? "nothing")
+    fileprivate func updateTableViewRow(with user: UserCacheInfo, section: Int) {
+        self.friendRequestUsersDict[user.id!] = user
+        let row: Int
+        if section == 0 {
+            row = self.receivedFriendRequests.count - 1
+        } else {
+            row = self.pendingFriendRequests.count - 1
+        }
+        
+        self.tableView.reloadRows(at: [IndexPath(row: row, section: section)], with: .none)
+    }
+    
+    fileprivate func getReceivedFriendRequests(completion:
+        @escaping (UserCacheInfo?, Error?) -> Void) {
         receivedFriendRequestsRef?.observe(.childAdded, with: { (snapshot) in
-            if !snapshot.exists() {
-                print("snapshot is empty for received friend requests...")
-                return
-            }
-            FirebaseCalls.shared
-                .getFriendRequest(for: snapshot.key) { (friendRequest, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                        return
-                    }
-                    self.receivedFriendRequests.append(friendRequest!)
+            let id = snapshot.key
+            FirebaseCalls.shared.getFriendRequest(for: id) { (friendRequest, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                guard let request = friendRequest else { return }
+                self.receivedFriendRequests.append(request)
+                
+                self.tableView.beginUpdates()
+                let row = self.receivedFriendRequests.count - 1
+                self.tableView.insertRows(at: [IndexPath(row: row, section: 0)],
+                                          with: .none)
+                self.tableView.endUpdates()
+                
+                guard let id = request.fromId else { return }
+                FirebaseCalls.shared.getUserCacheInfo(for: id, completion: completion)
             }
         }, withCancel: { (error) in
             print(error.localizedDescription)
         })
     }
     
-    fileprivate func getPendingFriendRequests() {
-        print(pendingFriendRequestsRef ?? "nothing")
+    fileprivate func getPendingFriendRequests(completion:
+        @escaping (UserCacheInfo?, Error?) -> Void) {
         pendingFriendRequestsRef?.observeSingleEvent(of: .childAdded, with: { (snapshot) in
-            print(snapshot)
-            if !snapshot.exists() {
-                print("snapshot is empty pending friend requests...")
-                return
-            }
-            FirebaseCalls.shared
-                .getFriendRequest(for: snapshot.key) { (friendRequest, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    }
-                    self.pendingFriendRequests.append(friendRequest!)
+            let id = snapshot.key
+            FirebaseCalls.shared.getFriendRequest(for: id) { [unowned self] (friendRequest, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                guard let request = friendRequest else { return }
+                self.pendingFriendRequests.append(request)
+                
+                self.tableView.beginUpdates()
+                let row = self.pendingFriendRequests.count - 1
+                self.tableView.insertRows(at: [IndexPath(row: row, section: 1)],
+                                          with: .none)
+                self.tableView.endUpdates()
+                
+                guard let id = request.toId else { return }
+                FirebaseCalls.shared.getUserCacheInfo(for: id, completion: completion)
             }
         }, withCancel: { (error) in
             print(error.localizedDescription)
@@ -234,7 +284,8 @@ extension FriendsViewController: UICollectionViewDataSource {
         return 2
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return onlineFriends.count
         } else {
@@ -252,7 +303,7 @@ extension FriendsViewController: UICollectionViewDataSource {
         if let url = friend.url, url != "" {
             let id = mediaManager .downloadImage(from: url)
             guard let taskId = id else { return cell }
-            taskIdsToIndexPathRowDict[taskId] = (indexPath.item, indexPath.section)
+            taskIdsToIndexPathCVDict[taskId] = (indexPath.item, indexPath.section)
         }
         cell.friendImageView.image = UIImage(named: "noAvatarImg")
         
@@ -292,31 +343,65 @@ extension FriendsViewController: UITableViewDelegate {
     }
 }
 
+
+
 extension FriendsViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return receivedFriendRequests.count
+        } else {
+            return pendingFriendRequests.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendRequestTableViewCell.identifier, for: indexPath)
             as? FriendRequestTableViewCell else { return UITableViewCell() }
+        let (section, row) = (indexPath.section, indexPath.row)
         
-        cell.friendUsernameLabel.text = "Username"
+        let friendRequest = section == 0 ? receivedFriendRequests[row] :
+            pendingFriendRequests[row]
         cell.friendImageView.image = UIImage(named: "noAvatarImg")
-        
-        cell.acceptFriendRequestBtn.tag = indexPath.row
-        cell.acceptFriendRequestBtn.addTarget(
-            self,
-            action: #selector(acceptFriendRequestBtnPressed(sender:)),
-            for: .touchUpInside)
+       
+        if section == 0 {
+            cell.friendUsernameLabel.text =
+                friendRequestUsersDict[friendRequest.fromId!]?.username
+            cell.acceptFriendRequestBtn.tag = row
+            cell.acceptFriendRequestBtn.addTarget(
+                self,
+                action: #selector(acceptFriendRequestBtnPressed(sender:)),
+                for: .touchUpInside)
+        } else {
+            cell.friendUsernameLabel.text =
+                friendRequestUsersDict[friendRequest.toId!]?.username
+            cell.acceptFriendRequestBtn.isHidden = true
+        }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Received Friend Requests"
+        } else {
+            return "Pending Friend Requests"
+        }
     }
     
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height / 6
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int)
+        -> CGFloat {
+        return 50.0
     }
 }
 
@@ -328,7 +413,8 @@ extension FriendsViewController: URLSessionDownloadDelegate {
         do {
             let data = try Data(contentsOf: location)
             DispatchQueue.main.async {
-                guard let (row, section) = self.taskIdsToIndexPathRowDict[taskId] else { return }
+                guard let (row, section) = self.taskIdsToIndexPathCVDict[taskId]
+                    else { return }
                 let indexPath = IndexPath(row: row, section: section)
                 guard let cell = self.collectionView.cellForItem(at: indexPath) as? FriendCollectionViewCell else { return }
                 let image = UIImage(data: data)
