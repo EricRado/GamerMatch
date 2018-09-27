@@ -20,6 +20,10 @@ class FirebaseCalls {
         return dbRef.child("FriendRequests/")
     }()
     
+    lazy var userRef: DatabaseReference = {
+        return dbRef.child("Users/")
+    }()
+    
     static var shared = FirebaseCalls()
     
     private init () {}
@@ -95,6 +99,15 @@ class FirebaseCalls {
             }
         }) { (error) in
             completion(nil, error)
+        }
+    }
+    
+    func getUser(with id: String, completion: @escaping (Error?) -> Void) {
+        let ref = userRef.child("\(id)/")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+        }) { (error) in
+            completion(error)
         }
     }
     

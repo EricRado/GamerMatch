@@ -12,9 +12,11 @@ import Firebase
 class FindGamerResultsViewController: UIViewController {
     
     private let cellId = "gamerCell"
+    private let vcIdentifier = "GamerProfileViewController"
     var results: [UserCacheInfo]?
     var resultIds: [String]?
     var taskIdToCellRowDict = [Int: Int]()
+    var cellRowToUserImage = [Int: UIImage]()
     
     lazy var downloadSession: URLSession = {
         let configuration = URLSessionConfiguration
@@ -93,6 +95,14 @@ extension FindGamerResultsViewController: UITableViewDataSource {
 extension FindGamerResultsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let userCacheInfo = results?[indexPath.row] else { return }
+        guard let vc = storyboard?
+            .instantiateViewController(withIdentifier: vcIdentifier)
+            as? GamerProfileViewController else { return }
+        vc.userCacheInfo = userCacheInfo
+        vc.userImage = cellRowToUserImage[indexPath.row]
+        
+        navigationController?.navigationBar.topItem?.backBarButtonItem?.title = "Back"
+        navigationController?.pushViewController(vc, animated: false)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -112,6 +122,7 @@ extension FindGamerResultsViewController: URLSessionDownloadDelegate {
                 guard let cell = self.tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? GamerMatchTableViewCell else { return }
                 let image = UIImage(data: data)
                 cell.gamerAvatarImageView.image = image
+                self.cellRowToUserImage[row] = image
             }
         } catch let error {
             print(error)

@@ -347,7 +347,6 @@
                                         <connections>
                                             <outlet property="gamerAvatarImageView" destination="Os3-ll-ncq" id="SJk-BG-EjS"/>
                                             <outlet property="gamerUsernameLabel" destination="DML-cB-oYd" id="nXZ-Ye-ufF"/>
-                                            <segue destination="fYM-oc-Ee5" kind="show" id="PRQ-Fv-rz6"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1457,7 +1456,7 @@
                                     <constraint firstItem="waT-be-PLf" firstAttribute="width" secondItem="Yoj-Mp-iIr" secondAttribute="width" id="Lpp-Wa-9tr"/>
                                     <constraint firstAttribute="trailing" secondItem="akc-ax-fSy" secondAttribute="trailing" id="NOL-TU-THb"/>
                                     <constraint firstItem="waT-be-PLf" firstAttribute="top" secondItem="akc-ax-fSy" secondAttribute="bottom" id="bmK-6g-k3h"/>
-                                    <constraint firstAttribute="height" constant="1011" id="bne-nW-683"/>
+                                    <constraint firstAttribute="height" priority="999" constant="1011" id="bne-nW-683"/>
                                     <constraint firstItem="waT-be-PLf" firstAttribute="leading" secondItem="sGA-IV-wiT" secondAttribute="leading" id="dfU-fs-dml"/>
                                     <constraint firstItem="akc-ax-fSy" firstAttribute="leading" secondItem="sGA-IV-wiT" secondAttribute="leading" id="lSz-a0-Bf5"/>
                                     <constraint firstAttribute="bottom" secondItem="waT-be-PLf" secondAttribute="bottom" id="ldC-um-LoU"/>
@@ -1470,6 +1469,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="Yoj-Mp-iIr" firstAttribute="width" secondItem="2ep-5w-E9z" secondAttribute="width" id="6w8-SD-0Qr"/>
+                            <constraint firstItem="sGA-IV-wiT" firstAttribute="height" secondItem="AK7-Gw-CIE" secondAttribute="height" id="OuH-Wq-NVK"/>
                             <constraint firstItem="sGA-IV-wiT" firstAttribute="leading" secondItem="AK7-Gw-CIE" secondAttribute="leading" id="S2d-LT-xeq"/>
                             <constraint firstItem="AK7-Gw-CIE" firstAttribute="bottom" secondItem="sGA-IV-wiT" secondAttribute="bottom" id="d86-Bm-x8n"/>
                             <constraint firstItem="sGA-IV-wiT" firstAttribute="width" secondItem="2ep-5w-E9z" secondAttribute="width" id="jg5-ag-IJg"/>
@@ -1478,8 +1478,38 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AK7-Gw-CIE"/>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <size key="freeformSize" width="375" height="1075"/>
+                    <connections>
+                        <outlet property="addGamerBtn" destination="iXn-eX-EsR" id="Aaz-UM-fP4"/>
+                        <outlet property="scrollView" destination="sGA-IV-wiT" id="Jj9-g7-Muc"/>
+                        <outlet property="userBioTextView" destination="CS0-1k-llq" id="KgY-iw-V2W"/>
+                        <outlet property="userProfileImg" destination="wza-Xn-srr" id="AP8-a2-syF"/>
+                        <outlet property="usernameLabel" destination="mtY-UZ-oTF" id="z8U-mJ-lSX"/>
+                        <outletCollection property="consoleImgs" destination="ACx-fS-Syi" collectionClass="NSMutableArray" id="yus-AJ-mGi"/>
+                        <outletCollection property="consoleImgs" destination="d7y-0p-GZa" collectionClass="NSMutableArray" id="S4V-3C-8V4"/>
+                        <outletCollection property="consoleImgs" destination="Llx-Fy-jE5" collectionClass="NSMutableArray" id="LoU-Fb-0x4"/>
+                        <outletCollection property="gameImgs" destination="yDx-vC-U8L" collectionClass="NSMutableArray" id="BvM-Jy-1aV"/>
+                        <outletCollection property="gameImgs" destination="5f2-gx-pzP" collectionClass="NSMutableArray" id="uVx-G7-Szw"/>
+                        <outletCollection property="gameImgs" destination="zfd-WT-G3L" collectionClass="NSMutableArray" id="WeF-Hg-5y3"/>
+                        <outletCollection property="gameImgs" destination="1XT-zg-Pbh" collectionClass="NSMutableArray" id="vJt-al-wjd"/>
+                        <outletCollection property="gameImgs" destination="7vj-Ra-zGo" collectionClass="NSMutableArray" id="sVl-Ug-ykC"/>
+                        <outletCollection property="gameImgs" destination="F5T-kA-VMA" collectionClass="NSMutableArray" id="X9X-yc-kjO"/>
+                        <outletCollection property="gameImgs" destination="kmB-ut-qe8" collectionClass="NSMutableArray" id="ALY-Go-yW1"/>
+                        <outletCollection property="gameImgs" destination="Em5-xa-dWD" collectionClass="NSMutableArray" id="bKq-pJ-UyV"/>
+                        <outletCollection property="roleImgs" destination="snP-bh-I4S" collectionClass="NSMutableArray" id="K0X-KD-olb"/>
+                        <outletCollection property="roleImgs" destination="4mA-1L-BBE" collectionClass="NSMutableArray" id="F5j-gl-b0F"/>
+                        <outletCollection property="roleImgs" destination="dW9-Tc-3xv" collectionClass="NSMutableArray" id="zxo-Na-Yfb"/>
+                        <outletCollection property="roleImgs" destination="mxz-bD-nf9" collectionClass="NSMutableArray" id="eAj-KI-iOZ"/>
+                        <outletCollection property="roleImgs" destination="tiZ-rQ-EKZ" collectionClass="NSMutableArray" id="wzB-lD-w9e"/>
+                        <outletCollection property="roleImgs" destination="akJ-51-tuM" collectionClass="NSMutableArray" id="YRG-Rn-LZz"/>
+                        <outletCollection property="roleImgs" destination="PJD-yO-0It" collectionClass="NSMutableArray" id="guI-yY-BxG"/>
+                        <outletCollection property="roleImgs" destination="z3u-we-rDa" collectionClass="NSMutableArray" id="X1g-SS-I1R"/>
+                        <outletCollection property="userStoredImgs" destination="d3v-OM-RCz" collectionClass="NSMutableArray" id="ejS-LI-XQj"/>
+                        <outletCollection property="userStoredImgs" destination="kjl-2V-KF5" collectionClass="NSMutableArray" id="ek8-mH-Gkz"/>
+                        <outletCollection property="userStoredImgs" destination="D8a-5V-SxB" collectionClass="NSMutableArray" id="ocF-9k-jm0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhj-9L-RTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
