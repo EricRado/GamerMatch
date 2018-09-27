@@ -257,6 +257,9 @@ class FriendsViewController: UIViewController {
                 }
                 
                 guard let request = friendRequest else { return }
+                guard let accepted = request.accepted?.toBool(), !accepted
+                    else { return }
+                
                 self.receivedFriendRequests.append(request)
                 
                 self.tableView.beginUpdates()
@@ -267,6 +270,7 @@ class FriendsViewController: UIViewController {
                 
                 guard let id = request.fromId else { return }
                 FirebaseCalls.shared.getUserCacheInfo(for: id, completion: completion)
+                
             }
         }, withCancel: { (error) in
             print(error.localizedDescription)
