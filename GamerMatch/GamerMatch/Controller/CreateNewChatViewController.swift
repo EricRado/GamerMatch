@@ -7,10 +7,16 @@
 //
 
 import UIKit
+import Firebase
 
 class CreateNewChatViewController: UIViewController {
     var downloadSessionId: String?
     let groupSetupVCId: String = "NewGroupSetupVC"
+    
+    let friendRef: DatabaseReference? = {
+        guard let uid = Auth.auth().currentUser?.uid else { return nil }
+        return Database.database().reference().child("Friends/")
+    }()
     
     lazy var selectedUsers: [String: UserCacheInfo] = {
         var users = [String: UserCacheInfo]()
@@ -61,21 +67,26 @@ class CreateNewChatViewController: UIViewController {
     }
     
     fileprivate func getUserFriends() {
-        guard let friendIds = User.onlineUser.friendsIds else { return }
-        
-        for (id, _) in friendIds {
-            FirebaseCalls.shared.getUserCacheInfo(for: id) { (userCacheInfo, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
+        friendRef?.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let snapshots = snapshot.children.allObjects as? [DataSnapshot]
+                else { return }
+            for child in snapshots {
+                let id = child.key
+                FirebaseCalls.shared.getUserCacheInfo(for: id) { userCacheInfo, error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    guard let friend = userCacheInfo else { return }
+                    self.friends?.append(friend)
+                    guard let count = self.friends?.count else { return }
+                    self.tableView.insertRows(at: [IndexPath(row: count - 1, section: 0)],
+                                              with: .none)
                 }
-                guard let friend = userCacheInfo else { return }
-                self.friends?.append(friend)
-                guard let row = self.friends?.count else { return }
-                self.tableView.insertRows(at: [IndexPath(row: row - 1, section: 0)],
-                                          with: .none)
             }
-        }
+        }, withCancel: { (error) in
+            print(error.localizedDescription)
+        })
     }
 }
 

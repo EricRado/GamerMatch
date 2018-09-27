@@ -18,7 +18,7 @@ class FriendsViewController: UIViewController {
     
     private let friendRef: DatabaseReference? = {
         guard let id = Auth.auth().currentUser?.uid else { return nil }
-        return Database.database().reference().child("Friends/")
+        return Database.database().reference().child("Friends/\(id)")
     }()
     
     private let friendRequestRef: DatabaseReference = {
@@ -203,9 +203,7 @@ class FriendsViewController: UIViewController {
     }
     
     fileprivate func getUserFriends(completion: @escaping (() -> Void)) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        friendRef?.child("\(uid)/").observeSingleEvent(of: .value, with: { (snapshot) in
+        friendRef?.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let snapshots = snapshot.children.allObjects as? [DataSnapshot]
                 else { return }
             var counter = 0
