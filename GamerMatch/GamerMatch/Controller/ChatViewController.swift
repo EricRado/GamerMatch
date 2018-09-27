@@ -34,6 +34,11 @@ class ChatViewController: UIViewController {
         return manager
     }()
     
+    let userChatsRef: DatabaseReference? = {
+        guard let uid = Auth.auth().currentUser?.uid else { return nil }
+        return Database.database().reference().child("UserChats/\(uid)/")
+    }()
+    
     let chatRef: DatabaseReference = {
         return Database.database().reference().child("Chats/")
     }()
@@ -112,10 +117,10 @@ class ChatViewController: UIViewController {
     }
     
     func getUserChatsDetails(){
-        guard let dict = User.onlineUser.chatIds else { return }
-   
-        for (key, _) in dict {
-            chatRef.child("\(key)/").observe(.value, with: { (snapshot) in
+        userChatsRef?.observe(.childAdded, with: { (snapshot) in
+            let id = snapshot.key
+            self.chatRef.child("\(id)").observe(.value, with: { (snapshot) in
+                print(snapshot)
                 guard let chat = Chat(snapshot: snapshot) else { return }
                 guard let id = chat.id else { return }
                 
@@ -132,10 +137,11 @@ class ChatViewController: UIViewController {
                         self.updateChatRow(at: id, chat: chat)
                     }
                 }
-            }) { (error) in
-                print(error.localizedDescription)
-            }
-        }
+            })
+           
+        }, withCancel: { (error) in
+            print(error.localizedDescription)
+        })
     }
     
     func getUserInfo(membersDict: [String: String]?, chatId: String?, completion: @escaping () -> Void){

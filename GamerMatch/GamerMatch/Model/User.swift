@@ -19,7 +19,6 @@ final class User {
     var avatarURL: String?
     var userImg:UIImage?
     var chatIds: [String: String]?
-    var friendsIds: [String: String]?
     
     static var onlineUser = User()
     private var dbRef = Database.database().reference()
@@ -34,10 +33,6 @@ final class User {
         guard let bio = dict["bio"] as! String? else {return nil}
         guard let isOnline = dict["isOnline"] as! String? else {return nil}
         guard let avatarURL = dict["url"] as! String? else {return nil}
-        
-        if let friendsIds = dict["friends"] as? [String: String] {
-            self.friendsIds = friendsIds
-        }
         
         if let chatIds = dict["chatIds"] as? [String: String] {
             self.chatIds = chatIds

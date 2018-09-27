@@ -110,7 +110,6 @@ extension CreateNewChatViewController: UITableViewDataSource {
             taskIdToCellRowDict[taskId] = indexPath.row
         } else {
             cell.userImageView.image = UIImage(named: "noAvatarImg")
-            
         }
         
         return cell
