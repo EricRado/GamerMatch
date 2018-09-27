@@ -203,35 +203,41 @@ class FriendsViewController: UIViewController {
     }
     
     fileprivate func getUserFriends(completion: @escaping (() -> Void)) {
-        guard let friendIds = User.onlineUser.friendsIds else { return }
-        let dictCount = friendIds.count
-        var counter = 0
+        guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        for (id, _) in friendIds {
-            FirebaseCalls.shared.getUserCacheInfo(for: id) { (userCacheInfo, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                guard let friend = userCacheInfo else { return }
-                guard let status = friend.isOnline?.toBool() else { return }
-                
-                if status {
-                    self.onlineFriends.append(friend)
-                    let row = self.onlineFriends.count - 1
-                    self.collectionView
-                        .insertItems(at: [IndexPath(item: row, section: self.onlineSectionId)])
-                } else {
-                    self.offlineFriends.append(friend)
-                    let row = self.offlineFriends.count - 1
-                    self.collectionView
-                        .insertItems(at: [IndexPath(item: row, section: self.offlineSectionId)])
-                }
-                if counter == dictCount {
-                    completion()
-                }
+        friendRef?.child("\(uid)/").observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let snapshots = snapshot.children.allObjects as? [DataSnapshot]
+                else { return }
+            var counter = 0
+            for child in snapshots {
+                let id = child.key
+
+                FirebaseCalls.shared.getUserCacheInfo(for: id, completion: { (userCacheInfo, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    guard let friend = userCacheInfo else { return }
+                    guard let status = friend.isOnline?.toBool() else { return }
+                    
+                    if status {
+                        self.onlineFriends.append(friend)
+                        let row = self.onlineFriends.count - 1
+                        self.collectionView
+                            .insertItems(at: [IndexPath(item: row, section: self.onlineSectionId)])
+                    } else {
+                        self.offlineFriends.append(friend)
+                        let row = self.offlineFriends.count - 1
+                        self.collectionView
+                            .insertItems(at: [IndexPath(item: row, section: self.offlineSectionId)])
+                    }
+                    if counter == snapshots.count { completion() }
+                })
+                counter += 1
             }
-            counter += 1
-        }
+        }, withCancel: { (error) in
+            print(error.localizedDescription)
+        })
     }
     
     fileprivate func updateTableViewRow(with user: UserCacheInfo, section: Int) {

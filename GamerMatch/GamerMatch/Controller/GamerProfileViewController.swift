@@ -51,12 +51,18 @@ class GamerProfileViewController: UIViewController {
         self.view.layoutIfNeeded()
         view.backgroundColor = UIColor.white
         tabBarController?.tabBar.isHidden = true
-        
         navigationItem.title = userCacheInfo?.username
+        
+        getUserDetails()
     }
     
     fileprivate func getUserDetails() {
-        
+        guard let id = userCacheInfo?.id else { return }
+        FirebaseCalls.shared.getUser(with: id) { (error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     @objc fileprivate func addGamerBtnPressed(sender: UIButton) {

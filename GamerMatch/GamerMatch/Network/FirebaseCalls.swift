@@ -104,6 +104,7 @@ class FirebaseCalls {
     
     func getUser(with id: String, completion: @escaping (Error?) -> Void) {
         let ref = userRef.child("\(id)/")
+        print(ref)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot)
         }) { (error) in
