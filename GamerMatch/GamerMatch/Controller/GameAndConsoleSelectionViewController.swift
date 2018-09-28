@@ -237,12 +237,49 @@ class GameAndConsoleSelectionViewController: UIViewController {
         return refs
     }
     
+    fileprivate func constructRoleString(roles: [VideoGameRole]) -> String {
+        var roleStr = ""
+        
+        for role in roles {
+            guard let roleName = role.roleName else { continue }
+            if roleName == roles.first?.roleName {
+                roleStr += roleName
+            } else {
+                roleStr += "," + roleName
+            }
+        }
+        
+        return roleStr
+    }
+    
     fileprivate func saveConsoleChoicesToDB(_ consoles: [ConsoleType]) {
         for console in consoles {
             let choice = console.rawValue
             guard let ref = userRef?.child("Consoles/") else { return }
             FirebaseCalls.shared
                 .updateReferenceWithDictionary(ref: ref, values: [choice: "true"])
+        }
+    }
+    
+    fileprivate func saveGameAndRoleChoicesToDB() {
+        guard let userGameRef = userRef?.child("Games/") else { return }
+        
+        for game in selectedVideoGames {
+            guard let name = game.value.name else { return }
+            if let roles = game.value.selectedRoles, !roles.isEmpty {
+                let str = constructRoleString(roles: roles)
+                print("this is the role string that is going to be saved: \(str)")
+                FirebaseCalls.shared
+                    .updateReferenceWithDictionary(ref: userGameRef, values: [name: str])
+            } else {
+                FirebaseCalls.shared
+                    .updateReferenceWithDictionary(ref: userGameRef, values: [name: "noRoles"])
+            }
+            
+            
+            // parse the selected video game to create database reference strings
+            let refs = parseVideoGameSelectionToDatabaseReference(videoGameName: name, consoleTypes: game.value.selectedConsoles!, roles: game.value.selectedRoles)
+            selectedVideoGameStringRefs.append(contentsOf: refs)
         }
     }
     
@@ -260,20 +297,10 @@ class GameAndConsoleSelectionViewController: UIViewController {
             return
         }
         
-        // save console choices to database
         saveConsoleChoicesToDB(selectedConsoles)
+        saveGameAndRoleChoicesToDB()
         
-        guard let userGameRef = userRef?.child("Games/") else { return }
-        // parse the selected video games to database references
-        for game in selectedVideoGames {
-            guard let name = game.value.name else { return }
-            FirebaseCalls.shared
-                  .updateReferenceWithDictionary(ref: userGameRef, values: [name: "true"])
-            let refs = parseVideoGameSelectionToDatabaseReference(videoGameName: name, consoleTypes: game.value.selectedConsoles!, roles: game.value.selectedRoles)
-            selectedVideoGameStringRefs.append(contentsOf: refs)
-        }
-        
-        // save data to database
+        // save data to specific console/game/role node in database
         print("all the refs")
         for ref in selectedVideoGameStringRefs {
             let gameRef = databaseRef.child(ref)

@@ -23,7 +23,7 @@ class Create1On1ChatViewController: CreateNewChatViewController {
 extension Create1On1ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let friend = friends?[indexPath.row] else { return }
-        selectedUsers[friend.id!] = friend
+        selectedUsers[friend.uid!] = friend
         print(selectedUsers)
     }
     

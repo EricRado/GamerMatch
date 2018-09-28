@@ -18,7 +18,6 @@ final class User {
     var isOnline: Bool?
     var avatarURL: String?
     var userImg:UIImage?
-    var chatIds: [String: String]?
     
     static var onlineUser = User()
     private var dbRef = Database.database().reference()
@@ -27,16 +26,13 @@ final class User {
     
     private init? (snapshot: DataSnapshot){
         guard let dict = snapshot.value as? [String: Any] else {return}
+        
         guard let uid = dict["uid"] as! String? else {return nil}
         guard let email = dict["email"] as! String? else {return nil}
         guard let username = dict["username"] as! String? else {return nil}
         guard let bio = dict["bio"] as! String? else {return nil}
         guard let isOnline = dict["isOnline"] as! String? else {return nil}
         guard let avatarURL = dict["url"] as! String? else {return nil}
-        
-        if let chatIds = dict["chatIds"] as? [String: String] {
-            self.chatIds = chatIds
-        }
         
         self.uid = uid
         self.email = email

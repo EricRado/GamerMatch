@@ -239,7 +239,7 @@ class FriendsViewController: UIViewController {
     }
     
     fileprivate func updateTableViewRow(with user: UserCacheInfo, section: Int) {
-        self.friendRequestUsersDict[user.id!] = user
+        self.friendRequestUsersDict[user.uid!] = user
         let row: Int
         if section == 0 {
             row = self.receivedFriendRequests.count - 1

@@ -102,7 +102,7 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
         
         // transform the selected members to dictionary which contains {memberId : true}
         let dict = selectedUsers?.reduce(into: [String: String]()) {
-            $0[$1.id!] = "true"
+            $0[$1.uid!] = "true"
         }
         guard var members = dict else { return }
         members[userId] = "true"
@@ -231,7 +231,7 @@ extension NewGroupChatSetupViewController: UICollectionViewDataSource {
             .dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
             as? FriendCollectionViewCell else { return UICollectionViewCell() }
         guard let friend = selectedUsers?[indexPath.row] else { return cell }
-        let image = selectedUsersIdToUIImage?[friend.id!] ??
+        let image = selectedUsersIdToUIImage?[friend.uid!] ??
             UIImage(named: "noAvatarImg")
         
         cell.friendUsernameLabel.text = friend.username

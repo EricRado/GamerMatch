@@ -29,6 +29,7 @@
 		071EE7AA21559D26006A6401 /* VideoGameSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7A921559D26006A6401 /* VideoGameSelected.swift */; };
 		071EE7B22155C2A9006A6401 /* VideoGameRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7B12155C2A9006A6401 /* VideoGameRepo.swift */; };
 		071EE7B4215709A6006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071EE7B3215709A6006A6401 /* GameAndConsoleSelectionViewController.swift */; };
+		071F2824215D93BE00F1AF61 /* UserJSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F2823215D93BE00F1AF61 /* UserJSONResponse.swift */; };
 		0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329721477B8200D491CD /* comic_sans_ms.ttf */; };
 		0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */; };
 		07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */; };
@@ -81,6 +82,7 @@
 		071EE7A921559D26006A6401 /* VideoGameSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameSelected.swift; sourceTree = "<group>"; };
 		071EE7B12155C2A9006A6401 /* VideoGameRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameRepo.swift; sourceTree = "<group>"; };
 		071EE7B3215709A6006A6401 /* GameAndConsoleSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAndConsoleSelectionViewController.swift; sourceTree = "<group>"; };
+		071F2823215D93BE00F1AF61 /* UserJSONResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJSONResponse.swift; sourceTree = "<group>"; };
 		0721329721477B8200D491CD /* comic_sans_ms.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms.ttf; sourceTree = "<group>"; };
 		0721329921477C9200D491CD /* comic_sans_ms_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_sans_ms_bold.ttf; sourceTree = "<group>"; };
 		07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCalls.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				07E586F42052FDCA00023383 /* Message.swift */,
 				07E586FE20578FA300023383 /* Tournament.swift */,
 				07E586C7205050A400023383 /* User.swift */,
+				071F2823215D93BE00F1AF61 /* UserJSONResponse.swift */,
 				071A7A122148717500099BCA /* UserCacheInfo.swift */,
 				070927F920608CDF005B0EAF /* VideoGame.swift */,
 				070927FB20619FC5005B0EAF /* VideoGameRole.swift */,
@@ -433,6 +436,7 @@
 				071ED11F215AA7F6007B805B /* FriendRequest.swift in Sources */,
 				071E901321500145005ED404 /* CreateNewChatViewController.swift in Sources */,
 				07E586C3204F911300023383 /* RegistrationViewController.swift in Sources */,
+				071F2824215D93BE00F1AF61 /* UserJSONResponse.swift in Sources */,
 				07E586F32052FA5700023383 /* Chat.swift in Sources */,
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */,

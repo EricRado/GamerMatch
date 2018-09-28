@@ -9,7 +9,7 @@
 import Foundation
 
 struct UserCacheInfo: Decodable {
-    let id: String?
+    let uid: String?
     let username: String?
     let url: String?
     let isOnline: String?

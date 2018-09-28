@@ -144,7 +144,7 @@ class RegistrationViewController: UIViewController {
     fileprivate func addUserToDatabase(uid: String, email: String, username: String){
         let userDict = ["uid": uid, "email": email, "username": username,
                         "isOnline": "true", "url": "", "bio": ""]
-        let userInfoDict = ["uid": uid, "email": email, "url": "",
+        let userInfoDict = ["uid": uid,"url": "",
                             "username": username, "isOnline": "true"]
         
         let ref = userRef.child("\(uid)")

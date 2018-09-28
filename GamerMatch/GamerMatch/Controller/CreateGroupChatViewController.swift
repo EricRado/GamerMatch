@@ -44,9 +44,9 @@ extension CreateGroupChatViewController: UITableViewDelegate {
             UserTableViewCell else { return }
         let friend = arr[indexPath.row]
         
-        selectedUsers[friend.id!] = friend
+        selectedUsers[friend.uid!] = friend
         if let url = friend.url, !url.isEmpty {
-            selectedUsersIdToUIImage[friend.id!] = cell.userImageView.image
+            selectedUsersIdToUIImage[friend.uid!] = cell.userImageView.image
         }
         
         cell.accessoryType = .checkmark
@@ -63,9 +63,9 @@ extension CreateGroupChatViewController: UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         let friend = arr[indexPath.row]
         
-        selectedUsers.removeValue(forKey: friend.id!)
+        selectedUsers.removeValue(forKey: friend.uid!)
         if let url = friend.url, !url.isEmpty {
-           selectedUsersIdToUIImage.removeValue(forKey: friend.id!)
+           selectedUsersIdToUIImage.removeValue(forKey: friend.uid!)
         }
         
         cell.accessoryType = .none
