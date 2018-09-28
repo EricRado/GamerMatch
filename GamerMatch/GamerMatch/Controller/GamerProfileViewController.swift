@@ -78,12 +78,12 @@ class GamerProfileViewController: UIViewController {
     
     @IBOutlet var consoleImgs: [UIImageView]! {
         didSet {
-            consoleImgs.map { $0.isHidden = true }
+            _ = consoleImgs.map { $0.isHidden = true }
         }
     }
     @IBOutlet var gameImgs: [UIImageView]! {
         didSet {
-            gameImgs.map { $0.isHidden = true }
+            _ = gameImgs.map { $0.isHidden = true }
         }
     }
     @IBOutlet var roleImgs: [UIImageView]!
@@ -150,7 +150,11 @@ class GamerProfileViewController: UIViewController {
     }
     
     fileprivate func createFriendRequest() {
+        guard let userId = User.onlineUser.uid else { return }
+        guard let friendId = userCacheInfo?.uid else { return }
         
+        FirebaseCalls.shared
+            .createFriendRequest(toId: friendId, fromId: userId, message: "Hellooooo")
     }
     
     @objc fileprivate func addGamerBtnPressed(sender: UIButton) {

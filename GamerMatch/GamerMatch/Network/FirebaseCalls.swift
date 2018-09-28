@@ -24,6 +24,14 @@ class FirebaseCalls {
         return dbRef.child("Users/")
     }()
     
+    lazy var pendingFriendRequestRef: DatabaseReference = {
+        return dbRef.child("PendingFriendRequests/")
+    }()
+    
+    lazy var receivedFriendRequestsRef: DatabaseReference = {
+       return dbRef.child("ReceivedFriendRequests/")
+    }()
+    
     
     static var shared = FirebaseCalls()
     
@@ -81,6 +89,22 @@ class FirebaseCalls {
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func createFriendRequest(toId: String, fromId: String, message: String) {
+        let id = friendRequestRef.childByAutoId().key
+        let ref = friendRequestRef.child("\(id)/")
+        let timestamp = "\(Date().toMillis() ?? 0)"
+    
+        let friendRequest = FriendRequest(id: id, fromId: fromId, toId: toId,
+                                          message: message, timestamp: timestamp)
+        print(friendRequest.dictionary)
+        // save the friend request object
+        ref.setValue(friendRequest.dictionary)
+        
+        // add friend request to User's pending requests
+        
+        // add friend request to selected gamer's received requests
     }
     
     func getFriendRequest(for id: String,

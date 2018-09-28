@@ -102,4 +102,12 @@ extension Array where Element == UIButton  {
     }
 }
 
+extension Encodable {
+    var dictionary: [String: Any] {
+        return (try? JSONSerialization
+            .jsonObject(with: JSONEncoder().encode(self), options: []))
+            as? [String: Any] ?? [:]
+    }
+}
+
 
