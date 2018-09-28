@@ -13,6 +13,7 @@ class GamerProfileViewController: UIViewController {
     var userCacheInfo: UserCacheInfo?
     var userImage: UIImage?
     var user: UserJSONResponse?
+    var roleImgCounter = 0
     
     lazy var consolesDict: [String: Console]? = {
         guard let consoles = VideoGameRepo.shared.getConsoles()
@@ -33,8 +34,17 @@ class GamerProfileViewController: UIViewController {
         
         for game in games {
             dict[game.title!] = game
+            guard let roles = game.roles else { continue }
+            for role in roles {
+                rolesDict?[role.roleName!] = role
+            }
         }
-        
+
+        return dict
+    }()
+    
+    lazy var rolesDict: [String: VideoGameRole]? = {
+        var dict = [String: VideoGameRole]()
         return dict
     }()
     
@@ -66,8 +76,16 @@ class GamerProfileViewController: UIViewController {
         }
     }
     
-    @IBOutlet var consoleImgs: [UIImageView]!
-    @IBOutlet var gameImgs: [UIImageView]!
+    @IBOutlet var consoleImgs: [UIImageView]! {
+        didSet {
+            consoleImgs.map { $0.isHidden = true }
+        }
+    }
+    @IBOutlet var gameImgs: [UIImageView]! {
+        didSet {
+            gameImgs.map { $0.isHidden = true }
+        }
+    }
     @IBOutlet var roleImgs: [UIImageView]!
     @IBOutlet var userStoredImgs: [UIImageView]!
     
@@ -98,9 +116,9 @@ class GamerProfileViewController: UIViewController {
     fileprivate func setupConsoleImages() {
         guard let consolesOwn = user?.consoles else { return }
         for (counter, consoleName) in consolesOwn.enumerated() {
-            print(consoleName.key)
             if let console = consolesDict?[consoleName.key] {
                 consoleImgs[counter].image = console.notSelectedImage
+                consoleImgs[counter].isHidden = false
             }
         }
     }
@@ -111,16 +129,48 @@ class GamerProfileViewController: UIViewController {
             print(gameName)
             if let game = gamesDict?[gameName.key] {
                 gameImgs[counter].image = game.notSelectedImage
+                gameImgs[counter].isHidden = false
+                if gameName.value != "noRole" {
+                    setupRoleImages(game: game, roleStr: gameName.value)
+                }
             }
         }
     }
     
-    fileprivate func setupRoleImages() {
+    fileprivate func setupRoleImages(game: VideoGame, roleStr: String) {
+        let splitRoleStr = roleStr.split(separator: ",")
+        print("This is the splitRoleStr : \(splitRoleStr)")
+        let roleStrArr = splitRoleStr.map { String($0) }
+        print(roleStrArr)
+        for roleStr in roleStrArr {
+            guard let role = rolesDict?[roleStr] else { continue }
+            roleImgs[roleImgCounter].image = role.roleImg
+            roleImgCounter += 1
+        }
+    }
+    
+    fileprivate func createFriendRequest() {
         
     }
     
     @objc fileprivate func addGamerBtnPressed(sender: UIButton) {
-        print("gamer btn pressed")
+        guard let userId = User.onlineUser.uid else { return }
+        guard let friendId = userCacheInfo?.uid else { return }
+        let path = "Friends/\(userId)/\(friendId)"
+   
+        FirebaseCalls.shared.checkIfReferencePathExists(path: path) { check, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            if check! {
+                print("Friend does exist")
+                self.addGamerBtn.imageView?.alpha = 0.5
+            } else {
+                print("Friend does not exist")
+                self.createFriendRequest()
+            }
+            self.addGamerBtn.isEnabled = false
+        }
     }
 
 }

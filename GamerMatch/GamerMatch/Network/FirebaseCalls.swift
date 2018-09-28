@@ -24,6 +24,7 @@ class FirebaseCalls {
         return dbRef.child("Users/")
     }()
     
+    
     static var shared = FirebaseCalls()
     
     private init () {}
@@ -114,6 +115,21 @@ class FirebaseCalls {
             } catch let error {
                 completion(nil, error)
             }
+        }) { (error) in
+            completion(nil, error)
+        }
+    }
+    
+    func checkIfReferencePathExists(path: String,
+                                completion: @escaping (Bool?, Error?) -> Void) {
+        let ref = dbRef.child(path)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+            if !snapshot.exists() {
+                completion(false, nil)
+                return
+            }
+            completion(true, nil)
         }) { (error) in
             completion(nil, error)
         }
