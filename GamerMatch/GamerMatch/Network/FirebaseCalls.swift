@@ -102,13 +102,20 @@ class FirebaseCalls {
         }
     }
     
-    func getUser(with id: String, completion: @escaping (Error?) -> Void) {
+    func getUser(with id: String, completion: @escaping (UserJSONResponse?, Error?) -> Void) {
         let ref = userRef.child("\(id)/")
-        print(ref)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot)
+            guard let dict = snapshot.value as? [String: Any] else { return }
+            do {
+                let jsonDict = try JSONSerialization
+                    .data(withJSONObject: dict, options: [])
+                let user = try JSONDecoder().decode(UserJSONResponse.self, from: jsonDict)
+                completion(user, nil)
+            } catch let error {
+                completion(nil, error)
+            }
         }) { (error) in
-            completion(error)
+            completion(nil, error)
         }
     }
     
