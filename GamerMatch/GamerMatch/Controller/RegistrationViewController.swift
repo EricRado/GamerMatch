@@ -15,6 +15,7 @@ class RegistrationViewController: UIViewController {
     
     fileprivate let nextVCId = "ConsoleAndGameSelectionVC"
     fileprivate var userImg: UIImage?
+    var isInfoViewShowing = false
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -22,6 +23,8 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var reconfirmPasswordTextField: UITextField!
     @IBOutlet weak var addPhotoBtn: UIButton! {
         didSet {
+            addPhotoBtn.layer.cornerRadius = addPhotoBtn.frame.height / 2.0
+            addPhotoBtn.clipsToBounds = true
             addPhotoBtn.addTarget(
                 self,
                 action: #selector(addPhotoBtnPressed(_:)),
@@ -44,6 +47,10 @@ class RegistrationViewController: UIViewController {
     lazy var userDict: [String: String] = {
         var dict = [String: String]()
         return dict
+    }()
+    
+    lazy var imageManager: ImageManager = {
+        return ImageManager()
     }()
     
     override func viewDidLoad() {
@@ -72,51 +79,94 @@ class RegistrationViewController: UIViewController {
         return true
     }
     
-    fileprivate func validateForEmptyFields(updateUI: @escaping (UITextField?) -> Void) {
+    fileprivate func validateForEmptyFields() -> Bool {
+        let completion: (Bool) -> Void = { isFinished in
+            if isFinished {
+                self.isInfoViewShowing = false
+            }
+        }
+        
         if (usernameTextField.text?.isEmpty)! {
-            updateUI(usernameTextField)
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Username field is empty", type: .Error,
+                                completion: completion)
+            }
+            return false
         }
         
         if (emailTextField.text?.isEmpty)! {
-            updateUI(emailTextField)
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Email field is empty", type: .Error,
+                                completion: completion)
+            }
+            return false
         }
         
         if (passwordTextField.text?.isEmpty)! {
-            updateUI(passwordTextField)
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Password field is empty", type: .Error,
+                                completion: completion)
+            }
+            return false
         }
         
         if (reconfirmPasswordTextField.text?.isEmpty)! {
-            updateUI(reconfirmPasswordTextField)
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Confirm Password field is empty", type: .Error,
+                                completion: completion)
+            }
+            return false
         }
         
-        updateUI(nil)
+    
+        return true
     }
     
     fileprivate func validateForm() {
-        validateForEmptyFields { (textField) in
-            if let textField = textField {
-                textField.layer.borderColor = UIColor.red.cgColor
+        guard validateForEmptyFields() else { return }
+        
+        let completion: (Bool) -> Void = { isFinished in
+            if isFinished {
+                self.isInfoViewShowing = false
             }
         }
         
         if !(6 ... 16 ~= (usernameTextField.text?.count)!)  {
-            print("username should be from 6 - 16 characters")
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Username should be from 6 - 16 characters", type: .Error, completion: completion)
+            }
             return
         }
         
         if !(8 ... 18 ~= (passwordTextField.text?.count)!) {
-            print("password should be from 8 - 18 characters")
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "password should be from 8 - 18 characters", type: .Error, completion: completion)
+            }
             return
         }
         
         if passwordTextField.text != reconfirmPasswordTextField.text {
-            print("passwords do not match")
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Passwords do not match", type: .Error,
+                                completion: completion)
+            }
             return
         }
         
         let predicate = EmailValidationPredicate()
         if !predicate.evaluate(with: emailTextField.text) {
-            print("email is not valid")
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Email is not valid", type: .Error,
+                                completion: completion)
+            }
             return
         }
         
@@ -124,16 +174,48 @@ class RegistrationViewController: UIViewController {
     }
     
     fileprivate func registerUser() {
+        let completion: (Bool) -> Void = { isFinished in
+            if isFinished {
+                self.isInfoViewShowing = false
+            }
+        }
+        
         SVProgressHUD.show(withStatus: "Registering")
         Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [unowned self] (user, error) in
-            if error != nil {
-                print("There was an error: \(error!)")
+            if let error = error {
+                if !self.isInfoViewShowing {
+                    self.isInfoViewShowing = true
+                    self.displayInfoView(message: error.localizedDescription, type: .Error,
+                                    completion: completion)
+                }
                 return
             }
             print("User registered successfully")
+            guard let username = self.usernameTextField.text else { return }
             self.addUserToDatabase(uid: (user?.uid)!,
                                    email: self.emailTextField.text!,
-                                   username: self.usernameTextField.text!)
+                                   username: username)
+            
+            // upload image if user selected one
+            if let image = self.userImg {
+                self.imageManager.uploadImage(image: image, at: "userProfileImages/\(username).jpg", completion: { (urlString, error) in
+                    if let error = error {
+                        self.displayInfoView(message: error.localizedDescription, type: .Error, completion: { (finished) in
+                            if finished {
+                                self.isInfoViewShowing = false
+                            }
+                        })
+                    }
+                    guard let url = urlString else { return }
+                    FirebaseCalls.shared.updateReferenceWithDictionary(
+                        ref: self.userRef.child("\((user?.uid)!)"),
+                        values: ["url": url])
+                    FirebaseCalls.shared.updateReferenceWithDictionary(
+                        ref: self.userCacheRef.child("\((user?.uid)!)"),
+                        values: ["url": url])
+                })
+            }
+            
             guard let vc = self.storyboard?
                 .instantiateViewController(withIdentifier: self.nextVCId) else { return }
             self.present(vc, animated: true, completion: nil)
@@ -166,7 +248,7 @@ class RegistrationViewController: UIViewController {
         print("Add photo btn pressed...")
         CamaraHandler.shared.showActionSheet(vc: self)
         CamaraHandler.shared.imagePickedBlock = { [unowned self] image in
-            self.addPhotoBtn.setBackgroundImage(image, for: .normal)
+            self.addPhotoBtn.setImage(image, for: .normal)
             self.userImg = image
         }
     }

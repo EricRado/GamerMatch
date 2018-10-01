@@ -82,8 +82,6 @@ class FindGamerViewController: UIViewController {
         }
         middleText.isHidden = true
         bottomText.isHidden = true
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

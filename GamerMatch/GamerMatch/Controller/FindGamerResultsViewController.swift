@@ -32,16 +32,22 @@ class FindGamerResultsViewController: UIViewController {
         return manager
     }()
     
-    @IBOutlet weak var tableView: UITableView!
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = self
+            tableView.dataSource = self
+        }
+    }
   
     override func viewDidLoad() {
         super.viewDidLoad()
         
         results = [UserCacheInfo]()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
         getUsersResults(from: resultIds)
     }
     
@@ -95,6 +101,7 @@ extension FindGamerResultsViewController: UITableViewDataSource {
 extension FindGamerResultsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let userCacheInfo = results?[indexPath.row] else { return }
+        
         guard let vc = storyboard?
             .instantiateViewController(withIdentifier: vcIdentifier)
             as? GamerProfileViewController else { return }

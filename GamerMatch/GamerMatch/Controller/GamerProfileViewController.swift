@@ -153,9 +153,13 @@ class GamerProfileViewController: UIViewController {
         guard let userId = User.onlineUser.uid else { return }
         guard let friendId = userCacheInfo?.uid else { return }
         
+        print("creating friend request")
+        
         FirebaseCalls.shared
             .createFriendRequest(toId: friendId, fromId: userId, message: "Hellooooo") {
                 print("friend request saved")
+                self.displayInfoView(message: "Friend Request sent", type: .Success,
+                                     completion: nil)
         }
     }
     

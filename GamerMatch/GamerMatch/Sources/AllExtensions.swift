@@ -110,7 +110,66 @@ extension Encodable {
     }
 }
 
+enum MessageType {
+    case Error
+    case Success
+}
 
+extension UIViewController {
+    func displayInfoView(message: String, type: MessageType,
+                         completion: ((Bool) -> Void)?) {
+        let infoViewHeight = view.bounds.height / 14.2
+        let infoViewY = 0 - infoViewHeight
+        var bgColor: UIColor
+        
+        // set view background color
+        switch type {
+        case .Error:
+            bgColor = UIColor(red: 1, green: 50/255, blue: 75/255, alpha: 1)
+        case .Success:
+            bgColor = UIColor(red: 30/255, green: 244/255, blue: 125/255, alpha: 1)
+        }
+        
+        let infoView = UIView(frame: CGRect(x: 0, y: infoViewY, width: view.bounds.width, height: infoViewHeight))
+        infoView.backgroundColor = bgColor
+        view.addSubview(infoView)
+        
+        // info label to show text
+        let infoLabelWidth = infoView.bounds.width
+        let infoLabelHeight = infoView.bounds.height + UIApplication.shared.statusBarFrame.height / 2
+        
+        let infoLabel = UILabel()
+        infoLabel.frame.size.width = infoLabelWidth
+        infoLabel.frame.size.height = infoLabelHeight
+        infoLabel.numberOfLines = 0
+        
+        infoLabel.text = message
+        infoLabel.font = UIFont(name: "HelveticaNeue", size: 12)
+        infoLabel.textColor = .white
+        infoLabel.textAlignment = .center
+        
+        infoView.addSubview(infoLabel)
+        
+        // animate info view
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            infoView.frame.origin.y = 0
+        }) { (finished) in
+            if finished {
+                UIView.animate(withDuration: 0.1, delay: 3, options: .curveLinear
+                    , animations: {
+                        infoView.frame.origin.y = infoViewY
+                }, completion: { (finished) in
+                    if finished {
+                        infoView.removeFromSuperview()
+                        infoLabel.removeFromSuperview()
+                        completion?(finished)
+                    }
+                })
+            }
+        }
+    }
+}
 
 
 

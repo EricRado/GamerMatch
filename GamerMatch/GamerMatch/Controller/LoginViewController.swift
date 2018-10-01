@@ -9,11 +9,12 @@
 import UIKit
 import Firebase
 import SVProgressHUD
+import ValidationComponents
 
 
 class LoginViewController: UIViewController {
     
-    
+    var isInfoViewShowing = false
     
     @IBOutlet weak var emailTextField: UITextField! {
         didSet {
@@ -39,8 +40,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         self.view.alpha = 0.75
 
         // Do any additional setup after loading the view.
@@ -60,14 +59,71 @@ class LoginViewController: UIViewController {
         passwordTextField.setBottomLine(borderColor: lineColor)
        
     }
+    
+    fileprivate func validateFields() -> Bool {
+        let completion: (Bool) -> Void = { isFinished in
+            if isFinished {
+                self.isInfoViewShowing = false
+            }
+        }
+        
+        if (emailTextField.text?.isEmpty)! {
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Email field is empty", type: .Error,
+                                completion: completion)
+            }
+            return false
+        }
+        if (passwordTextField.text?.isEmpty)! {
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Password field is empty", type: .Error,
+                                completion: completion)
+            }
+            return false
+        }
+        
+        let predicate = EmailValidationPredicate()
+        if !predicate.evaluate(with: emailTextField.text) {
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Email is not valid", type: .Error,
+                                completion: completion)
+            }
+            return false
+        }
+        
+        /*if !(8 ... 18 ~= (passwordTextField.text?.count)!) {
+            if !isInfoViewShowing {
+                isInfoViewShowing = true
+                displayInfoView(message: "Password should be from 8 - 18 characters",
+                                type: .Error, completion: completion)
+            }
+            return false
+        }*/
+        
+        return true
+    }
 
     
     @IBAction func signInPressed(_ sender: UIButton) {
-        SVProgressHUD.show()
+        let completion: (Bool) -> Void = { isFinished in
+            if isFinished {
+                self.isInfoViewShowing = false
+            }
+        }
+        guard validateFields() else { return }
+        SVProgressHUD.show(withStatus: "Signing In")
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
-            if error != nil {
-                print("There was an error : \((error?.localizedDescription)!)")
+            if let error = error {
                 SVProgressHUD.dismiss()
+                if !self.isInfoViewShowing {
+                    self.isInfoViewShowing = true
+                    self.displayInfoView(message: error.localizedDescription, type: .Error,
+                                         completion: completion)
+                }
+                
             } else {
                 print("Login successful")
                 // setup all of the signed in user info to User singleton object
