@@ -154,7 +154,9 @@ class GamerProfileViewController: UIViewController {
         guard let friendId = userCacheInfo?.uid else { return }
         
         FirebaseCalls.shared
-            .createFriendRequest(toId: friendId, fromId: userId, message: "Hellooooo")
+            .createFriendRequest(toId: friendId, fromId: userId, message: "Hellooooo") {
+                print("friend request saved")
+        }
     }
     
     @objc fileprivate func addGamerBtnPressed(sender: UIButton) {

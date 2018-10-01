@@ -16,9 +16,8 @@ class FriendsViewController: UIViewController {
     private let onlineSectionId = 0
     private let offlineSectionId = 1
     
-    private let friendRef: DatabaseReference? = {
-        guard let id = Auth.auth().currentUser?.uid else { return nil }
-        return Database.database().reference().child("Friends/\(id)")
+    private let friendRef: DatabaseReference = {
+        return Database.database().reference().child("Friends/")
     }()
     
     private let friendRequestRef: DatabaseReference = {
@@ -180,12 +179,12 @@ class FriendsViewController: UIViewController {
         guard let toId = friendRequest.toId else { return }
         
         // insert new friend to user's frinds list
-        guard let toRef = friendRef?.child("\(toId)/") else { return }
+        let toRef = friendRef.child("\(toId)/")
         FirebaseCalls.shared
             .updateReferenceWithDictionary(ref: toRef, values: [fromId: "true"])
         
         // insert user's id to new friend's friends list
-        guard let fromRef = friendRef?.child("\(fromId)/") else { return }
+        let fromRef = friendRef.child("\(fromId)/")
         FirebaseCalls.shared
             .updateReferenceWithDictionary(ref: fromRef, values: [toId: "true"])
         
@@ -203,36 +202,37 @@ class FriendsViewController: UIViewController {
     }
     
     fileprivate func getUserFriends(completion: @escaping (() -> Void)) {
-        friendRef?.observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let snapshots = snapshot.children.allObjects as? [DataSnapshot]
-                else { return }
-            var counter = 0
-            for child in snapshots {
-                let id = child.key
+        guard let uid = User.onlineUser.uid else { return }
+        var counter = 0
+        let ref = friendRef.child("\(uid)/")
+        
+        // FIX - HOW TO GET SNAPSHOT COUNT TO RUN COMPLETION
+        ref.observe(.childAdded, with: { (snapshot) in
+            let id = snapshot.key
+            FirebaseCalls.shared.getUserCacheInfo(for: id, completion: { (userCacheInfo, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                guard let friend = userCacheInfo else { return }
+                guard let status = friend.isOnline?.toBool() else { return }
+                
 
-                FirebaseCalls.shared.getUserCacheInfo(for: id, completion: { (userCacheInfo, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                        return
-                    }
-                    guard let friend = userCacheInfo else { return }
-                    guard let status = friend.isOnline?.toBool() else { return }
-                    
-                    if status {
-                        self.onlineFriends.append(friend)
-                        let row = self.onlineFriends.count - 1
-                        self.collectionView
-                            .insertItems(at: [IndexPath(item: row, section: self.onlineSectionId)])
-                    } else {
-                        self.offlineFriends.append(friend)
-                        let row = self.offlineFriends.count - 1
-                        self.collectionView
-                            .insertItems(at: [IndexPath(item: row, section: self.offlineSectionId)])
-                    }
-                    if counter == snapshots.count { completion() }
-                })
+                if status {
+                    self.onlineFriends.append(friend)
+                    let row = self.onlineFriends.count - 1
+                    self.collectionView
+                        .insertItems(at: [IndexPath(item: row, section: self.onlineSectionId)])
+                } else {
+                    self.offlineFriends.append(friend)
+                    let row = self.offlineFriends.count - 1
+                    self.collectionView
+                        .insertItems(at: [IndexPath(item: row, section: self.offlineSectionId)])
+                }
                 counter += 1
-            }
+                if counter == snapshot.childrenCount { completion() }
+            })
+            
         }, withCancel: { (error) in
             print(error.localizedDescription)
         })
@@ -360,6 +360,8 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
         else {
             headerCell.friendStatusLabel.text = "Offline"
         }
+        
+        headerCell.friendsCountLabel.isHidden = true
         
         return headerCell
     }

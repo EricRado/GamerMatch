@@ -91,20 +91,24 @@ class FirebaseCalls {
         }
     }
     
-    func createFriendRequest(toId: String, fromId: String, message: String) {
+    func createFriendRequest(toId: String, fromId: String,
+                             message: String, completion: @escaping () -> Void) {
         let id = friendRequestRef.childByAutoId().key
         let ref = friendRequestRef.child("\(id)/")
         let timestamp = "\(Date().toMillis() ?? 0)"
     
         let friendRequest = FriendRequest(id: id, fromId: fromId, toId: toId,
                                           message: message, timestamp: timestamp)
-        print(friendRequest.dictionary)
+        
         // save the friend request object
         ref.setValue(friendRequest.dictionary)
         
         // add friend request to User's pending requests
-        
+        updateReferenceWithDictionary(ref: pendingFriendRequestRef.child("\(fromId)/"),
+                                      values: [id: "true"])
         // add friend request to selected gamer's received requests
+        updateReferenceWithDictionary(ref: receivedFriendRequestsRef.child("\(toId)/"),
+                                      values: [id: "true"])
     }
     
     func getFriendRequest(for id: String,

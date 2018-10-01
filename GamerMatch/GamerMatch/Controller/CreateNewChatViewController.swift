@@ -11,11 +11,12 @@ import Firebase
 
 class CreateNewChatViewController: UIViewController {
     var downloadSessionId: String?
-    let groupSetupVCId: String = "NewGroupSetupVC"
+    let groupSetupVCId = "NewGroupSetupVC"
+    private let cellId = "cellId"
     
     let friendRef: DatabaseReference? = {
         guard let uid = Auth.auth().currentUser?.uid else { return nil }
-        return Database.database().reference().child("Friends/")
+        return Database.database().reference().child("Friends/\(uid)/")
     }()
     
     lazy var selectedUsers: [String: UserCacheInfo] = {
@@ -45,12 +46,13 @@ class CreateNewChatViewController: UIViewController {
     }()
     
     var friends: [UserCacheInfo]?
-    private let cellId = "cellId"
     private var taskIdToCellRowDict = [Int: Int]()
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
+            let nib = UINib(nibName: UserTableViewCell.identifier, bundle: nil)
+            tableView.register(nib, forCellReuseIdentifier: cellId)
         }
     }
     
@@ -58,10 +60,6 @@ class CreateNewChatViewController: UIViewController {
         super.viewDidLoad()
         
         friends = [UserCacheInfo]()
-        
-        
-        let nib = UINib(nibName: UserTableViewCell.identifier, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: cellId)
         
         getUserFriends()
     }
@@ -90,6 +88,7 @@ class CreateNewChatViewController: UIViewController {
     }
 }
 
+// MARK: - UITableView DataSource
 extension CreateNewChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let count = friends?.count {
@@ -116,6 +115,7 @@ extension CreateNewChatViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - URLSessionDownloadDelegate
 extension CreateNewChatViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         let taskId = downloadTask.taskIdentifier
