@@ -327,12 +327,25 @@ class FriendsViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension FriendsViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        let (section, row) = (indexPath.section, indexPath.row)
         
+        let user = section == 0 ? onlineFriends[row] : offlineFriends[row]
+        
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: vcIdentifier)
+            as? GamerProfileViewController else { return }
+        vc.userCacheInfo = user
+        navigationController?.navigationBar.topItem?.backBarButtonItem?.title = "Back"
+        navigationController?.pushViewController(vc, animated: true)
+        
+        collectionView.deselectItem(at: indexPath, animated: false)
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension FriendsViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -365,8 +378,10 @@ extension FriendsViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension FriendsViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String,
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         let headerCell = collectionView
             .dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
