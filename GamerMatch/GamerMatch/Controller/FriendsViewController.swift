@@ -450,20 +450,26 @@ extension FriendsViewController: UITableViewDataSource {
         
         let friendRequest = section == 0 ? receivedFriendRequests[row] :
             pendingFriendRequests[row]
-        cell.friendImageView.image = UIImage(named: "noAvatarImg")
-       
+        let user = section == 0 ? friendRequestUsersDict[friendRequest.fromId!] : friendRequestUsersDict[friendRequest.toId!]
+        
         if section == 0 {
-            cell.friendUsernameLabel.text =
-                friendRequestUsersDict[friendRequest.fromId!]?.username
+            cell.friendUsernameLabel.text = user?.username
             cell.acceptFriendRequestBtn.tag = row
             cell.acceptFriendRequestBtn.addTarget(
                 self,
                 action: #selector(acceptFriendRequestBtnPressed(sender:)),
                 for: .touchUpInside)
         } else {
-            cell.friendUsernameLabel.text =
-                friendRequestUsersDict[friendRequest.toId!]?.username
+            cell.friendUsernameLabel.text = user?.username
             cell.acceptFriendRequestBtn.isHidden = true
+        }
+        
+        if let url = user?.url, !url.isEmpty {
+            let id = mediaManager.downloadImage(from: url)
+            guard let taskId = id else { return cell }
+            taskIdsToIndexPathTVDict[taskId] = (row, section)
+        } else {
+            cell.friendImageView.image = UIImage(named: "noAvatarImg")
         }
         
         return cell
@@ -496,13 +502,22 @@ extension FriendsViewController: URLSessionDownloadDelegate {
         
         do {
             let data = try Data(contentsOf: location)
+            let image = UIImage(data: data)
+            
             DispatchQueue.main.async {
-                guard let (row, section) = self.taskIdsToIndexPathCVDict[taskId]
-                    else { return }
-                let indexPath = IndexPath(row: row, section: section)
-                guard let cell = self.collectionView.cellForItem(at: indexPath) as? FriendCollectionViewCell else { return }
-                let image = UIImage(data: data)
-                cell.friendImageView.image = image
+                if let (row, section) = self.taskIdsToIndexPathCVDict[taskId] {
+                    let indexPath = IndexPath(row: row, section: section)
+                    guard let cell = self.collectionView.cellForItem(at: indexPath) as? FriendCollectionViewCell else { return }
+                    cell.friendImageView.image = image
+                }
+                
+                if let (row, section) = self.taskIdsToIndexPathTVDict[taskId] {
+                    let indexPath = IndexPath(row: row, section: section)
+                    guard let cell = self.tableView.cellForRow(at: indexPath)
+                        as? FriendRequestTableViewCell else { return }
+                    cell.friendImageView.image = image
+                }
+                
             }
         } catch let error {
             print(error)
