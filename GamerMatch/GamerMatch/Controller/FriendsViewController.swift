@@ -13,6 +13,7 @@ import Firebase
 class FriendsViewController: UIViewController {
     
     private let cellId = "friendCell"
+    private let vcIdentifier = "GamerProfileViewController"
     private let onlineSectionId = 0
     private let offlineSectionId = 1
     
@@ -54,16 +55,19 @@ class FriendsViewController: UIViewController {
         return arr
     }()
     
+    // stores all users cache info from friend request screen
     lazy var friendRequestUsersDict: [String: UserCacheInfo] = {
         var arr = [String: UserCacheInfo]()
         return arr
     }()
     
+    // stores received friend request user id to its cell row
     lazy var receivedUserIdToCellRowDict: [String: Int] = {
         var arr = [String: Int]()
         return arr
     }()
     
+    // stores pending friend request user id to its cell row
     lazy var pendingUserIdToCellRowDict: [String: Int] = {
         var arr = [String: Int]()
         return arr
@@ -253,7 +257,7 @@ class FriendsViewController: UIViewController {
     
         let row: Int
         if section == 0 {
-            row = self.receivedFriendRequests.count - 1
+            row = self.receivedUserIdToCellRowDict[user.uid!] ?? 0
         } else {
             row = self.pendingUserIdToCellRowDict[user.uid!] ?? 0
         }
@@ -272,6 +276,7 @@ class FriendsViewController: UIViewController {
                 }
                 
                 guard let request = friendRequest else { return }
+                guard let id = request.fromId else { return }
                 guard let accepted = request.accepted?.toBool(), !accepted
                     else { return }
                 
@@ -279,11 +284,11 @@ class FriendsViewController: UIViewController {
                 
                 self.tableView.beginUpdates()
                 let row = self.receivedFriendRequests.count - 1
+                self.receivedUserIdToCellRowDict[id] = row
                 self.tableView.insertRows(at: [IndexPath(row: row, section: 0)],
                                           with: .none)
                 self.tableView.endUpdates()
                 
-                guard let id = request.fromId else { return }
                 FirebaseCalls.shared.getUserCacheInfo(for: id, completion: completion)
                 
             }
@@ -390,7 +395,19 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UITableViewDelegate
 extension FriendsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row pressed")
+        let (section, row) = (indexPath.section, indexPath.row)
+        
+        let request = section == 0 ? receivedFriendRequests[row] :
+            pendingFriendRequests[row]
+        let user = section == 0 ? friendRequestUsersDict[request.fromId!] : friendRequestUsersDict[request.toId!]
+        
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: vcIdentifier)
+            as? GamerProfileViewController else { return }
+        vc.userCacheInfo = user
+        navigationController?.navigationBar.topItem?.backBarButtonItem?.title = "Back"
+        navigationController?.pushViewController(vc, animated: true)
+        
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 

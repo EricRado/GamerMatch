@@ -91,11 +91,20 @@ class GamerProfileViewController: UIViewController {
     
     @IBOutlet weak var userBioTextView: UITextView!
     
+    override func viewWillDisappear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+        super.viewWillDisappear(animated)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.layoutIfNeeded()
         view.backgroundColor = UIColor.white
-        tabBarController?.tabBar.isHidden = true
         navigationItem.title = userCacheInfo?.username
         
         getUserDetails()
