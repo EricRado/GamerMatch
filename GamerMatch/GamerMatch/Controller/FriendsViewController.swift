@@ -26,12 +26,12 @@ class FriendsViewController: UIViewController {
     
     private let receivedFriendRequestsRef: DatabaseReference? = {
         guard let id = Auth.auth().currentUser?.uid else { return nil }
-        return Database.database().reference().child("ReceivedFriendRequests/\(id)")
+        return Database.database().reference().child("ReceivedFriendRequests/\(id)/")
     }()
     
     private let pendingFriendRequestsRef: DatabaseReference? = {
         guard let id = Auth.auth().currentUser?.uid else { return nil }
-        return Database.database().reference().child("PendingFriendRequests/\(id)")
+        return Database.database().reference().child("PendingFriendRequests/\(id)/")
     }()
     
     lazy var onlineFriends: [UserCacheInfo] = {
@@ -56,6 +56,16 @@ class FriendsViewController: UIViewController {
     
     lazy var friendRequestUsersDict: [String: UserCacheInfo] = {
         var arr = [String: UserCacheInfo]()
+        return arr
+    }()
+    
+    lazy var receivedUserIdToCellRowDict: [String: Int] = {
+        var arr = [String: Int]()
+        return arr
+    }()
+    
+    lazy var pendingUserIdToCellRowDict: [String: Int] = {
+        var arr = [String: Int]()
         return arr
     }()
     
@@ -240,11 +250,12 @@ class FriendsViewController: UIViewController {
     
     fileprivate func updateTableViewRow(with user: UserCacheInfo, section: Int) {
         self.friendRequestUsersDict[user.uid!] = user
+    
         let row: Int
         if section == 0 {
             row = self.receivedFriendRequests.count - 1
         } else {
-            row = self.pendingFriendRequests.count - 1
+            row = self.pendingUserIdToCellRowDict[user.uid!] ?? 0
         }
         
         self.tableView.reloadRows(at: [IndexPath(row: row, section: section)], with: .none)
@@ -283,7 +294,8 @@ class FriendsViewController: UIViewController {
     
     fileprivate func getPendingFriendRequests(completion:
         @escaping (UserCacheInfo?, Error?) -> Void) {
-        pendingFriendRequestsRef?.observeSingleEvent(of: .childAdded, with: { (snapshot) in
+        pendingFriendRequestsRef?.observe(.childAdded, with: { (snapshot) in
+            print(snapshot)
             let id = snapshot.key
             FirebaseCalls.shared.getFriendRequest(for: id) { [unowned self] (friendRequest, error) in
                 if let error = error {
@@ -292,15 +304,16 @@ class FriendsViewController: UIViewController {
                 }
                 
                 guard let request = friendRequest else { return }
+                guard let id = request.toId else { return }
                 self.pendingFriendRequests.append(request)
                 
                 self.tableView.beginUpdates()
                 let row = self.pendingFriendRequests.count - 1
+                self.pendingUserIdToCellRowDict[id] = row
                 self.tableView.insertRows(at: [IndexPath(row: row, section: 1)],
                                           with: .none)
                 self.tableView.endUpdates()
                 
-                guard let id = request.toId else { return }
                 FirebaseCalls.shared.getUserCacheInfo(for: id, completion: completion)
             }
         }, withCancel: { (error) in
@@ -374,7 +387,7 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
-
+// MARK: - UITableViewDelegate
 extension FriendsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("row pressed")
@@ -382,7 +395,7 @@ extension FriendsViewController: UITableViewDelegate {
 }
 
 
-
+// MARK: - UITableViewDataSource
 extension FriendsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -442,6 +455,7 @@ extension FriendsViewController: UITableViewDataSource {
         return 50.0
     }
 }
+
 
 extension FriendsViewController: URLSessionDownloadDelegate {
     

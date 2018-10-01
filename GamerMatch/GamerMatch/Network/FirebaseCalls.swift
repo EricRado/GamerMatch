@@ -109,6 +109,7 @@ class FirebaseCalls {
         // add friend request to selected gamer's received requests
         updateReferenceWithDictionary(ref: receivedFriendRequestsRef.child("\(toId)/"),
                                       values: [id: "true"])
+        completion()
     }
     
     func getFriendRequest(for id: String,
