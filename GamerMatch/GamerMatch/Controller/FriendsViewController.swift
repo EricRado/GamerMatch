@@ -217,12 +217,15 @@ class FriendsViewController: UIViewController {
     
     fileprivate func getUserFriends(completion: @escaping (() -> Void)) {
         guard let uid = User.onlineUser.uid else { return }
+        var onlineCounter = 0
         var counter = 0
         let ref = friendRef.child("\(uid)/")
         
         // FIX - HOW TO GET SNAPSHOT COUNT TO RUN COMPLETION
         ref.observe(.childAdded, with: { (snapshot) in
             let id = snapshot.key
+            print("snapshot count...")
+            print(snapshot.childrenCount)
             FirebaseCalls.shared.getUserCacheInfo(for: id, completion: { (userCacheInfo, error) in
                 if let error = error {
                     print(error.localizedDescription)
@@ -269,6 +272,7 @@ class FriendsViewController: UIViewController {
         @escaping (UserCacheInfo?, Error?) -> Void) {
         receivedFriendRequestsRef?.observe(.childAdded, with: { (snapshot) in
             let id = snapshot.key
+            
             FirebaseCalls.shared.getFriendRequest(for: id) { (friendRequest, error) in
                 if let error = error {
                     print(error.localizedDescription)
@@ -300,8 +304,8 @@ class FriendsViewController: UIViewController {
     fileprivate func getPendingFriendRequests(completion:
         @escaping (UserCacheInfo?, Error?) -> Void) {
         pendingFriendRequestsRef?.observe(.childAdded, with: { (snapshot) in
-            print(snapshot)
             let id = snapshot.key
+            
             FirebaseCalls.shared.getFriendRequest(for: id) { [unowned self] (friendRequest, error) in
                 if let error = error {
                     print(error.localizedDescription)

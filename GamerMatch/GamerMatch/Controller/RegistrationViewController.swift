@@ -15,7 +15,7 @@ class RegistrationViewController: UIViewController {
     
     fileprivate let nextVCId = "ConsoleAndGameSelectionVC"
     fileprivate var userImg: UIImage?
-    var isInfoViewShowing = false
+    private var isInfoViewShowing = false
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -32,7 +32,12 @@ class RegistrationViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton! {
+        didSet {
+            signUpButton.layer.cornerRadius = 10
+            signUpButton.layer.masksToBounds = true
+        }
+    }
     
     let userRef: DatabaseReference = {
         let ref = Database.database().reference().child("Users/")
@@ -55,16 +60,13 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        signUpButton.layer.cornerRadius = 10
-        signUpButton.layer.masksToBounds = true
         
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
         self.usernameTextField.delegate = self
         self.reconfirmPasswordTextField.delegate = self
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view,
+                                                              action: Selector("endEditing:")))
     
     }
     
@@ -80,93 +82,50 @@ class RegistrationViewController: UIViewController {
     }
     
     fileprivate func validateForEmptyFields() -> Bool {
-        let completion: (Bool) -> Void = { isFinished in
-            if isFinished {
-                self.isInfoViewShowing = false
-            }
-        }
-        
         if (usernameTextField.text?.isEmpty)! {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Username field is empty", type: .Error,
-                                completion: completion)
-            }
+            displayErrorMessage(with: "Username field is empty")
             return false
         }
         
         if (emailTextField.text?.isEmpty)! {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Email field is empty", type: .Error,
-                                completion: completion)
-            }
+            displayErrorMessage(with: "Email field is empty")
             return false
         }
         
         if (passwordTextField.text?.isEmpty)! {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Password field is empty", type: .Error,
-                                completion: completion)
-            }
+            displayErrorMessage(with: "Password field is empty")
             return false
         }
         
         if (reconfirmPasswordTextField.text?.isEmpty)! {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Confirm Password field is empty", type: .Error,
-                                completion: completion)
-            }
+            displayErrorMessage(with: "Confirm Password field is empty")
             return false
         }
         
-    
         return true
     }
     
     fileprivate func validateForm() {
         guard validateForEmptyFields() else { return }
         
-        let completion: (Bool) -> Void = { isFinished in
-            if isFinished {
-                self.isInfoViewShowing = false
-            }
-        }
-        
         if !(6 ... 16 ~= (usernameTextField.text?.count)!)  {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Username should be from 6 - 16 characters", type: .Error, completion: completion)
-            }
+            displayErrorMessage(with: "Username should be from 6 - 16 characters")
             return
         }
         
         if !(8 ... 18 ~= (passwordTextField.text?.count)!) {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "password should be from 8 - 18 characters", type: .Error, completion: completion)
-            }
+            displayErrorMessage(with: "Password should be from 8 - 18 characters")
             return
         }
         
         if passwordTextField.text != reconfirmPasswordTextField.text {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Passwords do not match", type: .Error,
-                                completion: completion)
-            }
+           displayErrorMessage(with: "Passwords do not match")
             return
         }
         
         let predicate = EmailValidationPredicate()
         if !predicate.evaluate(with: emailTextField.text) {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Email is not valid", type: .Error,
-                                completion: completion)
-            }
+            displayErrorMessage(with: "Email is not valid")
             return
         }
         
@@ -174,20 +133,13 @@ class RegistrationViewController: UIViewController {
     }
     
     fileprivate func registerUser() {
-        let completion: (Bool) -> Void = { isFinished in
-            if isFinished {
-                self.isInfoViewShowing = false
-            }
-        }
-        
         SVProgressHUD.show(withStatus: "Registering")
-        Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [unowned self] (user, error) in
+        Auth.auth().createUser(withEmail: emailTextField.text!,
+                               password: passwordTextField.text!,
+                               completion: { [unowned self] (user, error) in
             if let error = error {
-                if !self.isInfoViewShowing {
-                    self.isInfoViewShowing = true
-                    self.displayInfoView(message: error.localizedDescription, type: .Error,
-                                    completion: completion)
-                }
+                SVProgressHUD.dismiss()
+                self.displayErrorMessage(with: error.localizedDescription)
                 return
             }
             print("User registered successfully")
@@ -198,13 +150,12 @@ class RegistrationViewController: UIViewController {
             
             // upload image if user selected one
             if let image = self.userImg {
-                self.imageManager.uploadImage(image: image, at: "userProfileImages/\(username).jpg", completion: { (urlString, error) in
+                self.imageManager.uploadImage(image: image, at: "userProfileImages/\(username).jpg",
+                                              completion: { (urlString, error) in
                     if let error = error {
-                        self.displayInfoView(message: error.localizedDescription, type: .Error, completion: { (finished) in
-                            if finished {
-                                self.isInfoViewShowing = false
-                            }
-                        })
+                        SVProgressHUD.dismiss()
+                        self.displayErrorMessage(with: error.localizedDescription)
+                        return
                     }
                     guard let url = urlString else { return }
                     FirebaseCalls.shared.updateReferenceWithDictionary(

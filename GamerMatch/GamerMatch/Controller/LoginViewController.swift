@@ -61,36 +61,18 @@ class LoginViewController: UIViewController {
     }
     
     fileprivate func validateFields() -> Bool {
-        let completion: (Bool) -> Void = { isFinished in
-            if isFinished {
-                self.isInfoViewShowing = false
-            }
-        }
-        
         if (emailTextField.text?.isEmpty)! {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Email field is empty", type: .Error,
-                                completion: completion)
-            }
+            displayErrorMessage(with: "Email field is empty")
             return false
         }
         if (passwordTextField.text?.isEmpty)! {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Password field is empty", type: .Error,
-                                completion: completion)
-            }
+            displayErrorMessage(with: "Password field is empty")
             return false
         }
         
         let predicate = EmailValidationPredicate()
         if !predicate.evaluate(with: emailTextField.text) {
-            if !isInfoViewShowing {
-                isInfoViewShowing = true
-                displayInfoView(message: "Email is not valid", type: .Error,
-                                completion: completion)
-            }
+            displayErrorMessage(with: "Email is not valid")
             return false
         }
         
@@ -108,22 +90,12 @@ class LoginViewController: UIViewController {
 
     
     @IBAction func signInPressed(_ sender: UIButton) {
-        let completion: (Bool) -> Void = { isFinished in
-            if isFinished {
-                self.isInfoViewShowing = false
-            }
-        }
         guard validateFields() else { return }
         SVProgressHUD.show(withStatus: "Signing In")
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
             if let error = error {
                 SVProgressHUD.dismiss()
-                if !self.isInfoViewShowing {
-                    self.isInfoViewShowing = true
-                    self.displayInfoView(message: error.localizedDescription, type: .Error,
-                                         completion: completion)
-                }
-                
+                self.displayErrorMessage(with: error.localizedDescription)
             } else {
                 print("Login successful")
                 // setup all of the signed in user info to User singleton object

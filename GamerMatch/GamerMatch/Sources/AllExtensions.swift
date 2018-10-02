@@ -116,7 +116,45 @@ enum MessageType {
 }
 
 extension UIViewController {
-    func displayInfoView(message: String, type: MessageType,
+    
+    func displayErrorMessage(with message: String) {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate
+            else { return}
+        
+        let completion: (Bool) -> Void = { [unowned delegate] isFinished in
+            if isFinished {
+                delegate.isInfoViewShowing = false
+            }
+        }
+        
+        if !delegate.isInfoViewShowing {
+            delegate.isInfoViewShowing = true
+            displayInfoView(message: message,
+                            type: .Error,
+                            completion: completion)
+        }
+    }
+    
+    func displaySuccessfulMessage(with message: String) {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate
+            else { return}
+        
+        let completion: (Bool) -> Void = { [unowned delegate] isFinished in
+            if isFinished {
+                delegate.isInfoViewShowing = false
+            }
+        }
+        
+        if !delegate.isInfoViewShowing {
+            delegate.isInfoViewShowing = true
+            displayInfoView(message: message,
+                            type: .Success,
+                            completion: completion)
+        }
+    }
+    
+    
+    fileprivate func displayInfoView(message: String, type: MessageType,
                          completion: ((Bool) -> Void)?) {
         let infoViewHeight = view.bounds.height / 14.2
         let infoViewY = 0 - infoViewHeight

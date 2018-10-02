@@ -167,8 +167,7 @@ class GamerProfileViewController: UIViewController {
         FirebaseCalls.shared
             .createFriendRequest(toId: friendId, fromId: userId, message: "Hellooooo") {
                 print("friend request saved")
-                self.displayInfoView(message: "Friend Request sent", type: .Success,
-                                     completion: nil)
+                self.displaySuccessfulMessage(with: "Friend Request sent")
         }
     }
     

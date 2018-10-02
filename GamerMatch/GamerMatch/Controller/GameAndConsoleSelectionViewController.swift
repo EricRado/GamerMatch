@@ -9,12 +9,15 @@
 import UIKit
 import Firebase
 
+
+
 class GameAndConsoleSelectionViewController: UIViewController {
     
     // MARK: - Instance variables
     
     private let cellId = "cellId"
     private let segueId = "registrationDashboardSegue"
+    private var isInfoViewShowing = false
     
     private let databaseRef: DatabaseReference = {
         return Database.database().reference()
