@@ -13,7 +13,9 @@ import SVProgressHUD
 class FindGamerViewController: UIViewController {
     
     private let findGamerResultsSegueId = "findGamerResultsSegue"
-    private var searchRef: DatabaseReference?
+    private lazy var dbRef = {
+        return Database.database().reference()
+    }()
     private var ids: [String]?
     
     // MARK: - IBOutlet Variables
@@ -88,6 +90,8 @@ class FindGamerViewController: UIViewController {
         for btn in consoleBtnsArr {
             btn.isSelected = false
         }
+        
+        _ = gameBtnsArr.map { $0.isSelected = false }
         consoleIsTapped = false
     }
     
@@ -112,12 +116,12 @@ class FindGamerViewController: UIViewController {
         }
     }
     
-    fileprivate func createGamerMatchDBRef(console: String, game: String, role: String?) -> DatabaseReference {
+    fileprivate func createGamerMatchDBPath(console: String, game: String, role: String?) -> String {
+        let gameName = game.removingWhitespaces()
+        var ref = "\(console)/\(gameName)/"
         
-        let ref = Database.database().reference().child(console).child(game.removingWhitespaces())
-        
-        if let role = role {
-            ref.child(role.removingWhitespaces())
+        if let role = role?.removingWhitespaces() {
+            ref += role
         }
         
         return ref
@@ -142,20 +146,23 @@ class FindGamerViewController: UIViewController {
         let ac = UIAlertController(title: "Request", message: message, preferredStyle: .alert)
         
         ac.addAction(UIAlertAction(title: "Search", style: .default){ action in
-            self.searchRef = self.createGamerMatchDBRef(console: self.consoleName,
+            let path = self.createGamerMatchDBPath(console: self.consoleName,
                                                         game: gameName,
                                                         role: roleName)
             SVProgressHUD.show(withStatus: "Searching...")
             
+            print("this is the search ref : \(path)")
+            let ref = self.dbRef.child(path)
             FirebaseCalls.shared
-                .getIdListFromNode(for: self.searchRef) { (ids, error) in
+                .getIdListFromNode(for: ref) { (ids, error) in
                     if let error = error {
                         print(error.localizedDescription)
                         return
                     }
                     self.ids = ids
                     SVProgressHUD.dismiss()
-                    self.performSegue(withIdentifier: self.findGamerResultsSegueId, sender: nil)
+                    self.performSegue(withIdentifier: self.findGamerResultsSegueId,
+                                      sender: nil)
             }
         })
         
