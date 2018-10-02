@@ -187,5 +187,16 @@ class FirebaseCalls {
         }
     }
     
+    func removeReferenceValue(at path: String) {
+        let ref = dbRef.child(path)
+        ref.removeValue { (error, ref) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("Child removed correctly")
+            }
+        }
+    }
+    
     
 }

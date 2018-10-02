@@ -14,6 +14,7 @@ class FriendsViewController: UIViewController {
     
     private let cellId = "friendCell"
     private let vcIdentifier = "GamerProfileViewController"
+    private let pendingFriendRequestString = "PendingFriendRequests/"
     private let onlineSectionId = 0
     private let offlineSectionId = 1
     
@@ -206,6 +207,10 @@ class FriendsViewController: UIViewController {
         let requestRef = friendRequestRef.child("\(friendRequest.id!)/")
         FirebaseCalls.shared
             .updateReferenceWithDictionary(ref: requestRef, values: ["accepted": "true"])
+        
+        // remove friend request pending id from new friend's pending request list
+        let path = "\(pendingFriendRequestString)\(fromId)/\(friendRequest.id!)"
+        FirebaseCalls.shared.removeReferenceValue(at: path)
         
         // remove accepted friend request from table view
         receivedFriendRequests.remove(at: sender.tag)
