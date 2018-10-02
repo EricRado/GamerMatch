@@ -11,7 +11,7 @@ import Firebase
 
 
 
-class GameAndConsoleSelectionViewController: UIViewController {
+class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegate {
     
     // MARK: - Instance variables
     
@@ -91,6 +91,7 @@ class GameAndConsoleSelectionViewController: UIViewController {
     
     @IBOutlet weak var bioTextView: UITextView! {
         didSet {
+            bioTextView.delegate = self
             bioTextView.layer.cornerRadius = 10
             bioTextView.text = ""
         }
@@ -136,6 +137,19 @@ class GameAndConsoleSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedVideoGames = [String: VideoGameSelected]()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.bioTextView.resignFirstResponder()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        
+        return true
     }
     
     @objc fileprivate func consoleBtnPressed(sender: UIButton) {
@@ -286,22 +300,40 @@ class GameAndConsoleSelectionViewController: UIViewController {
         }
     }
     
+    fileprivate func validateFields() -> Bool {
+        if selectedConsoles.isEmpty {
+            displayErrorMessage(with: "At least one console must be selected to complete registration")
+            return false
+        }
+        if selectedVideoGames.isEmpty {
+            displayErrorMessage(with: "At least one game must be selected to complete registration")
+            return false
+        }
+        
+        if bioTextView.text.isEmpty {
+            displayErrorMessage(with: "Bio field is empty")
+            return false
+        }
+        
+        if bioTextView.text.count < 8 {
+            displayErrorMessage(with: "Bio must contain at least 8 word count")
+            return false
+        }
+        
+        return true
+    }
+    
     // save data retrieved to Firebase and transition to dashboard
     @objc fileprivate func submitBtnPressed(sender: UIButton) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
+        guard let ref = userRef else { return }
         let userIdDict = [userId: "true"]
         
-        if selectedConsoles.isEmpty {
-            print("At least one console must be selected to move on")
-            return
-        }
-        if selectedVideoGames.isEmpty {
-            print("At least one game must be selected to move on")
-            return
-        }
+        guard validateFields() else { return }
         
         saveConsoleChoicesToDB(selectedConsoles)
         saveGameAndRoleChoicesToDB()
+        FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: ["bio": bioTextView.text])
         
         // save data to specific console/game/role node in database
         print("all the refs")
