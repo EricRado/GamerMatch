@@ -18,8 +18,9 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     private let cellId = "cellId"
     private let segueId = "registrationDashboardSegue"
     private var isInfoViewShowing = false
+    private var effect: UIVisualEffect!
     
-    private let databaseRef: DatabaseReference = {
+    /*private let databaseRef: DatabaseReference = {
         return Database.database().reference()
     }()
     
@@ -27,7 +28,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         guard let id = Auth.auth().currentUser?.uid else { return nil }
         let ref = Database.database().reference().child("Users/\(id)/")
         return ref
-    }()
+    }()*/
     
     // store the user's selcted consoles
     private var selectedConsoles = [ConsoleType]()
@@ -45,6 +46,8 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     private var selectedVideoGameBtnTag = 0
     
     // MARK: - IBOutlet variables
+    
+    @IBOutlet weak var visualEffectView: UIVisualEffectView!
     
     @IBOutlet var gameSelectedOptionsView: UIView! {
         didSet {
@@ -134,13 +137,52 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDisplayed(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDismissed(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        effect = visualEffectView.effect
+        visualEffectView.effect = nil
         selectedVideoGames = [String: VideoGameSelected]()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.bioTextView.resignFirstResponder()
+        self.animateOut()
+    }
+    
+    fileprivate func disableUIElementsTouch() {
+        _ = gameBtns.map { $0.isUserInteractionEnabled = false }
+        _ = consoleBtns.map { $0.isUserInteractionEnabled = false }
+        submitBtn.isUserInteractionEnabled = false
+        bioTextView.isUserInteractionEnabled = false
+    }
+    
+    fileprivate func enableUIElementsTouch() {
+        _ = gameBtns.map { $0.isUserInteractionEnabled = true }
+        _ = consoleBtns.map { $0.isUserInteractionEnabled = true}
+        submitBtn.isUserInteractionEnabled = true
+        bioTextView.isUserInteractionEnabled = false
+    }
+    
+    @objc fileprivate func handleKeyboardDisplayed(notification: Notification) {
+        disableUIElementsTouch()
+    }
+    
+    @objc fileprivate func handleKeyboardDismissed(notification: Notification) {
+        enableUIElementsTouch()
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -178,6 +220,28 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         sender.isSelected = true
     }
     
+    fileprivate func animateIn() {
+        gameSelectedOptionsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        gameSelectedOptionsView.alpha = 0
+        
+        UIView.animate(withDuration: 0.4) {
+            self.visualEffectView.effect = self.effect
+            self.gameSelectedOptionsView.alpha = 1
+            self.gameSelectedOptionsView.transform = CGAffineTransform.identity
+        }
+    }
+    
+    fileprivate func animateOut() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.gameSelectedOptionsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+            self.gameSelectedOptionsView.alpha = 0
+            self.visualEffectView.effect = nil
+        }) { (_) in
+            self.gameSelectedOptionsView.removeFromSuperview()
+            self.enableUIElementsTouch()
+        }
+    }
+    
     fileprivate func setupPopupView() {
         tableView.reloadData()
         gameSelectedOptionsView.frame = CGRect(x: view.center.x, y: view.center.y,
@@ -190,10 +254,8 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         }
         view.addSubview(gameSelectedOptionsView)
         gameSelectedOptionsView.center = view.center
-    }
-    
-    @objc fileprivate func dismissPopup(sender: UITapGestureRecognizer) {
-        gameSelectedOptionsView.removeFromSuperview()
+        disableUIElementsTouch()
+        animateIn()
     }
     
     fileprivate func checkIfVideoGameWasAlreadySelected(tag: Int) {
@@ -234,7 +296,9 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         setupPopupView()
     }
     
-    fileprivate func parseVideoGameSelectionToDatabaseReference(videoGameName: String, consoleTypes: Set<ConsoleType>, roles: [VideoGameRole]?) -> [String] {
+    fileprivate func parseVideoGameSelectionToDatabaseReference(videoGameName: String,
+                                                                consoleTypes: Set<ConsoleType>,
+                                                                roles: [VideoGameRole]?) -> [String] {
         var refs = [String]()
         
         for console in consoleTypes {
@@ -269,7 +333,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         return roleStr
     }
     
-    fileprivate func saveConsoleChoicesToDB(_ consoles: [ConsoleType]) {
+    /*fileprivate func saveConsoleChoicesToDB(_ consoles: [ConsoleType]) {
         for console in consoles {
             let choice = console.rawValue
             guard let ref = userRef?.child("Consoles/") else { return }
@@ -298,7 +362,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
             let refs = parseVideoGameSelectionToDatabaseReference(videoGameName: name, consoleTypes: game.value.selectedConsoles!, roles: game.value.selectedRoles)
             selectedVideoGameStringRefs.append(contentsOf: refs)
         }
-    }
+    }*/
     
     fileprivate func validateFields() -> Bool {
         if selectedConsoles.isEmpty {
@@ -325,14 +389,14 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     
     // save data retrieved to Firebase and transition to dashboard
     @objc fileprivate func submitBtnPressed(sender: UIButton) {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        /*guard let userId = Auth.auth().currentUser?.uid else { return }
         guard let ref = userRef else { return }
         let userIdDict = [userId: "true"]
         
         guard validateFields() else { return }
         
-        saveConsoleChoicesToDB(selectedConsoles)
-        saveGameAndRoleChoicesToDB()
+        //saveConsoleChoicesToDB(selectedConsoles)
+        //saveGameAndRoleChoicesToDB()
         FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: ["bio": bioTextView.text])
         
         // save data to specific console/game/role node in database
@@ -341,14 +405,14 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
             let gameRef = databaseRef.child(ref)
             FirebaseCalls.shared
                 .updateReferenceWithDictionary(ref: gameRef, values: userIdDict)
-        }
+        }*/
         
         // transition to user's dashboard
         performSegue(withIdentifier: segueId, sender: nil)
     }
     
     @objc fileprivate func confirmFromPopupPressed(sender: UIButton) {
-        gameSelectedOptionsView.removeFromSuperview()
+        animateOut()
         
         guard let title = selectedVideoGame?.name else { return }
         guard !(selectedVideoGame?.selectedConsoles?.isEmpty)! else { return }
