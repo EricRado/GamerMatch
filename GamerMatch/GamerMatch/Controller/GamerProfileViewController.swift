@@ -36,15 +36,21 @@ class GamerProfileViewController: UIViewController {
             dict[game.title!] = game
             guard let roles = game.roles else { continue }
             for role in roles {
-                rolesDict?[role.roleName!] = role
+                if var arr = rolesDict[role.roleName!] {
+                    arr.append(role)
+                    rolesDict[role.roleName!] = arr
+                } else {
+                    rolesDict[role.roleName!] = [role]
+                }
+    
             }
         }
 
         return dict
     }()
     
-    lazy var rolesDict: [String: VideoGameRole]? = {
-        var dict = [String: VideoGameRole]()
+    lazy var rolesDict: [String: [VideoGameRole]] = {
+        var dict = [String: [VideoGameRole]]()
         return dict
     }()
     
@@ -152,8 +158,17 @@ class GamerProfileViewController: UIViewController {
         let roleStrArr = splitRoleStr.map { String($0) }
         print(roleStrArr)
         for roleStr in roleStrArr {
-            guard let role = rolesDict?[roleStr] else { continue }
-            roleImgs[roleImgCounter].image = role.roleImg
+            guard let role = rolesDict[roleStr] else { continue }
+            
+            if role.count == 1 {
+                roleImgs[roleImgCounter].image = role.first?.roleImg
+            } else {
+                // Traverse the games roles and select the role with
+                // matching names
+                let result = game.roles?.filter { $0.roleName == roleStr }
+                roleImgs[roleImgCounter].image = result?.first?.roleImg
+            }
+            
             roleImgCounter += 1
         }
     }

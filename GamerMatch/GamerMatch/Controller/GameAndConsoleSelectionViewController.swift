@@ -9,8 +9,6 @@
 import UIKit
 import Firebase
 
-
-
 class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegate {
     
     // MARK: - Instance variables
@@ -20,7 +18,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     private var isInfoViewShowing = false
     private var effect: UIVisualEffect!
     
-    /*private let databaseRef: DatabaseReference = {
+    private let databaseRef: DatabaseReference = {
         return Database.database().reference()
     }()
     
@@ -28,7 +26,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         guard let id = Auth.auth().currentUser?.uid else { return nil }
         let ref = Database.database().reference().child("Users/\(id)/")
         return ref
-    }()*/
+    }()
     
     // store the user's selcted consoles
     private var selectedConsoles = [ConsoleType]()
@@ -94,9 +92,9 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     
     @IBOutlet weak var bioTextView: UITextView! {
         didSet {
-            bioTextView.delegate = self
             bioTextView.layer.cornerRadius = 10
             bioTextView.text = ""
+            bioTextView.delegate = self
         }
     }
     
@@ -167,14 +165,12 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         _ = gameBtns.map { $0.isUserInteractionEnabled = false }
         _ = consoleBtns.map { $0.isUserInteractionEnabled = false }
         submitBtn.isUserInteractionEnabled = false
-        bioTextView.isUserInteractionEnabled = false
     }
     
     fileprivate func enableUIElementsTouch() {
         _ = gameBtns.map { $0.isUserInteractionEnabled = true }
         _ = consoleBtns.map { $0.isUserInteractionEnabled = true}
         submitBtn.isUserInteractionEnabled = true
-        bioTextView.isUserInteractionEnabled = false
     }
     
     @objc fileprivate func handleKeyboardDisplayed(notification: Notification) {
@@ -185,12 +181,15 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         enableUIElementsTouch()
     }
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return true
+    }
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
             return false
         }
-        
         return true
     }
     
@@ -297,8 +296,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     }
     
     fileprivate func parseVideoGameSelectionToDatabaseReference(videoGameName: String,
-                                                                consoleTypes: Set<ConsoleType>,
-                                                                roles: [VideoGameRole]?) -> [String] {
+            consoleTypes: Set<ConsoleType>, roles: [VideoGameRole]?) -> [String] {
         var refs = [String]()
         
         for console in consoleTypes {
@@ -333,7 +331,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         return roleStr
     }
     
-    /*fileprivate func saveConsoleChoicesToDB(_ consoles: [ConsoleType]) {
+    fileprivate func saveConsoleChoicesToDB(_ consoles: [ConsoleType]) {
         for console in consoles {
             let choice = console.rawValue
             guard let ref = userRef?.child("Consoles/") else { return }
@@ -362,7 +360,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
             let refs = parseVideoGameSelectionToDatabaseReference(videoGameName: name, consoleTypes: game.value.selectedConsoles!, roles: game.value.selectedRoles)
             selectedVideoGameStringRefs.append(contentsOf: refs)
         }
-    }*/
+    }
     
     fileprivate func validateFields() -> Bool {
         if selectedConsoles.isEmpty {
@@ -389,14 +387,14 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     
     // save data retrieved to Firebase and transition to dashboard
     @objc fileprivate func submitBtnPressed(sender: UIButton) {
-        /*guard let userId = Auth.auth().currentUser?.uid else { return }
+        guard let userId = Auth.auth().currentUser?.uid else { return }
         guard let ref = userRef else { return }
         let userIdDict = [userId: "true"]
         
         guard validateFields() else { return }
         
-        //saveConsoleChoicesToDB(selectedConsoles)
-        //saveGameAndRoleChoicesToDB()
+        saveConsoleChoicesToDB(selectedConsoles)
+        saveGameAndRoleChoicesToDB()
         FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: ["bio": bioTextView.text])
         
         // save data to specific console/game/role node in database
@@ -405,7 +403,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
             let gameRef = databaseRef.child(ref)
             FirebaseCalls.shared
                 .updateReferenceWithDictionary(ref: gameRef, values: userIdDict)
-        }*/
+        }
         
         // transition to user's dashboard
         performSegue(withIdentifier: segueId, sender: nil)
@@ -434,7 +432,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     }
     
     @objc fileprivate func removeFromPopupPressed(sender: UIButton) {
-        gameSelectedOptionsView.removeFromSuperview()
+        animateOut()
         
         guard let title = selectedVideoGame?.name else { return }
         selectedVideoGames.removeValue(forKey: title)

@@ -1838,7 +1838,6 @@
         <image name="xbox" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="f2Q-kX-U0u"/>
-        <segue reference="p1K-8C-PN8"/>
+        <segue reference="SZl-6X-ud1"/>
     </inferredMetricsTieBreakers>
 </document>
