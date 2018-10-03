@@ -14,12 +14,15 @@ struct Message: Decodable{
     let senderId: String?
     let body: String?
     let timestamp: String?
+    let username: String?
     
-    init(id: String, senderId: String, body: String, timestamp: String){
+    init(id: String, senderId: String, body: String,
+         timestamp: String, username: String){
         self.id = id
         self.body = body
         self.senderId = senderId
         self.timestamp = timestamp
+        self.username = username
     }
     
     init?(snapshot: DataSnapshot){
@@ -28,15 +31,18 @@ struct Message: Decodable{
         guard let body = dict["body"] else {return nil}
         guard let senderId = dict["senderId"] else {return nil}
         guard let timestamp = dict["timestamp"] else {return nil}
+        guard let username = dict["username"] else { return nil }
         
         self.id = id
         self.body = body
         self.senderId = senderId
         self.timestamp = timestamp
+        self.username = username
     }
     
     
     func toAnyObject() -> [AnyHashable: Any]{
-        return ["id": id!,"body": body!, "senderId": senderId!, "timestamp": timestamp!] as [AnyHashable: Any]
+        return ["id": id!,"body": body!, "senderId": senderId!,
+                "timestamp": timestamp!, "username": username!] as [AnyHashable: Any]
     }
 }

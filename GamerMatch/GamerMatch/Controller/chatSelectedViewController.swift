@@ -192,7 +192,7 @@ class ChatSelectedViewController: UIViewController {
             let timestamp = "\(Date().toMillis() ?? 0)"
             let newMessageRef = messagesRef?.childByAutoId()
             let id = newMessageRef?.key
-            let message = Message(id: id!, senderId: senderId, body: body, timestamp: timestamp)
+            let message = Message(id: id!, senderId: senderId, body: body, timestamp: timestamp, username: User.onlineUser.username!)
             messagesRef?.childByAutoId().setValue(message.toAnyObject(), withCompletionBlock: { (error, _) in
                 if let error = error {
                     print(error)
@@ -208,7 +208,8 @@ class ChatSelectedViewController: UIViewController {
 }
 
 extension ChatSelectedViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didDeselectItemAt indexPath: IndexPath) {
         inputTextField.endEditing(true)
     }
 }
@@ -222,45 +223,52 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCollectionViewCell
         
-        if let messageText = messages[indexPath.item].body {
-            cell.messageTextView.text = "\(messageText)"
+        guard let messageText = messages[indexPath.item].body else { return cell }
+        guard let usernameText = messages[indexPath.item].username else { return cell }
+        
+        cell.messageTextView.text = "\(messageText)"
+        cell.usernameTextView.text = "\(usernameText)"
+        
+        let size = CGSize(width: 250, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let estimatedFrameBody = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
+        let estimatedFrameUsername = NSString(string: usernameText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
+        
+        if messages[indexPath.item].senderId != Auth.auth().currentUser?.uid {
+            cell.backgroundColor = UIColor.yellow
+            // messages recieved
+            cell.usernameTextView.frame = CGRect(x: 48 + 8, y: 0, width: estimatedFrameUsername.width + 16, height: estimatedFrameUsername.height)
+            cell.messageTextView.frame = CGRect(x: 48 + 8, y: 16,
+                                                width: estimatedFrameBody.width + 16,
+                                                height: estimatedFrameBody.height + 20)
+            cell.textBubbleView.frame = CGRect(x: 48 - 10, y: 4,
+                                               width: estimatedFrameBody.width + 40,
+                                               height: estimatedFrameBody.height + estimatedFrameUsername.height + 26)
             
-            let size = CGSize(width: 250, height: 1000)
-            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
+            cell.profileImageView.isHidden = false
             
-            if messages[indexPath.item].senderId != Auth.auth().currentUser?.uid {
-                
-                // messages recieved
-                
-                cell.messageTextView.frame = CGRect(x: 48 + 8, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
-                cell.textBubbleView.frame = CGRect(x: 48 - 10, y: -4, width: estimatedFrame.width + 40, height: estimatedFrame.height + 26)
-                
-                cell.profileImageView.isHidden = false
-                
-                if !(chat?.isGroupChat)! {
-                    cell.profileImageView.image = selectedChatUser?.image
-                }
-                
-                cell.bubbleImageView.image = ChatMessageCollectionViewCell.grayBubbleImage
-                cell.bubbleImageView.tintColor = UIColor(white: 0.95, alpha: 1)
-                cell.messageTextView.textColor = UIColor.black
-                
-                //cell.profileImageView.image =
-                
-            } else {
-                
-                // messages sent
-                
-                cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 40, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
-                cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 40 - 10, y: -4, width: estimatedFrame.width + 34, height: estimatedFrame.height + 26)
-                
-                cell.profileImageView.isHidden = true
-                
-                cell.bubbleImageView.image = ChatMessageCollectionViewCell.blueBubbleImage
-                cell.bubbleImageView.tintColor = UIColor(red: 0, green: 137/255, blue: 249/255, alpha: 1)
-                cell.messageTextView.textColor = UIColor.white
+            if !(chat?.isGroupChat)! {
+                cell.profileImageView.image = selectedChatUser?.image
             }
+            
+            cell.bubbleImageView.image = ChatMessageCollectionViewCell.grayBubbleImage
+            cell.bubbleImageView.tintColor = UIColor(white: 0.95, alpha: 1)
+            cell.messageTextView.textColor = UIColor.black
+            
+            //cell.profileImageView.image =
+            
+        } else {
+            
+            // messages sent
+            
+            cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrameBody.width - 40, y: 0, width: estimatedFrameBody.width + 16, height: estimatedFrameBody.height + 20)
+            cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrameBody.width - 40 - 10, y: -4, width: estimatedFrameBody.width + 34, height: estimatedFrameBody.height + 26)
+            
+            cell.profileImageView.isHidden = true
+            
+            cell.bubbleImageView.image = ChatMessageCollectionViewCell.blueBubbleImage
+            cell.bubbleImageView.tintColor = UIColor(red: 0, green: 137/255, blue: 249/255, alpha: 1)
+            cell.messageTextView.textColor = UIColor.white
         }
         
         return cell
@@ -270,13 +278,20 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
 extension ChatSelectedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if let messageText = messages[indexPath.item].body {
+        let message = messages[indexPath.item]
+        if let messageText = message.body,
+            let usernameText = messages[indexPath.item].username {
+            
             let size = CGSize(width: 250, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
             
-            return CGSize(width: view.frame.width, height: estimatedFrame.height + 20)
+            let estimatedFrameBody = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
+            if message.senderId != Auth.auth().currentUser?.uid {
+                let estimatedFrameUsername = NSString(string: usernameText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrameBody.height + estimatedFrameUsername.height + 20)
+            }
+            
+             return CGSize(width: view.frame.width, height: estimatedFrameBody.height + 20)
         }
         
         return CGSize(width: view.frame.width, height: 100)

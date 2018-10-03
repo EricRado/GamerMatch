@@ -43,9 +43,15 @@ class FindGamerResultsViewController: UIViewController {
             tableView.dataSource = self
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("viewDidAppear FindGamerResultsViewController")
+    }
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad FindGamerResultsViewController")
         
         results = [UserCacheInfo]()
         getUsersResults(from: resultIds)

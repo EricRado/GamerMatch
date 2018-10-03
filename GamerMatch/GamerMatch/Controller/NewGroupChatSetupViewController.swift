@@ -19,8 +19,8 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
     let chatRef: DatabaseReference = {
         return Database.database().reference().child("Chats/")
     }()
-    let userRef: DatabaseReference = {
-        return Database.database().reference().child("Users/")
+    let userChatsRef: DatabaseReference = {
+        return Database.database().reference().child("UserChats/")
     }()
     
     var selectedUsers: [UserCacheInfo]?
@@ -88,7 +88,7 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
         guard let members = chat.members else { return }
         // add chat ids to each user node who is in the group chat
         for (key, value) in members {
-            let chatIdsUserRef = userRef.child("\(key)/chatIds")
+            let chatIdsUserRef = userChatsRef.child("\(key)/")
             FirebaseCalls.shared.updateReferenceList(ref: chatIdsUserRef,
                                                      values: [chat.id!: value])
         }
@@ -127,10 +127,14 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
             as? ChatSelectedViewController else { return }
         vc.chat = self.chat
         
+        //FIXXXXXXXXXXXX
         // pop the select users for new chat and group chat setup VCs
+        print("pop 1")
         navigationController?.popViewController(animated: false)
+        print("pop 2")
         navigationController?.popViewController(animated: false)
         
+        print("push 1")
         // push selected chat VC to the top
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -142,16 +146,17 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
             return
         }
         SVProgressHUD.show(withStatus: "Creating Group Chat")
-        if let title = groupTitleTextView.text {
-            createChat(with: title)
-        }
+        guard let title = groupTitleTextView.text else { return }
+        createChat(with: title)
+       
         // verify if photo was selected
         guard let image = groupImage else {
             transitionToSelectedChatVC()
             return
         }
         guard let createdChat = chat else { return }
-    
+        
+        // upload image if selected
         let manager = ImageManager()
         manager.uploadImage(image: image,
             at: "groupProfileImages/\(createdChat.id!).jpg") {

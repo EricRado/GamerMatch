@@ -18,6 +18,16 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
         return textView
     }()
     
+    let usernameTextView: UITextView = {
+        let textView = UITextView()
+        
+        textView.font = UIFont.systemFont(ofSize: 14)
+        textView.backgroundColor = UIColor.clear
+        textView.isEditable = false
+        
+        return textView
+    }()
+    
     let textBubbleView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 15
@@ -53,6 +63,7 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
         
         addSubview(textBubbleView)
         addSubview(messageTextView)
+        addSubview(usernameTextView)
         
         addSubview(profileImageView)
         addConstraintsWithFormat("H:|-8-[v0(30)]|", views: profileImageView)
