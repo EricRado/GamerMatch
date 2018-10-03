@@ -12,6 +12,7 @@
 		070927F8205C7046005B0EAF /* FindGamerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927F7205C7046005B0EAF /* FindGamerViewController.swift */; };
 		070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927F920608CDF005B0EAF /* VideoGame.swift */; };
 		070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070927FB20619FC5005B0EAF /* VideoGameRole.swift */; };
+		070A8B4A21653D780084D289 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070A8B4921653D780084D289 /* ProfileSettingsViewController.swift */; };
 		071A7A132148717500099BCA /* UserCacheInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A122148717500099BCA /* UserCacheInfo.swift */; };
 		071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A142148C29B00099BCA /* AllExtensions.swift */; };
 		071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */; };
@@ -65,6 +66,7 @@
 		070927F7205C7046005B0EAF /* FindGamerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGamerViewController.swift; sourceTree = "<group>"; };
 		070927F920608CDF005B0EAF /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		070927FB20619FC5005B0EAF /* VideoGameRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameRole.swift; sourceTree = "<group>"; };
+		070A8B4921653D780084D289 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		071A7A122148717500099BCA /* UserCacheInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCacheInfo.swift; sourceTree = "<group>"; };
 		071A7A142148C29B00099BCA /* AllExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExtensions.swift; sourceTree = "<group>"; };
 		071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGamerResultsViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 				071ED120215C6970007B805B /* GamerProfileViewController.swift */,
+				070A8B4921653D780084D289 /* ProfileSettingsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				071ED121215C6970007B805B /* GamerProfileViewController.swift in Sources */,
 				071EB7072152F8A100688D32 /* DisplayChatMetaDataViewController.swift in Sources */,
 				07E586F720542E2C00023383 /* ChatUserDisplay.swift in Sources */,
+				070A8B4A21653D780084D289 /* ProfileSettingsViewController.swift in Sources */,
 				071BC838214E108000621899 /* FriendsViewController.swift in Sources */,
 				07E586C8205050A400023383 /* User.swift in Sources */,
 				071E90152150255E005ED404 /* UserTableViewCell.swift in Sources */,
