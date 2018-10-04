@@ -206,12 +206,12 @@
 				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
 				071BC837214E108000621899 /* FriendsViewController.swift */,
 				071EE7B3215709A6006A6401 /* GameAndConsoleSelectionViewController.swift */,
+				071ED120215C6970007B805B /* GamerProfileViewController.swift */,
 				07E586C0204F90E700023383 /* LoginViewController.swift */,
 				07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */,
+				070A8B4921653D780084D289 /* ProfileSettingsViewController.swift */,
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
 				07C982F82096B292007B46BB /* SettingsViewController.swift */,
-				071ED120215C6970007B805B /* GamerProfileViewController.swift */,
-				070A8B4921653D780084D289 /* ProfileSettingsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

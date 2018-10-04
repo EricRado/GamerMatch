@@ -802,14 +802,14 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="Edit"/>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change username and add an optional profile picture" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RP0-oC-AWW">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change username and add an optional profile picture" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RP0-oC-AWW">
                                         <rect key="frame" x="132" y="16" width="227" height="39.5"/>
                                         <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cKf-oV-7N3" userLabel="TextViewContainter">
-                                        <rect key="frame" x="132" y="71.5" width="227" height="46.5"/>
+                                        <rect key="frame" x="132" y="69.5" width="227" height="46.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yiO-pQ-1qt" userLabel="TopBorder">
                                                 <rect key="frame" x="0.0" y="0.0" width="227" height="1"/>
@@ -845,12 +845,21 @@
                                             <constraint firstItem="eQp-VM-bsH" firstAttribute="leading" secondItem="cKf-oV-7N3" secondAttribute="leading" id="s5N-4b-lBP"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W2b-bp-xUB">
+                                        <rect key="frame" x="239" y="132" width="120" height="19"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="Change Username"/>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="vNk-lb-iv7" secondAttribute="bottom" constant="8" id="28F-n3-Pyt"/>
+                                    <constraint firstItem="W2b-bp-xUB" firstAttribute="centerY" secondItem="vNk-lb-iv7" secondAttribute="centerY" id="3cn-iZ-M7H"/>
+                                    <constraint firstAttribute="bottom" secondItem="W2b-bp-xUB" secondAttribute="bottom" constant="8" id="78i-3b-yk6"/>
+                                    <constraint firstItem="W2b-bp-xUB" firstAttribute="top" secondItem="cKf-oV-7N3" secondAttribute="bottom" constant="16" id="GbT-as-c53"/>
+                                    <constraint firstAttribute="trailing" secondItem="W2b-bp-xUB" secondAttribute="trailing" constant="16" id="Orc-pm-PZo"/>
                                     <constraint firstItem="cKf-oV-7N3" firstAttribute="leading" secondItem="RP0-oC-AWW" secondAttribute="leading" id="PX4-KJ-bYX"/>
-                                    <constraint firstItem="cKf-oV-7N3" firstAttribute="top" secondItem="RP0-oC-AWW" secondAttribute="bottom" constant="16" id="VZm-27-HDu"/>
                                     <constraint firstItem="vNk-lb-iv7" firstAttribute="centerX" secondItem="8kn-Aj-Q4b" secondAttribute="centerX" id="X4k-0g-vw1"/>
+                                    <constraint firstItem="W2b-bp-xUB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="b3j-r5-eeu" secondAttribute="leading" constant="20" symbolic="YES" id="bSY-mn-y67"/>
                                     <constraint firstItem="8kn-Aj-Q4b" firstAttribute="leading" secondItem="b3j-r5-eeu" secondAttribute="leading" constant="16" id="kiV-78-8y6"/>
                                     <constraint firstAttribute="trailing" secondItem="RP0-oC-AWW" secondAttribute="trailing" constant="16" id="mxq-Ov-FIW"/>
                                     <constraint firstItem="8kn-Aj-Q4b" firstAttribute="top" secondItem="b3j-r5-eeu" secondAttribute="top" constant="16" id="raL-mC-i52"/>
@@ -879,10 +888,17 @@
                     <navigationItem key="navigationItem" title="Settings" id="7Ce-uT-yOq"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="changeUsernameBtn" destination="W2b-bp-xUB" id="nBz-Vq-puf"/>
+                        <outlet property="editBtn" destination="vNk-lb-iv7" id="hBS-E3-30X"/>
+                        <outlet property="tableView" destination="vVg-9f-8LN" id="4Cr-fH-cuf"/>
+                        <outlet property="userProfileImg" destination="8kn-Aj-Q4b" id="g6o-lk-Diy"/>
+                        <outlet property="usernameTextView" destination="FIj-cS-2rq" id="ejy-eU-Dun"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="el5-mW-XxI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2708" y="-1512"/>
+            <point key="canvasLocation" x="2708" y="-1512.5937031484259"/>
         </scene>
         <!--Chat-->
         <scene sceneID="C1h-aj-YYo">
