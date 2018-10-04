@@ -16,11 +16,13 @@ class ProfileSettingsViewController: UIViewController {
     private let section2Titles = ["Notifications"]
     private let section3Titles = ["Logout"]
     
-    private let userRef: DatabaseReference = {
-        return Database.database().reference().child("Users/")
+    private let userRef: DatabaseReference? = {
+        guard let uid = User.onlineUser.uid else { return nil }
+        return Database.database().reference().child("Users/\(uid)")
     }()
-    private let userCacheInfoRef: DatabaseReference = {
-        return Database.database().reference().child("UserCacheInfo/")
+    private let userCacheInfoRef: DatabaseReference? = {
+        guard let uid = User.onlineUser.uid else { return nil }
+        return Database.database().reference().child("UserCacheInfo/\(uid)")
     }()
     
     private var manager: ImageManager?
@@ -67,29 +69,49 @@ class ProfileSettingsViewController: UIViewController {
     }
     
     @objc fileprivate func changeUsernameBtnPressed(sender: UIButton) {
-        if usernameTextView.text.isEmpty {
+        guard let username = usernameTextView.text else { return }
+        guard let ref1 = userRef else { return }
+        guard let ref2 = userCacheInfoRef else { return }
+        
+        if username.isEmpty {
             print("no text")
             return
         }
         
-        if !(6 ... 16 ~= (usernameTextView.text?.count)!)  {
+        if !(6 ... 16 ~= username.count)  {
             displayErrorMessage(with: "Username should be from 6 - 16 characters")
             return
         }
         
-        if usernameTextView.text == User.onlineUser.username {
+        if username == User.onlineUser.username {
             print("same username")
             return
         }
         
-        
+        changeUsernameBtn.isUserInteractionEnabled = false
+        FirebaseCalls.shared.checkIfUsernameExists(username) { (check, error) in
+            if let error = error {
+                self.displayErrorMessage(with: error.localizedDescription)
+                return
+            }
+            guard let usernameExists = check else { return }
+            if usernameExists {
+                FirebaseCalls.shared
+                    .updateReferenceWithDictionary(ref: ref1, values: ["username": username])
+                FirebaseCalls.shared
+                    .updateReferenceWithDictionary(ref: ref2, values: ["username": username])
+            } else {
+                self.displayErrorMessage(with: "Username is already taken")
+                self.changeUsernameBtn.isUserInteractionEnabled = true
+            }
+        }
     }
     
     @objc fileprivate func editBtnPressed(sender: UIButton) {
         guard let id = User.onlineUser.uid else { return }
         let path = "userProfileImages/\(id).jpg"
-        let ref1 = userRef.child("\(id)")
-        let ref2 = userCacheInfoRef.child("\(id)")
+        guard let ref1 = userRef else { return }
+        guard let ref2 = userCacheInfoRef else { return }
       
         CamaraHandler.shared.imagePickedBlock = { image in
             self.userProfileImg.image = image

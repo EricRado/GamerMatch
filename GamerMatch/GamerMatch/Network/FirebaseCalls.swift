@@ -198,5 +198,37 @@ class FirebaseCalls {
         }
     }
     
+    func checkIfUsernameExists(_ username: String,
+                               completion: @escaping (Bool?, Error?) -> Void) {
+        let query = userCacheInfoRef.queryOrdered(byChild: "username")
+            .queryEqual(toValue: username)
+        query.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+            if !snapshot.exists() {
+                print("username does not exist")
+                completion(false, nil)
+            } else {
+                print("username does exist")
+                completion(true, nil)
+            }
+        }) { (error) in
+            completion(nil, error)
+        }
+    }
+    
+    
+    
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
