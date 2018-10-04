@@ -216,7 +216,15 @@ class FirebaseCalls {
         }
     }
     
-    
+    func logoutUser(completion: () -> Void) {
+        do {
+            try Auth.auth().signOut()
+            completion()
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
     
     
 }

@@ -11,6 +11,7 @@ import Firebase
 
 class ProfileSettingsViewController: UIViewController {
     private let cellId = "cellId"
+    private let signInVCIdentifier = "signInVC"
     private let section0Titles = ["Change Consoles Played", "Change Games Played"]
     private let section1Titles = ["Change Bio", "Upload Images"]
     private let section2Titles = ["Notifications"]
@@ -66,6 +67,22 @@ class ProfileSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         manager = ImageManager()
+    }
+    
+    fileprivate func logoutUser() {
+        guard let vc = self.storyboard?
+            .instantiateViewController(withIdentifier: signInVCIdentifier)
+            as? LoginViewController else { return }
+        let ac = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Yes", style: .default) { (_) in
+            FirebaseCalls.shared.logoutUser {
+                print("presenting LoginViewController...")
+                self.present(vc, animated: true, completion: nil)
+            }
+        })
+        ac.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        self.present(ac, animated: true, completion: nil)
+       
     }
     
     @objc fileprivate func changeUsernameBtnPressed(sender: UIButton) {
@@ -133,7 +150,29 @@ class ProfileSettingsViewController: UIViewController {
 }
 
 extension ProfileSettingsViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let (section, row) = (indexPath.section, indexPath.row)
+        
+        switch (section, row) {
+        case (0,1):
+            print("Change consoles played pressed")
+        case (0,2):
+            print("Change games played pressed")
+        case (1,0):
+            print("Change bio pressed")
+        case (1,1):
+            print("Upload images pressed")
+        case (2,0):
+            print("Notifications pressed")
+        case (3,0):
+            print("Logout pressed")
+            logoutUser()
+        default:
+            break
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 }
 
 extension ProfileSettingsViewController: UITableViewDataSource {

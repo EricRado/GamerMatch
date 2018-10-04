@@ -24,7 +24,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="BYZ-38-t0r" customClass="LoginViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signInVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="BYZ-38-t0r" customClass="LoginViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" semanticContentAttribute="playback" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1983,6 +1983,6 @@
         <image name="xbox" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SZl-6X-ud1"/>
+        <segue reference="p1K-8C-PN8"/>
     </inferredMetricsTieBreakers>
 </document>
