@@ -12,8 +12,9 @@ import Firebase
 class ProfileSettingsViewController: UIViewController {
     private let cellId = "cellId"
     private let signInVCIdentifier = "signInVC"
+    private var updateBioView = UpdateBioView()
     private let section0Titles = ["Change Consoles Played", "Change Games Played"]
-    private let section1Titles = ["Change Bio", "Upload Images"]
+    private let section1Titles = ["Update Bio", "Upload Images"]
     private let section2Titles = ["Notifications"]
     private let section3Titles = ["Logout"]
     
@@ -69,6 +70,37 @@ class ProfileSettingsViewController: UIViewController {
         manager = ImageManager()
     }
     
+    fileprivate func changeConsolesPlayed() {
+        print("changeConsolesPlayed()")
+        let presentView = UIView()
+        presentView.translatesAutoresizingMaskIntoConstraints = false
+        presentView.backgroundColor = .red
+        print("new view is about to be added")
+        view.addSubview(presentView)
+        
+        presentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: 16).isActive = true
+        presentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+            constant: 16).isActive = true
+        presentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+            constant: -16).isActive = true
+        presentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+            constant: -16).isActive = true
+        
+    }
+    
+    fileprivate func updateBio() {
+        //updateBioView = UpdateBioView()
+        updateBioView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(updateBioView)
+        
+        updateBioView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        updateBioView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        updateBioView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        updateBioView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        updateBioView.cancelBtn.addTarget(self, action: #selector(cancelBtnPressed(sender:)), for: .touchUpInside)
+    }
+    
     fileprivate func logoutUser() {
         guard let vc = self.storyboard?
             .instantiateViewController(withIdentifier: signInVCIdentifier)
@@ -83,6 +115,12 @@ class ProfileSettingsViewController: UIViewController {
         ac.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         self.present(ac, animated: true, completion: nil)
        
+    }
+    
+    @objc fileprivate func cancelBtnPressed(sender: UIButton) {
+        print("cancel btn pressed")
+        
+        updateBioView.removeFromSuperview()
     }
     
     @objc fileprivate func changeUsernameBtnPressed(sender: UIButton) {
@@ -151,15 +189,18 @@ class ProfileSettingsViewController: UIViewController {
 
 extension ProfileSettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("indexpath selected : \(indexPath)")
         let (section, row) = (indexPath.section, indexPath.row)
         
         switch (section, row) {
-        case (0,1):
+        case (0,0):
             print("Change consoles played pressed")
-        case (0,2):
+            //changeConsolesPlayed()
+        case (0,1):
             print("Change games played pressed")
         case (1,0):
             print("Change bio pressed")
+            updateBio()
         case (1,1):
             print("Upload images pressed")
         case (2,0):
