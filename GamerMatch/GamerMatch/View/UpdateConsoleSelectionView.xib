@@ -6,18 +6,101 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="comic_sans_ms.ttf">
+            <string>ComicSansMS</string>
+        </array>
+    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UpdateConsoleSelectionView"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UpdateConsoleSelectionView">
+            <connections>
+                <outlet property="cancelBtn" destination="gwA-QP-8PA" id="pkU-Nu-do4"/>
+                <outlet property="titleLabel" destination="6V8-wY-GM9" id="ju3-Fu-pxr"/>
+                <outlet property="updateBtn" destination="85L-2y-Dwh" id="ESk-yH-gMx"/>
+                <outlet property="view" destination="iN0-l3-epB" id="S5A-5V-Zrg"/>
+                <outletCollection property="consoleBtns" destination="UU2-eH-nls" collectionClass="NSMutableArray" id="ggB-sP-Lst"/>
+                <outletCollection property="consoleBtns" destination="WCM-sm-M5T" collectionClass="NSMutableArray" id="1kJ-bz-0Bk"/>
+                <outletCollection property="consoleBtns" destination="0T5-al-aj7" collectionClass="NSMutableArray" id="e5J-ZJ-ZbG"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UpdateConsoleSelection" customModule="GamerMatch" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the Consoles You Play" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6V8-wY-GM9">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="24"/>
+                    <color key="backgroundColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="UxL-7B-Hhc" userLabel="Options">
+                    <rect key="frame" x="0.0" y="164" width="300" height="36"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gwA-QP-8PA">
+                            <rect key="frame" x="0.0" y="0.0" width="150" height="36"/>
+                            <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="85L-2y-Dwh">
+                            <rect key="frame" x="150" y="0.0" width="150" height="36"/>
+                            <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
+                            <state key="normal" title="Update">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                    </subviews>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jWB-Sz-2b0" userLabel="Consoles">
+                    <rect key="frame" x="14" y="60" width="272" height="80"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UU2-eH-nls" userLabel="Console1">
+                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="UU2-eH-nls" secondAttribute="height" multiplier="1:1" id="8oI-j9-ZLt"/>
+                            </constraints>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WCM-sm-M5T" userLabel="Console2">
+                            <rect key="frame" x="96" y="0.0" width="80" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="WCM-sm-M5T" secondAttribute="height" multiplier="1:1" id="MUw-VH-itg"/>
+                            </constraints>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0T5-al-aj7" userLabel="Console3">
+                            <rect key="frame" x="192" y="0.0" width="80" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="0T5-al-aj7" secondAttribute="height" multiplier="1:1" id="YC2-s8-z5w"/>
+                            </constraints>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="6V8-wY-GM9" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="2YT-nb-CIl"/>
+                <constraint firstItem="jWB-Sz-2b0" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="ET3-Ms-Oyc"/>
+                <constraint firstItem="jWB-Sz-2b0" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.4" id="JJw-nh-7k2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="UxL-7B-Hhc" secondAttribute="bottom" id="NIL-v2-LRq"/>
+                <constraint firstItem="jWB-Sz-2b0" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="TSm-dU-lfR"/>
+                <constraint firstItem="6V8-wY-GM9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="VGL-Tj-Ope"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="UxL-7B-Hhc" secondAttribute="trailing" id="YqX-UP-8uL"/>
+                <constraint firstItem="UxL-7B-Hhc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="eh9-zm-pho"/>
+                <constraint firstItem="6V8-wY-GM9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="hkV-fW-z3d"/>
+                <constraint firstItem="UxL-7B-Hhc" firstAttribute="top" secondItem="jWB-Sz-2b0" secondAttribute="bottom" constant="24" id="vwD-TN-rYf"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="34" y="53"/>
         </view>
     </objects>
 </document>

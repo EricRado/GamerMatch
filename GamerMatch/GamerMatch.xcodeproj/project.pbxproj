@@ -38,6 +38,9 @@
 		07473B97216690FF00F2E089 /* UpdateBioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07473B96216690FF00F2E089 /* UpdateBioView.swift */; };
 		07473B992166CD8F00F2E089 /* UpdateConsoleSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07473B982166CD8F00F2E089 /* UpdateConsoleSelectionView.xib */; };
 		07473B9B2166CDB300F2E089 /* UpdateConsoleSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07473B9A2166CDB300F2E089 /* UpdateConsoleSelectionView.swift */; };
+		07473B9D2166F2B500F2E089 /* UploadImagesForProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07473B9C2166F2B500F2E089 /* UploadImagesForProfileView.swift */; };
+		07473B9F2166F32400F2E089 /* UploadImagesForProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07473B9E2166F32400F2E089 /* UploadImagesForProfileView.xib */; };
+		07473BA121670FA000F2E089 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07473BA021670FA000F2E089 /* DownloadManager.swift */; };
 		07BF4CA720E5621600044C86 /* GamerMatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */; };
 		07C982F720961B40007B46BB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F620961B40007B46BB /* ImageManager.swift */; };
 		07C982F92096B292007B46BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F82096B292007B46BB /* SettingsViewController.swift */; };
@@ -96,6 +99,9 @@
 		07473B96216690FF00F2E089 /* UpdateBioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBioView.swift; sourceTree = "<group>"; };
 		07473B982166CD8F00F2E089 /* UpdateConsoleSelectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateConsoleSelectionView.xib; sourceTree = "<group>"; };
 		07473B9A2166CDB300F2E089 /* UpdateConsoleSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateConsoleSelectionView.swift; sourceTree = "<group>"; };
+		07473B9C2166F2B500F2E089 /* UploadImagesForProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImagesForProfileView.swift; sourceTree = "<group>"; };
+		07473B9E2166F32400F2E089 /* UploadImagesForProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadImagesForProfileView.xib; sourceTree = "<group>"; };
+		07473BA021670FA000F2E089 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchTableViewCell.swift; sourceTree = "<group>"; };
 		07C982F620961B40007B46BB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		07C982F82096B292007B46BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				07250BCF20CDBC8E0025C9DE /* FirebaseCalls.swift */,
+				07473BA021670FA000F2E089 /* DownloadManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -262,6 +269,8 @@
 				07473B96216690FF00F2E089 /* UpdateBioView.swift */,
 				07473B982166CD8F00F2E089 /* UpdateConsoleSelectionView.xib */,
 				07473B9A2166CDB300F2E089 /* UpdateConsoleSelectionView.swift */,
+				07473B9C2166F2B500F2E089 /* UploadImagesForProfileView.swift */,
+				07473B9E2166F32400F2E089 /* UploadImagesForProfileView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -352,6 +361,7 @@
 				0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */,
 				07DE23E4215430880079F338 /* FriendRequestTableViewCell.xib in Resources */,
 				07E586B9204F8F7600023383 /* LaunchScreen.storyboard in Resources */,
+				07473B9F2166F32400F2E089 /* UploadImagesForProfileView.xib in Resources */,
 				07E586CA205057D600023383 /* GoogleService-Info.plist in Resources */,
 				07DDCB6B2150B63500584BD6 /* FriendCollectionViewCell.xib in Resources */,
 				07E586B6204F8F7600023383 /* Assets.xcassets in Resources */,
@@ -458,10 +468,12 @@
 				07E586F32052FA5700023383 /* Chat.swift in Sources */,
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */,
+				07473B9D2166F2B500F2E089 /* UploadImagesForProfileView.swift in Sources */,
 				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
 				07C982F720961B40007B46BB /* ImageManager.swift in Sources */,
 				071E9011214EB04B005ED404 /* FriendCollectionViewHeader.swift in Sources */,
 				07473B9B2166CDB300F2E089 /* UpdateConsoleSelectionView.swift in Sources */,
+				07473BA121670FA000F2E089 /* DownloadManager.swift in Sources */,
 				071EE7B22155C2A9006A6401 /* VideoGameRepo.swift in Sources */,
 				071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */,
 				07E586F52052FDCA00023383 /* Message.swift in Sources */,

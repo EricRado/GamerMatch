@@ -72,20 +72,15 @@ class ProfileSettingsViewController: UIViewController {
     
     fileprivate func changeConsolesPlayed() {
         print("changeConsolesPlayed()")
-        let presentView = UIView()
+        let presentView = UpdateConsoleSelectionView()
         presentView.translatesAutoresizingMaskIntoConstraints = false
-        presentView.backgroundColor = .red
-        print("new view is about to be added")
         view.addSubview(presentView)
         
-        presentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-            constant: 16).isActive = true
-        presentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16).isActive = true
-        presentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16).isActive = true
-        presentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-            constant: -16).isActive = true
+        presentView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        presentView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        presentView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        presentView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        presentView.cancelBtn.addTarget(self, action: #selector(cancelBtnPressed(sender:)), for: .touchUpInside)
         
     }
     
@@ -195,7 +190,7 @@ extension ProfileSettingsViewController: UITableViewDelegate {
         switch (section, row) {
         case (0,0):
             print("Change consoles played pressed")
-            //changeConsolesPlayed()
+            changeConsolesPlayed()
         case (0,1):
             print("Change games played pressed")
         case (1,0):
