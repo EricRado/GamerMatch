@@ -187,6 +187,17 @@ class FirebaseCalls {
         }
     }
     
+    func removeAndUpdateReferenceWithDictionary(ref: DatabaseReference,
+                                                values: [String: String]?) {
+        guard let dict = values else { return }
+        ref.setValue(dict) { (error, _) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+        }
+    }
+    
     func removeReferenceValue(at path: String) {
         let ref = dbRef.child(path)
         ref.removeValue { (error, ref) in

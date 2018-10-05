@@ -55,13 +55,14 @@ class ProfileSettingsViewController: UIViewController {
     private let section1Titles = ["Update Bio", "Upload Images"]
     private let section2Titles = ["Notifications"]
     
-    private let userRef: DatabaseReference? = {
+    private lazy var userRef: DatabaseReference? = {
+        print(User.onlineUser.uid ?? "noID")
         guard let uid = User.onlineUser.uid else { return nil }
-        return Database.database().reference().child("Users/\(uid)")
+        return Database.database().reference().child("Users/\(uid)/")
     }()
-    private let userCacheInfoRef: DatabaseReference? = {
+    private lazy var userCacheInfoRef: DatabaseReference? = {
         guard let uid = User.onlineUser.uid else { return nil }
-        return Database.database().reference().child("UserCacheInfo/\(uid)")
+        return Database.database().reference().child("UserCacheInfo/\(uid)/")
     }()
     
     private var manager: ImageManager?
@@ -113,7 +114,6 @@ class ProfileSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         manager = ImageManager()
-       
     }
     
     fileprivate func updateBio() {
@@ -264,12 +264,14 @@ extension ProfileSettingsViewController {
             sender.isSelected = true
             consolesSelected?[consoleName] = "true"
         }
-        print("The dict so far")
-        print(consolesSelected)
     }
     
     @objc fileprivate func updateConsolesBtnPressed(sender: UIButton) {
-        print("update btn was pressed")
+        guard let ref = userRef?.child("Consoles/") else { return }
+    
+        FirebaseCalls.shared.removeAndUpdateReferenceWithDictionary(ref: ref,
+                                                           values: consolesSelected)
+        updateConsoleSelectionView.removeFromSuperview()
     }
     
 }

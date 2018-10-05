@@ -28,7 +28,7 @@ final class User {
     private init? (snapshot: DataSnapshot){
         guard let dict = snapshot.value as? [String: Any] else {return}
         
-        guard let uid = dict["uid"] as! String? else {return nil}
+        guard let uid = dict["uid"] as? String else {return nil}
         guard let email = dict["email"] as! String? else {return nil}
         guard let username = dict["username"] as! String? else {return nil}
         guard let bio = dict["bio"] as! String? else {return nil}
