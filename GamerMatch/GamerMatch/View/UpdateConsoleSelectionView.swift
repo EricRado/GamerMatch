@@ -25,6 +25,15 @@ class UpdateConsoleSelectionView: UIView {
             }
         }
     }
+    lazy var btnTagToConsoleDict: [Int: String]? = {
+        guard let consoles = VideoGameRepo.shared.getConsoles()
+            else { return nil}
+        var dict = [Int: String]()
+        for (index,console) in consoles.enumerated() {
+            dict[index] = console.name
+        }
+        return dict
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

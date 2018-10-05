@@ -12,11 +12,48 @@ import Firebase
 class ProfileSettingsViewController: UIViewController {
     private let cellId = "cellId"
     private let signInVCIdentifier = "signInVC"
-    private var updateBioView = UpdateBioView()
+    
+    // keeps track of user's console selections
+    private lazy var consolesSelected: [String: String]? = {
+        guard let consoles = User.onlineUser.consoles else { return nil }
+        var dict = consoles
+        return dict
+    }()
+    
+    private lazy var updateConsoleSelectionView: UpdateConsoleSelectionView  = {
+        var view = UpdateConsoleSelectionView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.cancelBtn.tag = 0
+        view.cancelBtn.addTarget(self,
+                                 action: #selector(cancelBtnPressed(sender:)),
+                                 for: .touchUpInside)
+        view.updateBtn.addTarget(self,
+                                 action: #selector(updateConsolesBtnPressed(sender:)),
+                                 for: .touchUpInside)
+        return view
+    }()
+    private lazy var updateBioView: UpdateBioView = {
+        var view = UpdateBioView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.cancelBtn.tag = 1
+        view.cancelBtn.addTarget(self,
+                                 action: #selector(cancelBtnPressed(sender:)),
+                                 for: .touchUpInside)
+        return view
+    }()
+    private lazy var uploadImagesProfileView: UploadImagesForProfileView = {
+        var view = UploadImagesForProfileView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.closeBtn.tag = 2
+        view.closeBtn.addTarget(self,
+                                action: #selector(cancelBtnPressed(sender:)),
+                                for: .touchUpInside)
+        return view
+    }()
+    
     private let section0Titles = ["Change Consoles Played", "Change Games Played"]
     private let section1Titles = ["Update Bio", "Upload Images"]
     private let section2Titles = ["Notifications"]
-    private let section3Titles = ["Logout"]
     
     private let userRef: DatabaseReference? = {
         guard let uid = User.onlineUser.uid else { return nil }
@@ -64,6 +101,8 @@ class ProfileSettingsViewController: UIViewController {
             tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         }
     }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let rightBarBtn = UIBarButtonItem(title: "Logout", style: .plain, target: self,
@@ -74,50 +113,31 @@ class ProfileSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         manager = ImageManager()
-    }
-    
-    fileprivate func changeConsolesPlayed() {
-        print("changeConsolesPlayed()")
-        let presentView = UpdateConsoleSelectionView()
-        presentView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(presentView)
-        
-        presentView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        presentView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        presentView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        presentView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        presentView.cancelBtn.addTarget(self, action: #selector(cancelBtnPressed(sender:)), for: .touchUpInside)
-        
+       
     }
     
     fileprivate func updateBio() {
-        //updateBioView = UpdateBioView()
-        updateBioView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(updateBioView)
         
         updateBioView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         updateBioView.widthAnchor.constraint(equalToConstant: 300).isActive = true
         updateBioView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         updateBioView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        updateBioView.cancelBtn.addTarget(self, action: #selector(cancelBtnPressed(sender:)), for: .touchUpInside)
     }
     
     fileprivate func uploadImages() {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         guard let size = delegate?.window?.frame.size else { return }
+        
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = true
-        print("this is the size of window : \(size)")
-        let presentView = UploadImagesForProfileView()
-        presentView.translatesAutoresizingMaskIntoConstraints = false
-    
-        view.addSubview(presentView)
         
-        presentView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
-        presentView.widthAnchor.constraint(equalToConstant: size.width).isActive = true
-        presentView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        presentView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        view.addSubview(uploadImagesProfileView)
         
+        uploadImagesProfileView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        uploadImagesProfileView.widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        uploadImagesProfileView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        uploadImagesProfileView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     @objc fileprivate func logoutUser(sender: UIBarButtonItem) {
@@ -127,19 +147,27 @@ class ProfileSettingsViewController: UIViewController {
         let ac = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Yes", style: .default) { (_) in
             FirebaseCalls.shared.logoutUser {
-                print("presenting LoginViewController...")
                 self.present(vc, animated: true, completion: nil)
             }
         })
         ac.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         self.present(ac, animated: true, completion: nil)
-       
     }
     
     @objc fileprivate func cancelBtnPressed(sender: UIButton) {
-        print("cancel btn pressed")
-        
-        updateBioView.removeFromSuperview()
+        switch sender.tag {
+        case 0:
+            updateConsoleSelectionView.removeFromSuperview()
+        case 1:
+            updateBioView.removeFromSuperview()
+        case 2:
+            uploadImagesProfileView.removeFromSuperview()
+            navigationController?.navigationBar.isHidden = false
+            tabBarController?.tabBar.isHidden = false
+        default:
+            return
+        }
+     
     }
     
     @objc fileprivate func changeUsernameBtnPressed(sender: UIButton) {
@@ -203,9 +231,50 @@ class ProfileSettingsViewController: UIViewController {
         }
         CamaraHandler.shared.showActionSheet(vc: self)
     }
-
 }
 
+// MARK: -  UpdateConsoleSelectionView's Functions
+extension ProfileSettingsViewController {
+    fileprivate func changeConsolesPlayed() {
+        for btn in updateConsoleSelectionView.consoleBtns {
+            btn.addTarget(self, action: #selector(consoleBtnPressed(sender:)), for: .touchUpInside)
+        }
+        
+        for (index, consoleName) in updateConsoleSelectionView.btnTagToConsoleDict! {
+            guard ((consolesSelected?[consoleName]) != nil) else { continue }
+            updateConsoleSelectionView.consoleBtns[index].isSelected = true
+        }
+        
+        view.addSubview(updateConsoleSelectionView)
+        
+        updateConsoleSelectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        updateConsoleSelectionView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        updateConsoleSelectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        updateConsoleSelectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
+    @objc fileprivate func consoleBtnPressed(sender: UIButton) {
+        guard let consoleName = updateConsoleSelectionView
+            .btnTagToConsoleDict?[sender.tag] else { return }
+        
+        if let _ = consolesSelected?[consoleName] {
+            sender.isSelected = false
+            consolesSelected?.removeValue(forKey: consoleName)
+        } else {
+            sender.isSelected = true
+            consolesSelected?[consoleName] = "true"
+        }
+        print("The dict so far")
+        print(consolesSelected)
+    }
+    
+    @objc fileprivate func updateConsolesBtnPressed(sender: UIButton) {
+        print("update btn was pressed")
+    }
+    
+}
+
+// MARK: - UITableViewDelegate
 extension ProfileSettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("indexpath selected : \(indexPath)")
@@ -233,6 +302,7 @@ extension ProfileSettingsViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ProfileSettingsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
