@@ -19,9 +19,7 @@ class FindGamerResultsViewController: UIViewController {
     var cellRowToUserImage = [Int: UIImage]()
     
     lazy var downloadSession: URLSession = {
-        let configuration = URLSessionConfiguration
-            .background(withIdentifier: "GamerResultsVCBgSessionConfiguration")
-        let session = URLSession(configuration: configuration,
+        let session = URLSession(configuration: .default,
                                  delegate: self,
                                  delegateQueue: nil)
         return session
@@ -46,12 +44,10 @@ class FindGamerResultsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("viewDidAppear FindGamerResultsViewController")
     }
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad FindGamerResultsViewController")
         
         results = [UserCacheInfo]()
         getUsersResults(from: resultIds)
