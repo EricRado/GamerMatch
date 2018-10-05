@@ -64,6 +64,12 @@ class ProfileSettingsViewController: UIViewController {
             tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let rightBarBtn = UIBarButtonItem(title: "Logout", style: .plain, target: self,
+                                         action: #selector(logoutUser(sender:)))
+        navigationItem.rightBarButtonItem = rightBarBtn
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +102,25 @@ class ProfileSettingsViewController: UIViewController {
         updateBioView.cancelBtn.addTarget(self, action: #selector(cancelBtnPressed(sender:)), for: .touchUpInside)
     }
     
-    fileprivate func logoutUser() {
+    fileprivate func uploadImages() {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        guard let size = delegate?.window?.frame.size else { return }
+        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
+        print("this is the size of window : \(size)")
+        let presentView = UploadImagesForProfileView()
+        presentView.translatesAutoresizingMaskIntoConstraints = false
+    
+        view.addSubview(presentView)
+        
+        presentView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        presentView.widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        presentView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        presentView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+    }
+    
+    @objc fileprivate func logoutUser(sender: UIBarButtonItem) {
         guard let vc = self.storyboard?
             .instantiateViewController(withIdentifier: signInVCIdentifier)
             as? LoginViewController else { return }
@@ -198,11 +222,9 @@ extension ProfileSettingsViewController: UITableViewDelegate {
             updateBio()
         case (1,1):
             print("Upload images pressed")
+            uploadImages()
         case (2,0):
             print("Notifications pressed")
-        case (3,0):
-            print("Logout pressed")
-            logoutUser()
         default:
             break
         }
@@ -213,7 +235,7 @@ extension ProfileSettingsViewController: UITableViewDelegate {
 
 extension ProfileSettingsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -224,8 +246,6 @@ extension ProfileSettingsViewController: UITableViewDataSource {
             return section1Titles.count
         case 2:
             return section2Titles.count
-        case 3:
-            return section3Titles.count
         default:
             return 0
         }
@@ -243,8 +263,6 @@ extension ProfileSettingsViewController: UITableViewDataSource {
             title = section1Titles[row]
         case 2:
             title = section2Titles[row]
-        case 3:
-            title = section3Titles[row]
         default:
             title = ""
         }

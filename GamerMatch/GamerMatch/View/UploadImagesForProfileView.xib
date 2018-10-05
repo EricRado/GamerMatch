@@ -6,63 +6,146 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="comic_sans_ms.ttf">
+            <string>ComicSansMS</string>
+        </array>
+    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UploadImagesForProfileView" customModule="GamerMatch" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UploadImagesForProfileView" customModule="GamerMatch" customModuleProvider="target">
+            <connections>
+                <outlet property="closeBtn" destination="nDG-hB-xtU" id="5Ms-3U-LbG"/>
+                <outlet property="view" destination="iN0-l3-epB" id="KgC-Xz-Nal"/>
+                <outletCollection property="imageBtns" destination="8eA-60-7l9" collectionClass="NSMutableArray" id="KDP-zI-0n5"/>
+                <outletCollection property="imageBtns" destination="eqc-7e-ieZ" collectionClass="NSMutableArray" id="cYG-XU-9Sh"/>
+                <outletCollection property="imageBtns" destination="fqq-in-EP6" collectionClass="NSMutableArray" id="mKu-Sd-wNg"/>
+                <outletCollection property="uploadBtns" destination="uIq-Og-OBW" collectionClass="NSMutableArray" id="UrT-ct-7zA"/>
+                <outletCollection property="uploadBtns" destination="suC-IM-dc0" collectionClass="NSMutableArray" id="QqH-Wh-0zu"/>
+                <outletCollection property="uploadBtns" destination="j0s-IS-dwx" collectionClass="NSMutableArray" id="el5-rO-q19"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nDG-hB-xtU">
-                    <rect key="frame" x="315" y="20" width="60" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nDG-hB-xtU" userLabel="Close Btn">
+                    <rect key="frame" x="295" y="20" width="64" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="nDG-hB-xtU" secondAttribute="height" multiplier="1:1" id="yod-2h-eL6"/>
+                    </constraints>
+                    <state key="normal" image="closeButton"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCY-eO-nxB">
-                    <rect key="frame" x="164" y="318" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="emn-FX-HLq">
-                    <rect key="frame" x="313" y="318" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIq-Og-OBW">
-                    <rect key="frame" x="42" y="404" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WPw-Sv-Dtp">
-                    <rect key="frame" x="164" y="404" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="njI-1e-fkN">
-                    <rect key="frame" x="313" y="404" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="080-H6-SKO">
-                    <rect key="frame" x="59" y="149" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" text="Upload up to 3 images to display your awesomness when gamers view your profile" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="080-H6-SKO" userLabel="Text View Top">
+                    <rect key="frame" x="84" y="108" width="207" height="111"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eA-60-7l9">
-                    <rect key="frame" x="25" y="293" width="80" height="80"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Q2u-jZ-l2R" userLabel="Upload Image Stack View">
+                    <rect key="frame" x="12.5" y="267.5" width="350" height="152"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="huy-y9-XkZ" userLabel="UploadImageView1">
+                            <rect key="frame" x="0.0" y="0.0" width="106" height="152"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eA-60-7l9" userLabel="UploadImage1 Btn">
+                                    <rect key="frame" x="8" y="8" width="90" height="90"/>
+                                    <state key="normal" image="AddPhotoRoundSquare"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIq-Og-OBW" userLabel="Upload1 Btn">
+                                    <rect key="frame" x="28" y="114" width="50" height="30"/>
+                                    <state key="normal" title="Upload"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="uIq-Og-OBW" firstAttribute="top" secondItem="8eA-60-7l9" secondAttribute="bottom" constant="16" id="7sO-S0-yKM"/>
+                                <constraint firstAttribute="trailing" secondItem="8eA-60-7l9" secondAttribute="trailing" constant="8" id="CGe-61-5w1"/>
+                                <constraint firstItem="8eA-60-7l9" firstAttribute="leading" secondItem="huy-y9-XkZ" secondAttribute="leading" constant="8" id="RbC-30-YbZ"/>
+                                <constraint firstItem="uIq-Og-OBW" firstAttribute="centerX" secondItem="huy-y9-XkZ" secondAttribute="centerX" id="UdU-72-uXT"/>
+                                <constraint firstAttribute="bottom" secondItem="uIq-Og-OBW" secondAttribute="bottom" constant="8" id="Y3a-zZ-Eci"/>
+                                <constraint firstItem="8eA-60-7l9" firstAttribute="top" secondItem="huy-y9-XkZ" secondAttribute="top" constant="8" id="fNi-Dy-nAl"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qTc-uH-SIB" userLabel="UploadImageView2">
+                            <rect key="frame" x="122" y="0.0" width="106" height="152"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqc-7e-ieZ" userLabel="UploadImage2 Btn">
+                                    <rect key="frame" x="8" y="8" width="90" height="90"/>
+                                    <state key="normal" image="AddPhotoRoundSquare"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="suC-IM-dc0" userLabel="Upload2 Btn">
+                                    <rect key="frame" x="28" y="114" width="50" height="30"/>
+                                    <state key="normal" title="Upload"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="suC-IM-dc0" firstAttribute="top" secondItem="eqc-7e-ieZ" secondAttribute="bottom" constant="16" id="D4Q-nk-ank"/>
+                                <constraint firstAttribute="bottom" secondItem="suC-IM-dc0" secondAttribute="bottom" constant="8" id="Uyn-HN-tIa"/>
+                                <constraint firstItem="eqc-7e-ieZ" firstAttribute="leading" secondItem="qTc-uH-SIB" secondAttribute="leading" constant="8" id="f2x-NE-IC4"/>
+                                <constraint firstItem="suC-IM-dc0" firstAttribute="centerX" secondItem="qTc-uH-SIB" secondAttribute="centerX" id="hQH-So-Ghw"/>
+                                <constraint firstAttribute="trailing" secondItem="eqc-7e-ieZ" secondAttribute="trailing" constant="8" id="iK9-V1-F7f"/>
+                                <constraint firstItem="eqc-7e-ieZ" firstAttribute="top" secondItem="qTc-uH-SIB" secondAttribute="top" constant="8" id="uzb-J6-hPb"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWS-Av-cYO" userLabel="UploadImageView3">
+                            <rect key="frame" x="244" y="0.0" width="106" height="152"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-in-EP6" userLabel="UploadImage3 Btn">
+                                    <rect key="frame" x="8" y="8" width="90" height="90"/>
+                                    <state key="normal" image="AddPhotoRoundSquare"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j0s-IS-dwx" userLabel="Upload3 Btn">
+                                    <rect key="frame" x="28" y="114" width="50" height="30"/>
+                                    <state key="normal" title="Upload"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="j0s-IS-dwx" secondAttribute="bottom" constant="8" id="2or-XB-l77"/>
+                                <constraint firstItem="j0s-IS-dwx" firstAttribute="top" secondItem="fqq-in-EP6" secondAttribute="bottom" constant="16" id="AlX-sP-XEK"/>
+                                <constraint firstItem="j0s-IS-dwx" firstAttribute="centerX" secondItem="kWS-Av-cYO" secondAttribute="centerX" id="Ijj-w4-C7f"/>
+                                <constraint firstItem="fqq-in-EP6" firstAttribute="leading" secondItem="kWS-Av-cYO" secondAttribute="leading" constant="8" id="Jtz-Ll-fev"/>
+                                <constraint firstItem="fqq-in-EP6" firstAttribute="top" secondItem="kWS-Av-cYO" secondAttribute="top" constant="8" id="MIE-12-vcI"/>
+                                <constraint firstAttribute="trailing" secondItem="fqq-in-EP6" secondAttribute="trailing" constant="8" id="lP1-Dh-8RL"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" text="If you want to change an existing image, just tap the image to select a new one then press upload" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9Qu-ez-vu8" userLabel="Text View Bottom">
+                    <rect key="frame" x="74.5" y="464" width="225" height="111"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Q2u-jZ-l2R" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="8zb-qb-aWv"/>
+                <constraint firstItem="080-H6-SKO" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="GqQ-L2-nko"/>
+                <constraint firstItem="9Qu-ez-vu8" firstAttribute="top" secondItem="Q2u-jZ-l2R" secondAttribute="bottom" constant="44.5" id="at5-rK-ITQ"/>
+                <constraint firstItem="080-H6-SKO" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.55" id="cjs-fg-z8r"/>
+                <constraint firstItem="9Qu-ez-vu8" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="dZT-LZ-i4x"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="nDG-hB-xtU" secondAttribute="trailing" constant="16" id="iSw-Df-Dr4"/>
+                <constraint firstItem="nDG-hB-xtU" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="p5P-UG-EKd"/>
+                <constraint firstItem="Q2u-jZ-l2R" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="qGM-v9-IE5"/>
+                <constraint firstItem="080-H6-SKO" firstAttribute="top" secondItem="nDG-hB-xtU" secondAttribute="bottom" constant="24" id="s01-iq-ogF"/>
+                <constraint firstItem="nDG-hB-xtU" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.096" id="uc8-GT-xBo"/>
+                <constraint firstItem="9Qu-ez-vu8" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.6" id="zbq-PJ-5wk"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="AddPhotoRoundSquare" width="90" height="90"/>
+        <image name="closeButton" width="128" height="128"/>
+    </resources>
 </document>

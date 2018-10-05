@@ -9,13 +9,59 @@
 import UIKit
 
 class UploadImagesForProfileView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    @IBOutlet var view: UIView!
+    @IBOutlet weak var closeBtn: UIButton!
+    @IBOutlet var imageBtns: [UIButton]! {
+        didSet {
+            for (index, btn) in imageBtns.enumerated() {
+                btn.tag = index
+            }
+        }
     }
-    */
+    @IBOutlet var uploadBtns: [UIButton]! {
+        didSet {
+            for (index, btn) in uploadBtns.enumerated() {
+                btn.tag = index
+            }
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        Bundle.main.loadNibNamed("UploadImagesForProfileView", owner: self, options: nil)
+        addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
