@@ -88,12 +88,22 @@ class DisplayChatMetaDataViewController: UIViewController {
     }
     
     @objc fileprivate func savePhotoBtnPressed(sender: UIButton) {
-        print("save pressed")
+        guard let id = chat?.id else { return }
+        let path = "groupProfileImages/\(id).jpg"
         let ac = UIAlertController(title: "Upload new image",
                                    message: "Do you want to change the group picture to the selected one?",
                                    preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Confirm", style: .default) { _ in
-            print("confirm pressed")
+            guard let image = self.groupImage else { return }
+            self.mediaManager.uploadImage(image: image, at: path){ (urlString, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                guard let url = urlString else { return }
+                guard let ref = self.chatRef else { return }
+                FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: ["url": url])
+            }
             
         })
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -106,6 +116,7 @@ class DisplayChatMetaDataViewController: UIViewController {
             self.groupImageButton.setBackgroundImage(image, for: .normal)
             self.savePhotoButton.isEnabled = true
             self.savePhotoButton.setTitleColor(UIColor.blue, for: .normal)
+            self.groupImage = image
         }
     }
 }
