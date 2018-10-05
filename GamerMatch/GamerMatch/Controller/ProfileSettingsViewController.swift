@@ -39,6 +39,9 @@ class ProfileSettingsViewController: UIViewController {
         view.cancelBtn.addTarget(self,
                                  action: #selector(cancelBtnPressed(sender:)),
                                  for: .touchUpInside)
+        view.updateBtn.addTarget(self,
+                                 action: #selector(updateBioBtnPressed(sender:)),
+                                 for: .touchUpInside)
         return view
     }()
     private lazy var uploadImagesProfileView: UploadImagesForProfileView = {
@@ -56,7 +59,6 @@ class ProfileSettingsViewController: UIViewController {
     private let section2Titles = ["Notifications"]
     
     private lazy var userRef: DatabaseReference? = {
-        print(User.onlineUser.uid ?? "noID")
         guard let uid = User.onlineUser.uid else { return nil }
         return Database.database().reference().child("Users/\(uid)/")
     }()
@@ -114,15 +116,6 @@ class ProfileSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         manager = ImageManager()
-    }
-    
-    fileprivate func updateBio() {
-        view.addSubview(updateBioView)
-        
-        updateBioView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        updateBioView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        updateBioView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        updateBioView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     fileprivate func uploadImages() {
@@ -235,7 +228,7 @@ class ProfileSettingsViewController: UIViewController {
 
 // MARK: -  UpdateConsoleSelectionView's Functions
 extension ProfileSettingsViewController {
-    fileprivate func changeConsolesPlayed() {
+    fileprivate func setupUpdateConsoleSelectionView() {
         for btn in updateConsoleSelectionView.consoleBtns {
             btn.addTarget(self, action: #selector(consoleBtnPressed(sender:)), for: .touchUpInside)
         }
@@ -271,9 +264,33 @@ extension ProfileSettingsViewController {
     
         FirebaseCalls.shared.removeAndUpdateReferenceWithDictionary(ref: ref,
                                                            values: consolesSelected)
+        User.onlineUser.consoles = consolesSelected
         updateConsoleSelectionView.removeFromSuperview()
     }
     
+}
+
+// MARK: - UpdateBioView's Functions
+extension ProfileSettingsViewController {
+    fileprivate func setupUpdateBioView() {
+        updateBioView.bioTextView.text = User.onlineUser.bio
+        view.addSubview(updateBioView)
+        
+        updateBioView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        updateBioView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        updateBioView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        updateBioView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
+    @objc fileprivate func updateBioBtnPressed(sender: UIButton) {
+        guard let ref = userRef else { return }
+        // verify text is not short and empty
+        
+        let text = updateBioView.bioTextView.text
+        FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: ["bio": text!])
+        User.onlineUser.bio = text
+        updateBioView.removeFromSuperview()
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -285,12 +302,12 @@ extension ProfileSettingsViewController: UITableViewDelegate {
         switch (section, row) {
         case (0,0):
             print("Change consoles played pressed")
-            changeConsolesPlayed()
+            setupUpdateConsoleSelectionView()
         case (0,1):
             print("Change games played pressed")
         case (1,0):
             print("Change bio pressed")
-            updateBio()
+            setupUpdateBioView()
         case (1,1):
             print("Upload images pressed")
             uploadImages()
