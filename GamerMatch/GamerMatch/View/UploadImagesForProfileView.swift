@@ -23,6 +23,8 @@ class UploadImagesForProfileView: UIView {
         didSet {
             for (index, btn) in uploadBtns.enumerated() {
                 btn.tag = index
+                btn.layer.cornerRadius = 10
+                btn.layer.masksToBounds = true
             }
         }
     }

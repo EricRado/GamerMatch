@@ -47,18 +47,18 @@
                     <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Q2u-jZ-l2R" userLabel="Upload Image Stack View">
-                    <rect key="frame" x="12.5" y="267.5" width="350" height="152"/>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Q2u-jZ-l2R" userLabel="Upload Image Stack View">
+                    <rect key="frame" x="27.5" y="267.5" width="320" height="152"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="huy-y9-XkZ" userLabel="UploadImageView1">
-                            <rect key="frame" x="0.0" y="0.0" width="106" height="152"/>
+                            <rect key="frame" x="0.0" y="0.0" width="96" height="152"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eA-60-7l9" userLabel="UploadImage1 Btn">
-                                    <rect key="frame" x="8" y="8" width="90" height="90"/>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eA-60-7l9" userLabel="UploadImage1 Btn">
+                                    <rect key="frame" x="8" y="8" width="80" height="91"/>
                                     <state key="normal" image="AddPhotoRoundSquare"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIq-Og-OBW" userLabel="Upload1 Btn">
-                                    <rect key="frame" x="28" y="114" width="50" height="30"/>
+                                    <rect key="frame" x="23.5" y="115" width="50" height="29"/>
                                     <state key="normal" title="Upload"/>
                                 </button>
                             </subviews>
@@ -67,20 +67,21 @@
                                 <constraint firstItem="uIq-Og-OBW" firstAttribute="top" secondItem="8eA-60-7l9" secondAttribute="bottom" constant="16" id="7sO-S0-yKM"/>
                                 <constraint firstAttribute="trailing" secondItem="8eA-60-7l9" secondAttribute="trailing" constant="8" id="CGe-61-5w1"/>
                                 <constraint firstItem="8eA-60-7l9" firstAttribute="leading" secondItem="huy-y9-XkZ" secondAttribute="leading" constant="8" id="RbC-30-YbZ"/>
+                                <constraint firstItem="8eA-60-7l9" firstAttribute="height" secondItem="huy-y9-XkZ" secondAttribute="height" multiplier="0.6" id="T00-rM-F02"/>
                                 <constraint firstItem="uIq-Og-OBW" firstAttribute="centerX" secondItem="huy-y9-XkZ" secondAttribute="centerX" id="UdU-72-uXT"/>
                                 <constraint firstAttribute="bottom" secondItem="uIq-Og-OBW" secondAttribute="bottom" constant="8" id="Y3a-zZ-Eci"/>
                                 <constraint firstItem="8eA-60-7l9" firstAttribute="top" secondItem="huy-y9-XkZ" secondAttribute="top" constant="8" id="fNi-Dy-nAl"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qTc-uH-SIB" userLabel="UploadImageView2">
-                            <rect key="frame" x="122" y="0.0" width="106" height="152"/>
+                            <rect key="frame" x="112" y="0.0" width="96" height="152"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqc-7e-ieZ" userLabel="UploadImage2 Btn">
-                                    <rect key="frame" x="8" y="8" width="90" height="90"/>
+                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqc-7e-ieZ" userLabel="UploadImage2 Btn">
+                                    <rect key="frame" x="8" y="8" width="80" height="91"/>
                                     <state key="normal" image="AddPhotoRoundSquare"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="suC-IM-dc0" userLabel="Upload2 Btn">
-                                    <rect key="frame" x="28" y="114" width="50" height="30"/>
+                                    <rect key="frame" x="23" y="115" width="50" height="29"/>
                                     <state key="normal" title="Upload"/>
                                 </button>
                             </subviews>
@@ -92,17 +93,18 @@
                                 <constraint firstItem="suC-IM-dc0" firstAttribute="centerX" secondItem="qTc-uH-SIB" secondAttribute="centerX" id="hQH-So-Ghw"/>
                                 <constraint firstAttribute="trailing" secondItem="eqc-7e-ieZ" secondAttribute="trailing" constant="8" id="iK9-V1-F7f"/>
                                 <constraint firstItem="eqc-7e-ieZ" firstAttribute="top" secondItem="qTc-uH-SIB" secondAttribute="top" constant="8" id="uzb-J6-hPb"/>
+                                <constraint firstItem="eqc-7e-ieZ" firstAttribute="height" secondItem="qTc-uH-SIB" secondAttribute="height" multiplier="0.6" id="ygj-Ax-rUj"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWS-Av-cYO" userLabel="UploadImageView3">
-                            <rect key="frame" x="244" y="0.0" width="106" height="152"/>
+                            <rect key="frame" x="224" y="0.0" width="96" height="152"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-in-EP6" userLabel="UploadImage3 Btn">
-                                    <rect key="frame" x="8" y="8" width="90" height="90"/>
+                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-in-EP6" userLabel="UploadImage3 Btn">
+                                    <rect key="frame" x="8" y="8" width="80" height="91"/>
                                     <state key="normal" image="AddPhotoRoundSquare"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j0s-IS-dwx" userLabel="Upload3 Btn">
-                                    <rect key="frame" x="28" y="114" width="50" height="30"/>
+                                    <rect key="frame" x="23.5" y="115" width="50" height="29"/>
                                     <state key="normal" title="Upload"/>
                                 </button>
                             </subviews>
@@ -113,10 +115,16 @@
                                 <constraint firstItem="j0s-IS-dwx" firstAttribute="centerX" secondItem="kWS-Av-cYO" secondAttribute="centerX" id="Ijj-w4-C7f"/>
                                 <constraint firstItem="fqq-in-EP6" firstAttribute="leading" secondItem="kWS-Av-cYO" secondAttribute="leading" constant="8" id="Jtz-Ll-fev"/>
                                 <constraint firstItem="fqq-in-EP6" firstAttribute="top" secondItem="kWS-Av-cYO" secondAttribute="top" constant="8" id="MIE-12-vcI"/>
+                                <constraint firstItem="fqq-in-EP6" firstAttribute="height" secondItem="kWS-Av-cYO" secondAttribute="height" multiplier="0.6" id="WK5-PD-4PN"/>
                                 <constraint firstAttribute="trailing" secondItem="fqq-in-EP6" secondAttribute="trailing" constant="8" id="lP1-Dh-8RL"/>
                             </constraints>
                         </view>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="huy-y9-XkZ" firstAttribute="width" secondItem="Q2u-jZ-l2R" secondAttribute="width" multiplier="0.3" id="7q9-Su-McD"/>
+                        <constraint firstItem="qTc-uH-SIB" firstAttribute="height" secondItem="huy-y9-XkZ" secondAttribute="height" id="SFj-ea-5aY"/>
+                        <constraint firstItem="kWS-Av-cYO" firstAttribute="height" secondItem="huy-y9-XkZ" secondAttribute="height" id="h8Z-Ue-yUj"/>
+                    </constraints>
                 </stackView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" text="If you want to change an existing image, just tap the image to select a new one then press upload" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9Qu-ez-vu8" userLabel="Text View Bottom">
                     <rect key="frame" x="74.5" y="464" width="225" height="111"/>
@@ -132,6 +140,7 @@
                 <constraint firstItem="9Qu-ez-vu8" firstAttribute="top" secondItem="Q2u-jZ-l2R" secondAttribute="bottom" constant="44.5" id="at5-rK-ITQ"/>
                 <constraint firstItem="080-H6-SKO" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.55" id="cjs-fg-z8r"/>
                 <constraint firstItem="9Qu-ez-vu8" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="dZT-LZ-i4x"/>
+                <constraint firstItem="huy-y9-XkZ" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.228" id="eDw-tf-Qfj"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="nDG-hB-xtU" secondAttribute="trailing" constant="16" id="iSw-Df-Dr4"/>
                 <constraint firstItem="nDG-hB-xtU" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="p5P-UG-EKd"/>
                 <constraint firstItem="Q2u-jZ-l2R" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="qGM-v9-IE5"/>

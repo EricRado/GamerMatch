@@ -51,6 +51,17 @@ class ProfileSettingsViewController: UIViewController {
         view.closeBtn.addTarget(self,
                                 action: #selector(cancelBtnPressed(sender:)),
                                 for: .touchUpInside)
+        for btn in view.imageBtns {
+            btn.addTarget(self,
+                          action: #selector(imageBtnPressed(sender:)),
+                          for: .touchUpInside)
+        }
+        
+        for btn in view.uploadBtns {
+            btn.addTarget(self,
+                          action: #selector(uploadImageBtnPressed(sender:)),
+                          for: .touchUpInside)
+        }
         return view
     }()
     
@@ -116,21 +127,6 @@ class ProfileSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         manager = ImageManager()
-    }
-    
-    fileprivate func uploadImages() {
-        let delegate = UIApplication.shared.delegate as? AppDelegate
-        guard let size = delegate?.window?.frame.size else { return }
-        
-        navigationController?.navigationBar.isHidden = true
-        tabBarController?.tabBar.isHidden = true
-        
-        view.addSubview(uploadImagesProfileView)
-        
-        uploadImagesProfileView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
-        uploadImagesProfileView.widthAnchor.constraint(equalToConstant: size.width).isActive = true
-        uploadImagesProfileView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        uploadImagesProfileView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     @objc fileprivate func logoutUser(sender: UIBarButtonItem) {
@@ -293,6 +289,40 @@ extension ProfileSettingsViewController {
     }
 }
 
+// MARK: - UploadImagesForProfileView's Functions
+extension ProfileSettingsViewController {
+    fileprivate func setupUploadImagesForProfileView() {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        guard let size = delegate?.window?.frame.size else { return }
+        
+        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
+        
+        view.addSubview(uploadImagesProfileView)
+        
+        uploadImagesProfileView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        uploadImagesProfileView.widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        uploadImagesProfileView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        uploadImagesProfileView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
+    @objc func uploadImageBtnPressed(sender: UIButton) {
+        print("upload btn pressed")
+        
+    }
+    
+    @objc func imageBtnPressed(sender: UIButton) {
+        print("image btn pressed")
+        print(sender.tag)
+        CamaraHandler.shared.imagePickedBlock = { image in
+            sender.setImage(image, for: .normal)
+            sender.layer.cornerRadius = 10
+            sender.layer.masksToBounds = true
+        }
+        CamaraHandler.shared.showActionSheet(vc: self)
+    }
+}
+
 // MARK: - UITableViewDelegate
 extension ProfileSettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -310,7 +340,7 @@ extension ProfileSettingsViewController: UITableViewDelegate {
             setupUpdateBioView()
         case (1,1):
             print("Upload images pressed")
-            uploadImages()
+            setupUploadImagesForProfileView()
         case (2,0):
             print("Notifications pressed")
         default:
