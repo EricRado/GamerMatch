@@ -61,6 +61,7 @@ class ProfileSettingsViewController: UIViewController {
             btn.addTarget(self,
                           action: #selector(uploadImageBtnPressed(sender:)),
                           for: .touchUpInside)
+            btn.isEnabled = false
         }
         return view
     }()
@@ -307,17 +308,37 @@ extension ProfileSettingsViewController {
     }
     
     @objc func uploadImageBtnPressed(sender: UIButton) {
-        print("upload btn pressed")
+        let index = sender.tag
+        guard let image = uploadImagesProfileView
+            .imageBtns[index].image(for: .normal) else { return }
         
+        guard let uid = User.onlineUser.uid else { return }
+        guard let ref = userRef?.child("ProfileImages/") else { return }
+        let imageId = ref.childByAutoId().key
+        let path = "profileImages/\(uid)/\(imageId).jpg"
+     
+        self.uploadImagesProfileView.uploadBtns[index].isEnabled = false
+        manager?.uploadImage(image: image, at: path, completion: { (urlString, error) in
+            if let error = error {
+                self.displayErrorMessage(with: error.localizedDescription)
+                self.uploadImagesProfileView.uploadBtns[index].isEnabled = true
+                return
+            }
+            guard let url = urlString else { return }
+    
+            FirebaseCalls.shared.updateReferenceList(ref: ref, values: [imageId: url])
+            // remove previous picture from storage and reference in database
+            
+        })
     }
     
     @objc func imageBtnPressed(sender: UIButton) {
-        print("image btn pressed")
-        print(sender.tag)
+        let index = sender.tag
         CamaraHandler.shared.imagePickedBlock = { image in
             sender.setImage(image, for: .normal)
             sender.layer.cornerRadius = 10
             sender.layer.masksToBounds = true
+            self.uploadImagesProfileView.uploadBtns[index].isEnabled = true
         }
         CamaraHandler.shared.showActionSheet(vc: self)
     }
