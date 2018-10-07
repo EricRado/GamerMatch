@@ -17,6 +17,7 @@ struct UserJSONResponse: Decodable {
     let url: String
     let consoles: [String: String]
     let games: [String: String]
+    let profileImageUrls: [String: String]
     
     enum CodingKeys: String, CodingKey {
         case uid = "uid"
@@ -27,6 +28,7 @@ struct UserJSONResponse: Decodable {
         case url = "url"
         case consoles = "Consoles"
         case games = "Games"
+        case profileImageUrls = "ProfileImages"
     }
 }
 

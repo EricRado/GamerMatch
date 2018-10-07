@@ -14,6 +14,19 @@ class GamerProfileViewController: UIViewController {
     var userImage: UIImage?
     var user: UserJSONResponse?
     var roleImgCounter = 0
+    private var taskIdToImageTag = [Int: Int]()
+    
+    private lazy var session: URLSession = {
+        var session = URLSession(configuration: .default,
+                                delegate: self,
+                                delegateQueue: nil)
+        return session
+    }()
+    private lazy var manager: ImageManager = {
+        var manager = ImageManager()
+        manager.downloadSession = session
+        return manager
+    }()
     
     lazy var consolesDict: [String: Console]? = {
         guard let consoles = VideoGameRepo.shared.getConsoles()
@@ -42,7 +55,6 @@ class GamerProfileViewController: UIViewController {
                 } else {
                     rolesDict[role.roleName!] = [role]
                 }
-    
             }
         }
 
@@ -93,10 +105,18 @@ class GamerProfileViewController: UIViewController {
         }
     }
     @IBOutlet var roleImgs: [UIImageView]!
-    @IBOutlet var userStoredImgs: [UIImageView]!
+    @IBOutlet var userStoredImgs: [UIImageView]! {
+        didSet {
+            for (index, image) in userStoredImgs.enumerated() {
+                image.tag = index
+            }
+        }
+    }
     
     @IBOutlet weak var userBioTextView: UITextView!
     
+    
+    // MARK: - UIViewController's lifecycle methods
     override func viewWillDisappear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
         super.viewWillDisappear(animated)
@@ -123,8 +143,10 @@ class GamerProfileViewController: UIViewController {
                 print(error.localizedDescription)
             }
             self.user = user
+            self.userBioTextView.text = self.user?.bio
             self.setupConsoleImages()
             self.setupGameImages()
+            self.setupUserProfileImages()
         }
     }
     
@@ -173,6 +195,18 @@ class GamerProfileViewController: UIViewController {
         }
     }
     
+    // storing images as imageID: urlString
+    fileprivate func setupUserProfileImages() {
+        print("setupUserProfileImages()")
+        print(user?.profileImageUrls)
+        guard let dict = user?.profileImageUrls else { return }
+        for (index, value) in dict.enumerated() {
+            let id = manager.downloadImage(from: value.1)
+            guard let taskId = id else { return }
+            taskIdToImageTag[taskId] = index
+        }
+    }
+    
     fileprivate func createFriendRequest() {
         guard let userId = User.onlineUser.uid else { return }
         guard let friendId = userCacheInfo?.uid else { return }
@@ -207,3 +241,66 @@ class GamerProfileViewController: UIViewController {
     }
 
 }
+
+extension GamerProfileViewController: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
+                    didFinishDownloadingTo location: URL) {
+        let taskId = downloadTask.taskIdentifier
+        do {
+            let data = try Data(contentsOf: location)
+            let image = UIImage(data: data)
+            
+            DispatchQueue.main.async {
+                guard let imageTag = self.taskIdToImageTag[taskId]
+                    else { return }
+                let imageView = self.userStoredImgs[imageTag]
+                imageView.image = image
+                imageView.layer.cornerRadius = 10
+                imageView.layer.masksToBounds = true
+            }
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                completionHandler()
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
