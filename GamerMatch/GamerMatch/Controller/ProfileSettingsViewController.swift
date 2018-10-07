@@ -12,6 +12,7 @@ import Firebase
 class ProfileSettingsViewController: UIViewController {
     private let cellId = "cellId"
     private let signInVCIdentifier = "signInVC"
+    private var taskIdToPhotoBtnTag = [Int: Int]()
     
     // keeps track of user's console selections
     private lazy var consolesSelected: [String: String]? = {
@@ -51,10 +52,18 @@ class ProfileSettingsViewController: UIViewController {
         view.closeBtn.addTarget(self,
                                 action: #selector(cancelBtnPressed(sender:)),
                                 for: .touchUpInside)
-        for btn in view.imageBtns {
+        
+        for (index, btn) in view.imageBtns.enumerated() {
             btn.addTarget(self,
                           action: #selector(imageBtnPressed(sender:)),
                           for: .touchUpInside)
+            
+            // retrieve the url and download the image
+            guard let url = profileImagesIDToUrlTupleArray?[index].1,
+                url != "" else { continue }
+            let id = manager.downloadImage(from: url)
+            guard let taskId = id else { continue }
+            taskIdToPhotoBtnTag[taskId] = btn.tag
         }
         
         for btn in view.uploadBtns {
@@ -79,7 +88,28 @@ class ProfileSettingsViewController: UIViewController {
         return Database.database().reference().child("UserCacheInfo/\(uid)/")
     }()
     
-    private var manager: ImageManager?
+    private lazy var profileImagesIDToUrlTupleArray: [(String,String)]? = {
+        guard let dict = User.onlineUser.profileImagesURLS else { return nil }
+        var arr = Array(repeating: ("",""), count: 3)
+
+        for (index, value) in dict.enumerated() {
+            arr[index] = value
+        }
+        return arr
+    }()
+    
+    private lazy var session: URLSession = {
+        var session = URLSession(configuration: .default,
+                                 delegate: self,
+                                 delegateQueue: nil)
+        return session
+    }()
+    
+    private lazy var manager: ImageManager = {
+        var manager = ImageManager()
+        manager.downloadSession = session
+        return manager
+    }()
     
     @IBOutlet weak var usernameTextView: UITextView! {
         didSet {
@@ -118,6 +148,7 @@ class ProfileSettingsViewController: UIViewController {
     }
     
     
+    // MARK: - UIViewController's Life cycle methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let rightBarBtn = UIBarButtonItem(title: "Logout", style: .plain, target: self,
@@ -127,7 +158,6 @@ class ProfileSettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        manager = ImageManager()
     }
     
     @objc fileprivate func logoutUser(sender: UIBarButtonItem) {
@@ -207,7 +237,7 @@ class ProfileSettingsViewController: UIViewController {
       
         CamaraHandler.shared.imagePickedBlock = { image in
             self.userProfileImg.image = image
-            self.manager?.uploadImage(image: image, at: path, completion: { (urlString, error) in
+            self.manager.uploadImage(image: image, at: path, completion: { (urlString, error) in
                 if let error = error {
                     print(error.localizedDescription)
                     return
@@ -307,6 +337,15 @@ extension ProfileSettingsViewController {
         uploadImagesProfileView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
+    fileprivate func removeImageReference(index: Int) {
+        guard let (imageId, url) = self.profileImagesIDToUrlTupleArray?[index],
+            url != "" else { return }
+        guard let uid = User.onlineUser.uid else { return }
+        let referencePath = "Users/\(uid)/ProfileImages/\(imageId)"
+        FirebaseCalls.shared.removeReferenceValue(at: referencePath)
+        FirebaseCalls.shared.removeDataFromStorage(at: url)
+    }
+    
     @objc func uploadImageBtnPressed(sender: UIButton) {
         let index = sender.tag
         guard let image = uploadImagesProfileView
@@ -318,17 +357,17 @@ extension ProfileSettingsViewController {
         let path = "profileImages/\(uid)/\(imageId).jpg"
      
         self.uploadImagesProfileView.uploadBtns[index].isEnabled = false
-        manager?.uploadImage(image: image, at: path, completion: { (urlString, error) in
+        manager.uploadImage(image: image, at: path, completion: { (urlString, error) in
             if let error = error {
                 self.displayErrorMessage(with: error.localizedDescription)
                 self.uploadImagesProfileView.uploadBtns[index].isEnabled = true
                 return
             }
             guard let url = urlString else { return }
-    
             FirebaseCalls.shared.updateReferenceList(ref: ref, values: [imageId: url])
-            // remove previous picture from storage and reference in database
             
+            // remove previous picture from storage and reference in database
+            self.removeImageReference(index: index)
         })
     }
     
@@ -427,6 +466,36 @@ extension ProfileSettingsViewController: UITableViewDataSource {
     }
 }
 
+extension ProfileSettingsViewController: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        let taskId = downloadTask.taskIdentifier
+        
+        do {
+            let data = try Data(contentsOf: location)
+            DispatchQueue.main.async {
+                let image = UIImage(data: data)
+                guard let btnIndex = self.taskIdToPhotoBtnTag[taskId]
+                    else { return }
+                let button = self.uploadImagesProfileView.imageBtns[btnIndex]
+                button.setImage(image, for: .normal)
+                button.layer.cornerRadius = 10
+                button.layer.masksToBounds = true
+                
+            }
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                completionHandler()
+            }
+        }
+    }
+}
 
 
 

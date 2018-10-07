@@ -32,6 +32,7 @@ class FirebaseCalls {
        return dbRef.child("ReceivedFriendRequests/")
     }()
     
+    private let storage = Storage.storage()
     
     static var shared = FirebaseCalls()
     
@@ -205,6 +206,17 @@ class FirebaseCalls {
                 print(error.localizedDescription)
             } else {
                 print("Child removed correctly")
+            }
+        }
+    }
+    
+    func removeDataFromStorage(at url: String) {
+        let ref = storage.reference(forURL: url)
+        ref.delete { (error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("Data was removed successfully")
             }
         }
     }

@@ -109,6 +109,7 @@ extension FindGamerResultsViewController: UITableViewDelegate {
             as? GamerProfileViewController else { return }
         vc.userCacheInfo = userCacheInfo
         vc.userImage = cellRowToUserImage[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: false)
         
         navigationController?.navigationBar.topItem?.backBarButtonItem?.title = "Back"
         navigationController?.pushViewController(vc, animated: false)

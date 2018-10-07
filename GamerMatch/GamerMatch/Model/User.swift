@@ -19,6 +19,7 @@ final class User {
     var avatarURL: String?
     var userImg:UIImage?
     var consoles: [String: String]?
+    var profileImagesURLS: [String: String]?
     
     static var onlineUser = User()
     private var dbRef = Database.database().reference()
@@ -35,6 +36,8 @@ final class User {
         guard let isOnline = dict["isOnline"] as! String? else {return nil}
         guard let avatarURL = dict["url"] as! String? else {return nil}
         guard let consoles = dict["Consoles"] as? [String: String] else { return nil }
+        guard let profileImagesURLS = dict["ProfileImages"] as? [String: String]
+            else { return nil}
         
         self.uid = uid
         self.email = email
@@ -43,6 +46,7 @@ final class User {
         self.isOnline = isOnline.toBool()
         self.avatarURL = avatarURL
         self.consoles = consoles
+        self.profileImagesURLS = profileImagesURLS
     }
     
     func toAnyObject() -> [AnyHashable: Any] {
