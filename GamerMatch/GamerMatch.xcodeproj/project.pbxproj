@@ -43,7 +43,6 @@
 		07473BA121670FA000F2E089 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07473BA021670FA000F2E089 /* DownloadManager.swift */; };
 		07BF4CA720E5621600044C86 /* GamerMatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */; };
 		07C982F720961B40007B46BB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F620961B40007B46BB /* ImageManager.swift */; };
-		07C982F92096B292007B46BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F82096B292007B46BB /* SettingsViewController.swift */; };
 		07DDCB65215071CF00584BD6 /* NewGroupChatSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */; };
 		07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */; };
 		07DDCB692150773600584BD6 /* Create1On1ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */; };
@@ -104,7 +103,6 @@
 		07473BA021670FA000F2E089 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchTableViewCell.swift; sourceTree = "<group>"; };
 		07C982F620961B40007B46BB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
-		07C982F82096B292007B46BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupChatSetupViewController.swift; sourceTree = "<group>"; };
 		07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupChatViewController.swift; sourceTree = "<group>"; };
 		07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Create1On1ChatViewController.swift; sourceTree = "<group>"; };
@@ -226,7 +224,6 @@
 				07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */,
 				070A8B4921653D780084D289 /* ProfileSettingsViewController.swift */,
 				07E586C2204F911300023383 /* RegistrationViewController.swift */,
-				07C982F82096B292007B46BB /* SettingsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -493,7 +490,6 @@
 				070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */,
 				07E586CE2050E85300023383 /* ChatTableViewCell.swift in Sources */,
 				07250BD020CDBC8E0025C9DE /* FirebaseCalls.swift in Sources */,
-				07C982F92096B292007B46BB /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

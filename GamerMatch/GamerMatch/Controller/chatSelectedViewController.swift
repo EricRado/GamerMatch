@@ -94,7 +94,8 @@ class ChatSelectedViewController: UIViewController {
     }
     
     fileprivate func setSettingsButton() {
-        if (chat?.isGroupChat)! {
+        guard let isGroupChat = chat?.isGroupChat else { return }
+        if isGroupChat {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 title: "Settings", style: .plain, target: self,
                 action: #selector(settingsPressed(sender:)))
@@ -314,18 +315,7 @@ extension ChatSelectedViewController {
         label.center = navView.center
         label.textAlignment = NSTextAlignment.center
         
-        // create the image view
-        let image = UIImageView()
-        image.image = self.image
-        let imageAspect = image.image!.size.width / image.image!.size.height
-        image.frame = CGRect(x: label.frame.origin.x - label.frame.size.height*imageAspect,
-                             y: label.frame.origin.y,
-                             width: label.frame.size.height * imageAspect,
-                             height: label.frame.size.height)
-        image.contentMode = UIViewContentMode.scaleAspectFit
-        
         navView.addSubview(label)
-        navView.addSubview(image)
         
         self.navigationItem.titleView = navView
         navView.sizeToFit()

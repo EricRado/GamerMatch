@@ -976,7 +976,6 @@
                     <connections>
                         <outlet property="chatTableView" destination="AZN-q9-iPe" id="5tI-YM-BG2"/>
                         <segue destination="fIc-Yj-YGI" kind="show" identifier="chatSegue" id="das-c4-Am8"/>
-                        <segue destination="wBi-iw-OfJ" kind="show" identifier="createNewChatSegue" id="cac-mb-C25"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zqq-W9-1Qw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -992,7 +991,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7H9-ZS-yHs">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
@@ -1173,7 +1172,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xM4-7M-KOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2860" y="1469"/>
+            <point key="canvasLocation" x="3066" y="1469"/>
         </scene>
         <!--Chat Selected View Controller-->
         <scene sceneID="oFj-NO-HvL">

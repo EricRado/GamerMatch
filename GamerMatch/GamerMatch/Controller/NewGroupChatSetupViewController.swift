@@ -127,19 +127,18 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
             as? ChatSelectedViewController else { return }
         vc.chat = self.chat
         
-        //FIXXXXXXXXXXXX
         // pop the select users for new chat and group chat setup VCs
-        print("pop 1")
-        navigationController?.popViewController(animated: false)
-        print("pop 2")
-        navigationController?.popViewController(animated: false)
+        let navigationController = self.navigationController
+        self.navigationController?.popToRootViewController(animated: false)
         
-        print("push 1")
         // push selected chat VC to the top
-        navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: false)
     }
     
     @objc func createPressed(sender: UIBarButtonItem) {
+        
+        self.transitionToSelectedChatVC()
+        
         // verify group title was set
         guard !groupTitleTextView.text.isEmpty else {
             createAlert()
