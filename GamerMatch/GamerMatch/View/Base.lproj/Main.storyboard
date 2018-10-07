@@ -900,31 +900,6 @@
             </objects>
             <point key="canvasLocation" x="2708" y="-1512.5937031484259"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="oPF-e0-aAp">
-            <objects>
-                <viewController id="PAU-IK-vpg" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="eae-73-KJN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Update or select new games you are currently playing and the console and roles you play for that game" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2q2-X0-8np">
-                                <rect key="frame" x="67" y="82" width="240" height="111"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="hoR-hD-mNo"/>
-                    </view>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="C4W-Jq-8a6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3848.8000000000002" y="-1513.4932533733136"/>
-        </scene>
         <!--Chat-->
         <scene sceneID="C1h-aj-YYo">
             <objects>

@@ -197,8 +197,6 @@ class GamerProfileViewController: UIViewController {
     
     // storing images as imageID: urlString
     fileprivate func setupUserProfileImages() {
-        print("setupUserProfileImages()")
-        print(user?.profileImageUrls)
         guard let dict = user?.profileImageUrls else { return }
         for (index, value) in dict.enumerated() {
             let id = manager.downloadImage(from: value.1)
