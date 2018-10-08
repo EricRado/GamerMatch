@@ -33,6 +33,7 @@ class ProfileSettingsViewController: UIViewController {
                                  for: .touchUpInside)
         return view
     }()
+    
     private lazy var updateBioView: UpdateBioView = {
         var view = UpdateBioView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -45,6 +46,7 @@ class ProfileSettingsViewController: UIViewController {
                                  for: .touchUpInside)
         return view
     }()
+    
     private lazy var uploadImagesProfileView: UploadImagesForProfileView = {
         var view = UploadImagesForProfileView()
         view.translatesAutoresizingMaskIntoConstraints = false
