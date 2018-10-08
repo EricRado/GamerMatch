@@ -1924,7 +1924,7 @@
         <scene sceneID="jAm-3t-5BX">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BzV-bw-TIq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" selectedImage="settings" id="LZt-Sd-DtQ"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="LZt-Sd-DtQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZKt-FF-Bg8">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
