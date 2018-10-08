@@ -24,6 +24,9 @@ class CreateNewChatViewController: UIViewController {
         return users
     }()
     
+    var existing1on1ChatUserIDToCache: [String: UserCacheInfo]?
+    var existingChats: [Chat]?
+    
     lazy var selectedUsersIdToUIImage: [String: UIImage] = {
         var dict = [String: UIImage]()
         return dict

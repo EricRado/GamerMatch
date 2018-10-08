@@ -13,7 +13,6 @@ import FirebaseAuth
 class ChatSelectedViewController: UIViewController {
     private let cellId = "messageCell"
     private let chatMetaDataVCId = "DisplayChatMetaDataVC"
-    var selectedChatUser: ChatUserDisplay?
     var chat: Chat?
     var messages = [Message]()
     var image: UIImage?
@@ -70,7 +69,7 @@ class ChatSelectedViewController: UIViewController {
         super.viewDidLoad()
         
         inputTextField.delegate = self
-        setNavBarTitleView()
+        //setNavBarTitleView()
         setSettingsButton()
         
         // setup message field and send button
@@ -86,9 +85,6 @@ class ChatSelectedViewController: UIViewController {
         // add notification observers to handle keyboard display when typing message
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-        //let title = selectedChatUser != nil ? selectedChatUser?.username : chat?.title
-        //navigationItem.title = title
         
         getMessages()
     }
@@ -246,17 +242,10 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
                                                width: estimatedFrameBody.width + 40,
                                                height: estimatedFrameBody.height + estimatedFrameUsername.height + 26)
             
-            cell.profileImageView.isHidden = false
-            
-            if !(chat?.isGroupChat)! {
-                cell.profileImageView.image = selectedChatUser?.image
-            }
-            
             cell.bubbleImageView.image = ChatMessageCollectionViewCell.grayBubbleImage
             cell.bubbleImageView.tintColor = UIColor(white: 0.95, alpha: 1)
             cell.messageTextView.textColor = UIColor.black
             
-            //cell.profileImageView.image =
             
         } else {
             

@@ -22,7 +22,6 @@ class CreateGroupChatViewController: CreateNewChatViewController {
         navigationItem.rightBarButtonItem?.isEnabled = false
     
         navigationItem.title = "New Group"
-        print("this is cellId: \(groupSetupVCId)")
     }
     
     @objc func nextPressed(sender: UIBarButtonItem) {

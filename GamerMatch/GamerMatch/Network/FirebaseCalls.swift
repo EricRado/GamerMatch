@@ -221,6 +221,12 @@ class FirebaseCalls {
         }
     }
     
+    func createANewUid(at path: String) -> String {
+        let ref = dbRef.child(path)
+        let uid = ref.childByAutoId().key
+        return uid
+    }
+    
     func checkIfUsernameExists(_ username: String,
                                completion: @escaping (Bool?, Error?) -> Void) {
         let query = userCacheInfoRef.queryOrdered(byChild: "username")

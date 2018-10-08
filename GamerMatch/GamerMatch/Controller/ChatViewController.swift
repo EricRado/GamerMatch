@@ -60,8 +60,7 @@ class ChatViewController: UIViewController {
     
     // selected chat information to pass to ChatSelectedViewController
     var selectedChat: Chat?
-    var selectedChatUser: ChatUserDisplay?
-    
+    var selectedChatUsername: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +88,8 @@ class ChatViewController: UIViewController {
         guard let vc = storyboard?
             .instantiateViewController(withIdentifier: createNewChatVCId) as? CreateNewChatViewController else { return }
         vc.downloadSessionId = "CreateGroupChatVCBgConfig"
+        vc.existing1on1ChatUserIDToCache = chat1on1TitleDict
+        vc.existingChats = chats
         object_setClass(vc, Create1On1ChatViewController.self)
         
         navigationController?.pushViewController(vc, animated: true)
@@ -144,7 +145,8 @@ class ChatViewController: UIViewController {
         })
     }
     
-    func getUserInfo(membersDict: [String: String]?, chatId: String?, completion: @escaping () -> Void){
+    func getUserInfo(membersDict: [String: String]?, chatId: String?,
+                     completion: @escaping () -> Void){
         guard let dict = membersDict else { return }
         guard let userId = Auth.auth().currentUser?.uid else { return }
         var friendId: String?
@@ -172,11 +174,10 @@ class ChatViewController: UIViewController {
             
             // if the chat is 1on1 set title for message log screen to user's
             // username else to group chat's title
-            if let user = selectedChatUser {
-                vc.navigationItem.title = user.username
-                vc.selectedChatUser = user
+            if !(chat.isGroupChat)! {
+                vc.navigationController?.navigationBar.topItem?.title = selectedChatUsername
             } else {
-                vc.navigationItem.title = chat.title
+                vc.navigationController?.navigationBar.topItem?.title = chat.title
             }
             
             // if chat has an image pass it to the next VC
@@ -186,9 +187,6 @@ class ChatViewController: UIViewController {
             
             // send chat meta data and participant ids to message log screen
             vc.chat = chat
-            
-            // reset selectedChatUser
-            selectedChatUser = nil
         }
     }
 }
@@ -203,8 +201,8 @@ extension ChatViewController: UITableViewDelegate {
         
         // this is a 1on1 chat get user's username and avatar pic
         if (chat.isGroupChat)! {
-            if let user = chat1on1TitleDict[chat.id!], let image = chatImageDict[chat.id!] {
-               selectedChatUser = ChatUserDisplay(username: user.username!, image: image)
+            if let user = chat1on1TitleDict[chat.id!] {
+               selectedChatUsername = user.username
             }
         }
         
