@@ -398,12 +398,15 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: ["bio": bioTextView.text])
         
         // save data to specific console/game/role node in database
-        print("all the refs")
         for ref in selectedVideoGameStringRefs {
             let gameRef = databaseRef.child(ref)
             FirebaseCalls.shared
                 .updateReferenceWithDictionary(ref: gameRef, values: userIdDict)
         }
+        
+        // setup the User singleton variable onlineUser
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        User.onlineUser.retrieveUserInfo(uid: uid)
         
         // transition to user's dashboard
         performSegue(withIdentifier: segueId, sender: nil)
