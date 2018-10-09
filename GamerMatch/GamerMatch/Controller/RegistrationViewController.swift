@@ -165,7 +165,7 @@ class RegistrationViewController: UIViewController {
             
             // upload image if user selected one
             if let image = self.userImg {
-                self.imageManager.uploadImage(image: image, at: "userProfileImages/\(username).jpg",
+                self.imageManager.uploadImage(image: image, at: "userProfileImages/\(user?.uid ?? "nothing").jpg",
                                               completion: { (urlString, error) in
                     if let error = error {
                         SVProgressHUD.dismiss()

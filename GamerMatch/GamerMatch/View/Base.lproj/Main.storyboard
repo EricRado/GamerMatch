@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,12 +24,12 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="signInVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="BYZ-38-t0r" customClass="LoginViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="BYZ-38-t0r" customClass="LoginViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" semanticContentAttribute="playback" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.93000000000000005" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gamerMatchBG" translatesAutoresizingMaskIntoConstraints="NO" id="Dsi-OW-asN">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gamerMatchBG" translatesAutoresizingMaskIntoConstraints="NO" id="Dsi-OW-asN">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
@@ -66,7 +66,6 @@
                                         <state key="normal" backgroundImage="RegisterBtn"/>
                                         <connections>
                                             <action selector="registerPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rLi-zW-AiD"/>
-                                            <segue destination="48r-iv-jYN" kind="show" identifier="registrationSegue" id="f2Q-kX-U0u"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0x-Bx-3ku">
@@ -146,7 +145,7 @@
         <!--Registration View Controller-->
         <scene sceneID="CFB-F3-sn5">
             <objects>
-                <viewController storyboardIdentifier="registrationVC" id="48r-iv-jYN" customClass="RegistrationViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegistrationVC" id="48r-iv-jYN" customClass="RegistrationViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WAt-N7-7RU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -299,7 +298,6 @@
                         <outlet property="reconfirmPasswordTextField" destination="IGW-f4-TEu" id="ieb-4q-ZVZ"/>
                         <outlet property="signUpButton" destination="wyT-yb-dMk" id="ajw-d3-N41"/>
                         <outlet property="usernameTextField" destination="GKE-Nv-6Va" id="R7Y-0o-B3C"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="returnSegue" id="9iT-u1-uYN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zJc-48-JIO" userLabel="First Responder" sceneMemberID="firstResponder"/>

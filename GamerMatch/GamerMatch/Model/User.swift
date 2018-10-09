@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 
-final class User {
+final class User: NSObject {
     var uid: String?
     var email: String?
     var username: String?
@@ -22,9 +22,20 @@ final class User {
     var profileImagesURLS: [String: String]?
     
     static var onlineUser = User()
-    private var dbRef = Database.database().reference()
     
-    private init(){}
+    private var dbRef = Database.database().reference()
+    private lazy var manager: ImageManager = {
+        var manager = ImageManager()
+        manager.downloadSession = session
+        return manager
+    }()
+    private lazy var session: URLSession = {
+        var session = URLSession(configuration: .default,
+                                 delegate: self, delegateQueue: nil)
+        return session
+    }()
+    
+    private override init(){}
     
     private init? (snapshot: DataSnapshot){
         guard let dict = snapshot.value as? [String: Any] else {return}
@@ -82,13 +93,62 @@ final class User {
         } else {
             if let urlString = User.onlineUser.avatarURL {
                 print("User avatarURL : \(urlString)")
-                //ImageManager.shared.downloadImage(urlString: urlString)
+                _ = manager.downloadImage(from: urlString)
+            }
+        }
+    }
+}
+
+
+extension User: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
+                    didFinishDownloadingTo location: URL) {
+        do {
+            let data = try Data(contentsOf: location)
+            User.onlineUser.userImg = UIImage(data: data)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                completionHandler()
             }
         }
     }
     
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
