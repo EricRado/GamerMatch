@@ -185,7 +185,8 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         return true
     }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
             return false

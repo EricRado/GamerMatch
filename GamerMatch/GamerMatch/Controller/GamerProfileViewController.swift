@@ -124,6 +124,7 @@ class GamerProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationItem.title = userCacheInfo?.username
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -131,7 +132,6 @@ class GamerProfileViewController: UIViewController {
         super.viewDidLoad()
         self.view.layoutIfNeeded()
         view.backgroundColor = UIColor.white
-        navigationItem.title = userCacheInfo?.username
         
         getUserDetails()
     }

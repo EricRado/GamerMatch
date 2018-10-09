@@ -341,11 +341,12 @@ extension FriendsViewController: UICollectionViewDelegate {
         let (section, row) = (indexPath.section, indexPath.row)
         
         let user = section == 0 ? onlineFriends[row] : offlineFriends[row]
+        let cell = collectionView.cellForItem(at: indexPath) as? FriendCollectionViewCell
         
         guard let vc = storyboard?.instantiateViewController(withIdentifier: vcIdentifier)
             as? GamerProfileViewController else { return }
         vc.userCacheInfo = user
-        navigationController?.navigationBar.topItem?.backBarButtonItem?.title = "Back"
+        vc.userImage = cell?.friendImageView.image
         navigationController?.pushViewController(vc, animated: true)
         
         collectionView.deselectItem(at: indexPath, animated: false)
@@ -422,11 +423,13 @@ extension FriendsViewController: UITableViewDelegate {
         let request = section == 0 ? receivedFriendRequests[row] :
             pendingFriendRequests[row]
         let user = section == 0 ? friendRequestUsersDict[request.fromId!] : friendRequestUsersDict[request.toId!]
+        let cell = tableView.cellForRow(at: indexPath)
+            as? FriendRequestTableViewCell
         
         guard let vc = storyboard?.instantiateViewController(withIdentifier: vcIdentifier)
             as? GamerProfileViewController else { return }
         vc.userCacheInfo = user
-        navigationController?.navigationBar.topItem?.backBarButtonItem?.title = "Back"
+        vc.userImage = cell?.friendImageView.image
         navigationController?.pushViewController(vc, animated: true)
         
         tableView.deselectRow(at: indexPath, animated: false)

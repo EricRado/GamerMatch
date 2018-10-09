@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ProfileSettingsViewController: UIViewController {
+class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
     private let cellId = "cellId"
     private let signInVCIdentifier = "LoginVC"
     private var taskIdToPhotoBtnTag = [Int: Int]()
@@ -116,6 +116,7 @@ class ProfileSettingsViewController: UIViewController {
     @IBOutlet weak var usernameTextView: UITextView! {
         didSet {
             usernameTextView.text = User.onlineUser.username
+            usernameTextView.delegate = self
         }
     }
     @IBOutlet weak var userProfileImg: UIImageView! {
@@ -156,6 +157,9 @@ class ProfileSettingsViewController: UIViewController {
         let rightBarBtn = UIBarButtonItem(title: "Logout", style: .plain, target: self,
                                          action: #selector(logoutUser(sender:)))
         navigationItem.rightBarButtonItem = rightBarBtn
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDisplayed(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDismissed(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func viewDidLoad() {
@@ -164,6 +168,38 @@ class ProfileSettingsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+    }
+    
+    @objc fileprivate func handleKeyboardDisplayed(notification: Notification) {
+        editBtn.isUserInteractionEnabled = false
+        tableView.isUserInteractionEnabled = false
+    }
+    
+    @objc fileprivate func handleKeyboardDismissed(notification: Notification) {
+        enableUIElementsTouch()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    fileprivate func disableUIElementsTouch() {
+        tableView.isUserInteractionEnabled = false
+        editBtn.isUserInteractionEnabled = false
+        changeUsernameBtn.isUserInteractionEnabled = false
+        usernameTextView.isUserInteractionEnabled = false
+    }
+    
+    fileprivate func enableUIElementsTouch() {
+        tableView.isUserInteractionEnabled = true
+        editBtn.isUserInteractionEnabled = true
+        changeUsernameBtn.isUserInteractionEnabled = true
+        usernameTextView.isUserInteractionEnabled = true
     }
     
     @objc fileprivate func logoutUser(sender: UIBarButtonItem) {
@@ -195,7 +231,8 @@ class ProfileSettingsViewController: UIViewController {
         default:
             return
         }
-     
+        
+        enableUIElementsTouch()
     }
     
     @objc fileprivate func changeUsernameBtnPressed(sender: UIButton) {
@@ -264,6 +301,7 @@ class ProfileSettingsViewController: UIViewController {
 // MARK: -  UpdateConsoleSelectionView's Functions
 extension ProfileSettingsViewController {
     fileprivate func setupUpdateConsoleSelectionView() {
+        disableUIElementsTouch()
         for btn in updateConsoleSelectionView.consoleBtns {
             btn.addTarget(self, action: #selector(consoleBtnPressed(sender:)), for: .touchUpInside)
         }
@@ -308,7 +346,9 @@ extension ProfileSettingsViewController {
 // MARK: - UpdateBioView's Functions
 extension ProfileSettingsViewController {
     fileprivate func setupUpdateBioView() {
+        disableUIElementsTouch()
         updateBioView.bioTextView.text = User.onlineUser.bio
+        updateBioView.bioTextView.delegate = self
         view.addSubview(updateBioView)
         
         updateBioView.heightAnchor.constraint(equalToConstant: 200).isActive = true
@@ -331,6 +371,7 @@ extension ProfileSettingsViewController {
 // MARK: - UploadImagesForProfileView's Functions
 extension ProfileSettingsViewController {
     fileprivate func setupUploadImagesForProfileView() {
+        disableUIElementsTouch()
         let delegate = UIApplication.shared.delegate as? AppDelegate
         guard let size = delegate?.window?.frame.size else { return }
         
