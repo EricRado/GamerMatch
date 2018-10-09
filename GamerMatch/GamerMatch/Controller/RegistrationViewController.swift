@@ -107,8 +107,9 @@ class RegistrationViewController: UIViewController {
     
     fileprivate func validateForm() {
         guard validateForEmptyFields() else { return }
+        guard let username = usernameTextField.text else { return }
         
-        if !(6 ... 16 ~= (usernameTextField.text?.count)!)  {
+        if !(6 ... 16 ~= username.count)  {
             displayErrorMessage(with: "Username should be from 6 - 16 characters")
             return
         }
@@ -129,7 +130,20 @@ class RegistrationViewController: UIViewController {
             return
         }
         
-        registerUser()
+        FirebaseCalls.shared.checkIfUsernameExists(username) { (check, error) in
+            if let error = error {
+                self.displayErrorMessage(with: error.localizedDescription)
+                return
+            }
+            
+            if check! {
+                self.displayErrorMessage(with: "Username is already taken")
+            } else {
+                self.registerUser()
+            }
+        }
+        
+        
     }
     
     fileprivate func registerUser() {
