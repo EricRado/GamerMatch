@@ -126,12 +126,14 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
         guard let vc = storyboard?.instantiateViewController(withIdentifier: destVCId)
             as? ChatSelectedViewController else { return }
         vc.chat = self.chat
+        SVProgressHUD.dismiss()
         
         // pop the select users for new chat and group chat setup VCs
         let navigationController = self.navigationController
         self.navigationController?.popToRootViewController(animated: false)
         
         // push selected chat VC to the top
+        navigationController?.navigationBar.topItem?.title = chat?.title
         navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -170,7 +172,6 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
                 ref: self.chatRef.child("\(createdChat.id!)"),
                 values: ["url": url])
             print("Finish all uploads")
-            SVProgressHUD.dismiss()
             self.transitionToSelectedChatVC()
         }
     }

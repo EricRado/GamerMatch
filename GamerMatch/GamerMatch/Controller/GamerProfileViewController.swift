@@ -215,6 +215,7 @@ class GamerProfileViewController: UIViewController {
             .createFriendRequest(toId: friendId, fromId: userId, message: "Hellooooo") {
                 print("friend request saved")
                 self.displaySuccessfulMessage(with: "Friend Request sent")
+                self.addGamerBtn.imageView?.alpha = 0.5
         }
     }
     
