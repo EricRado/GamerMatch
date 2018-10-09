@@ -36,8 +36,9 @@ final class User {
         guard let isOnline = dict["isOnline"] as! String? else {return nil}
         guard let avatarURL = dict["url"] as! String? else {return nil}
         guard let consoles = dict["Consoles"] as? [String: String] else { return nil }
-        guard let profileImagesURLS = dict["ProfileImages"] as? [String: String]
-            else { return nil}
+        if let profileImagesURLS = dict["ProfileImages"] as? [String: String] {
+            self.profileImagesURLS = profileImagesURLS
+        }
         
         self.uid = uid
         self.email = email
@@ -46,7 +47,7 @@ final class User {
         self.isOnline = isOnline.toBool()
         self.avatarURL = avatarURL
         self.consoles = consoles
-        self.profileImagesURLS = profileImagesURLS
+        
     }
     
     func toAnyObject() -> [AnyHashable: Any] {
@@ -58,6 +59,7 @@ final class User {
     func retrieveUserInfo(uid: String) {
         let userDBRef = dbRef.child("Users/\(uid)")
         userDBRef.observeSingleEvent(of: .value) { (snapshot) in
+            print(snapshot)
             User.onlineUser = User(snapshot: snapshot)!
             User.onlineUser.self.loadUserImg()
         }
