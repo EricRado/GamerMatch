@@ -14,17 +14,20 @@ import ValidationComponents
 
 class LoginViewController: UIViewController {
     
+    private let registrationVCId = "RegistrationVC"
     var isInfoViewShowing = false
     
     @IBOutlet weak var emailTextField: UITextField! {
         didSet {
             emailTextField.attributedPlaceholder = NSAttributedString(string: "Email",
                 attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+            self.emailTextField.delegate = self
         }
     }
     @IBOutlet weak var passwordTextField: UITextField! {
         didSet {
             passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+            self.passwordTextField.delegate = self
         }
     }
     
@@ -34,21 +37,17 @@ class LoginViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signInButton: UIButton! {
+        didSet {
+            signInButton.layer.cornerRadius = 10
+            signInButton.layer.masksToBounds = true
+        }
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.alpha = 0.75
-
-        // Do any additional setup after loading the view.
-        signInButton.layer.cornerRadius = 10
-        signInButton.layer.masksToBounds = true
-        
-        self.view.backgroundColor = UIColor(white: 0, alpha: 0.95)
-        self.emailTextField.delegate = self
-        self.passwordTextField.delegate = self
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
         
     }
@@ -108,7 +107,9 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func registerPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "registrationSegue", sender: self)
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: registrationVCId) as? RegistrationViewController else { return }
+        let window = UIApplication.shared.windows[0] as UIWindow
+        window.rootViewController = vc
     }
 
 }

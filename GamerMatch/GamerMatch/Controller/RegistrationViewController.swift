@@ -14,6 +14,7 @@ import ValidationComponents
 class RegistrationViewController: UIViewController {
     
     fileprivate let nextVCId = "ConsoleAndGameSelectionVC"
+    private let loginVCId = "LoginVC"
     fileprivate var userImg: UIImage?
     private var isInfoViewShowing = false
     
@@ -206,11 +207,13 @@ class RegistrationViewController: UIViewController {
     
     
     @IBAction func returnBtnPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "returnSegue", sender: self)
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: loginVCId)
+            as? LoginViewController else { return }
+        let window = UIApplication.shared.windows[0] as UIWindow
+        window.rootViewController = vc
     }
     
     @objc func addPhotoBtnPressed(_ sender: UIButton) {
-        print("Add photo btn pressed...")
         CamaraHandler.shared.showActionSheet(vc: self)
         CamaraHandler.shared.imagePickedBlock = { [unowned self] image in
             self.addPhotoBtn.setImage(image, for: .normal)

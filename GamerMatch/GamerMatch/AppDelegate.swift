@@ -24,6 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // google api key configuration
         GMSServices.provideAPIKey("AIzaSyDX_wKa1QHJL4UCDKA1aVULTwenAsNBm-E")
         
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginViewController else { return false }
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
 

@@ -11,7 +11,7 @@ import Firebase
 
 class ProfileSettingsViewController: UIViewController {
     private let cellId = "cellId"
-    private let signInVCIdentifier = "signInVC"
+    private let signInVCIdentifier = "LoginVC"
     private var taskIdToPhotoBtnTag = [Int: Int]()
     
     // keeps track of user's console selections
@@ -162,6 +162,10 @@ class ProfileSettingsViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
     @objc fileprivate func logoutUser(sender: UIBarButtonItem) {
         guard let vc = self.storyboard?
             .instantiateViewController(withIdentifier: signInVCIdentifier)
@@ -169,7 +173,9 @@ class ProfileSettingsViewController: UIViewController {
         let ac = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Yes", style: .default) { (_) in
             FirebaseCalls.shared.logoutUser {
+                self.dismiss(animated: true, completion: nil)
                 self.present(vc, animated: true, completion: nil)
+                
             }
         })
         ac.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
