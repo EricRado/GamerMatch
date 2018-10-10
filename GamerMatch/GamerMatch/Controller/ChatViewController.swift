@@ -175,9 +175,9 @@ class ChatViewController: UIViewController {
             // if the chat is 1on1 set title for message log screen to user's
             // username else to group chat's title
             if !(chat.isGroupChat)! {
-                vc.navigationController?.navigationBar.topItem?.title = selectedChatUsername
+                vc.chatTitle = selectedChatUsername
             } else {
-                vc.navigationController?.navigationBar.topItem?.title = chat.title
+                vc.chatTitle = chat.title
             }
             
             // if chat has an image pass it to the next VC
@@ -200,7 +200,7 @@ extension ChatViewController: UITableViewDelegate {
         selectedChat = chat
         
         // this is a 1on1 chat get user's username and avatar pic
-        if (chat.isGroupChat)! {
+        if !(chat.isGroupChat)! {
             if let user = chat1on1TitleDict[chat.id!] {
                selectedChatUsername = user.username
             }

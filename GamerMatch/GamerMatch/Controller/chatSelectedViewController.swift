@@ -16,6 +16,7 @@ class ChatSelectedViewController: UIViewController {
     var chat: Chat?
     var messages = [Message]()
     var image: UIImage?
+    var chatTitle: String?
     
     lazy var messagesRef: DatabaseReference? = {
         if let id = self.chat?.id {
@@ -64,6 +65,11 @@ class ChatSelectedViewController: UIViewController {
     }()
     
     var bottomConstraint: NSLayoutConstraint?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = chatTitle
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
