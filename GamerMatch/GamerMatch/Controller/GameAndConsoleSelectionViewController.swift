@@ -10,13 +10,10 @@ import UIKit
 import Firebase
 
 class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegate {
-    
     // MARK: - Instance variables
-    
     private let cellId = "cellId"
     private let segueId = "registrationDashboardSegue"
     private var isInfoViewShowing = false
-    private var effect: UIVisualEffect!
     
     private let databaseRef: DatabaseReference = {
         return Database.database().reference()
@@ -43,10 +40,14 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     private var buttonTagToVideoGameDict = [Int: VideoGame]()
     private var selectedVideoGameBtnTag = 0
     
+    private lazy var blurredEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+        blurredEffectView.frame = view.bounds
+        return blurredEffectView
+    }()
+    
     // MARK: - IBOutlet variables
-    
-    @IBOutlet weak var visualEffectView: UIVisualEffectView!
-    
     @IBOutlet var gameSelectedOptionsView: UIView! {
         didSet {
             gameSelectedOptionsView.layer.cornerRadius = 5
@@ -144,9 +145,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        effect = visualEffectView.effect
-        visualEffectView.effect = nil
+    
         selectedVideoGames = [String: VideoGameSelected]()
     }
     
@@ -224,8 +223,9 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         gameSelectedOptionsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
         gameSelectedOptionsView.alpha = 0
         
+        
         UIView.animate(withDuration: 0.4) {
-            self.visualEffectView.effect = self.effect
+            self.view.addSubview(self.blurredEffectView)
             self.gameSelectedOptionsView.alpha = 1
             self.gameSelectedOptionsView.transform = CGAffineTransform.identity
         }
@@ -235,7 +235,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         UIView.animate(withDuration: 0.3, animations: {
             self.gameSelectedOptionsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
             self.gameSelectedOptionsView.alpha = 0
-            self.visualEffectView.effect = nil
+            self.blurredEffectView.removeFromSuperview()
         }) { (_) in
             self.gameSelectedOptionsView.removeFromSuperview()
             self.enableUIElementsTouch()
@@ -252,10 +252,11 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         } else {
             removePopupBtn.isHidden = true
         }
-        view.addSubview(gameSelectedOptionsView)
-        gameSelectedOptionsView.center = view.center
+        
         disableUIElementsTouch()
         animateIn()
+        view.addSubview(gameSelectedOptionsView)
+        gameSelectedOptionsView.center = view.center
     }
     
     fileprivate func checkIfVideoGameWasAlreadySelected(tag: Int) {
@@ -587,7 +588,6 @@ extension GameAndConsoleSelectionViewController: UITableViewDataSource {
         }
         return ""
     }
-    
     
     func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
