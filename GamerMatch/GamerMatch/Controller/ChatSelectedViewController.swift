@@ -219,17 +219,35 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCollectionViewCell
+        let message = messages[indexPath.item]
         
-        guard let messageText = messages[indexPath.item].body else { return cell }
-        guard let usernameText = messages[indexPath.item].username else { return cell }
+        guard let uid = Auth.auth().currentUser?.uid else { return cell }
+        guard let messageText = message.body else { return cell }
+        guard let usernameText = message.username else { return cell }
         
-        if messages[indexPath.item].senderId != Auth.auth().currentUser?.uid {
+        // format string according to group or single chat
+        let attributesBody = [NSAttributedStringKey.font:
+            UIFont.systemFont(ofSize: 18)]
+        let attributeUsername = [NSAttributedStringKey.font:
+            UIFont.boldSystemFont(ofSize: 14)]
+        
+        let singleChatMsg = NSMutableAttributedString(string: messageText,
+                                                      attributes: attributesBody)
+        let groupChatMsg = NSMutableAttributedString(
+            string: "\(usernameText) \n",
+            attributes: attributeUsername)
+        groupChatMsg.append(singleChatMsg)
+        
+        let text = (chat?.isGroupChat)! && message.senderId != uid ?
+            groupChatMsg : singleChatMsg
+        
+        if message.senderId != Auth.auth().currentUser?.uid {
             // messages received
-            cell.showIncomingMessage(text: messageText)
+            cell.showIncomingMessage(text: text)
             
         } else {
             // messages sent
-            cell.showOutgoingMessage(text: messageText)
+            cell.showOutgoingMessage(text: text)
         }
         
         return cell
@@ -239,15 +257,39 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
 extension ChatSelectedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let uid = Auth.auth().currentUser?.uid
+            else { return CGSize(width: view.frame.width, height: 100) }
         let message = messages[indexPath.item]
-        if let messageText = message.body{
+        
+        if let messageText = message.body, let usernameText = message.username {
+            let attributesBody = [NSAttributedStringKey.font:
+                UIFont.systemFont(ofSize: 18)]
+            let attributeUsername = [NSAttributedStringKey.font:
+                UIFont.boldSystemFont(ofSize: 14)]
+            
+            let singleChatMsg = NSMutableAttributedString(string: messageText,
+                                          attributes: attributesBody)
+            let groupChatMsg = NSMutableAttributedString(
+                string: "\(usernameText) \n",
+                attributes: attributeUsername)
+            groupChatMsg.append(singleChatMsg)
+            
+            let text = (chat?.isGroupChat)! && message.senderId != uid ?
+                 groupChatMsg : singleChatMsg
             
             let size = CGSize(width: 250, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             
-            let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
+            let estimatedFrame = text.boundingRect(with: size, options: options, context: nil)
+            /*let estimatedFrame = NSAttributedString(string: text).boundingRect(
+                with: size,
+                options: options,
+                attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)],
+                context: nil)*/
+            
              return CGSize(width: view.frame.width, height: estimatedFrame.height + 20)
         }
+        
         return CGSize(width: view.frame.width, height: 100)
     }
     

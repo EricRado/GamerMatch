@@ -15,18 +15,17 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func showIncomingMessage(text: String) {
-        backgroundColor = UIColor.red
+    func showIncomingMessage(text: NSMutableAttributedString) {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
-        label.text = text
+        label.attributedText = text
         
         let constraintRect = CGSize(width: 0.667 * frame.width, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let boundingBox = text.boundingRect(with: constraintRect, options: options,
-                                            attributes: [.font: label.font], context: nil)
+                                            context: nil)
         label.frame.size = CGSize(width: ceil(boundingBox.width), height: ceil(boundingBox.height))
         let bubbleImageSize = CGSize(width: label.frame.width + 28,
                                      height: label.frame.height + 20)
@@ -48,20 +47,17 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
         addSubview(label)
     }
     
-    func showOutgoingMessage(text: String) {
-        backgroundColor = UIColor.green
+    func showOutgoingMessage(text: NSMutableAttributedString) {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .white
-        label.text = text
+        label.attributedText = text
         
-        let testWidth = 0.667 * frame.width
-        print("This is the test width: \(testWidth)")
         let constraintRect = CGSize(width: 0.667 * frame.width, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let boundingBox = text.boundingRect(with: constraintRect, options: options,
-                                            attributes: [.font: label.font], context: nil)
+                                            context: nil)
         label.frame.size = CGSize(width: ceil(boundingBox.width), height: ceil(boundingBox.height))
         let bubbleImageSize = CGSize(width: label.frame.width + 28,
                                      height: label.frame.height + 20)
