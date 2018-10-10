@@ -166,11 +166,11 @@ class ChatSelectedViewController: UIViewController {
                 let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
                 let message = try JSONDecoder().decode(Message.self, from: jsonData)
                 self.messages.append(message)
+                let row = self.messages.count - 1
+                self.collectionView.insertItems(at: [IndexPath(item: row, section: 0)])
             } catch let error {
                 print(error)
             }
-            print("reloading...")
-            self.collectionView.reloadData()
         }) { (error) in
             print(error)
         }
@@ -223,42 +223,13 @@ extension ChatSelectedViewController: UICollectionViewDataSource {
         guard let messageText = messages[indexPath.item].body else { return cell }
         guard let usernameText = messages[indexPath.item].username else { return cell }
         
-        cell.messageTextView.text = "\(messageText)"
-        cell.usernameTextView.text = "\(usernameText)"
-        
-        let size = CGSize(width: 250, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrameBody = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
-        let estimatedFrameUsername = NSString(string: usernameText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
-        
         if messages[indexPath.item].senderId != Auth.auth().currentUser?.uid {
-            cell.backgroundColor = UIColor.yellow
-            // messages recieved
-            cell.usernameTextView.frame = CGRect(x: 48 + 8, y: 0, width: estimatedFrameUsername.width + 16, height: estimatedFrameUsername.height)
-            cell.messageTextView.frame = CGRect(x: 48 + 8, y: 16,
-                                                width: estimatedFrameBody.width + 16,
-                                                height: estimatedFrameBody.height + 20)
-            cell.textBubbleView.frame = CGRect(x: 48 - 10, y: 4,
-                                               width: estimatedFrameBody.width + 40,
-                                               height: estimatedFrameBody.height + estimatedFrameUsername.height + 26)
-            
-            cell.bubbleImageView.image = ChatMessageCollectionViewCell.grayBubbleImage
-            cell.bubbleImageView.tintColor = UIColor(white: 0.95, alpha: 1)
-            cell.messageTextView.textColor = UIColor.black
-            
+            // messages received
+            cell.showIncomingMessage(text: messageText)
             
         } else {
-            
             // messages sent
-            
-            cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrameBody.width - 40, y: 0, width: estimatedFrameBody.width + 16, height: estimatedFrameBody.height + 20)
-            cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrameBody.width - 40 - 10, y: -4, width: estimatedFrameBody.width + 34, height: estimatedFrameBody.height + 26)
-            
-            cell.profileImageView.isHidden = true
-            
-            cell.bubbleImageView.image = ChatMessageCollectionViewCell.blueBubbleImage
-            cell.bubbleImageView.tintColor = UIColor(red: 0, green: 137/255, blue: 249/255, alpha: 1)
-            cell.messageTextView.textColor = UIColor.white
+            cell.showOutgoingMessage(text: messageText)
         }
         
         return cell
@@ -269,21 +240,14 @@ extension ChatSelectedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let message = messages[indexPath.item]
-        if let messageText = message.body,
-            let usernameText = messages[indexPath.item].username {
+        if let messageText = message.body{
             
             let size = CGSize(width: 250, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             
-            let estimatedFrameBody = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
-            if message.senderId != Auth.auth().currentUser?.uid {
-                let estimatedFrameUsername = NSString(string: usernameText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrameBody.height + estimatedFrameUsername.height + 20)
-            }
-            
-             return CGSize(width: view.frame.width, height: estimatedFrameBody.height + 20)
+            let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)
+             return CGSize(width: view.frame.width, height: estimatedFrame.height + 20)
         }
-        
         return CGSize(width: view.frame.width, height: 100)
     }
     
