@@ -40,12 +40,7 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     private var buttonTagToVideoGameDict = [Int: VideoGame]()
     private var selectedVideoGameBtnTag = 0
     
-    private lazy var blurredEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .light)
-        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
-        blurredEffectView.frame = view.bounds
-        return blurredEffectView
-    }()
+    private var blurredEffectView: UIVisualEffectView?
     
     // MARK: - IBOutlet variables
     @IBOutlet var gameSelectedOptionsView: UIView! {
@@ -65,8 +60,8 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
                     self,
                     action: #selector(consoleBtnPressed(sender:)),
                     for: .touchUpInside)
-                btn.setBackgroundImage(console.notSelectedImage, for: .normal)
-                btn.setBackgroundImage(console.selectedImage, for: .selected)
+                btn.setImage(console.notSelectedImage, for: .normal)
+                btn.setImage(console.selectedImage, for: .selected)
                 buttonTagToConsoleDict[btn.tag] = console
             }
         }
@@ -83,8 +78,8 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
                     self,
                     action: #selector(gameBtnPressed(sender:)),
                     for: .touchUpInside)
-                btn.setBackgroundImage(videoGame.notSelectedImage, for: .normal)
-                btn.setBackgroundImage(videoGame.selectedImage, for: .selected)
+                btn.setImage(videoGame.notSelectedImage, for: .normal)
+                btn.setImage(videoGame.selectedImage, for: .selected)
                 buttonTagToVideoGameDict[btn.tag] = videoGame
 
             }
@@ -139,20 +134,29 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDisplayed(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDismissed(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         selectedVideoGames = [String: VideoGameSelected]()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self)
+    deinit {
+        NotificationCenter.default
+            .removeObserver(self,
+                            name: Notification.Name.UIKeyboardWillShow,
+                            object: nil)
+        NotificationCenter.default
+            .removeObserver(self,
+                            name: Notification.Name.UIKeyboardWillHide,
+                            object: nil)
+        NotificationCenter.default
+            .removeObserver(self,
+                            name: Notification.Name.UIKeyboardWillChangeFrame,
+                            object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -170,6 +174,19 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         _ = gameBtns.map { $0.isUserInteractionEnabled = true }
         _ = consoleBtns.map { $0.isUserInteractionEnabled = true}
         submitBtn.isUserInteractionEnabled = true
+    }
+    
+    @objc fileprivate func keyboardWillChange(notification: Notification) {
+        guard let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        
+        if notification.name == Notification.Name.UIKeyboardWillShow ||
+            notification.name == Notification.Name.UIKeyboardWillChangeFrame {
+            disableUIElementsTouch()
+            view.frame.origin.y = -keyboardRect.height
+        } else {
+            enableUIElementsTouch()
+            view.frame.origin.y = 0
+        }
     }
     
     @objc fileprivate func handleKeyboardDisplayed(notification: Notification) {
@@ -223,9 +240,11 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         gameSelectedOptionsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
         gameSelectedOptionsView.alpha = 0
         
-        
         UIView.animate(withDuration: 0.4) {
-            self.view.addSubview(self.blurredEffectView)
+            let blurEffect = UIBlurEffect(style: .light)
+            self.blurredEffectView = UIVisualEffectView(effect: blurEffect)
+            self.blurredEffectView?.frame = self.view.bounds
+            self.view.addSubview(self.blurredEffectView!)
             self.gameSelectedOptionsView.alpha = 1
             self.gameSelectedOptionsView.transform = CGAffineTransform.identity
         }
@@ -235,8 +254,10 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         UIView.animate(withDuration: 0.3, animations: {
             self.gameSelectedOptionsView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
             self.gameSelectedOptionsView.alpha = 0
-            self.blurredEffectView.removeFromSuperview()
+            
         }) { (_) in
+            self.blurredEffectView?.removeFromSuperview()
+            self.blurredEffectView = nil
             self.gameSelectedOptionsView.removeFromSuperview()
             self.enableUIElementsTouch()
         }
