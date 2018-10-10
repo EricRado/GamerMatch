@@ -53,10 +53,6 @@ extension UIViewController: UITextFieldDelegate {
         view.endEditing(true)
     }
     
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
 }
 
 extension Date {

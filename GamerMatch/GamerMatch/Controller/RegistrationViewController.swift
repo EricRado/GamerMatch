@@ -61,25 +61,7 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.emailTextField.delegate = self
-        self.passwordTextField.delegate = self
-        self.usernameTextField.delegate = self
-        self.reconfirmPasswordTextField.delegate = self
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view,
-                                                              action: Selector("endEditing:")))
-    
-    }
-    
-    /* override func viewDidLayoutSubviews() {
-        emailTextField.setBottomLine(borderColor: UIColor.black)
-        passwordTextField.setBottomLine(borderColor: UIColor.black)
-        usernameTextField.setBottomLine(borderColor: UIColor.black)
-    }*/
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return true
+        self.hideKeyboardWhenTappedAround()
     }
     
     fileprivate func validateForEmptyFields() -> Bool {
