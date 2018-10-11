@@ -25,8 +25,8 @@ class FindGamerViewController: UIViewController {
             guard let consoles = VideoGameRepo.shared.getConsoles() else { return }
             for btn in consoleBtnsArr {
                 let console = consoles[btn.tag]
-                btn.setBackgroundImage(console.notSelectedImage, for: .normal)
-                btn.setBackgroundImage(console.selectedImage, for: .selected)
+                btn.setImage(console.notSelectedImage, for: .normal)
+                btn.setImage(console.selectedImage, for: .selected)
                 buttonTagToConsoleDict[btn.tag] = console
             }
         }

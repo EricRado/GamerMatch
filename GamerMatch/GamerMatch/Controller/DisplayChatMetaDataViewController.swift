@@ -208,7 +208,7 @@ extension DisplayChatMetaDataViewController: UITableViewDataSource {
         case 0:
             return "Group Name"
         case 1:
-            return "Participants : \(members?.count ?? 0)"
+            return "Participants : \(chat?.members?.count ?? 0)"
         default:
             return nil
         }
