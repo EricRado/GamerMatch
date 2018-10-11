@@ -121,9 +121,10 @@ class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
     }
     @IBOutlet weak var userProfileImg: UIImageView! {
         didSet {
-            userProfileImg.layer.cornerRadius = userProfileImg.frame.height / 2.0
-            userProfileImg.layer.masksToBounds = true
             userProfileImg.image = User.onlineUser.userImg != nil ? User.onlineUser.userImg : UIImage(named: "noAvatarImg")
+            userProfileImg.layer.cornerRadius = userProfileImg.frame.height / 2.0
+            userProfileImg.layer.masksToBounds = false
+            userProfileImg.clipsToBounds = true
         }
     }
     @IBOutlet weak var editBtn: UIButton! {
@@ -209,6 +210,7 @@ class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
         let ac = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Yes", style: .default) { (_) in
             FirebaseCalls.shared.logoutUser {
+                
                 self.dismiss(animated: true, completion: nil)
                 self.present(vc, animated: true, completion: nil)
                 
@@ -242,32 +244,37 @@ class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
         
         if username.isEmpty {
             print("no text")
+            displayErrorMessage(with: "Username field is empty")
             return
         }
         
         if !(6 ... 16 ~= username.count)  {
+            print("Username should be from 6 - 16 characters")
             displayErrorMessage(with: "Username should be from 6 - 16 characters")
             return
         }
         
         if username == User.onlineUser.username {
             print("same username")
+            displayErrorMessage(with: "Username was not changed")
             return
         }
         
         changeUsernameBtn.isUserInteractionEnabled = false
         FirebaseCalls.shared.checkIfUsernameExists(username) { (check, error) in
             if let error = error {
+                print(error.localizedDescription)
                 self.displayErrorMessage(with: error.localizedDescription)
                 return
             }
             guard let usernameExists = check else { return }
-            if usernameExists {
+            if !usernameExists {
                 FirebaseCalls.shared
                     .updateReferenceWithDictionary(ref: ref1, values: ["username": username])
                 FirebaseCalls.shared
                     .updateReferenceWithDictionary(ref: ref2, values: ["username": username])
             } else {
+                print("Username is already taken")
                 self.displayErrorMessage(with: "Username is already taken")
                 self.changeUsernameBtn.isUserInteractionEnabled = true
             }

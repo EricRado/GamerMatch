@@ -245,8 +245,15 @@ class FirebaseCalls {
     }
     
     func logoutUser(completion: () -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let userRef = self.userRef.child(uid)
+        let userCacheInfoRef = self.userCacheInfoRef.child(uid)
         do {
             try Auth.auth().signOut()
+            updateReferenceWithDictionary(ref: userRef,
+                                          values: ["isOnline": "false"])
+            updateReferenceWithDictionary(ref: userCacheInfoRef,
+                                          values: ["isOnline": "false"])
             completion()
             
         } catch let error {

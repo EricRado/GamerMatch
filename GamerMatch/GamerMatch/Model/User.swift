@@ -69,11 +69,18 @@ final class User: NSObject {
     
     func retrieveUserInfo(uid: String) {
         let userDBRef = dbRef.child("Users/\(uid)")
+        let userCacheInfoRef = dbRef.child("UserCacheInfo/\(uid)")
         userDBRef.observeSingleEvent(of: .value) { (snapshot) in
-            print(snapshot)
             User.onlineUser = User(snapshot: snapshot)!
             User.onlineUser.self.loadUserImg()
         }
+        FirebaseCalls.shared
+            .updateReferenceWithDictionary(ref: userDBRef,
+                                           values: ["isOnline": "true"])
+        FirebaseCalls.shared
+            .updateReferenceWithDictionary(ref: userCacheInfoRef,
+                                           values: ["isOnline": "true"])
+        
     }
     
     func loadUserImg() {

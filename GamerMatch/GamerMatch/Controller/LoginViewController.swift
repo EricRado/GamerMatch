@@ -31,19 +31,12 @@ class LoginViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var backgroundImg: UIImageView! {
-        didSet {
-            backgroundImg.alpha = 0.80
-        }
-    }
-    
     @IBOutlet weak var signInButton: UIButton! {
         didSet {
             signInButton.layer.cornerRadius = 10
             signInButton.layer.masksToBounds = true
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
