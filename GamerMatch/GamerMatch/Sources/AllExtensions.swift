@@ -205,7 +205,11 @@ extension UIViewController {
     }
 }
 
-
+extension String {
+    public var hasWhiteSpace: Bool {
+        return self.contains(" ")
+    }
+}
 
 
 

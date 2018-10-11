@@ -248,6 +248,11 @@ class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
             return
         }
         
+        if username.hasWhiteSpace {
+            displayErrorMessage(with: "Username cannot contain any spaces")
+            return
+        }
+        
         if !(6 ... 16 ~= username.count)  {
             print("Username should be from 6 - 16 characters")
             displayErrorMessage(with: "Username should be from 6 - 16 characters")

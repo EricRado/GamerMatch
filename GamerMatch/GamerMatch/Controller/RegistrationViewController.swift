@@ -15,13 +15,32 @@ class RegistrationViewController: UIViewController {
     
     fileprivate let nextVCId = "ConsoleAndGameSelectionVC"
     private let loginVCId = "LoginVC"
-    fileprivate var userImg: UIImage?
+    private var userImg: UIImage?
     private var isInfoViewShowing = false
+    private var activeTextField: UITextField?
     
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var reconfirmPasswordTextField: UITextField!
+    @IBOutlet var inputFieldsContainerView: UIView!
+    @IBOutlet weak var emailTextField: UITextField! {
+        didSet {
+            emailTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var passwordTextField: UITextField! {
+        didSet {
+            passwordTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var usernameTextField: UITextField! {
+        didSet {
+            usernameTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var reconfirmPasswordTextField: UITextField! {
+        didSet {
+            reconfirmPasswordTextField.delegate = self
+        }
+    }
+    
     @IBOutlet weak var addPhotoBtn: UIButton! {
         didSet {
             addPhotoBtn.layer.cornerRadius = addPhotoBtn.frame.height / 2.0
@@ -50,18 +69,74 @@ class RegistrationViewController: UIViewController {
         return ref
     }()
     
-    lazy var userDict: [String: String] = {
-        var dict = [String: String]()
-        return dict
-    }()
-    
     lazy var imageManager: ImageManager = {
         return ImageManager()
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardDidShow(notification:)),
+            name: Notification.Name.UIKeyboardWillShow,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: Notification.Name.UIKeyboardWillHide,
+            object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default
+            .removeObserver(self,
+                            name: Notification.Name.UIKeyboardWillShow,
+                            object: nil)
+        NotificationCenter.default
+            .removeObserver(self,
+                            name: Notification.Name.UIKeyboardWillHide,
+                            object: nil)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc fileprivate func keyboardDidShow(notification: Notification) {
+        let info = notification.userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue)
+            .cgRectValue
+        let keyboardY = view.frame.size.height - keyboardSize.height - view.safeAreaInsets.bottom
+        
+        let editingTextFieldY: CGFloat! = (activeTextField?.frame.origin.y)! + inputFieldsContainerView.frame.origin.y
+        
+        // check if the textfield is really hidden behind the keyboard
+        if view.frame.origin.y >= 0 && (editingTextFieldY > keyboardY - 60) {
+            UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseIn, animations: {
+                self.view.frame = CGRect(
+                    x: 0,
+                    y: self.view.frame.origin.y - (editingTextFieldY! - (keyboardY - 60)),
+                    width: self.view.bounds.width,
+                    height: self.view.bounds.height)
+            }, completion: nil)
+        }
+    }
+    
+    @objc fileprivate func keyboardWillHide(notification: Notification) {
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.frame.origin.y = 0
+        }, completion: nil)
     }
     
     fileprivate func validateForEmptyFields() -> Bool {
@@ -91,18 +166,29 @@ class RegistrationViewController: UIViewController {
     fileprivate func validateForm() {
         guard validateForEmptyFields() else { return }
         guard let username = usernameTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        if username.hasWhiteSpace {
+            displayErrorMessage(with: "Username cannot contain any spaces")
+            return
+        }
         
         if !(6 ... 16 ~= username.count)  {
             displayErrorMessage(with: "Username should be from 6 - 16 characters")
             return
         }
         
-        if !(8 ... 18 ~= (passwordTextField.text?.count)!) {
+        if !(8 ... 18 ~= password.count) {
             displayErrorMessage(with: "Password should be from 8 - 18 characters")
             return
         }
         
-        if passwordTextField.text != reconfirmPasswordTextField.text {
+        if password.hasWhiteSpace {
+            displayErrorMessage(with: "Password cannot contain any spaces")
+            return
+        }
+        
+        if password != reconfirmPasswordTextField.text {
            displayErrorMessage(with: "Passwords do not match")
             return
         }
@@ -125,8 +211,6 @@ class RegistrationViewController: UIViewController {
                 self.registerUser()
             }
         }
-        
-        
     }
     
     fileprivate func registerUser() {
@@ -141,32 +225,38 @@ class RegistrationViewController: UIViewController {
             }
             print("User registered successfully")
             guard let username = self.usernameTextField.text else { return }
-            self.addUserToDatabase(uid: (user?.uid)!,
+            guard let uid = user?.uid else { return }
+            self.addUserToDatabase(uid: uid,
                                    email: self.emailTextField.text!,
                                    username: username)
             
             // upload image if user selected one
             if let image = self.userImg {
-                self.imageManager.uploadImage(image: image, at: "userProfileImages/\(user?.uid ?? "nothing").jpg",
-                                              completion: { (urlString, error) in
-                    if let error = error {
-                        SVProgressHUD.dismiss()
-                        self.displayErrorMessage(with: error.localizedDescription)
-                        return
-                    }
-                    guard let url = urlString else { return }
-                    FirebaseCalls.shared.updateReferenceWithDictionary(
-                        ref: self.userRef.child("\((user?.uid)!)"),
-                        values: ["url": url])
-                    FirebaseCalls.shared.updateReferenceWithDictionary(
-                        ref: self.userCacheRef.child("\((user?.uid)!)"),
-                        values: ["url": url])
-                })
+                self.uploadUserImg(uid: uid, image: image)
             }
             
             guard let vc = self.storyboard?
                 .instantiateViewController(withIdentifier: self.nextVCId) else { return }
             self.present(vc, animated: true, completion: nil)
+        })
+    }
+    
+    fileprivate func uploadUserImg(uid: String, image: UIImage){
+        let path = "userProfileImages/\(uid).jpg"
+        self.imageManager.uploadImage(image: image, at: path,
+            completion: { (urlString, error) in
+                if let error = error {
+                    SVProgressHUD.dismiss()
+                    self.displayErrorMessage(with: error.localizedDescription)
+                    return
+                }
+                guard let url = urlString else { return }
+                FirebaseCalls.shared.updateReferenceWithDictionary(
+                    ref: self.userRef.child("\(uid)"),
+                    values: ["url": url])
+                FirebaseCalls.shared.updateReferenceWithDictionary(
+                    ref: self.userCacheRef.child("\(uid)"),
+                    values: ["url": url])
         })
     }
     
