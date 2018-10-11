@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController{
     
     @IBOutlet weak var chatTableView: UITableView! {
         didSet {

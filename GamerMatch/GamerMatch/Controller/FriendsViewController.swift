@@ -85,9 +85,7 @@ class FriendsViewController: UIViewController {
     }()
     
     lazy var downloadSession: URLSession = {
-        let configuration = URLSessionConfiguration
-            .background(withIdentifier: "FriendVCBgSessionConfiguration")
-        let session = URLSession(configuration: configuration,
+        let session = URLSession(configuration: .default,
                                  delegate: self,
                                  delegateQueue: nil)
         return session

@@ -10,9 +10,14 @@ import UIKit
 
 class ChatMessageCollectionViewCell: UICollectionViewCell {
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
+    }
+    
+    override func prepareForReuse() {
+        contentView.subviews.forEach({ $0.removeFromSuperview() })
     }
     
     func showIncomingMessage(text: NSMutableAttributedString) {
@@ -40,11 +45,11 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
     
         incomingMessageView.image = bubbleImage
         
-        addSubview(incomingMessageView)
+        contentView.addSubview(incomingMessageView)
         
         label.center = incomingMessageView.center
         
-        addSubview(label)
+        contentView.addSubview(label)
     }
     
     func showOutgoingMessage(text: NSMutableAttributedString) {
@@ -73,11 +78,11 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
         
         outgoingMessageView.image = bubbleImage
         
-        addSubview(outgoingMessageView)
+        contentView.addSubview(outgoingMessageView)
         
         label.center = outgoingMessageView.center
         
-        addSubview(label)
+        contentView.addSubview(label)
     }
     
 }

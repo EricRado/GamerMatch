@@ -182,10 +182,15 @@ class GameAndConsoleSelectionViewController: UIViewController, UITextViewDelegat
         if notification.name == Notification.Name.UIKeyboardWillShow ||
             notification.name == Notification.Name.UIKeyboardWillChangeFrame {
             disableUIElementsTouch()
-            view.frame.origin.y = -keyboardRect.height
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+                self.view.frame.origin.y = -keyboardRect.height 
+            }, completion: nil)
+            
         } else {
             enableUIElementsTouch()
-            view.frame.origin.y = 0
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+                self.view.frame.origin.y = 0
+            }, completion: nil)
         }
     }
     
