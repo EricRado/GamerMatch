@@ -11,7 +11,7 @@ import Firebase
 
 class CreateNewChatViewController: UIViewController {
     var downloadSessionId: String?
-//    let groupSetupVCId = "NewGroupSetupVC"
+    let groupSetupVCId = "NewGroupSetupVC"
     private let cellId = "cellId"
     
     let friendRef: DatabaseReference? = {
