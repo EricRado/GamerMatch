@@ -41,7 +41,7 @@
 		07473B9F2166F32400F2E089 /* UploadImagesForProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07473B9E2166F32400F2E089 /* UploadImagesForProfileView.xib */; };
 		07473BA121670FA000F2E089 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07473BA021670FA000F2E089 /* DownloadManager.swift */; };
 		074C1F08216D03FC00F21241 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 074C1F07216D03FC00F21241 /* GoogleService-Info.plist */; };
-		07BF4CA720E5621600044C86 /* GamerMatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */; };
+		07BF4CA720E5621600044C86 /* UserSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF4CA620E5621600044C86 /* UserSearchResultCell.swift */; };
 		07C982F720961B40007B46BB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C982F620961B40007B46BB /* ImageManager.swift */; };
 		07DDCB65215071CF00584BD6 /* NewGroupChatSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */; };
 		07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */; };
@@ -61,6 +61,7 @@
 		07E586F32052FA5700023383 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F22052FA5700023383 /* Chat.swift */; };
 		07E586F52052FDCA00023383 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F42052FDCA00023383 /* Message.swift */; };
 		475153E9256A258D00920398 /* GamerMatchCoreTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475153E8256A258D00920398 /* GamerMatchCoreTabBarController.swift */; };
+		479198A2256AD43F000BD807 /* UICollectionViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479198A1256AD43F000BD807 /* UICollectionViewCell+Extension.swift */; };
 		4798ECE8253FDE6D003C8DD1 /* ChatSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4798ECE7253FDE6D003C8DD1 /* ChatSelectedViewController.swift */; };
 		7105DC45CB9B5E0CBF066D2E /* Pods_GamerMatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */; };
 /* End PBXBuildFile section */
@@ -100,7 +101,7 @@
 		07473B9E2166F32400F2E089 /* UploadImagesForProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadImagesForProfileView.xib; sourceTree = "<group>"; };
 		07473BA021670FA000F2E089 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		074C1F07216D03FC00F21241 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchTableViewCell.swift; sourceTree = "<group>"; };
+		07BF4CA620E5621600044C86 /* UserSearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchResultCell.swift; sourceTree = "<group>"; };
 		07C982F620961B40007B46BB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupChatSetupViewController.swift; sourceTree = "<group>"; };
 		07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupChatViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 		07E586F42052FDCA00023383 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GamerMatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		475153E8256A258D00920398 /* GamerMatchCoreTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchCoreTabBarController.swift; sourceTree = "<group>"; };
+		479198A1256AD43F000BD807 /* UICollectionViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extension.swift"; sourceTree = "<group>"; };
 		4798ECE7253FDE6D003C8DD1 /* ChatSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectedViewController.swift; sourceTree = "<group>"; };
 		8AF9417A7AC9D821680FE172 /* Pods-GamerMatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamerMatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GamerMatch/Pods-GamerMatch.debug.xcconfig"; sourceTree = "<group>"; };
 		FF24FBA86CEBCD1907B56494 /* Pods-GamerMatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamerMatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-GamerMatch/Pods-GamerMatch.release.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		07E586AD204F8F7500023383 /* GamerMatch */ = {
 			isa = PBXGroup;
 			children = (
+				479198A0256AD413000BD807 /* Extensions */,
 				0721329621477B6300D491CD /* Fonts */,
 				0712C97F20A1159E00775C63 /* Network */,
 				07C982F320961242007B46BB /* Sources */,
@@ -253,7 +256,7 @@
 				07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */,
 				071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */,
 				071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */,
-				07BF4CA620E5621600044C86 /* GamerMatchTableViewCell.swift */,
+				07BF4CA620E5621600044C86 /* UserSearchResultCell.swift */,
 				07E586B2204F8F7600023383 /* Main.storyboard */,
 				071E90142150255E005ED404 /* UserTableViewCell.swift */,
 				071E901621502571005ED404 /* UserTableViewCell.xib */,
@@ -275,6 +278,14 @@
 				1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		479198A0256AD413000BD807 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				479198A1256AD43F000BD807 /* UICollectionViewCell+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		5ECA3A26F8263880744EABA2 /* Pods */ = {
@@ -425,7 +436,7 @@
 			files = (
 				071EE7AA21559D26006A6401 /* VideoGameSelected.swift in Sources */,
 				475153E9256A258D00920398 /* GamerMatchCoreTabBarController.swift in Sources */,
-				07BF4CA720E5621600044C86 /* GamerMatchTableViewCell.swift in Sources */,
+				07BF4CA720E5621600044C86 /* UserSearchResultCell.swift in Sources */,
 				071EE7B4215709A6006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */,
 				071ED121215C6970007B805B /* GamerProfileViewController.swift in Sources */,
 				071EB7072152F8A100688D32 /* DisplayChatMetaDataViewController.swift in Sources */,
@@ -438,6 +449,7 @@
 				07E586C3204F911300023383 /* RegistrationViewController.swift in Sources */,
 				071F2824215D93BE00F1AF61 /* UserJSONResponse.swift in Sources */,
 				07E586F32052FA5700023383 /* Chat.swift in Sources */,
+				479198A2256AD43F000BD807 /* UICollectionViewCell+Extension.swift in Sources */,
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */,
 				07473B9D2166F2B500F2E089 /* UploadImagesForProfileView.swift in Sources */,
