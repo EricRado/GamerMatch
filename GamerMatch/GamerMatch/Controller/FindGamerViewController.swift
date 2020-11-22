@@ -12,7 +12,6 @@ import SVProgressHUD
 
 class FindGamerViewController: UIViewController {
     
-    private let findGamerResultsSegueId = "findGamerResultsSegue"
     private lazy var dbRef = {
         return Database.database().reference()
     }()
@@ -153,16 +152,16 @@ class FindGamerViewController: UIViewController {
             
             print("this is the search ref : \(path)")
             let ref = self.dbRef.child(path)
-            FirebaseCalls.shared
-                .getIdListFromNode(for: ref) { (ids, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                        return
-                    }
-                    self.ids = ids
-                    SVProgressHUD.dismiss()
-                    self.performSegue(withIdentifier: self.findGamerResultsSegueId,
-                                      sender: nil)
+            FirebaseCalls.shared.getIdListFromNode(for: ref) { (ids, error) in
+				if let error = error {
+					print(error.localizedDescription)
+					return
+				}
+				self.ids = ids
+				SVProgressHUD.dismiss()
+				let findGamerResultsViewController = FindGamerResultsViewController()
+				findGamerResultsViewController.resultIds = self.ids
+				self.navigationController?.pushViewController(findGamerResultsViewController, animated: true)
             }
         })
         
@@ -257,25 +256,4 @@ class FindGamerViewController: UIViewController {
     @IBAction func roleBtnPressed(_ sender: UIButton){
         createAlert(gameBtnTag: (selectedVideogameBtnPressed?.tag)!, roleBtnTag: sender.tag)
     }
-    
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationViewController = segue.destination
-            as? FindGamerResultsViewController {
-            destinationViewController.resultIds = ids
-        }
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-

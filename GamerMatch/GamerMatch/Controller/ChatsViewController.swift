@@ -56,10 +56,6 @@ class ChatsViewController: UIViewController{
     var chat1on1TitleDict = [String: UserCacheInfo]()
     var taskIdToCellRowAndChatIdDict = [Int: (Int,String)]()
     
-    // selected chat information to pass to ChatSelectedViewController
-    var selectedChat: Chat?
-    var selectedChatUsername: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -164,49 +160,28 @@ class ChatsViewController: UIViewController{
             }
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "chatSegue" {
-            let vc = segue.destination as! ChatSelectedViewController
-            guard let chat = selectedChat else { return }
-            
-            // if the chat is 1on1 set title for message log screen to user's
-            // username else to group chat's title
-            if !(chat.isGroupChat)! {
-                vc.chatTitle = selectedChatUsername
-            } else {
-                vc.chatTitle = chat.title
-            }
-            
-            // if chat has an image pass it to the next VC
-            if let img = chatImageDict[chat.id!] {
-                vc.image = img
-            }
-            
-            // send chat meta data and participant ids to message log screen
-            vc.chat = chat
-        }
-    }
 }
 
 
 extension ChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		chatTableView.deselectRow(at: indexPath, animated: true)
         guard let chat = chats?[indexPath.row] else { return }
         
-        selectedChat = chat
-        
-        // this is a 1on1 chat get user's username and avatar pic
-        if !(chat.isGroupChat)! {
-            if let user = chat1on1TitleDict[chat.id!] {
-               selectedChatUsername = user.username
-            }
-        }
-        
-        performSegue(withIdentifier: "chatSegue", sender: self)
-        
-        chatTableView.deselectRow(at: indexPath, animated: true)
+        let chatSelectedViewController = ChatSelectedViewController()
+		// if the chat is 1on1 set title for message log screen to user's
+		// username else to group chat's title
+		chatSelectedViewController.chatTitle = (chat.isGroupChat ?? false) ? chat.title : (chat1on1TitleDict[chat.id!]?.username ?? "")
+
+		// if chat has an image pass it to the next VC
+		if let img = chatImageDict[chat.id!] {
+			chatSelectedViewController.image = img
+		}
+
+		// send chat meta data and participant ids to message log screen
+		chatSelectedViewController.chat = chat
+		navigationController?.pushViewController(chatSelectedViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -286,29 +261,3 @@ extension ChatsViewController: URLSessionDownloadDelegate {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

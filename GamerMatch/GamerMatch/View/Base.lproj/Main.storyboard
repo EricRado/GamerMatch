@@ -302,11 +302,11 @@
             <objects>
                 <viewController storyboardIdentifier="findGamerResults" id="J42-57-qP3" customClass="FindGamerResultsViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fXC-EP-6os">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dT2-8I-1i6">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="gamerCell" rowHeight="73" id="b5c-vX-wrm" customClass="GamerMatchTableViewCell" customModule="GamerMatch" customModuleProvider="target">
@@ -658,7 +658,6 @@
                         <outletCollection property="roleBtnsArr" destination="zq1-Nm-zn6" collectionClass="NSMutableArray" id="rs6-hE-tuF"/>
                         <outletCollection property="roleBtnsArr" destination="uGx-9n-Agc" collectionClass="NSMutableArray" id="GYJ-Ab-kis"/>
                         <outletCollection property="roleBtnsArr" destination="rdK-eM-a3N" collectionClass="NSMutableArray" id="ihb-20-wDM"/>
-                        <segue destination="J42-57-qP3" kind="show" identifier="findGamerResultsSegue" id="xtO-2b-8iD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rSD-LB-xvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
