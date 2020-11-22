@@ -56,7 +56,7 @@
 		07E586C1204F90E700023383 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586C0204F90E700023383 /* LoginViewController.swift */; };
 		07E586C3204F911300023383 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586C2204F911300023383 /* RegistrationViewController.swift */; };
 		07E586C8205050A400023383 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586C7205050A400023383 /* User.swift */; };
-		07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586CB2050E14F00023383 /* ChatViewController.swift */; };
+		07E586CC2050E14F00023383 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586CB2050E14F00023383 /* ChatsViewController.swift */; };
 		07E586CE2050E85300023383 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586CD2050E85300023383 /* ChatTableViewCell.swift */; };
 		07E586F32052FA5700023383 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F22052FA5700023383 /* Chat.swift */; };
 		07E586F52052FDCA00023383 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F42052FDCA00023383 /* Message.swift */; };
@@ -116,7 +116,7 @@
 		07E586C0204F90E700023383 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		07E586C2204F911300023383 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		07E586C7205050A400023383 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		07E586CB2050E14F00023383 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		07E586CB2050E14F00023383 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		07E586CD2050E85300023383 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		07E586F22052FA5700023383 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		07E586F42052FDCA00023383 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				4798ECE7253FDE6D003C8DD1 /* ChatSelectedViewController.swift */,
-				07E586CB2050E14F00023383 /* ChatViewController.swift */,
+				07E586CB2050E14F00023383 /* ChatsViewController.swift */,
 				07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */,
 				07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */,
 				071E901221500145005ED404 /* CreateNewChatViewController.swift */,
@@ -437,7 +437,7 @@
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */,
 				07473B9D2166F2B500F2E089 /* UploadImagesForProfileView.swift in Sources */,
-				07E586CC2050E14F00023383 /* ChatViewController.swift in Sources */,
+				07E586CC2050E14F00023383 /* ChatsViewController.swift in Sources */,
 				07C982F720961B40007B46BB /* ImageManager.swift in Sources */,
 				071E9011214EB04B005ED404 /* FriendCollectionViewHeader.swift in Sources */,
 				07473B9B2166CDB300F2E089 /* UpdateConsoleSelectionView.swift in Sources */,

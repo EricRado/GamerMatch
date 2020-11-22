@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ChatViewController: UIViewController{
+class ChatsViewController: UIViewController{
     
     @IBOutlet weak var chatTableView: UITableView! {
         didSet {
@@ -190,7 +190,7 @@ class ChatViewController: UIViewController{
 }
 
 
-extension ChatViewController: UITableViewDelegate {
+extension ChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let chat = chats?[indexPath.row] else { return }
@@ -214,7 +214,7 @@ extension ChatViewController: UITableViewDelegate {
     }
 }
 
-extension ChatViewController: UITableViewDataSource {
+extension ChatsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatTableViewCell
@@ -258,7 +258,7 @@ extension ChatViewController: UITableViewDataSource {
 }
 
 
-extension ChatViewController: URLSessionDownloadDelegate {
+extension ChatsViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         let taskId = downloadTask.taskIdentifier
         
