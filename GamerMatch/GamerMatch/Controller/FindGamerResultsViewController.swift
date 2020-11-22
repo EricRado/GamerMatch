@@ -59,16 +59,20 @@ class FindGamerResultsViewController: UIViewController {
         for id in ids {
             print("This is the id : \(id)")
             guard id != User.onlineUser.uid else { continue }
-            FirebaseCalls.shared.getUserCacheInfo(for: id) { (userCacheInfo, error) in
-                if let error = error {
+            FirebaseCalls.shared.getUserCacheInfo(for: id) { [weak self] (userCacheInfo, error) in
+				guard let self = self else { return }
+
+				if let error = error {
                     print(error.localizedDescription)
                 }
+
                 if let userCacheInfo = userCacheInfo {
                     self.results?.append(userCacheInfo)
                     
                     guard let count = self.results?.count else { return }
                     let indexPath = IndexPath(row: count - 1, section: 0)
                     print("Inserting at row : \(indexPath.item)")
+					// CRASH
                     self.tableView.insertRows(at: [indexPath], with: .none)
                 }
             }
