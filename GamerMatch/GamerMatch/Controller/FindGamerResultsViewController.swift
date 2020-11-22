@@ -12,8 +12,8 @@ import Firebase
 final class FindGamerResultsViewController: UIViewController {
 
     private let vcIdentifier = "GamerProfileViewController"
-    var results: [UserCacheInfo]?
-    var resultIds: [String]?
+    private var results = [UserCacheInfo]()
+    private var gamerIds: [String]
     var taskIdToCellRowDict = [Int: Int]()
     var cellRowToUserImage = [Int: UIImage]()
     
@@ -39,7 +39,16 @@ final class FindGamerResultsViewController: UIViewController {
 		collectionView.delegate = self
 		return collectionView
 	}()
-    
+
+	init(gamerIds: [String]) {
+		self.gamerIds = gamerIds
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         tabBarController?.tabBar.isHidden = false
@@ -57,13 +66,11 @@ final class FindGamerResultsViewController: UIViewController {
 		])
         
         results = [UserCacheInfo]()
-        getUsersResults(from: resultIds)
+        getUsersResults(from: gamerIds)
     }
     
-    fileprivate func getUsersResults(from resultIds: [String]?) {
-        guard let ids = resultIds else { return }
-        
-        for id in ids {
+    fileprivate func getUsersResults(from gamerIds: [String]) {
+        for id in gamerIds {
             print("This is the id : \(id)")
             guard id != User.onlineUser.uid else { continue }
             FirebaseCalls.shared.getUserCacheInfo(for: id) { [weak self] (userCacheInfo, error) in
@@ -71,13 +78,12 @@ final class FindGamerResultsViewController: UIViewController {
 
 				if let error = error {
                     print(error.localizedDescription)
+					return
                 }
 
                 if let userCacheInfo = userCacheInfo {
-                    self.results?.append(userCacheInfo)
-                    
-                    guard let count = self.results?.count else { return }
-                    let indexPath = IndexPath(row: count - 1, section: 0)
+                    self.results.append(userCacheInfo)
+					let indexPath = IndexPath(row: self.results.count - 1, section: 0)
                     print("Inserting at row : \(indexPath.item)")
 					self.collectionView.insertItems(at: [indexPath])
                 }
@@ -89,14 +95,14 @@ final class FindGamerResultsViewController: UIViewController {
 
 extension FindGamerResultsViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return results?.count ?? 0
+		return results.count
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let cell = collectionView
 				.dequeueReusableCell(withReuseIdentifier: UserSearchResultCell.identifier, for: indexPath)
 				as? UserSearchResultCell else { return UICollectionViewCell() }
-		guard let userCacheInfo = results?[indexPath.row] else { return cell }
+		let userCacheInfo = results[indexPath.row]
 		
 		if let urlString = userCacheInfo.url, urlString != "" {
 			let id = mediaManager.downloadImage(from: urlString)
@@ -111,11 +117,12 @@ extension FindGamerResultsViewController: UICollectionViewDataSource {
 extension FindGamerResultsViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		collectionView.deselectItem(at: indexPath, animated: true)
-		guard let userCacheInfo = results?[indexPath.row] else { return }
+		let userCacheInfo = results[indexPath.row]
 
-		guard let gamerProfileViewController = storyboard?
-			.instantiateViewController(withIdentifier: vcIdentifier)
-			as? GamerProfileViewController else { return }
+		let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+		guard let gamerProfileViewController = mainStoryboard
+				.instantiateViewController(withIdentifier: vcIdentifier)
+				as? GamerProfileViewController else { return }
 		gamerProfileViewController.userCacheInfo = userCacheInfo
 		gamerProfileViewController.userImage = cellRowToUserImage[indexPath.row]
 
@@ -139,7 +146,7 @@ extension FindGamerResultsViewController: URLSessionDownloadDelegate {
             let data = try Data(contentsOf: location)
             DispatchQueue.main.async {
                 guard let item = self.taskIdToCellRowDict[taskId] else { return }
-				guard let username = self.results?[item].username else { return }
+				guard let username = self.results[item].username else { return }
 				let indexPath = IndexPath(item: item, section: 0)
 				guard let cell = self.collectionView.cellForItem(at: indexPath)
 						as? UserSearchResultCell else { return }
