@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC")
+        guard let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
             as? LoginViewController else { return false }
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()

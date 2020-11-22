@@ -11,7 +11,7 @@ import Firebase
 
 class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
     private let cellId = "cellId"
-    private let signInVCIdentifier = "LoginVC"
+    private let signInVCIdentifier = "LoginViewController"
     private var taskIdToPhotoBtnTag = [Int: Int]()
     
     // keeps track of user's console selections

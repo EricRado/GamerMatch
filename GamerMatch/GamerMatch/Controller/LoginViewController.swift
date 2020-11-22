@@ -14,7 +14,7 @@ import ValidationComponents
 
 class LoginViewController: UIViewController {
     
-    private let registrationVCId = "RegistrationVC"
+    private let registrationVCId = "RegistrationViewController"
     var isInfoViewShowing = false
     
     @IBOutlet weak var emailTextField: UITextField! {
@@ -40,6 +40,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.backgroundColor = .clear
         self.hideKeyboardWhenTappedAround()
     }
     
@@ -83,6 +84,7 @@ class LoginViewController: UIViewController {
         guard validateFields() else { return }
         SVProgressHUD.show(withStatus: "Signing In")
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
+
             if let error = error {
                 SVProgressHUD.dismiss()
                 self.displayErrorMessage(with: error.localizedDescription)
@@ -91,16 +93,18 @@ class LoginViewController: UIViewController {
                 // setup all of the signed in user info to User singleton object
                 User.onlineUser.retrieveUserInfo(uid: (user?.uid)!)
                 SVProgressHUD.dismiss()
-                self.performSegue(withIdentifier: "signinDashboardSegue", sender: self)
+				// Present TabBarController
+				let gamerMatchCoreTabBarController = GamerMatchCoreTabBarController()
+				self.show(gamerMatchCoreTabBarController, sender: nil)
             }
         }
     }
     
     
     @IBAction func registerPressed(_ sender: UIButton) {
-        guard let vc = storyboard?.instantiateViewController(withIdentifier: registrationVCId) as? RegistrationViewController else { return }
-        let window = UIApplication.shared.windows[0] as UIWindow
-        window.rootViewController = vc
+        guard let registrationViewController = storyboard?.instantiateViewController(withIdentifier: registrationVCId) as? RegistrationViewController else { return }
+		registrationViewController.modalPresentationStyle = .fullScreen
+		show(registrationViewController, sender: nil)
     }
 
 }

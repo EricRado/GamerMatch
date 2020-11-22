@@ -12,9 +12,8 @@ import SVProgressHUD
 import ValidationComponents
 
 class RegistrationViewController: UIViewController {
-    
-    fileprivate let nextVCId = "ConsoleAndGameSelectionVC"
-    private let loginVCId = "LoginVC"
+
+    private let loginVCId = "LoginViewController"
     private var userImg: UIImage?
     private var isInfoViewShowing = false
     private var activeTextField: UITextField?
@@ -89,6 +88,7 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.backgroundColor = .clear
         self.hideKeyboardWhenTappedAround()
     }
     
@@ -235,9 +235,8 @@ class RegistrationViewController: UIViewController {
                 self.uploadUserImg(uid: uid, image: image)
             }
             
-            guard let vc = self.storyboard?
-                .instantiateViewController(withIdentifier: self.nextVCId) else { return }
-            self.present(vc, animated: true, completion: nil)
+            let gamerMatchCoreTabBarController = GamerMatchCoreTabBarController()
+			self.show(gamerMatchCoreTabBarController, sender: nil)
         })
     }
     
@@ -279,10 +278,10 @@ class RegistrationViewController: UIViewController {
     
     
     @IBAction func returnBtnPressed(_ sender: UIButton) {
-        guard let vc = storyboard?.instantiateViewController(withIdentifier: loginVCId)
+        guard let loginViewController = storyboard?.instantiateViewController(withIdentifier: loginVCId)
             as? LoginViewController else { return }
-        let window = UIApplication.shared.windows[0] as UIWindow
-        window.rootViewController = vc
+		loginViewController.modalPresentationStyle = .fullScreen
+		show(loginViewController, sender: nil)
     }
     
     @objc func addPhotoBtnPressed(_ sender: UIButton) {
