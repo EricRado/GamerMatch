@@ -61,6 +61,7 @@
 		07E586F32052FA5700023383 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F22052FA5700023383 /* Chat.swift */; };
 		07E586F52052FDCA00023383 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F42052FDCA00023383 /* Message.swift */; };
 		475153E9256A258D00920398 /* GamerMatchCoreTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475153E8256A258D00920398 /* GamerMatchCoreTabBarController.swift */; };
+		475BDB43256C724600B266AA /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDB42256C724600B266AA /* UIImageView+Extension.swift */; };
 		479198A2256AD43F000BD807 /* UICollectionViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479198A1256AD43F000BD807 /* UICollectionViewCell+Extension.swift */; };
 		4798ECE8253FDE6D003C8DD1 /* ChatSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4798ECE7253FDE6D003C8DD1 /* ChatSelectedViewController.swift */; };
 		7105DC45CB9B5E0CBF066D2E /* Pods_GamerMatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */; };
@@ -124,6 +125,7 @@
 		07E586F42052FDCA00023383 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GamerMatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		475153E8256A258D00920398 /* GamerMatchCoreTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchCoreTabBarController.swift; sourceTree = "<group>"; };
+		475BDB42256C724600B266AA /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		479198A1256AD43F000BD807 /* UICollectionViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extension.swift"; sourceTree = "<group>"; };
 		4798ECE7253FDE6D003C8DD1 /* ChatSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectedViewController.swift; sourceTree = "<group>"; };
 		8AF9417A7AC9D821680FE172 /* Pods-GamerMatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamerMatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GamerMatch/Pods-GamerMatch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				479198A1256AD43F000BD807 /* UICollectionViewCell+Extension.swift */,
+				475BDB42256C724600B266AA /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				479198A2256AD43F000BD807 /* UICollectionViewCell+Extension.swift in Sources */,
 				07E586C1204F90E700023383 /* LoginViewController.swift in Sources */,
 				071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */,
+				475BDB43256C724600B266AA /* UIImageView+Extension.swift in Sources */,
 				07473B9D2166F2B500F2E089 /* UploadImagesForProfileView.swift in Sources */,
 				07E586CC2050E14F00023383 /* ChatsViewController.swift in Sources */,
 				07C982F720961B40007B46BB /* ImageManager.swift in Sources */,

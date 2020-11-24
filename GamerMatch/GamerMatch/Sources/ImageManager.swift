@@ -37,8 +37,7 @@ final class ImageManager {
 		}.resume()
     }
     
-    func uploadImage(image: UIImage, at filePath: String,
-                     completion: @escaping (String?, Error?) -> Void) {
+    func uploadImage(image: UIImage, at filePath: String, completion: @escaping (String?, Error?) -> Void) {
         guard let data = UIImageJPEGRepresentation(image, 0.8) else { return }
         
         let metaData = StorageMetadata()
