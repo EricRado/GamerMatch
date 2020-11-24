@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -597,99 +597,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rSD-LB-xvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2727" y="-136"/>
-        </scene>
-        <!--Friends-->
-        <scene sceneID="Jnh-M3-UAG">
-            <objects>
-                <viewController storyboardIdentifier="FriendsViewController" id="U5j-hJ-51c" customClass="FriendsViewController" customModule="GamerMatch" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vt3-LP-lRD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iNP-CS-PKa">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
-                                <segments>
-                                    <segment title="Friends"/>
-                                    <segment title="Friend Requests"/>
-                                </segments>
-                            </segmentedControl>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="q6K-yT-7HK">
-                                <rect key="frame" x="0.0" y="39" width="375" height="628"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O0a-ME-iPY">
-                                <rect key="frame" x="0.0" y="39" width="375" height="628"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ddh-SV-oKf">
-                                    <size key="itemSize" width="116" height="133"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="friendCell" id="GkR-o9-ohd" customClass="FriendCollectionViewCell" customModule="GamerMatch" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="116" height="133"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="116" height="133"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gmS-Ny-mHe">
-                                                    <rect key="frame" x="16" y="16" width="84" height="84"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="gmS-Ny-mHe" secondAttribute="height" multiplier="1:1" id="9qA-N1-thl"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbG-WM-df1">
-                                                    <rect key="frame" x="8" y="116" width="100" height="17"/>
-                                                    <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="gmS-Ny-mHe" firstAttribute="leading" secondItem="GkR-o9-ohd" secondAttribute="leading" constant="16" id="Acn-yU-fKB"/>
-                                            <constraint firstItem="vbG-WM-df1" firstAttribute="centerX" secondItem="gmS-Ny-mHe" secondAttribute="centerX" id="SWC-Ze-TP1"/>
-                                            <constraint firstAttribute="trailing" secondItem="vbG-WM-df1" secondAttribute="trailing" constant="8" id="mx6-zz-SfJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="gmS-Ny-mHe" secondAttribute="trailing" constant="16" id="rxt-F1-Hg3"/>
-                                            <constraint firstAttribute="bottom" secondItem="vbG-WM-df1" secondAttribute="bottom" id="uPK-8D-IFc"/>
-                                            <constraint firstItem="gmS-Ny-mHe" firstAttribute="top" secondItem="GkR-o9-ohd" secondAttribute="top" constant="16" id="vUI-ny-4SQ"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="friendImageView" destination="gmS-Ny-mHe" id="aAG-tv-wOe"/>
-                                            <outlet property="friendUsernameLabel" destination="vbG-WM-df1" id="mUV-eO-1Qo"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="BSC-jW-ELK"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="BSC-jW-ELK" firstAttribute="bottom" secondItem="O0a-ME-iPY" secondAttribute="bottom" id="9g7-GR-VeP"/>
-                            <constraint firstItem="iNP-CS-PKa" firstAttribute="leading" secondItem="BSC-jW-ELK" secondAttribute="leading" id="BqP-IG-l2f"/>
-                            <constraint firstItem="BSC-jW-ELK" firstAttribute="bottom" secondItem="q6K-yT-7HK" secondAttribute="bottom" id="Hs0-x8-cL5"/>
-                            <constraint firstItem="q6K-yT-7HK" firstAttribute="leading" secondItem="BSC-jW-ELK" secondAttribute="leading" id="QHE-IC-Dwh"/>
-                            <constraint firstItem="iNP-CS-PKa" firstAttribute="top" secondItem="BSC-jW-ELK" secondAttribute="top" id="V6i-7d-gnc"/>
-                            <constraint firstItem="O0a-ME-iPY" firstAttribute="leading" secondItem="BSC-jW-ELK" secondAttribute="leading" id="W7y-Hj-dyn"/>
-                            <constraint firstItem="BSC-jW-ELK" firstAttribute="trailing" secondItem="q6K-yT-7HK" secondAttribute="trailing" id="ata-YT-IND"/>
-                            <constraint firstItem="BSC-jW-ELK" firstAttribute="trailing" secondItem="iNP-CS-PKa" secondAttribute="trailing" id="cv8-02-oSw"/>
-                            <constraint firstItem="O0a-ME-iPY" firstAttribute="top" secondItem="iNP-CS-PKa" secondAttribute="bottom" constant="8" id="cw2-CM-et8"/>
-                            <constraint firstItem="q6K-yT-7HK" firstAttribute="top" secondItem="iNP-CS-PKa" secondAttribute="bottom" constant="8" id="fFV-LH-jv4"/>
-                            <constraint firstItem="BSC-jW-ELK" firstAttribute="trailing" secondItem="O0a-ME-iPY" secondAttribute="trailing" id="gEj-gd-E2y"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Friends" id="Qrj-3g-YuN"/>
-                    <connections>
-                        <outlet property="collectionView" destination="O0a-ME-iPY" id="Cnc-mJ-lVO"/>
-                        <outlet property="segmentedControl" destination="iNP-CS-PKa" id="VcA-aI-oXz"/>
-                        <outlet property="tableView" destination="q6K-yT-7HK" id="OUj-za-ozV"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KZB-Vp-ZZg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2708" y="-836"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Gih-Cf-Jra">

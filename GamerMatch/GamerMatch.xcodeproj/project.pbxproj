@@ -46,7 +46,6 @@
 		07DDCB65215071CF00584BD6 /* NewGroupChatSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */; };
 		07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */; };
 		07DDCB692150773600584BD6 /* Create1On1ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */; };
-		07DDCB6B2150B63500584BD6 /* FriendCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */; };
 		07DE23DF2153CECC0079F338 /* FriendRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE23DD2153CECC0079F338 /* FriendRequestTableViewCell.swift */; };
 		07DE23E4215430880079F338 /* FriendRequestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07DE23E3215430880079F338 /* FriendRequestTableViewCell.xib */; };
 		07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586AE204F8F7500023383 /* AppDelegate.swift */; };
@@ -107,7 +106,6 @@
 		07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupChatSetupViewController.swift; sourceTree = "<group>"; };
 		07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupChatViewController.swift; sourceTree = "<group>"; };
 		07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Create1On1ChatViewController.swift; sourceTree = "<group>"; };
-		07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCollectionViewCell.xib; sourceTree = "<group>"; };
 		07DE23DD2153CECC0079F338 /* FriendRequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestTableViewCell.swift; sourceTree = "<group>"; };
 		07DE23E3215430880079F338 /* FriendRequestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendRequestTableViewCell.xib; sourceTree = "<group>"; };
 		07E586AB204F8F7500023383 /* GamerMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamerMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,7 +253,6 @@
 				0701F3BE2146087E00A73A77 /* ChatMessageCollectionViewCell.swift */,
 				07E586CD2050E85300023383 /* ChatTableViewCell.swift */,
 				071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */,
-				07DDCB6A2150B63500584BD6 /* FriendCollectionViewCell.xib */,
 				071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */,
 				071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */,
 				07BF4CA620E5621600044C86 /* UserSearchResultCell.swift */,
@@ -370,7 +367,6 @@
 				07DE23E4215430880079F338 /* FriendRequestTableViewCell.xib in Resources */,
 				07E586B9204F8F7600023383 /* LaunchScreen.storyboard in Resources */,
 				07473B9F2166F32400F2E089 /* UploadImagesForProfileView.xib in Resources */,
-				07DDCB6B2150B63500584BD6 /* FriendCollectionViewCell.xib in Resources */,
 				07E586B6204F8F7600023383 /* Assets.xcassets in Resources */,
 				071E900F214EB026005ED404 /* FriendCollectionViewHeader.xib in Resources */,
 				07E586B4204F8F7600023383 /* Main.storyboard in Resources */,
