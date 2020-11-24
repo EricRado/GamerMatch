@@ -84,20 +84,6 @@ class FriendsViewController: UIViewController {
         return dict
     }()
     
-    lazy var downloadSession: URLSession = {
-        let session = URLSession(configuration: .default,
-                                 delegate: self,
-                                 delegateQueue: nil)
-        return session
-    }()
-    
-    lazy var mediaManager: ImageManager = {
-        let manager = ImageManager(downloadSession: downloadSession)
-        return manager
-    }()
-    
-   
-    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             let nib = UINib(nibName: FriendRequestTableViewCell.identifier,
@@ -373,11 +359,11 @@ extension FriendsViewController: UICollectionViewDataSource {
         
         cell.friendUsernameLabel.text = friend.username
         
-        if let url = friend.url, url != "" {
-            let id = mediaManager .downloadImage(from: url)
-            guard let taskId = id else { return cell }
-            taskIdsToIndexPathCVDict[taskId] = (indexPath.item, indexPath.section)
-        }
+//        if let url = friend.url, url != "" {
+//            let id = mediaManager .downloadImage(from: url)
+//            guard let taskId = id else { return cell }
+//            taskIdsToIndexPathCVDict[taskId] = (indexPath.item, indexPath.section)
+//        }
         cell.friendImageView.image = UIImage(named: "noAvatarImg")
         
         return cell
@@ -473,9 +459,9 @@ extension FriendsViewController: UITableViewDataSource {
         }
         
         if let url = user?.url, !url.isEmpty {
-            let id = mediaManager.downloadImage(from: url)
-            guard let taskId = id else { return cell }
-            taskIdsToIndexPathTVDict[taskId] = (row, section)
+//            let id = mediaManager.downloadImage(from: url)
+//            guard let taskId = id else { return cell }
+//            taskIdsToIndexPathTVDict[taskId] = (row, section)
         } else {
             cell.friendImageView.image = UIImage(named: "noAvatarImg")
         }
@@ -501,66 +487,3 @@ extension FriendsViewController: UITableViewDataSource {
         return 50.0
     }
 }
-
-
-extension FriendsViewController: URLSessionDownloadDelegate {
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        let taskId = downloadTask.taskIdentifier
-        
-        do {
-            let data = try Data(contentsOf: location)
-            let image = UIImage(data: data)
-            
-            DispatchQueue.main.async {
-                if let (row, section) = self.taskIdsToIndexPathCVDict[taskId] {
-                    let indexPath = IndexPath(row: row, section: section)
-                    guard let cell = self.collectionView.cellForItem(at: indexPath) as? FriendCollectionViewCell else { return }
-                    cell.friendImageView.image = image
-                }
-                
-                if let (row, section) = self.taskIdsToIndexPathTVDict[taskId] {
-                    let indexPath = IndexPath(row: row, section: section)
-                    guard let cell = self.tableView.cellForRow(at: indexPath)
-                        as? FriendRequestTableViewCell else { return }
-                    cell.friendImageView.image = image
-                }
-                
-            }
-        } catch let error {
-            print(error)
-        }
-    }
-    
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-                appDelegate.backgroundSessionCompletionHandler = nil
-                completionHandler()
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

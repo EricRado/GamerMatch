@@ -63,9 +63,9 @@ class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
             // retrieve the url and download the image
             guard let url = profileImagesIDToUrlTupleArray?[index].1,
                 url != "" else { continue }
-            let id = manager.downloadImage(from: url)
-            guard let taskId = id else { continue }
-            taskIdToPhotoBtnTag[taskId] = btn.tag
+//            let id = manager.downloadImage(from: url)
+//            guard let taskId = id else { continue }
+//            taskIdToPhotoBtnTag[taskId] = btn.tag
         }
         
         for btn in view.uploadBtns {
@@ -98,19 +98,6 @@ class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
             arr[index] = value
         }
         return arr
-    }()
-    
-    private lazy var session: URLSession = {
-        var session = URLSession(configuration: .default,
-                                 delegate: self,
-                                 delegateQueue: nil)
-        return session
-    }()
-    
-    private lazy var manager: ImageManager = {
-        var manager = ImageManager()
-        manager.downloadSession = session
-        return manager
     }()
     
     @IBOutlet weak var usernameTextView: UITextView! {
@@ -294,17 +281,17 @@ class ProfileSettingsViewController: UIViewController, UITextViewDelegate {
       
         CamaraHandler.shared.imagePickedBlock = { image in
             self.userProfileImg.image = image
-            self.manager.uploadImage(image: image, at: path, completion: { (urlString, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                guard let url = urlString else { return }
-                FirebaseCalls.shared
-                    .updateReferenceWithDictionary(ref: ref1, values: ["url": url])
-                FirebaseCalls.shared
-                    .updateReferenceWithDictionary(ref: ref2, values: ["url": url])
-            })
+//            self.manager.uploadImage(image: image, at: path, completion: { (urlString, error) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                    return
+//                }
+//                guard let url = urlString else { return }
+//                FirebaseCalls.shared
+//                    .updateReferenceWithDictionary(ref: ref1, values: ["url": url])
+//                FirebaseCalls.shared
+//                    .updateReferenceWithDictionary(ref: ref2, values: ["url": url])
+//            })
         }
         CamaraHandler.shared.showActionSheet(vc: self)
     }
@@ -418,18 +405,18 @@ extension ProfileSettingsViewController {
         let path = "profileImages/\(uid)/\(imageId).jpg"
      
         self.uploadImagesProfileView.uploadBtns[index].isEnabled = false
-        manager.uploadImage(image: image, at: path, completion: { (urlString, error) in
-            if let error = error {
-                self.displayErrorMessage(with: error.localizedDescription)
-                self.uploadImagesProfileView.uploadBtns[index].isEnabled = true
-                return
-            }
-            guard let url = urlString else { return }
-            FirebaseCalls.shared.updateReferenceList(ref: ref, values: [imageId: url])
-            
-            // remove previous picture from storage and reference in database
-            self.removeImageReference(index: index)
-        })
+//        manager.uploadImage(image: image, at: path, completion: { (urlString, error) in
+//            if let error = error {
+//                self.displayErrorMessage(with: error.localizedDescription)
+//                self.uploadImagesProfileView.uploadBtns[index].isEnabled = true
+//                return
+//            }
+//            guard let url = urlString else { return }
+//            FirebaseCalls.shared.updateReferenceList(ref: ref, values: [imageId: url])
+//
+//            // remove previous picture from storage and reference in database
+//            self.removeImageReference(index: index)
+//        })
     }
     
     @objc func imageBtnPressed(sender: UIButton) {
@@ -527,58 +514,23 @@ extension ProfileSettingsViewController: UITableViewDataSource {
     }
 }
 
-extension ProfileSettingsViewController: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        let taskId = downloadTask.taskIdentifier
-        
-        do {
-            let data = try Data(contentsOf: location)
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                guard let btnIndex = self.taskIdToPhotoBtnTag[taskId]
-                    else { return }
-                let button = self.uploadImagesProfileView.imageBtns[btnIndex]
-                button.setImage(image, for: .normal)
-                button.layer.cornerRadius = 10
-                button.layer.masksToBounds = true
-                
-            }
-        } catch let error {
-            print(error)
-        }
-    }
-    
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-                appDelegate.backgroundSessionCompletionHandler = nil
-                completionHandler()
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//extension ProfileSettingsViewController: URLSessionDownloadDelegate {
+//    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+//        let taskId = downloadTask.taskIdentifier
+//
+//        do {
+//            let data = try Data(contentsOf: location)
+//            DispatchQueue.main.async {
+//                let image = UIImage(data: data)
+//                guard let btnIndex = self.taskIdToPhotoBtnTag[taskId]
+//                    else { return }
+//                let button = self.uploadImagesProfileView.imageBtns[btnIndex]
+//                button.setImage(image, for: .normal)
+//                button.layer.cornerRadius = 10
+//                button.layer.masksToBounds = true
+//            }
+//        } catch let error {
+//            print(error)
+//        }
+//    }
+//}

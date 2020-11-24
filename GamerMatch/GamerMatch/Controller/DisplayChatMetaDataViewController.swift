@@ -52,17 +52,6 @@ class DisplayChatMetaDataViewController: UIViewController {
         var ref = Database.database().reference().child("Chats/\(id)/")
         return ref
     }()
-    
-    lazy var downloadSession: URLSession = {
-        let configuration = URLSessionConfiguration.background(withIdentifier: "DisplayChatMetaDataSessionConfiguration")
-        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-        return session
-    }()
-    
-    lazy var mediaManager: ImageManager = {
-        let manager = ImageManager(downloadSession: downloadSession)
-        return manager
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,15 +84,15 @@ class DisplayChatMetaDataViewController: UIViewController {
                                    preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Confirm", style: .default) { _ in
             guard let image = self.groupImage else { return }
-            self.mediaManager.uploadImage(image: image, at: path){ (urlString, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                guard let url = urlString else { return }
-                guard let ref = self.chatRef else { return }
-                FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: ["url": url])
-            }
+//            self.mediaManager.uploadImage(image: image, at: path){ (urlString, error) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                    return
+//                }
+//                guard let url = urlString else { return }
+//                guard let ref = self.chatRef else { return }
+//                FirebaseCalls.shared.updateReferenceWithDictionary(ref: ref, values: ["url": url])
+//            }
             
         })
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -196,9 +185,9 @@ extension DisplayChatMetaDataViewController: UITableViewDataSource {
             return cell
         }
         
-        let id = mediaManager.downloadImage(from: url)
-        guard let taskId = id else { return cell }
-        taskIdsToIndexPathDict?[taskId] = indexPath
+//        let id = mediaManager.downloadImage(from: url)
+//        guard let taskId = id else { return cell }
+//        taskIdsToIndexPathDict?[taskId] = indexPath
             
         return cell
     }
@@ -215,44 +204,3 @@ extension DisplayChatMetaDataViewController: UITableViewDataSource {
     
     }
 }
-
-extension DisplayChatMetaDataViewController: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        let taskId = downloadTask.taskIdentifier
-        
-        do {
-            let data = try Data(contentsOf: location)
-            DispatchQueue.main.async {
-                guard let indexPath = self.taskIdsToIndexPathDict?[taskId] else { return }
-                guard let cell = self.tableView.cellForRow(at: indexPath)
-                    as? UserTableViewCell else { return }
-                let image = UIImage(data: data)
-                cell.userImageView.image = image
-            }
-        } catch let error {
-            print(error)
-        }
-    }
-    
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-                appDelegate.backgroundSessionCompletionHandler = nil
-                completionHandler()
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-

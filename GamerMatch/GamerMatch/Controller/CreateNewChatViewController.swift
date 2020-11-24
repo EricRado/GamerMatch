@@ -32,22 +32,6 @@ class CreateNewChatViewController: UIViewController {
         return dict
     }()
     
-    lazy var downloadSession: URLSession? = {
-        guard let id = downloadSessionId else { return nil }
-        let configuration = URLSessionConfiguration
-            .background(withIdentifier: id)
-        let session = URLSession(configuration: configuration,
-                                 delegate: self,
-                                 delegateQueue: nil)
-        return session
-    }()
-    
-    lazy var mediaManager: ImageManager? = {
-        guard let session = downloadSession else { return nil }
-        let manager = ImageManager(downloadSession: session)
-        return manager
-    }()
-    
     var friends: [UserCacheInfo]?
     private var taskIdToCellRowDict = [Int: Int]()
     
@@ -106,74 +90,14 @@ extension CreateNewChatViewController: UITableViewDataSource {
         guard let friend = friends?[indexPath.row] else { return cell }
         cell.usernameLabel.text = friend.username
         
-        if let url = friend.url, !url.isEmpty {
-            let id = mediaManager?.downloadImage(from: url)
-            guard let taskId = id else { return cell }
-            taskIdToCellRowDict[taskId] = indexPath.row
-        } else {
-            cell.userImageView.image = UIImage(named: "noAvatarImg")
-        }
+//        if let url = friend.url, !url.isEmpty {
+//            let id = mediaManager?.downloadImage(from: url)
+//            guard let taskId = id else { return cell }
+//            taskIdToCellRowDict[taskId] = indexPath.row
+//        } else {
+//            cell.userImageView.image = UIImage(named: "noAvatarImg")
+//        }
         
         return cell
     }
 }
-
-// MARK: - URLSessionDownloadDelegate
-extension CreateNewChatViewController: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        let taskId = downloadTask.taskIdentifier
-        
-        do {
-            let data = try Data(contentsOf: location)
-            DispatchQueue.main.async {
-                guard let row = self.taskIdToCellRowDict[taskId] else { return }
-                guard let cell = self.tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? UserTableViewCell else { return }
-                let image = UIImage(data: data)
-                cell.userImageView.image = image
-            }
-        } catch let error {
-            print(error)
-        }
-    }
-    
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-                appDelegate.backgroundSessionCompletionHandler = nil
-                completionHandler()
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

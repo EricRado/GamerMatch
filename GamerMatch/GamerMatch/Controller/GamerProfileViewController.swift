@@ -16,18 +16,6 @@ class GamerProfileViewController: UIViewController {
     var roleImgCounter = 0
     private var taskIdToImageTag = [Int: Int]()
     
-    private lazy var session: URLSession = {
-        var session = URLSession(configuration: .default,
-                                delegate: self,
-                                delegateQueue: nil)
-        return session
-    }()
-    private lazy var manager: ImageManager = {
-        var manager = ImageManager()
-        manager.downloadSession = session
-        return manager
-    }()
-    
     lazy var consolesDict: [String: Console]? = {
         guard let consoles = VideoGameRepo.shared.getConsoles()
             else { return nil}
@@ -198,11 +186,11 @@ class GamerProfileViewController: UIViewController {
     // storing images as imageID: urlString
     fileprivate func setupUserProfileImages() {
         guard let dict = user?.profileImageUrls else { return }
-        for (index, value) in dict.enumerated() {
-            let id = manager.downloadImage(from: value.1)
-            guard let taskId = id else { return }
-            taskIdToImageTag[taskId] = index
-        }
+//        for (index, value) in dict.enumerated() {
+//            let id = manager.downloadImage(from: value.1)
+//            guard let taskId = id else { return }
+//            taskIdToImageTag[taskId] = index
+//        }
     }
     
     fileprivate func createFriendRequest() {
@@ -240,66 +228,6 @@ class GamerProfileViewController: UIViewController {
     }
 
 }
-
-extension GamerProfileViewController: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
-                    didFinishDownloadingTo location: URL) {
-        let taskId = downloadTask.taskIdentifier
-        do {
-            let data = try Data(contentsOf: location)
-            let image = UIImage(data: data)
-            
-            DispatchQueue.main.async {
-                guard let imageTag = self.taskIdToImageTag[taskId]
-                    else { return }
-                let imageView = self.userStoredImgs[imageTag]
-                imageView.image = image
-                imageView.layer.cornerRadius = 10
-                imageView.layer.masksToBounds = true
-            }
-        } catch let error {
-            print(error)
-        }
-    }
-    
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-                appDelegate.backgroundSessionCompletionHandler = nil
-                completionHandler()
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//imageView.image = image
+//imageView.layer.cornerRadius = 10
+//imageView.layer.masksToBounds = true

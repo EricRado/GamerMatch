@@ -24,16 +24,6 @@ final class User: NSObject {
     static var onlineUser = User()
     
     private var dbRef = Database.database().reference()
-    private lazy var manager: ImageManager = {
-        var manager = ImageManager()
-        manager.downloadSession = session
-        return manager
-    }()
-    private lazy var session: URLSession = {
-        var session = URLSession(configuration: .default,
-                                 delegate: self, delegateQueue: nil)
-        return session
-    }()
     
     private override init(){}
     
@@ -98,64 +88,17 @@ final class User: NSObject {
             print("Image exists...")
             User.onlineUser.userImg = UIImage(contentsOfFile: filePath)
         } else {
-            if let urlString = User.onlineUser.avatarURL {
-                print("User avatarURL : \(urlString)")
-                _ = manager.downloadImage(from: urlString)
-            }
+			if let urlString = User.onlineUser.avatarURL {
+				let imageManager = ImageManager()
+				imageManager.downloadImage(from: urlString) { (result) in
+					switch result {
+					case .failure:
+						break
+					case .success(let image):
+						User.onlineUser.userImg = image
+					}
+				}
+			}
         }
     }
 }
-
-
-extension User: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
-                    didFinishDownloadingTo location: URL) {
-        do {
-            let data = try Data(contentsOf: location)
-            User.onlineUser.userImg = UIImage(data: data)
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-    }
-    
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-                appDelegate.backgroundSessionCompletionHandler = nil
-                completionHandler()
-            }
-        }
-    }
-    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

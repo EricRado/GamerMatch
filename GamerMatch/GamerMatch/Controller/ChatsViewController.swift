@@ -20,18 +20,6 @@ class ChatsViewController: UIViewController{
     
     private let createNewChatVCId = "CreateNewChatVC"
     
-    lazy var downloadSession: URLSession = {
-        let session = URLSession(configuration: .default,
-                                 delegate: self,
-                                 delegateQueue: nil)
-        return session
-    }()
-    
-    lazy var mediaManager: ImageManager = {
-        let manager = ImageManager(downloadSession: downloadSession)
-        return manager
-    }()
-    
     let userChatsRef: DatabaseReference? = {
         guard let uid = Auth.auth().currentUser?.uid else { return nil }
         return Database.database().reference().child("UserChats/\(uid)/")
@@ -215,9 +203,7 @@ extension ChatsViewController: UITableViewDataSource {
         let urlString = chat.isGroupChat! ? chat.urlString
             : chat1on1TitleDict[chat.id!]?.url
         if let urlString = urlString, !urlString.isEmpty {
-            if let taskIdentifier = mediaManager.downloadImage(from: urlString) {
-                taskIdToCellRowAndChatIdDict[taskIdentifier] = (indexPath.row, chat.id!)
-            }
+
         }
         
         return cell
@@ -230,34 +216,4 @@ extension ChatsViewController: UITableViewDataSource {
         return 0
     }
     
-}
-
-
-extension ChatsViewController: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        let taskId = downloadTask.taskIdentifier
-        
-        do {
-            let data = try Data(contentsOf: location)
-            DispatchQueue.main.async {
-                if let (index, chatId) = self.taskIdToCellRowAndChatIdDict[taskId] {
-                    let image = UIImage(data: data)
-                    self.chatImageDict[chatId] = image
-                    self.chatTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-                }
-            }
-        } catch let error {
-            print(error)
-        }
-    }
-    
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-                appDelegate.backgroundSessionCompletionHandler = nil
-                completionHandler()
-            }
-        }
-    }
 }
