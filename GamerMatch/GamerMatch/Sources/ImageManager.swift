@@ -11,22 +11,30 @@ import Firebase
 
 final class ImageManager {
     
-    var downloadSession: URLSession!
-    
-    init(downloadSession: URLSession) {
-        self.downloadSession = downloadSession
-    }
-    
-    init() {}
-    
-    func downloadImage(from urlString: String) -> Int? {
-        guard let url = URL(string: urlString) else { return nil }
-        print("Download task is about to start with : \(urlString)")
-        
-        let downloadTask = downloadSession.downloadTask(with: url)
-        downloadTask.resume()
-        
-        return downloadTask.taskIdentifier
+	func downloadImage(from urlString: String, completion: @escaping (Result<UIImage?, Error>) -> Void) {
+		guard let url = URL(string: urlString) else { return }
+		let urlRequest = URLRequest(url: url)
+
+		let cache = URLCache.shared
+		if let cachedURLResponse = cache.cachedResponse(for: urlRequest) {
+			completion(.success(UIImage(data: cachedURLResponse.data)))
+			return
+		}
+
+		URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
+			guard error == nil else {
+				completion(.failure(error!))
+				return
+			}
+
+			if let response = response, let data = data, let image = UIImage(data: data) {
+				let cachedImageData = CachedURLResponse(response: response, data: data)
+				cache.storeCachedResponse(cachedImageData, for: urlRequest)
+				DispatchQueue.main.async {
+					completion(.success(image))
+				}
+			}
+		}.resume()
     }
     
     func uploadImage(image: UIImage, at filePath: String,
@@ -37,30 +45,16 @@ final class ImageManager {
         metaData.contentType = "image/jpg"
         
         let storageRef = Storage.storage().reference()
-        storageRef.child(filePath)
-            .putData(data, metadata: metaData) { (metaData, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    completion(nil, error)
-                    return
-                } else {
-                    let downloadURL = metaData?.downloadURL()?.absoluteString
-                    print(downloadURL ?? "no url")
-                    completion(downloadURL, nil)
-                }
+        storageRef.child(filePath).putData(data, metadata: metaData) { (metaData, error) in
+			if let error = error {
+				print(error.localizedDescription)
+				completion(nil, error)
+				return
+			} else {
+				let downloadURL = metaData?.downloadURL()?.absoluteString
+				print(downloadURL ?? "no url")
+				completion(downloadURL, nil)
+			}
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
