@@ -15,7 +15,7 @@
 		071A7A132148717500099BCA /* UserCacheInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A122148717500099BCA /* UserCacheInfo.swift */; };
 		071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A142148C29B00099BCA /* AllExtensions.swift */; };
 		071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */; };
-		071BC836214E0E4500621899 /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */; };
+		071BC836214E0E4500621899 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC835214E0E4500621899 /* FriendCell.swift */; };
 		071BC838214E108000621899 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC837214E108000621899 /* FriendsViewController.swift */; };
 		071E900F214EB026005ED404 /* FriendCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */; };
 		071E9011214EB04B005ED404 /* FriendCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */; };
@@ -46,8 +46,7 @@
 		07DDCB65215071CF00584BD6 /* NewGroupChatSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */; };
 		07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */; };
 		07DDCB692150773600584BD6 /* Create1On1ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */; };
-		07DE23DF2153CECC0079F338 /* FriendRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE23DD2153CECC0079F338 /* FriendRequestTableViewCell.swift */; };
-		07DE23E4215430880079F338 /* FriendRequestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07DE23E3215430880079F338 /* FriendRequestTableViewCell.xib */; };
+		07DE23DF2153CECC0079F338 /* FriendRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE23DD2153CECC0079F338 /* FriendRequestCell.swift */; };
 		07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586AE204F8F7500023383 /* AppDelegate.swift */; };
 		07E586B4204F8F7600023383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B2204F8F7600023383 /* Main.storyboard */; };
 		07E586B6204F8F7600023383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E586B5204F8F7600023383 /* Assets.xcassets */; };
@@ -75,7 +74,7 @@
 		071A7A122148717500099BCA /* UserCacheInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCacheInfo.swift; sourceTree = "<group>"; };
 		071A7A142148C29B00099BCA /* AllExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExtensions.swift; sourceTree = "<group>"; };
 		071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGamerResultsViewController.swift; sourceTree = "<group>"; };
-		071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
+		071BC835214E0E4500621899 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		071BC837214E108000621899 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCollectionViewHeader.xib; sourceTree = "<group>"; };
 		071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewHeader.swift; sourceTree = "<group>"; };
@@ -106,8 +105,7 @@
 		07DDCB64215071CF00584BD6 /* NewGroupChatSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupChatSetupViewController.swift; sourceTree = "<group>"; };
 		07DDCB662150771E00584BD6 /* CreateGroupChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupChatViewController.swift; sourceTree = "<group>"; };
 		07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Create1On1ChatViewController.swift; sourceTree = "<group>"; };
-		07DE23DD2153CECC0079F338 /* FriendRequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestTableViewCell.swift; sourceTree = "<group>"; };
-		07DE23E3215430880079F338 /* FriendRequestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendRequestTableViewCell.xib; sourceTree = "<group>"; };
+		07DE23DD2153CECC0079F338 /* FriendRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestCell.swift; sourceTree = "<group>"; };
 		07E586AB204F8F7500023383 /* GamerMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamerMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E586AE204F8F7500023383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07E586B3204F8F7600023383 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -252,15 +250,14 @@
 			children = (
 				0701F3BE2146087E00A73A77 /* ChatMessageCollectionViewCell.swift */,
 				07E586CD2050E85300023383 /* ChatTableViewCell.swift */,
-				071BC835214E0E4500621899 /* FriendCollectionViewCell.swift */,
+				071BC835214E0E4500621899 /* FriendCell.swift */,
 				071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */,
 				071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */,
 				07BF4CA620E5621600044C86 /* UserSearchResultCell.swift */,
 				07E586B2204F8F7600023383 /* Main.storyboard */,
 				071E90142150255E005ED404 /* UserTableViewCell.swift */,
 				071E901621502571005ED404 /* UserTableViewCell.xib */,
-				07DE23DD2153CECC0079F338 /* FriendRequestTableViewCell.swift */,
-				07DE23E3215430880079F338 /* FriendRequestTableViewCell.xib */,
+				07DE23DD2153CECC0079F338 /* FriendRequestCell.swift */,
 				07473B9421668D6200F2E089 /* UpdateBioView.xib */,
 				07473B96216690FF00F2E089 /* UpdateBioView.swift */,
 				07473B982166CD8F00F2E089 /* UpdateConsoleSelectionView.xib */,
@@ -364,7 +361,6 @@
 				0721329A21477C9600D491CD /* comic_sans_ms_bold.ttf in Resources */,
 				07473B992166CD8F00F2E089 /* UpdateConsoleSelectionView.xib in Resources */,
 				0721329821477B8600D491CD /* comic_sans_ms.ttf in Resources */,
-				07DE23E4215430880079F338 /* FriendRequestTableViewCell.xib in Resources */,
 				07E586B9204F8F7600023383 /* LaunchScreen.storyboard in Resources */,
 				07473B9F2166F32400F2E089 /* UploadImagesForProfileView.xib in Resources */,
 				07E586B6204F8F7600023383 /* Assets.xcassets in Resources */,
@@ -468,10 +464,10 @@
 				070927FA20608CDF005B0EAF /* VideoGame.swift in Sources */,
 				0701F3BF2146087E00A73A77 /* ChatMessageCollectionViewCell.swift in Sources */,
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
-				07DE23DF2153CECC0079F338 /* FriendRequestTableViewCell.swift in Sources */,
+				07DE23DF2153CECC0079F338 /* FriendRequestCell.swift in Sources */,
 				071EB70921531C5A00688D32 /* CamaraHandler.swift in Sources */,
 				071A7A132148717500099BCA /* UserCacheInfo.swift in Sources */,
-				071BC836214E0E4500621899 /* FriendCollectionViewCell.swift in Sources */,
+				071BC836214E0E4500621899 /* FriendCell.swift in Sources */,
 				07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */,
 				07473B97216690FF00F2E089 /* UpdateBioView.swift in Sources */,
 				070927FC20619FC5005B0EAF /* VideoGameRole.swift in Sources */,
