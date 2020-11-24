@@ -9,8 +9,8 @@
 import UIKit
 
 final class UserSearchResultCell: UICollectionViewCell {
-
-	private let defaultAvatarImage = UIImage(named: "noAvatarImg")
+	static let preferredHeight: CGFloat = 85.0
+	private let defaultAvatarImage = UIImage(named: "noAvatarImg")!
 	private lazy var avatarImageView: UIImageView = {
 		let avatarImageView = UIImageView()
 		avatarImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,6 +37,7 @@ final class UserSearchResultCell: UICollectionViewCell {
 	}
 
 	override func prepareForReuse() {
+		super.prepareForReuse()
 		avatarImageView.image = defaultAvatarImage
 		usernameLabel.text = nil
 	}
@@ -59,8 +60,13 @@ final class UserSearchResultCell: UICollectionViewCell {
 		])
 	}
 
-	func configure(with username: String, image: UIImage?) {
-		avatarImageView.image = image ?? defaultAvatarImage
+	func configure(with username: String, urlString: String?) {
+		if let urlString = urlString {
+			avatarImageView.downloadImage(with: urlString, defaultImage: defaultAvatarImage)
+		} else {
+			avatarImageView.image = defaultAvatarImage
+		}
+
 		usernameLabel.text = username
 	}
 }
