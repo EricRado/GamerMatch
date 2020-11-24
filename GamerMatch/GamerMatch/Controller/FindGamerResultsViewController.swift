@@ -12,22 +12,8 @@ import Firebase
 final class FindGamerResultsViewController: UIViewController {
 
     private let vcIdentifier = "GamerProfileViewController"
-    private var results = [UserCacheInfo]()
-    private var gamerIds: [String]
-    var taskIdToCellRowDict = [Int: Int]()
-    var cellRowToUserImage = [Int: UIImage]()
-    
-    lazy var downloadSession: URLSession = {
-        let session = URLSession(configuration: .default,
-                                 delegate: self,
-                                 delegateQueue: nil)
-        return session
-    }()
-    
-    lazy var mediaManager: ImageManager = {
-        let manager = ImageManager(downloadSession: downloadSession)
-        return manager
-    }()
+    private var usersCacheInfo = [UserCacheInfo]()
+    private var userIds: [String]
 
 	private lazy var collectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
@@ -40,8 +26,8 @@ final class FindGamerResultsViewController: UIViewController {
 		return collectionView
 	}()
 
-	init(gamerIds: [String]) {
-		self.gamerIds = gamerIds
+	init(userIds: [String]) {
+		self.userIds = userIds
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -50,7 +36,7 @@ final class FindGamerResultsViewController: UIViewController {
 	}
 	
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
     }
   
@@ -64,14 +50,12 @@ final class FindGamerResultsViewController: UIViewController {
 			collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
 		])
-        
-        results = [UserCacheInfo]()
-        getUsersResults(from: gamerIds)
+
+        getUsersResults(from: userIds)
     }
     
     fileprivate func getUsersResults(from gamerIds: [String]) {
         for id in gamerIds {
-            print("This is the id : \(id)")
             guard id != User.onlineUser.uid else { continue }
             FirebaseCalls.shared.getUserCacheInfo(for: id) { [weak self] (userCacheInfo, error) in
 				guard let self = self else { return }
@@ -82,9 +66,8 @@ final class FindGamerResultsViewController: UIViewController {
                 }
 
                 if let userCacheInfo = userCacheInfo {
-                    self.results.append(userCacheInfo)
-					let indexPath = IndexPath(row: self.results.count - 1, section: 0)
-                    print("Inserting at row : \(indexPath.item)")
+                    self.usersCacheInfo.append(userCacheInfo)
+					let indexPath = IndexPath(row: self.usersCacheInfo.count - 1, section: 0)
 					self.collectionView.insertItems(at: [indexPath])
                 }
             }
@@ -95,21 +78,15 @@ final class FindGamerResultsViewController: UIViewController {
 
 extension FindGamerResultsViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return results.count
+		return usersCacheInfo.count
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let cell = collectionView
 				.dequeueReusableCell(withReuseIdentifier: UserSearchResultCell.identifier, for: indexPath)
 				as? UserSearchResultCell else { return UICollectionViewCell() }
-		let userCacheInfo = results[indexPath.row]
-		
-		if let urlString = userCacheInfo.url, urlString != "" {
-			let id = mediaManager.downloadImage(from: urlString)
-			guard let taskId = id else { return cell }
-			taskIdToCellRowDict[taskId] = indexPath.row
-		}
-
+		let userCacheInfo = usersCacheInfo[indexPath.row]
+		cell.configure(with: userCacheInfo.username ?? "", urlString: userCacheInfo.url)
 		return cell
 	}
 }
@@ -117,14 +94,13 @@ extension FindGamerResultsViewController: UICollectionViewDataSource {
 extension FindGamerResultsViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		collectionView.deselectItem(at: indexPath, animated: true)
-		let userCacheInfo = results[indexPath.row]
+		let userCacheInfo = usersCacheInfo[indexPath.row]
 
 		let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
 		guard let gamerProfileViewController = mainStoryboard
 				.instantiateViewController(withIdentifier: vcIdentifier)
 				as? GamerProfileViewController else { return }
 		gamerProfileViewController.userCacheInfo = userCacheInfo
-		gamerProfileViewController.userImage = cellRowToUserImage[indexPath.row]
 
 		navigationController?.navigationBar.topItem?.backBarButtonItem?.title = "Back"
 		navigationController?.pushViewController(gamerProfileViewController, animated: true)
@@ -133,39 +109,6 @@ extension FindGamerResultsViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(
 		_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
 		sizeForItemAt indexPath: IndexPath) -> CGSize {
-		return CGSize(width: collectionView.frame.width, height: 80)
+		return CGSize(width: collectionView.frame.width, height: UserSearchResultCell.preferredHeight)
 	}
-}
-
-extension FindGamerResultsViewController: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
-                    didFinishDownloadingTo location: URL) {
-        let taskId = downloadTask.taskIdentifier
-        
-        do {
-            let data = try Data(contentsOf: location)
-            DispatchQueue.main.async {
-                guard let item = self.taskIdToCellRowDict[taskId] else { return }
-				guard let username = self.results[item].username else { return }
-				let indexPath = IndexPath(item: item, section: 0)
-				guard let cell = self.collectionView.cellForItem(at: indexPath)
-						as? UserSearchResultCell else { return }
-                let image = UIImage(data: data)
-				cell.configure(with: username, image: image)
-                self.cellRowToUserImage[item] = image
-            }
-        } catch let error {
-            print(error)
-        }
-    }
-    
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-                appDelegate.backgroundSessionCompletionHandler = nil
-                completionHandler()
-            }
-        }
-    }
 }

@@ -159,7 +159,7 @@ class FindGamerViewController: UIViewController {
 				}
 				self.ids = ids
 				SVProgressHUD.dismiss()
-				let findGamerResultsViewController = FindGamerResultsViewController(gamerIds: ids ?? [])
+				let findGamerResultsViewController = FindGamerResultsViewController(userIds: ids ?? [])
 				self.navigationController?.pushViewController(findGamerResultsViewController, animated: true)
             }
         })
