@@ -44,7 +44,7 @@ final class NewGroupChatSetupViewController: UIViewController, UITextViewDelegat
     }
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
-            let cellNib = UINib(nibName: FriendCollectionViewCell.identifier, bundle: nil)
+            let cellNib = UINib(nibName: FriendCell.identifier, bundle: nil)
             collectionView.register(cellNib, forCellWithReuseIdentifier: cellId)
             
             let headerNib = UINib(nibName: FriendCollectionViewHeader.identifier,
@@ -234,13 +234,13 @@ extension NewGroupChatSetupViewController: UICollectionViewDataSource {
         print("Running cell for item at ")
         guard let cell = collectionView
             .dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-            as? FriendCollectionViewCell else { return UICollectionViewCell() }
+            as? FriendCell else { return UICollectionViewCell() }
         guard let friend = selectedUsers?[indexPath.row] else { return cell }
         let image = selectedUsersIdToUIImage?[friend.uid!] ??
             UIImage(named: "noAvatarImg")
         
-        cell.friendUsernameLabel.text = friend.username
-        cell.friendImageView.image = image
+//        cell.friendUsernameLabel.text = friend.username
+//        cell.friendImageView.image = image
         
         return cell
     }
