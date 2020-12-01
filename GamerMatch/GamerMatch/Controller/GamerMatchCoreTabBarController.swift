@@ -21,9 +21,6 @@ final class GamerMatchCoreTabBarController: UITabBarController {
 		guard let findGamerViewControler =
 				mainStoryBoard.instantiateViewController(withIdentifier: "FindGamerViewController")
 				as? FindGamerViewController,
-			  let friendsViewController =
-				mainStoryBoard.instantiateViewController(withIdentifier: "FriendsViewController")
-				as? FriendsViewController,
 			  let chatsViewController =
 				mainStoryBoard.instantiateViewController(withIdentifier: "ChatsViewController")
 				as? ChatsViewController,
@@ -37,9 +34,10 @@ final class GamerMatchCoreTabBarController: UITabBarController {
 		findGamerNavigationController.tabBarItem.title = "Find Gamer"
 		findGamerNavigationController.tabBarItem.image = UIImage(named: "search")
 
-		let friendsNavigationController = UINavigationController(rootViewController: friendsViewController)
-		friendsNavigationController.tabBarItem.title = "Friends"
-		friendsNavigationController.tabBarItem.image = UIImage(named: "friends")
+		let friendTabParentViewController = FriendTabParentViewController()
+		let friendTabNavigationController = UINavigationController(rootViewController: friendTabParentViewController)
+		friendTabNavigationController.tabBarItem.title = "Friends"
+		friendTabNavigationController.tabBarItem.image = UIImage(named: "friends")
 
 		let chatsNavigationController = UINavigationController(rootViewController: chatsViewController)
 		chatsNavigationController.tabBarItem.title = "Chats"
@@ -51,7 +49,7 @@ final class GamerMatchCoreTabBarController: UITabBarController {
 
 		setViewControllers([
 			findGamerNavigationController,
-			friendsNavigationController,
+			friendTabNavigationController,
 			chatsNavigationController,
 			profileSettingsNavigationController
 		], animated: true)

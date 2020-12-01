@@ -16,7 +16,7 @@
 		071A7A152148C29B00099BCA /* AllExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A7A142148C29B00099BCA /* AllExtensions.swift */; };
 		071A9ABE214A1C9200211E48 /* FindGamerResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */; };
 		071BC836214E0E4500621899 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC835214E0E4500621899 /* FriendCell.swift */; };
-		071BC838214E108000621899 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC837214E108000621899 /* FriendsViewController.swift */; };
+		071BC838214E108000621899 /* FriendTabParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BC837214E108000621899 /* FriendTabParentViewController.swift */; };
 		071E900F214EB026005ED404 /* FriendCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */; };
 		071E9011214EB04B005ED404 /* FriendCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */; };
 		071E901321500145005ED404 /* CreateNewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071E901221500145005ED404 /* CreateNewChatViewController.swift */; };
@@ -75,7 +75,7 @@
 		071A7A142148C29B00099BCA /* AllExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExtensions.swift; sourceTree = "<group>"; };
 		071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGamerResultsViewController.swift; sourceTree = "<group>"; };
 		071BC835214E0E4500621899 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
-		071BC837214E108000621899 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		071BC837214E108000621899 /* FriendTabParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTabParentViewController.swift; sourceTree = "<group>"; };
 		071E900E214EB026005ED404 /* FriendCollectionViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCollectionViewHeader.xib; sourceTree = "<group>"; };
 		071E9010214EB04B005ED404 /* FriendCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewHeader.swift; sourceTree = "<group>"; };
 		071E901221500145005ED404 /* CreateNewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewChatViewController.swift; sourceTree = "<group>"; };
@@ -216,7 +216,6 @@
 				071EB7062152F8A100688D32 /* DisplayChatMetaDataViewController.swift */,
 				071A9ABD214A1C9200211E48 /* FindGamerResultsViewController.swift */,
 				070927F7205C7046005B0EAF /* FindGamerViewController.swift */,
-				071BC837214E108000621899 /* FriendsViewController.swift */,
 				071EE7B3215709A6006A6401 /* GameAndConsoleSelectionViewController.swift */,
 				071ED120215C6970007B805B /* GamerProfileViewController.swift */,
 				07E586C0204F90E700023383 /* LoginViewController.swift */,
@@ -436,7 +435,7 @@
 				071ED121215C6970007B805B /* GamerProfileViewController.swift in Sources */,
 				071EB7072152F8A100688D32 /* DisplayChatMetaDataViewController.swift in Sources */,
 				070A8B4A21653D780084D289 /* ProfileSettingsViewController.swift in Sources */,
-				071BC838214E108000621899 /* FriendsViewController.swift in Sources */,
+				071BC838214E108000621899 /* FriendTabParentViewController.swift in Sources */,
 				07E586C8205050A400023383 /* User.swift in Sources */,
 				071E90152150255E005ED404 /* UserTableViewCell.swift in Sources */,
 				071ED11F215AA7F6007B805B /* FriendRequest.swift in Sources */,
