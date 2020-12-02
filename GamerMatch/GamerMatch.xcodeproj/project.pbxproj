@@ -58,6 +58,7 @@
 		07E586CE2050E85300023383 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586CD2050E85300023383 /* ChatTableViewCell.swift */; };
 		07E586F32052FA5700023383 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F22052FA5700023383 /* Chat.swift */; };
 		07E586F52052FDCA00023383 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F42052FDCA00023383 /* Message.swift */; };
+		473155DE256D7E12009CA024 /* FriendRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473155DD256D7E12009CA024 /* FriendRequestsViewController.swift */; };
 		473155E3256D7F5C009CA024 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473155E2256D7F5C009CA024 /* FriendsViewController.swift */; };
 		475153E9256A258D00920398 /* GamerMatchCoreTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475153E8256A258D00920398 /* GamerMatchCoreTabBarController.swift */; };
 		475BDB43256C724600B266AA /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDB42256C724600B266AA /* UIImageView+Extension.swift */; };
@@ -121,6 +122,7 @@
 		07E586F22052FA5700023383 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		07E586F42052FDCA00023383 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GamerMatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		473155DD256D7E12009CA024 /* FriendRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestsViewController.swift; sourceTree = "<group>"; };
 		473155E2256D7F5C009CA024 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		475153E8256A258D00920398 /* GamerMatchCoreTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchCoreTabBarController.swift; sourceTree = "<group>"; };
 		475BDB42256C724600B266AA /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				071EE7AA21559D26006A6401 /* VideoGameSelected.swift in Sources */,
+				473155DE256D7E12009CA024 /* FriendRequestsViewController.swift in Sources */,
 				475153E9256A258D00920398 /* GamerMatchCoreTabBarController.swift in Sources */,
 				07BF4CA720E5621600044C86 /* UserSearchResultCell.swift in Sources */,
 				071EE7B4215709A6006A6401 /* GameAndConsoleSelectionViewController.swift in Sources */,
