@@ -58,6 +58,7 @@
 		07E586CE2050E85300023383 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586CD2050E85300023383 /* ChatTableViewCell.swift */; };
 		07E586F32052FA5700023383 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F22052FA5700023383 /* Chat.swift */; };
 		07E586F52052FDCA00023383 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E586F42052FDCA00023383 /* Message.swift */; };
+		473155E3256D7F5C009CA024 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473155E2256D7F5C009CA024 /* FriendsViewController.swift */; };
 		475153E9256A258D00920398 /* GamerMatchCoreTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475153E8256A258D00920398 /* GamerMatchCoreTabBarController.swift */; };
 		475BDB43256C724600B266AA /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDB42256C724600B266AA /* UIImageView+Extension.swift */; };
 		479198A2256AD43F000BD807 /* UICollectionViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479198A1256AD43F000BD807 /* UICollectionViewCell+Extension.swift */; };
@@ -120,6 +121,7 @@
 		07E586F22052FA5700023383 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		07E586F42052FDCA00023383 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GamerMatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		473155E2256D7F5C009CA024 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		475153E8256A258D00920398 /* GamerMatchCoreTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamerMatchCoreTabBarController.swift; sourceTree = "<group>"; };
 		475BDB42256C724600B266AA /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		479198A1256AD43F000BD807 /* UICollectionViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extension.swift"; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 		07E586C4204F912100023383 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				473155DC256D7DED009CA024 /* Friends */,
 				4798ECE7253FDE6D003C8DD1 /* ChatSelectedViewController.swift */,
 				07E586CB2050E14F00023383 /* ChatsViewController.swift */,
 				07DDCB682150773600584BD6 /* Create1On1ChatViewController.swift */,
@@ -273,6 +276,16 @@
 				1E49539C0C950ED07A315396 /* Pods_GamerMatch.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		473155DC256D7DED009CA024 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				071BC837214E108000621899 /* FriendTabParentViewController.swift */,
+				473155DD256D7E12009CA024 /* FriendRequestsViewController.swift */,
+				473155E2256D7F5C009CA024 /* FriendsViewController.swift */,
+			);
+			path = Friends;
 			sourceTree = "<group>";
 		};
 		479198A0256AD413000BD807 /* Extensions */ = {
@@ -465,6 +478,7 @@
 				07E586AF204F8F7500023383 /* AppDelegate.swift in Sources */,
 				07DE23DF2153CECC0079F338 /* FriendRequestCell.swift in Sources */,
 				071EB70921531C5A00688D32 /* CamaraHandler.swift in Sources */,
+				473155E3256D7F5C009CA024 /* FriendsViewController.swift in Sources */,
 				071A7A132148717500099BCA /* UserCacheInfo.swift in Sources */,
 				071BC836214E0E4500621899 /* FriendCell.swift in Sources */,
 				07DDCB672150771E00584BD6 /* CreateGroupChatViewController.swift in Sources */,
